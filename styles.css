@@ -1564,3 +1564,242 @@ textarea {
   font-size: 0.78rem;
 }
 
+/* ==========================================================================
+   スマートフォン表示 最適化 (Mobile Responsive & UI Polish)
+   ========================================================================== */
+@media (max-width: 640px) {
+  /* 1. アプリヘッダー */
+  .app-header {
+    padding: 10px 14px;
+  }
+  
+  .app-header h1 {
+    font-size: 1.1rem;
+  }
+
+  .btn-sync-header {
+    padding: 5px 9px;
+    font-size: 0.78rem;
+    gap: 4px;
+  }
+
+  .btn-icon {
+    padding: 6px;
+  }
+
+  .btn-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* 2. 検索バーとフィルター */
+  .search-filter-section {
+    padding: 10px 14px;
+    gap: 8px;
+  }
+
+  .search-box input {
+    padding: 10px 36px 10px 42px;
+    font-size: 0.85rem;
+    height: 42px;
+  }
+
+  .search-icon {
+    left: 14px;
+  }
+
+  .search-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .attr-btn {
+    padding: 5px 11px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .dungeon-filter-section {
+    padding: 6px 14px;
+  }
+
+  .dungeon-btn {
+    padding: 5px 10px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* 3. モンスター一覧 & パーティ一覧 */
+  .app-content {
+    padding: 10px 12px;
+  }
+
+  .monster-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .party-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .party-card {
+    padding: 12px;
+  }
+
+  .party-card-title {
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .party-turn-order {
+    font-size: 0.76rem;
+    padding: 6px 8px;
+    gap: 4px;
+  }
+
+  /* パーティカード内の5体メンバーチップ（スマホ最適化） */
+  .party-members-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 4px;
+  }
+
+  .party-member-chip {
+    padding: 4px 2px;
+    font-size: 0.7rem;
+    min-width: 0;
+    text-align: center;
+  }
+
+  .party-chip-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 0.65rem;
+  }
+
+  .party-chip-name {
+    font-size: 0.68rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .party-chip-role {
+    display: none; /* スマホカード上では長文役割を省略してスッキリ整頓（詳細はモーダルで表示） */
+  }
+
+  /* 4. 詳細モーダル共通（スマホ下部スライドイン・全幅フィット） */
+  .modal-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 92vh !important;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0 !important;
+    margin: 0 !important;
+    position: relative;
+  }
+
+  .modal-header {
+    padding: 14px 16px;
+    position: relative;
+  }
+
+  .modal-header h2 {
+    font-size: 1.1rem;
+    padding-right: 38px; /* 右上の×ボタンとの重なりを完全防止！ */
+    line-height: 1.35;
+  }
+
+  .modal-close-btn {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    font-size: 1.8rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-body {
+    padding: 14px 16px;
+    padding-bottom: 95px !important; /* 最下部の固定フッターと被らないよう安全余白を確保！ */
+    gap: 12px;
+  }
+
+  .modal-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(18, 25, 41, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 12px 16px calc(12px + var(--safe-bottom));
+    border-top: 1px solid var(--border-color);
+    z-index: 20;
+  }
+
+  /* 5. 詳細モーダル内のメンバー構成カード（ルーン縦積みで崩れ完全防止） */
+  .party-modal-member-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px 12px;
+    gap: 6px;
+  }
+
+  .modal-member-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .modal-member-runes {
+    width: 100%;
+    text-align: left;
+    font-size: 0.75rem;
+    padding: 4px 8px;
+    margin-top: 2px;
+  }
+
+  /* 6. 同期モーダル */
+  .modal-sync-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0 !important;
+  }
+
+  .sync-modal-body {
+    padding: 14px 16px 85px 16px !important;
+  }
+
+  .sync-btn-group {
+    flex-direction: column;
+  }
+
+  .sync-import-actions {
+    flex-direction: column;
+  }
+
+  /* 7. 下部ナビゲーションバー */
+  .app-nav {
+    height: calc(60px + var(--safe-bottom));
+    padding-bottom: var(--safe-bottom);
+  }
+
+  .nav-item {
+    min-height: 48px;
+  }
+
+  .nav-label {
+    font-size: 0.72rem;
+  }
+}
+
+
