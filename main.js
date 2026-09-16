@@ -707,7 +707,21 @@ const elements = {
   formPartySpeed: document.getElementById('form-party-speed'),
   formPartyReq: document.getElementById('form-party-req'),
   formPartyTarget: document.getElementById('form-party-target'),
-  btnPartyFormCancel: document.getElementById('btn-party-form-cancel')
+  btnPartyFormCancel: document.getElementById('btn-party-form-cancel'),
+
+  // データ同期・保存関連
+  btnOpenSync: document.getElementById('btn-open-sync'),
+  syncModal: document.getElementById('sync-modal'),
+  syncModalClose: document.getElementById('sync-modal-close'),
+  syncCountMonsters: document.getElementById('sync-count-monsters'),
+  syncCountParties: document.getElementById('sync-count-parties'),
+  btnCopySyncCode: document.getElementById('btn-copy-sync-code'),
+  btnDownloadBackup: document.getElementById('btn-download-backup'),
+  syncInputCode: document.getElementById('sync-input-code'),
+  btnApplySyncReplace: document.getElementById('btn-apply-sync-replace'),
+  btnApplySyncMerge: document.getElementById('btn-apply-sync-merge'),
+  syncFileInput: document.getElementById('sync-file-input'),
+  btnTriggerFileInput: document.getElementById('btn-trigger-file-input')
 };
 
 // 4. アプリ起動処理
@@ -1677,6 +1691,35 @@ function setupEventListeners() {
       switchTab('all');
     }
   });
+
+  // データ同期モーダル関連イベント
+  if (elements.btnOpenSync) {
+    elements.btnOpenSync.addEventListener('click', openSyncModal);
+  }
+  if (elements.syncModalClose) {
+    elements.syncModalClose.addEventListener('click', closeSyncModal);
+  }
+  if (elements.syncModal) {
+    elements.syncModal.addEventListener('click', (e) => {
+      if (e.target === elements.syncModal) closeSyncModal();
+    });
+  }
+  if (elements.btnCopySyncCode) {
+    elements.btnCopySyncCode.addEventListener('click', handleCopySyncCode);
+  }
+  if (elements.btnDownloadBackup) {
+    elements.btnDownloadBackup.addEventListener('click', handleDownloadBackup);
+  }
+  if (elements.btnApplySyncReplace) {
+    elements.btnApplySyncReplace.addEventListener('click', () => handleApplySyncFromText('replace'));
+  }
+  if (elements.btnApplySyncMerge) {
+    elements.btnApplySyncMerge.addEventListener('click', () => handleApplySyncFromText('merge'));
+  }
+  if (elements.btnTriggerFileInput && elements.syncFileInput) {
+    elements.btnTriggerFileInput.addEventListener('click', () => elements.syncFileInput.click());
+    elements.syncFileInput.addEventListener('change', handleSyncFileSelect);
+  }
 }
 
 // タブ切り替え制御
@@ -1791,3 +1834,240 @@ function handleFormSubmit(e) {
   resetForm();
   switchTab('all');
 }
+
+// ==========================================
+// データ同期・バックアップ機能 (PC・スマホ同期)
+// ==========================================
+
+// 同期モーダルを開く
+function openSyncModal() {
+  if (!elements.syncModal) return;
+  // 現在のデータ件数を反映
+  if (elements.syncCountMonsters) elements.syncCountMonsters.textContent = `${monsters.length}体`;
+  if (elements.syncCountParties) elements.syncCountParties.textContent = `${parties.length}編成`;
+  if (elements.syncInputCode) elements.syncInputCode.value = '';
+  
+  elements.syncModal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+// 同期モーダルを閉じる
+function closeSyncModal() {
+  if (!elements.syncModal) return;
+  elements.syncModal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// データをBase64エンコード付き同期コードに変換 (UTF-8対応)
+function generateSyncCode() {
+  const payload = {
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    monsters: monsters,
+    parties: parties
+  };
+  const jsonStr = JSON.stringify(payload);
+  // UTF-8対応のBase64エンコード
+  const base64Str = btoa(encodeURIComponent(jsonStr).replace(/%([0-9A-F]{2})/g, (match, p1) => {
+    return String.fromCharCode('0x' + p1);
+  }));
+  return `SWDATA:${base64Str}`;
+}
+
+// 同期コードをクリップボードにコピー
+async function handleCopySyncCode() {
+  const syncCode = generateSyncCode();
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(syncCode);
+      showToast('📋 同期コードをコピーしました！LINEやメモでスマホに送ってください');
+    } else {
+      copyToClipboardFallback(syncCode);
+    }
+  } catch (err) {
+    copyToClipboardFallback(syncCode);
+  }
+}
+
+// クリップボードコピーのフォールバック
+function copyToClipboardFallback(text) {
+  const ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try {
+    document.execCommand('copy');
+    showToast('📋 同期コードをコピーしました！');
+  } catch (e) {
+    prompt('以下のコードをすべてコピーしてください:', text);
+  }
+  document.body.removeChild(ta);
+}
+
+// JSONファイルとしてダウンロード保存
+function handleDownloadBackup() {
+  const payload = {
+    appName: "SummonersWar_Manager",
+    version: "1.0",
+    exportedAt: new Date().toISOString(),
+    monstersCount: monsters.length,
+    partiesCount: parties.length,
+    monsters: monsters,
+    parties: parties
+  };
+  const jsonStr = JSON.stringify(payload, null, 2);
+  const blob = new Blob([jsonStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  const filename = `sw_manager_backup_${y}${m}${d}.json`;
+  
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  showToast(`💾 「${filename}」を保存しました`);
+}
+
+// 同期コードまたはJSONテキストの解析
+function parseSyncPayload(rawInput) {
+  if (!rawInput || typeof rawInput !== 'string') {
+    throw new Error('同期データが入力されていません');
+  }
+  const trimmed = rawInput.trim();
+  let jsonStr = '';
+
+  if (trimmed.startsWith('SWDATA:')) {
+    const base64Str = trimmed.slice(7);
+    try {
+      jsonStr = decodeURIComponent(atob(base64Str).split('').map(c => {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+    } catch (e) {
+      throw new Error('同期コードの復号に失敗しました。コードが欠けていないか確認してください');
+    }
+  } else if (trimmed.startsWith('{') && trimmed.endsWith('}')) {
+    jsonStr = trimmed;
+  } else {
+    try {
+      jsonStr = decodeURIComponent(atob(trimmed).split('').map(c => {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+    } catch (e) {
+      throw new Error('コードの形式が認識できません。正しくコピーされているかご確認ください');
+    }
+  }
+
+  let data;
+  try {
+    data = JSON.parse(jsonStr);
+  } catch (e) {
+    throw new Error('データ形式が不正です（JSON解析エラー）');
+  }
+
+  if (!data || (!Array.isArray(data.monsters) && !Array.isArray(data.parties))) {
+    throw new Error('モンスターまたはパーティの有効なデータが見つかりません');
+  }
+
+  return {
+    monsters: Array.isArray(data.monsters) ? data.monsters : [],
+    parties: Array.isArray(data.parties) ? data.parties : []
+  };
+}
+
+// データの反映実行 (mode: 'replace' または 'merge')
+function applySyncData(payload, mode = 'replace') {
+  if (mode === 'replace') {
+    const confirmMsg = `同期を実行すると、現在の端末のデータが上書きされます。\nよろしいですか？\n\n【読み込むデータ】\n・モンスター: ${payload.monsters.length}体\n・周回パーティ: ${payload.parties.length}編成`;
+    if (confirm(confirmMsg)) {
+      monsters = payload.monsters;
+      parties = payload.parties;
+      saveToLocalStorage();
+      savePartiesToLocalStorage();
+      sortMonsters();
+      sortParties();
+      renderAll();
+      closeSyncModal();
+      showToast(`⚡ 同期完了！（モンスター${monsters.length}体 / パーティ${parties.length}編成）`);
+    }
+  } else if (mode === 'merge') {
+    // マージ（既存にないIDや名称は追加、既存にあるものは更新）
+    let mAdded = 0, mUpdated = 0;
+    payload.monsters.forEach(newM => {
+      const idx = monsters.findIndex(m => m.id === newM.id || (m.name === newM.name && m.attribute === newM.attribute));
+      if (idx !== -1) {
+        monsters[idx] = newM;
+        mUpdated++;
+      } else {
+        monsters.push(newM);
+        mAdded++;
+      }
+    });
+
+    let pAdded = 0, pUpdated = 0;
+    payload.parties.forEach(newP => {
+      const idx = parties.findIndex(p => p.id === newP.id || (p.name === newP.name && p.dungeon === newP.dungeon));
+      if (idx !== -1) {
+        parties[idx] = newP;
+        pUpdated++;
+      } else {
+        parties.push(newP);
+        pAdded++;
+      }
+    });
+
+    saveToLocalStorage();
+    savePartiesToLocalStorage();
+    sortMonsters();
+    sortParties();
+    renderAll();
+    closeSyncModal();
+    showToast(`🔀 統合完了！（追加: モンスター${mAdded}/パーティ${pAdded}、更新: モンスター${mUpdated}/パーティ${pUpdated}）`);
+  }
+}
+
+// テキストエリアからの同期実行
+function handleApplySyncFromText(mode) {
+  const code = (elements.syncInputCode.value || '').trim();
+  if (!code) {
+    alert('同期コードをテキストエリアに貼り付けてください。');
+    if (elements.syncInputCode) elements.syncInputCode.focus();
+    return;
+  }
+  try {
+    const payload = parseSyncPayload(code);
+    applySyncData(payload, mode);
+  } catch (err) {
+    alert(`同期エラー: ${err.message}`);
+  }
+}
+
+// バックアップファイル選択時のハンドラ
+function handleSyncFileSelect(e) {
+  const file = e.target.files && e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    try {
+      const content = event.target.result;
+      const payload = parseSyncPayload(content);
+      applySyncData(payload, 'replace');
+    } catch (err) {
+      alert(`ファイル読み込みエラー: ${err.message}`);
+    } finally {
+      if (elements.syncFileInput) elements.syncFileInput.value = '';
+    }
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+

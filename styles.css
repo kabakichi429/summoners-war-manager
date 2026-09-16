@@ -1386,3 +1386,181 @@ textarea {
   max-height: 75vh;
   overflow-y: auto;
 }
+
+/* ==========================================================================
+   データ同期・保存モーダル (PC・スマホ同期機能)
+   ========================================================================== */
+
+/* ヘッダー内 同期ボタン */
+.btn-sync-header {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(223, 178, 58, 0.15);
+  border: 1px solid var(--border-gold);
+  color: var(--accent-gold);
+  padding: 6px 12px;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-sync-header:hover {
+  background: rgba(223, 178, 58, 0.28);
+  box-shadow: 0 0 10px var(--accent-gold-glow);
+  transform: translateY(-1px);
+}
+
+.btn-sync-header .sync-icon {
+  width: 15px;
+  height: 15px;
+}
+
+/* 同期モーダル */
+.modal-sync-card {
+  max-width: 520px;
+  width: 92%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.sync-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sync-modal-title h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.sync-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* 同期ステータスサマリー */
+.sync-status-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  padding: 12px 16px;
+}
+
+.sync-status-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sync-status-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.sync-status-val {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+/* 各セクション */
+.sync-section {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sync-section-header h3 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.sync-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin: 0;
+}
+
+.sync-btn-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-sync-action {
+  flex: 1;
+  min-width: 160px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  padding: 10px 14px;
+}
+
+/* テキストエリア */
+.sync-textarea {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  color: #fff;
+  padding: 10px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  resize: vertical;
+  min-height: 70px;
+}
+
+.sync-textarea:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 8px var(--accent-gold-glow);
+}
+
+.sync-import-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.sync-import-actions button {
+  flex: 1;
+  min-width: 160px;
+  font-size: 0.85rem;
+  padding: 10px 12px;
+}
+
+.sync-file-import-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border-color);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.btn-sm {
+  padding: 5px 12px;
+  font-size: 0.78rem;
+}
+
