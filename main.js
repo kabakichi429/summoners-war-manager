@@ -323,6 +323,48 @@ const PRESET_PARTIES = [
     updatedAt: new Date().toISOString()
   },
   {
+    id: "preset-party-dragons-abyss-no-liam-kahli",
+    name: "ドラゴン深淵Hard 【リアム不要・星4/星3】カイル＆カーリー防御無視軸",
+    dungeon: "ドラゴンダンジョン (深淵Hard)",
+    dungeonCategory: "ドラゴン",
+    averageTime: "約38秒",
+    successRate: "98%",
+    members: [
+      { name: "ヴェルデハイル", attribute: "火", role: "速度リーダー・全体ゲージ回し (L)", runes: "暴走+反撃 (クリ率100%必須)", isLeader: true },
+      { name: "カイル", attribute: "水", role: "ボス最大体力比例特効削り (核)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "カーリー", attribute: "火", role: "防御無視特大火力＆味方攻撃・速度バフ", runes: "激怒+刃 または 猛攻+刃 (クリダメ型)", isLeader: false },
+      { name: "ジュリー", attribute: "水", role: "開幕全体SHOTで道中wave1/3を一掃", runes: "激怒+刃 または 猛攻+刃", isLeader: false },
+      { name: "ガレオン", attribute: "水", role: "全体縦割り＆攻撃バフ", runes: "迅速+意志 (的中55%+)", isLeader: false }
+    ],
+    turnOrder: "ガレオン ➔ ジュリー ➔ カーリー ➔ カイル ➔ ヴェルデハイル",
+    speedTuningMemo: "ガレオンが最速でバフと盾割り、ジュリーが道中を一撃粉砕。ボス戦ではカーリーが攻撃速度バフと防御無視攻撃を叩き込み、カイルの最大体力比例で一瞬で倒します。",
+    requirementsMemo: "純5リアムを持っていない人向けの代表的高速テンプレ！調合・星3のカーリー（火ハイエレメンタル）の防御無視火力が非常に強力で、リアムなしでも30秒台周回が可能です。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dragons-abyss-no-liam-twins",
+    name: "ドラゴン深淵Hard 【リアム不要・双子連撃】ブメチャク＆カイル軸",
+    dungeon: "ドラゴンダンジョン (深淵Hard)",
+    dungeonCategory: "ドラゴン",
+    averageTime: "約42秒",
+    successRate: "99%",
+    members: [
+      { name: "ヴェルデハイル", attribute: "火", role: "速度リーダー・全体ゲージ回し (L)", runes: "暴走+反撃 (クリ率100%必須)", isLeader: true },
+      { name: "サブリナ", attribute: "水", role: "水ブーメラン・防御弱化＆被ダメ増デバフ", runes: "暴走+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "シャイナ", attribute: "火", role: "火チャクラム・ゲージ下げ＆全体縦割り", runes: "暴走+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "カイル", attribute: "水", role: "ボス特効最大体力比例アタッカー", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "ローレン", attribute: "光", role: "強化剥がし＆持続縦割り・ゲージ下げ", runes: "迅速+集中 (速度/体力/的中55%+)", isLeader: false }
+    ],
+    turnOrder: "ローレン ➔ サブリナ ➔ シャイナ ➔ カイル ➔ ヴェルデハイル",
+    speedTuningMemo: "ローレンが剥がしと盾割り。サブリナとシャイナの協力攻撃で免疫タワーのゲージを削りつつ手数を稼ぎ、カイルの一撃でボスを沈めます。",
+    requirementsMemo: "リアム不要！ブーメラン＆チャクラムの同時攻撃により免疫クリスタルが動く前にゲージを制圧できるため、ルーンの敷居が低くオート勝率が極めて高い安定編成です。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
     id: "preset-party-necro-abyss-seren",
     name: "死ダン深淵Hard 【最速】セレン＆アビゲイル軸 (最速テンプレ)",
     dungeon: "死のダンジョン (深淵Hard)",
@@ -528,6 +570,48 @@ const PRESET_PARTIES = [
     turnOrder: "フラン ➔ ローレン ➔ ジンク ➔ リンリン ➔ クロー",
     speedTuningMemo: "フラン最速で剣バフ。ローレンが盾割りを入れ、ジンクとリンリンのW強化阻害でボスのシールド獲得を100%阻止。弱化が重なったボスにクローが「傷口ほじくり返す」で大ダメージを与えます。",
     requirementsMemo: "純5（ブランディア等）を一切使わず、古代コインや秘密ダンジョン、2次覚醒で揃うモンスターのみで構成。W阻害（ジンク＋リンリン）により事故率がほぼ0%の安心仕様です。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-steel-fortress-no-brandia-lushen",
+    name: "鋼鉄のダンジョン 【ブランディア不要・道中切断】ルシェン＆クロー即殺軸",
+    dungeon: "鋼鉄のダンジョン",
+    dungeonCategory: "鋼鉄",
+    averageTime: "約32秒",
+    successRate: "98%",
+    members: [
+      { name: "ルシェン", attribute: "風", role: "攻撃リーダー・切断で道中wave1/3を即殺 (L)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+      { name: "ジンク", attribute: "闇", role: "最速全体強化効果阻害・攻撃力低下 (2A)", runes: "迅速+集中 (的中60%+)", isLeader: false },
+      { name: "ローレン", attribute: "光", role: "盾割り・剥がし・ゲージ管理", runes: "迅速+集中 (速度/的中50%+)", isLeader: false },
+      { name: "テオン", attribute: "光", role: "リモーションでクローへ即時ターン譲渡", runes: "迅速+闘志 (速度調整)", isLeader: false },
+      { name: "クロー", attribute: "闇", role: "弱化効果比例・超特大一撃フィニッシャー (2A)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "ルシェン ➔ ジンク ➔ ローレン ➔ テオン ➔ クロー",
+    speedTuningMemo: "道中はルシェンの切断で瞬殺。ボス戦ではジンクが強化阻害、ローレンが盾割りを入れ、テオンのリモーションを受けたクローが「傷口ほじくり返す」で一撃十数万ダメージを叩き込みます。",
+    requirementsMemo: "純5ブランディアなしでの最速級テンプレ！クローの火力ルーン（激怒＋高クリダメ）をしっかり仕上げることで、ブランディア同等の秒速周回を実現できます。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-steel-fortress-no-brandia-roaq",
+    name: "鋼鉄のダンジョン 【ブランディア不要・高回転】ラオーク＆クロー協力攻撃軸",
+    dungeon: "鋼鉄のダンジョン",
+    dungeonCategory: "鋼鉄",
+    averageTime: "約40秒",
+    successRate: "99%",
+    members: [
+      { name: "フラン", attribute: "光", role: "攻撃バフ・免疫・持続回復 (L)", runes: "迅速+集中 (速度/体力/体力)", isLeader: true },
+      { name: "ローレン", attribute: "光", role: "盾割り・強化剥がし・ゲージ下げ", runes: "迅速+集中 (速度/体力/的中50%+)", isLeader: false },
+      { name: "ジンク", attribute: "闇", role: "全体強化阻害・攻撃力低下 (2A)", runes: "絶望+集中 または 迅速 (的中50%+)", isLeader: false },
+      { name: "ラオーク", attribute: "火", role: "協力攻撃でジンク阻害＆クロー追撃を連続発動 (2A)", runes: "暴走+反撃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "クロー", attribute: "闇", role: "烙印・弱化比例大ダメージフィニッシャー (2A)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ ローレン ➔ ジンク ➔ ラオーク ➔ クロー",
+    speedTuningMemo: "フランの剣バフからローレンが盾割り。ジンクの強化阻害が入った後、ラオークの協力攻撃がジンクとクローを連れて連続攻撃。強化阻害を切らさずクローのスキル回転を極限まで早めます。",
+    requirementsMemo: "純5モンスター完全不要！秘密ダンジョンと2次覚醒だけで組める超高安定パ。ラオークの協力攻撃により阻害デバフの付与確率とクローの攻撃回数が跳ね上がります。",
     targetMemo: "ボス直撃ターゲット設定。",
     isFavorite: false,
     updatedAt: new Date().toISOString()
@@ -1101,11 +1185,46 @@ function renderParties() {
 function createPartyEmptyState() {
   const div = document.createElement('div');
   div.className = 'empty-state';
-  div.innerHTML = `
-    <div class="empty-icon">⚔️</div>
-    <p>該当する周回パーティが見つかりませんでした。</p>
-    <button class="btn btn-primary" onclick="openPartyForm()" style="margin-top: 8px;">＋ 新規パーティを作成</button>
-  `;
+  const hasFilter = (searchQuery && searchQuery.trim() !== '') || dungeonFilter !== 'all';
+
+  if (hasFilter) {
+    div.innerHTML = `
+      <div class="empty-icon">🔍</div>
+      <p style="font-weight: 600; color: #fff; margin-bottom: 6px;">条件に一致する周回パーティがありません</p>
+      <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">
+        ${searchQuery ? `検索ワード: 「${escapeHtml(searchQuery)}」 ` : ''}
+        ${dungeonFilter !== 'all' ? `ダンジョン: 「${escapeHtml(dungeonFilter)}」` : ''} で絞り込み中です。
+      </p>
+      <button class="btn btn-primary btn-sm" id="btn-reset-party-filters" style="margin-bottom: 10px;">
+        🔄 検索・絞り込みをすべて解除して全件表示
+      </button>
+    `;
+    setTimeout(() => {
+      const btnReset = div.querySelector('#btn-reset-party-filters');
+      if (btnReset) {
+        btnReset.addEventListener('click', () => {
+          elements.searchInput.value = '';
+          searchQuery = '';
+          elements.btnClearSearch.style.display = 'none';
+          dungeonFilter = 'all';
+          if (elements.dungeonBtns) {
+            elements.dungeonBtns.forEach(b => {
+              if (b.dataset.dungeon === 'all') b.classList.add('active');
+              else b.classList.remove('active');
+            });
+          }
+          renderParties();
+          showToast('検索・絞り込みを解除し、全パーティを表示しました');
+        });
+      }
+    }, 0);
+  } else {
+    div.innerHTML = `
+      <div class="empty-icon">⚔️</div>
+      <p>登録されている周回パーティがありません。</p>
+      <button class="btn btn-primary" onclick="openPartyForm()" style="margin-top: 8px;">＋ 新規パーティを作成</button>
+    `;
+  }
   return div;
 }
 
