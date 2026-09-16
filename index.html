@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>サマナ攻略 Manager</title>
+  <!-- Google Fonts: Outfit & Noto Sans JP -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- アプリヘッダー -->
+  <header class="app-header">
+    <div class="header-logo">
+      <span class="logo-icon">⚜️</span>
+      <h1>SW Manager</h1>
+    </div>
+    <div class="header-actions">
+      <button id="btn-reset-preset" class="btn-icon" title="初期データにリセット">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- 検索・フィルターエリア（一覧系タブの時のみ表示されるようJSで制御） -->
+  <section class="search-filter-section" id="search-filter-area">
+    <div class="search-box">
+      <span class="search-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </span>
+      <input type="text" id="search-input" placeholder="モンスター名、役割、メモを検索...">
+      <button id="btn-clear-search" class="clear-search-btn" style="display: none;">&times;</button>
+    </div>
+    
+    <div class="attribute-filters">
+      <button class="attr-btn active" data-attr="all">すべて</button>
+      <button class="attr-btn attr-fire" data-attr="火">火</button>
+      <button class="attr-btn attr-water" data-attr="水">水</button>
+      <button class="attr-btn attr-wind" data-attr="風">風</button>
+      <button class="attr-btn attr-light" data-attr="光">光</button>
+      <button class="attr-btn attr-dark" data-attr="闇">闇</button>
+    </div>
+  </section>
+
+  <!-- メインコンテンツ -->
+  <main class="app-content">
+    
+    <!-- すべてタブ -->
+    <div id="tab-content-all" class="tab-pane active">
+      <div class="list-summary">
+        <span id="monster-count">0</span>体のモンスター
+      </div>
+      <div class="monster-grid" id="monster-list-all">
+        <!-- JSで動的に生成 -->
+      </div>
+    </div>
+
+    <!-- ギルドメモタブ -->
+    <div id="tab-content-guild" class="tab-pane">
+      <div class="list-summary">
+        ギルド・アリーナ対策メモ付き (<span id="guild-count">0</span>)
+      </div>
+      <div class="monster-grid" id="monster-list-guild">
+        <!-- JSで動的に生成 -->
+      </div>
+    </div>
+
+    <!-- カイロスタブ -->
+    <div id="tab-content-cairos" class="tab-pane">
+      <!-- カイロスサブナビゲーション & アクション -->
+      <div class="cairos-subnav">
+        <div class="subnav-tabs">
+          <button class="subnav-tab active" id="btn-subnav-party" data-subtab="party">
+            <span class="subnav-icon">⚔️</span> 周回パーティ編成 (<span id="party-count">0</span>)
+          </button>
+          <button class="subnav-tab" id="btn-subnav-monsters" data-subtab="monsters">
+            <span class="subnav-icon">🐉</span> モンスターメモ (<span id="cairos-count">0</span>)
+          </button>
+        </div>
+        <button id="btn-add-party" class="btn btn-gold-sm">
+          <span>＋</span> パーティ追加
+        </button>
+      </div>
+
+      <!-- ダンジョン別フィルター (パーティ表示時) -->
+      <div class="dungeon-filters" id="dungeon-filter-area">
+        <button class="dungeon-btn active" data-dungeon="all">すべて</button>
+        <button class="dungeon-btn dungeon-giants" data-dungeon="巨人">巨人深淵</button>
+        <button class="dungeon-btn dungeon-dragons" data-dungeon="ドラゴン">ドラゴン深淵</button>
+        <button class="dungeon-btn dungeon-necro" data-dungeon="死のダンジョン">死ダン深淵</button>
+        <button class="dungeon-btn dungeon-spirit" data-dungeon="精霊">精霊深淵</button>
+        <button class="dungeon-btn dungeon-steel" data-dungeon="鋼鉄">鋼鉄</button>
+        <button class="dungeon-btn dungeon-punisher" data-dungeon="審判">審判</button>
+      </div>
+
+      <!-- パーティ一覧コンテナ -->
+      <div id="cairos-subpane-party" class="cairos-subpane active">
+        <div class="party-grid" id="party-list-cairos">
+          <!-- JSで動的に生成 -->
+        </div>
+      </div>
+
+      <!-- カイロス向けモンスター一覧コンテナ -->
+      <div id="cairos-subpane-monsters" class="cairos-subpane" style="display: none;">
+        <div class="list-summary">
+          カイロス周回・ステータス条件付きモンスター
+        </div>
+        <div class="monster-grid" id="monster-list-cairos">
+          <!-- JSで動的に生成 -->
+        </div>
+      </div>
+    </div>
+
+    <!-- 登録・編集タブ -->
+    <div id="tab-content-form" class="tab-pane">
+      <div class="form-container">
+        <h2 id="form-title">新規モンスター登録</h2>
+        <form id="monster-form" novalidate>
+          <input type="hidden" id="form-monster-id">
+          
+          <div class="form-group">
+            <label for="form-name">モンスター名 <span class="required">*</span></label>
+            <input type="text" id="form-name" required placeholder="例: 水パンダ, ヴェルデハイル">
+            <span class="error-msg" id="error-name">名前を入力してください</span>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="form-attribute">属性 <span class="required">*</span></label>
+              <select id="form-attribute" required>
+                <option value="" disabled selected>選択してください</option>
+                <option value="火">火 (Fire)</option>
+                <option value="水">水 (Water)</option>
+                <option value="風">風 (Wind)</option>
+                <option value="光">光 (Light)</option>
+                <option value="闇">闇 (Dark)</option>
+              </select>
+              <span class="error-msg" id="error-attribute">属性を選択してください</span>
+            </div>
+
+            <div class="form-group">
+              <label for="form-stars">レア度 (★)</label>
+              <select id="form-stars">
+                <option value="5" selected>★★★★★ (星5)</option>
+                <option value="4">★★★★ (星4)</option>
+                <option value="3">★★★ (星3)</option>
+                <option value="2">★★ (星2)</option>
+                <option value="1">★ (星1)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="form-role">役割 (タグ・カテゴリ)</label>
+            <input type="text" id="form-role" placeholder="例: アタッカー, デバッファー, 剥がし, 巨人深淵用">
+          </div>
+
+          <div class="form-group">
+            <label for="form-runes">推奨ルーン構成</label>
+            <input type="text" id="form-runes" placeholder="例: 暴走 + 意志 (速度/体力/体力)">
+          </div>
+
+          <div class="form-group">
+            <label for="form-guild">ギルド戦・アリーナ対策メモ</label>
+            <textarea id="form-guild" rows="3" placeholder="攻め編成、特定の防衛への対策、速度調整など"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="form-cairos">カイロス周回・ステータス条件</label>
+            <textarea id="form-cairos" rows="3" placeholder="周回メンバー、必要速度、的中率、クリ率の閾値など"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="form-general">全般メモ / 育成方針</label>
+            <textarea id="form-general" rows="3" placeholder="ルーンの叩き基準や将来の使い道など自由に入力してください"></textarea>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="form-favorite">
+              <span class="checkbox-custom"></span>
+              お気に入りに登録する
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" id="btn-cancel-form" class="btn btn-secondary">キャンセル</button>
+            <button type="submit" id="btn-submit-form" class="btn btn-primary">保存する</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- モンスター詳細ポップアップ（モーダル） -->
+  <div class="modal-backdrop" id="detail-modal" style="display: none;">
+    <div class="modal-container">
+      <div class="modal-header">
+        <div class="modal-title-area">
+          <span class="monster-attr-badge" id="modal-attr-badge">水</span>
+          <h2 id="modal-monster-name">水パンダ</h2>
+          <div class="monster-stars" id="modal-monster-stars">★★★★★</div>
+        </div>
+        <button id="modal-close" class="modal-close-btn">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <div class="detail-section">
+          <h3><span class="section-icon">⚔️</span> 役割 / タグ</h3>
+          <p id="modal-role" class="detail-value">未登録</p>
+        </div>
+
+        <div class="detail-section">
+          <h3><span class="section-icon">💎</span> 推奨ルーン</h3>
+          <p id="modal-runes" class="detail-value">未登録</p>
+        </div>
+
+        <div class="detail-section" id="modal-section-guild">
+          <h3><span class="section-icon">🛡️</span> ギルド戦・アリーナ対策</h3>
+          <p id="modal-guild-memo" class="detail-value text-pre">未登録</p>
+        </div>
+
+        <div class="detail-section" id="modal-section-cairos">
+          <h3><span class="section-icon">🐉</span> カイロス周回・ステータス条件</h3>
+          <p id="modal-cairos-memo" class="detail-value text-pre">未登録</p>
+        </div>
+
+        <div class="detail-section" id="modal-section-general">
+          <h3><span class="section-icon">📝</span> 全般メモ / 育成方針</h3>
+          <p id="modal-general-memo" class="detail-value text-pre">未登録</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modal-btn-delete" class="btn btn-danger">削除</button>
+        <button id="modal-btn-edit" class="btn btn-primary">編集する</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- パーティ詳細ポップアップ（モーダル） -->
+  <div class="modal-backdrop" id="party-detail-modal" style="display: none;">
+    <div class="modal-container party-modal-container">
+      <div class="modal-header">
+        <div class="modal-title-area">
+          <div class="party-modal-tags">
+            <span class="party-dungeon-badge" id="modal-party-dungeon">ダンジョン名</span>
+            <span class="party-meta-pill" id="modal-party-time">⏱️ --秒</span>
+            <span class="party-meta-pill winrate" id="modal-party-rate">🏆 --%</span>
+          </div>
+          <h2 id="modal-party-name">パーティ名</h2>
+        </div>
+        <button id="party-modal-close" class="modal-close-btn">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- メンバー一覧 -->
+        <div class="party-detail-section">
+          <h3><span class="section-icon">👥</span> メンバー構成 (5体)</h3>
+          <div class="party-modal-members" id="modal-party-members">
+            <!-- JSで動的生成 -->
+          </div>
+        </div>
+
+        <!-- 行動順 -->
+        <div class="party-detail-section" id="modal-section-party-turn">
+          <h3><span class="section-icon">⚡</span> 推奨行動順</h3>
+          <div class="turn-flow-display" id="modal-party-turn-order">未設定</div>
+        </div>
+
+        <!-- 速度調整メモ -->
+        <div class="party-detail-section" id="modal-section-party-speed">
+          <h3><span class="section-icon">👟</span> 速度調整・同調メモ</h3>
+          <p id="modal-party-speed-memo" class="detail-value text-pre">未登録</p>
+        </div>
+
+        <!-- 要件・ステータス条件 -->
+        <div class="party-detail-section" id="modal-section-party-req">
+          <h3><span class="section-icon">🎯</span> 周回要件・ステータス基準</h3>
+          <p id="modal-party-req-memo" class="detail-value text-pre">未登録</p>
+        </div>
+
+        <!-- ターゲット・立ち回り -->
+        <div class="party-detail-section" id="modal-section-party-target">
+          <h3><span class="section-icon">🎯</span> ボス階ターゲット設定・立ち回り</h3>
+          <p id="modal-party-target-memo" class="detail-value text-pre">未登録</p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="modal-party-btn-delete" class="btn btn-danger">削除</button>
+        <button id="modal-party-btn-edit" class="btn btn-primary">編集する</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- パーティ登録・編集モーダル -->
+  <div class="modal-backdrop" id="party-form-modal" style="display: none;">
+    <div class="modal-container party-modal-container party-form-modal-container">
+      <div class="modal-header">
+        <h2 id="party-form-title">周回パーティ登録</h2>
+        <button id="party-form-close" class="modal-close-btn">&times;</button>
+      </div>
+
+      <form id="party-form" class="modal-body form-scroll-body" novalidate>
+        <input type="hidden" id="form-party-id">
+
+        <div class="form-group">
+          <label for="form-party-name">パーティ名 <span class="required">*</span></label>
+          <input type="text" id="form-party-name" required placeholder="例: 巨人深淵Hard 高速テシャール軸">
+          <span class="error-msg" id="error-party-name">パーティ名を入力してください</span>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-party-dungeon">ダンジョン <span class="required">*</span></label>
+            <select id="form-party-dungeon" required>
+              <option value="巨人ダンジョン (深淵Hard)">巨人ダンジョン (深淵Hard)</option>
+              <option value="巨人ダンジョン (10階/12階)">巨人ダンジョン (10階/12階)</option>
+              <option value="ドラゴンダンジョン (深淵Hard)">ドラゴンダンジョン (深淵Hard)</option>
+              <option value="ドラゴンダンジョン (10階/12階)">ドラゴンダンジョン (10階/12階)</option>
+              <option value="死のダンジョン (深淵Hard)">死のダンジョン (深淵Hard)</option>
+              <option value="死のダンジョン (10階/12階)">死のダンジョン (10階/12階)</option>
+              <option value="精霊のダンジョン (深淵Hard)">精霊のダンジョン (深淵Hard)</option>
+              <option value="精霊のダンジョン (10階)">精霊のダンジョン (10階)</option>
+              <option value="鋼鉄のダンジョン">鋼鉄のダンジョン</option>
+              <option value="審判のダンジョン">審判のダンジョン</option>
+              <option value="その他">その他</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="form-party-time">目安クリアタイム</label>
+            <input type="text" id="form-party-time" placeholder="例: 約30秒, 45秒安定">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-party-rate">推定勝率 / 安定度</label>
+            <input type="text" id="form-party-rate" placeholder="例: 99%, ほぼ事故なし">
+          </div>
+          <div class="form-group checkbox-group" style="padding-top: 24px;">
+            <label class="checkbox-label">
+              <input type="checkbox" id="form-party-favorite">
+              <span class="checkbox-custom"></span>
+              お気に入り登録
+            </label>
+          </div>
+        </div>
+
+        <!-- メンバー5体入力欄 -->
+        <div class="form-group-title">
+          <span>👥</span> モンスター構成 (1体目はリーダー)
+        </div>
+
+        <div class="members-input-grid">
+          <!-- メンバー1 (リーダー) -->
+          <div class="member-input-card leader-card">
+            <div class="member-card-title"><span class="badge-leader">LEADER</span> モンスター 1</div>
+            <div class="form-row">
+              <input type="text" id="form-m1-name" required placeholder="名前 (例: テシャール)">
+              <select id="form-m1-attr">
+                <option value="風">風</option>
+                <option value="火">火</option>
+                <option value="水">水</option>
+                <option value="光">光</option>
+                <option value="闇">闇</option>
+              </select>
+            </div>
+            <input type="text" id="form-m1-role" placeholder="役割 (例: ボス火力/道中一掃)">
+            <input type="text" id="form-m1-runes" placeholder="ルーン (例: 激怒+刃 攻/クリダメ/攻)">
+          </div>
+
+          <!-- メンバー2 -->
+          <div class="member-input-card">
+            <div class="member-card-title">モンスター 2</div>
+            <div class="form-row">
+              <input type="text" id="form-m2-name" placeholder="名前 (例: フリルレア)">
+              <select id="form-m2-attr">
+                <option value="風">風</option>
+                <option value="火">火</option>
+                <option value="水">水</option>
+                <option value="光">光</option>
+                <option value="闇">闇</option>
+              </select>
+            </div>
+            <input type="text" id="form-m2-role" placeholder="役割 (例: 全体削り/盾割り)">
+            <input type="text" id="form-m2-runes" placeholder="ルーン (例: 闘志+闘志+意志)">
+          </div>
+
+          <!-- メンバー3 -->
+          <div class="member-input-card">
+            <div class="member-card-title">モンスター 3</div>
+            <div class="form-row">
+              <input type="text" id="form-m3-name" placeholder="名前 (例: コナミヤ)">
+              <select id="form-m3-attr">
+                <option value="水">水</option>
+                <option value="火">火</option>
+                <option value="風">風</option>
+                <option value="光">光</option>
+                <option value="闇">闇</option>
+              </select>
+            </div>
+            <input type="text" id="form-m3-role" placeholder="役割 (例: リモーション)">
+            <input type="text" id="form-m3-runes" placeholder="ルーン (例: 迅速+闘志)">
+          </div>
+
+          <!-- メンバー4 -->
+          <div class="member-input-card">
+            <div class="member-card-title">モンスター 4</div>
+            <div class="form-row">
+              <input type="text" id="form-m4-name" placeholder="名前 (例: テオン)">
+              <select id="form-m4-attr">
+                <option value="光">光</option>
+                <option value="火">火</option>
+                <option value="水">水</option>
+                <option value="風">風</option>
+                <option value="闇">闇</option>
+              </select>
+            </div>
+            <input type="text" id="form-m4-role" placeholder="役割 (例: リモーション)">
+            <input type="text" id="form-m4-runes" placeholder="ルーン (例: 迅速+闘志)">
+          </div>
+
+          <!-- メンバー5 -->
+          <div class="member-input-card">
+            <div class="member-card-title">モンスター 5</div>
+            <div class="form-row">
+              <input type="text" id="form-m5-name" placeholder="名前 (例: ルナ)">
+              <select id="form-m5-attr">
+                <option value="闇">闇</option>
+                <option value="火">火</option>
+                <option value="水">水</option>
+                <option value="風">風</option>
+                <option value="光">光</option>
+              </select>
+            </div>
+            <input type="text" id="form-m5-role" placeholder="役割 (例: 最大体力比例ダメ)">
+            <input type="text" id="form-m5-runes" placeholder="ルーン (例: 激怒+刃)">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="form-party-turn">推奨行動順</label>
+          <input type="text" id="form-party-turn" placeholder="例: フリルレア ➔ テシャール ➔ テオン ➔ コナミヤ ➔ ルナ">
+        </div>
+
+        <div class="form-group">
+          <label for="form-party-speed">速度調整・同調メモ</label>
+          <textarea id="form-party-speed" rows="2" placeholder="例: フリルレア最速。テオンとコナミヤはテシャールの直後に割り込めるよう速度差2以内に調整。"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="form-party-req">ステータス条件・ルーン要件</label>
+          <textarea id="form-party-req" rows="2" placeholder="例: 全体で闘志ルーン6セット以上。道中クリスタルを一撃で倒せる攻撃力が必要。"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="form-party-target">ボス階ターゲット設定・立ち回り</label>
+          <textarea id="form-party-target" rows="2" placeholder="例: ボス直撃ターゲット設定。"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" id="btn-party-form-cancel" class="btn btn-secondary">キャンセル</button>
+          <button type="submit" id="btn-party-form-submit" class="btn btn-primary">保存する</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 下部ナビゲーションバー -->
+  <nav class="app-nav">
+    <button class="nav-item active" data-tab="all">
+      <span class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+      </span>
+      <span class="nav-label">すべて</span>
+    </button>
+    <button class="nav-item" data-tab="guild">
+      <span class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+      </span>
+      <span class="nav-label">ギルド戦</span>
+    </button>
+    <button class="nav-item" data-tab="cairos">
+      <span class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+      </span>
+      <span class="nav-label">カイロス</span>
+    </button>
+    <button class="nav-item" data-tab="form" id="nav-item-form">
+      <span class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+      </span>
+      <span class="nav-label">追加</span>
+    </button>
+  </nav>
+
+  <!-- トースト通知用コンテナ -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- JavaScriptファイル -->
+  <script src="main.js" defer></script>
+</body>
+</html>
