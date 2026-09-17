@@ -183,15 +183,15 @@ const PRESET_PARTIES = [
     averageTime: "約32秒",
     successRate: "99%",
     members: [
-      { name: "フリルレア", attribute: "風", role: "最速全体盾割り・速度リーダー (L)", runes: "闘志+闘志+意志 (速度+110以上)", isLeader: true },
+      { name: "ルシェン", attribute: "風", role: "ダンジョン攻撃力33%UP (L)・切断で道中殲滅", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+      { name: "フリルレア", attribute: "風", role: "最速全体盾割り・攻撃弱化デバフ", runes: "闘志+闘志+意志 (速度+110以上)", isLeader: false },
       { name: "ジュリー", attribute: "水", role: "道中wave一掃 (開幕100%全体撃破)", runes: "激怒+刃 または 猛攻+刃 (攻/クリダメ/攻)", isLeader: false },
       { name: "コナミヤ", attribute: "水", role: "リモーション (ヒンメルへ即ターン渡し)", runes: "迅速+闘志 (速度微調整)", isLeader: false },
-      { name: "ヒンメル", attribute: "水", role: "ボス特攻2倍火力・味方被ダメ20%軽減 (核)", runes: "激怒+刃 (速度/クリダメ/攻撃)", isLeader: false },
-      { name: "ルシェン", attribute: "風", role: "切断の魔法で道中殲滅・ボス追撃", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
+      { name: "ヒンメル", attribute: "水", role: "ボス特攻2倍火力・味方被ダメ20%軽減 (核)", runes: "激怒+刃 (速度/クリダメ/攻撃)", isLeader: false }
     ],
     turnOrder: "フリルレア ➔ ジュリー ➔ コナミヤ ➔ ヒンメル ➔ ルシェン",
     speedTuningMemo: "フリルレア最速（速度+110以上）。ジュリーはフリルレア直後（体力100%維持）。コナミヤはジュリーの直後に動き、即座にリモーションをヒンメルへ渡してボスに高火力スキル2を叩き込ませる。",
-    requirementsMemo: "【ヒンメルのパッシブが超強力】ボス戦でヒンメルの与ダメージが+100%（2倍）になるため、リンや風ホムなしでもボスを高速粉砕可能！さらに味方の被ダメを20%カットするため巨人の7回反撃事故を完全に防止できます。",
+    requirementsMemo: "【ヒンメルのパッシブが超強力】ルシェンのダンジョン攻撃33%UPリーダーで全体火力を底上げ。ボス戦でヒンメルの与ダメージが+100%（2倍）になるため、リンや風ホムなしでもボスを高速粉砕可能！さらに味方の被ダメを20%カットするため巨人の7回反撃事故を完全に防止できます。",
     targetMemo: "ボス直撃ターゲット指定でOK。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
@@ -205,7 +205,7 @@ const PRESET_PARTIES = [
     successRate: "98%",
     members: [
       { name: "アカムアミール", attribute: "風", role: "全体速度リーダー・弱化比例火力 (L)", runes: "激怒+刃 または 猛攻+刃 (攻/クリダメ/攻)", isLeader: true },
-      { name: "フリルレア", attribute: "風", role: "最速全体盾割り・攻撃バフ", runes: "迅速+集中 または 闘志", isLeader: false },
+      { name: "フリルレア", attribute: "風", role: "最速全体盾割り・攻撃弱化デバフ", runes: "迅速+集中 または 闘志", isLeader: false },
       { name: "ルシェン", attribute: "風", role: "切断の魔法で道中wave一掃", runes: "激怒+刃 (攻/クリダメ/攻)", isLeader: false },
       { name: "シャーマン", attribute: "光", role: "スキル2特攻・最大体力比例ダメ (リン代用)", runes: "激怒+刃 (クリダメ型)", isLeader: false },
       { name: "コナミヤ", attribute: "水", role: "リモーション・デバフ解除", runes: "迅速+元気 (速度調整)", isLeader: false }
@@ -225,7 +225,7 @@ const PRESET_PARTIES = [
     averageTime: "約38秒",
     successRate: "98%",
     members: [
-      { name: "フリルレア", attribute: "風", role: "最速全体盾割り・速度リーダー (L)", runes: "闘志+闘志+意志 (速度+110以上)", isLeader: true },
+      { name: "フリルレア", attribute: "風", role: "最速全体盾割り・攻撃弱化デバフ (LSなし)", runes: "闘志+闘志+意志 (速度+110以上)", isLeader: false },
       { name: "ジュリー", attribute: "水", role: "道中wave一掃 (開幕100%全体撃破)", runes: "激怒+刃 または 猛攻+刃 (攻/クリダメ/攻)", isLeader: false },
       { name: "コナミヤ", attribute: "水", role: "リモーション (リンへ即ターン渡し)", runes: "迅速+闘志 (速度微調整)", isLeader: false },
       { name: "リン", attribute: "光", role: "ボス特効最大体力比例 (ルナ代用・核)", runes: "激怒+刃 (クリダメ200%+/クリ率85%+)", isLeader: false },
@@ -233,7 +233,7 @@ const PRESET_PARTIES = [
     ],
     turnOrder: "フリルレア ➔ ジュリー ➔ コナミヤ ➔ リン ➔ 風ホムンクルス",
     speedTuningMemo: "フリルレア最速（速度+110以上）。ジュリーはフリルレアの直後に動いて道中雑魚を一掃。コナミヤはジュリー/リンの直後に動き、即座にリモーションをリンへ渡してボスにスキル3特効を撃たせる。",
-    requirementsMemo: "【テシャール・ルナなし高速構成】ジュリーは開幕体力100%を維持してスキル3の最大打点を出す。リンはスキル3が敵最大体力比例のため激怒ルーン推奨。パーティ全体で闘志ルーンを4〜6セット積むとステータス要求値が大幅に下がります。",
+    requirementsMemo: "【テシャール・ルナなし高速構成】※フリルレアをはじめ本編成は全員リーダースキルを持たないため、速度や火力は闘志ルーン（4〜6セット推奨）やルーンのサブOPでしっかり確保します。ジュリーは開幕体力100%を維持してスキル3の最大打点を出す。リンはスキル3が敵最大体力比例のため激怒ルーン推奨。",
     targetMemo: "ボス直撃ターゲット指定でOK。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
@@ -247,7 +247,7 @@ const PRESET_PARTIES = [
     successRate: "99%",
     members: [
       { name: "アカムアミール", attribute: "風", role: "全体速度リーダー・弱化比例火力 (L)", runes: "激怒+刃 または 猛攻+刃 (攻/クリダメ/攻)", isLeader: true },
-      { name: "フリルレア", attribute: "風", role: "最速全体盾割り・攻撃バフ", runes: "迅速+集中 または 闘志", isLeader: false },
+      { name: "フリルレア", attribute: "風", role: "最速全体盾割り・攻撃弱化デバフ", runes: "迅速+集中 または 闘志", isLeader: false },
       { name: "コナミヤ", attribute: "水", role: "リモーション・デバフ解除", runes: "迅速+元気 (速度調整)", isLeader: false },
       { name: "リン", attribute: "光", role: "ボス最大体力比例特効", runes: "激怒+刃 (クリダメ型)", isLeader: false },
       { name: "風ホムンクルス", attribute: "風", role: "単体ボス削り・持続・トドメ", runes: "猛攻+刃 または 激怒", isLeader: false }
@@ -678,6 +678,48 @@ const PRESET_PARTIES = [
     targetMemo: "左クリスタル ➔ ボス の順にターゲット設定するとさらに安定します。",
     isFavorite: false,
     updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-punishers-crypt-plan-a",
+    name: "審判のダンジョン クロー導入型 (イカル入替・50秒切り)",
+    dungeon: "審判のダンジョン",
+    dungeonCategory: "審判",
+    averageTime: "約45秒",
+    successRate: "98%",
+    members: [
+      { name: "ヴェルデハイル", attribute: "火", role: "速度リーダー・全体ゲージ回し (L)", runes: "暴走+反撃 (クリ率100%必須)", isLeader: true },
+      { name: "セレン", attribute: "闇", role: "多段連撃・持続・盾割り・回復阻害 (2A)", runes: "暴走+反撃 (速度/クリダメ/攻撃)", isLeader: false },
+      { name: "ラオーク", attribute: "火", role: "協力攻撃・防御弱化 (2A)", runes: "暴走+反撃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "クロー", attribute: "闇", role: "弱化比例特大火力フィニッシャー・烙印 (2A)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "エルガー", attribute: "闇", role: "開幕攻撃＆吸血バフ・デバフ付与", runes: "猛攻+刃 または 闘志", isLeader: false }
+    ],
+    turnOrder: "エルガー ➔ セレン ➔ ラオーク ➔ クロー ➔ ヴェルデハイル",
+    speedTuningMemo: "エルガー最速で開幕バフ展開。セレンが多段攻撃で盾割り・持続・回復阻害を付与。ラオークの協力攻撃でさらに手数を重ね、デバフ山盛りのボスへクローのスキル3を叩き込みます。",
+    requirementsMemo: "【イカルをクローに変えるだけの即効型】セレンとエルガーが付与する弱化効果（盾割り・持続・回復阻害・攻撃弱化）の数に応じて、クローのスキル3（傷口ほじくり）が特大ダメージに化けます。クローの激怒ルーンのクリダメと攻撃力を優先的に強化してください。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-punishers-crypt-plan-b",
+    name: "審判のダンジョン セレン＆クロー加速型 (ヴィゴル速度バフ軸)",
+    dungeon: "審判のダンジョン",
+    dungeonCategory: "審判",
+    averageTime: "約40秒",
+    successRate: "98%",
+    members: [
+      { name: "ヴェルデハイル", attribute: "火", role: "速度リーダー・全体ゲージ回し (L)", runes: "暴走+反撃 (クリ率100%必須)", isLeader: true },
+      { name: "ヴィゴル", attribute: "水", role: "味方全体速度バフ・回復・盾割り (2A)", runes: "暴走+意志 (速度/体力/体力)", isLeader: false },
+      { name: "セレン", attribute: "闇", role: "多段連撃・持続・回復阻害・盾割り (2A)", runes: "暴走+反撃 (速度/クリダメ/攻撃)", isLeader: false },
+      { name: "ラオーク", attribute: "火", role: "協力攻撃・防御弱化 (2A)", runes: "暴走+反撃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "クロー", attribute: "闇", role: "烙印付与・弱化効果比例特大ダメージ (2A)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "ヴィゴル ➔ セレン ➔ ラオーク ➔ クロー ➔ ヴェルデハイル",
+    speedTuningMemo: "ヴィゴル最速で全体速度バフ。セレンが先手で多段デバフを蓄積し、ラオーク協力攻撃からクローのスキル3でボスのHPを一気に刈り取ります。",
+    requirementsMemo: "【セレンとクローを活かした40秒切り構成】ヴィゴルの全体速度バフでボスの割り込みを阻止し、味方の行動回数を激増させます。セレンの多段デバフとクローの弱化比例火力が完璧に噛み合い、40秒前後の高速安定周回が可能です。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
   }
 ];
 
@@ -914,6 +956,38 @@ function initApp() {
         if (!parties.some(p => p.id === preset.id)) {
           parties.push(preset);
           updated = true;
+        }
+      });
+
+      // 7. フリルレアのリーダースキル誤記の自動修正（既存LocalStorageデータへのパッチ）
+      parties.forEach(p => {
+        if (p.members && Array.isArray(p.members)) {
+          p.members.forEach(m => {
+            if (m.name === 'フリルレア') {
+              if (m.isLeader) {
+                m.isLeader = false;
+                updated = true;
+              }
+              if (m.role && m.role.includes('速度リーダー')) {
+                m.role = m.role.replace(/最速全体盾割り・速度リーダー\s*\(L\)/g, '最速全体盾割り・攻撃弱化デバフ (LSなし)');
+                m.role = m.role.replace(/速度リーダー\s*\(L\)/g, '攻撃弱化デバフ (LSなし)');
+                updated = true;
+              }
+              if (m.role && m.role.includes('攻撃バフ')) {
+                m.role = m.role.replace('攻撃バフ', '攻撃弱化デバフ');
+                updated = true;
+              }
+            }
+          });
+          // ヒンメル軸の場合、ルシェンをリーダーに設定
+          if (p.id === 'preset-party-giants-abyss-himmel') {
+            const lushen = p.members.find(m => m.name === 'ルシェン');
+            if (lushen && !lushen.isLeader) {
+              lushen.isLeader = true;
+              lushen.role = "ダンジョン攻撃力33%UP (L)・切断で道中殲滅";
+              updated = true;
+            }
+          }
         }
       });
 
@@ -1234,9 +1308,11 @@ function createPartyCard(party) {
   card.className = `party-card dungeon-${party.dungeonCategory || 'other'}`;
   card.dataset.id = party.id;
 
+  const hasAnyLeaderFlag = (party.members || []).some(member => typeof member.isLeader === 'boolean');
+
   // メンバー5体のチップHTML
   const membersHtml = (party.members || []).map((m, idx) => {
-    const isLeader = m.isLeader || idx === 0;
+    const isLeader = hasAnyLeaderFlag ? Boolean(m.isLeader) : (idx === 0);
     const attr = m.attribute || '風';
     return `
       <div class="party-member-chip" title="${escapeHtml(m.name)} (${escapeHtml(attr)}) - ${escapeHtml(m.role || '')}">
@@ -1337,8 +1413,9 @@ function openPartyDetailModal(id) {
 
   // メンバー5体カード描画
   elements.modalPartyMembers.innerHTML = '';
+  const hasAnyLeaderFlagModal = (party.members || []).some(member => typeof member.isLeader === 'boolean');
   (party.members || []).forEach((m, idx) => {
-    const isLeader = m.isLeader || idx === 0;
+    const isLeader = hasAnyLeaderFlagModal ? Boolean(m.isLeader) : (idx === 0);
     const attr = m.attribute || '風';
     const memberCard = document.createElement('div');
     memberCard.className = `party-modal-member-card ${isLeader ? 'is-leader' : ''}`;

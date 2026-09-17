@@ -140,12 +140,13 @@ body {
 
 .search-icon {
   position: absolute;
-  left: 14px;
+  left: 16px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--text-muted);
   display: flex;
   align-items: center;
+  pointer-events: none;
 }
 
 .search-icon svg {
@@ -155,13 +156,14 @@ body {
 
 .search-box input {
   width: 100%;
-  padding: 12px 40px 12px 44px;
+  padding: 12px 40px 12px 52px;
   background-color: var(--bg-input);
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md);
   color: var(--text-primary);
   font-size: 0.95rem;
   transition: var(--transition-fast);
+  box-sizing: border-box;
 }
 
 .search-box input:focus {
@@ -251,8 +253,9 @@ body {
   color: var(--text-secondary);
   margin-bottom: 12px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
+  gap: 6px;
 }
 
 /* モンスターグリッドレイアウト */
@@ -992,9 +995,15 @@ textarea {
   gap: 16px;
 }
 
-@media(min-width: 768px) {
+@media(min-width: 900px) {
   .party-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media(min-width: 1400px) {
+  .party-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -1114,12 +1123,14 @@ textarea {
 /* 5体メンバーアイコン行 */
 .party-monsters-row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 6px;
   background-color: rgba(0, 0, 0, 0.2);
-  padding: 8px;
+  padding: 8px 6px;
   border-radius: var(--border-radius-sm);
   border: 1px solid rgba(255, 255, 255, 0.05);
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .party-member-chip {
@@ -1128,6 +1139,9 @@ textarea {
   align-items: center;
   text-align: center;
   position: relative;
+  min-width: 0;
+  width: 100%;
+  overflow: hidden;
 }
 
 .party-chip-icon {
@@ -1143,6 +1157,7 @@ textarea {
   position: relative;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
   margin-bottom: 4px;
+  flex-shrink: 0;
 }
 
 .party-chip-icon.attr-火 { background: linear-gradient(135deg, #ff4757 0%, #c0392b 100%); border: 1px solid #ff6b81; }
@@ -1167,6 +1182,8 @@ textarea {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
+  text-align: center;
+  display: block;
 }
 
 .party-chip-role {
@@ -1176,6 +1193,8 @@ textarea {
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
+  text-align: center;
+  display: block;
 }
 
 /* 行動順フロー */
@@ -1191,6 +1210,9 @@ textarea {
   gap: 6px;
   overflow-x: auto;
   white-space: nowrap;
+  box-sizing: border-box;
+  max-width: 100%;
+  scrollbar-width: thin;
 }
 
 .party-turn-order .turn-label {
@@ -1276,11 +1298,12 @@ textarea {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 12px;
+  padding: 10px 14px;
   background-color: rgba(0, 0, 0, 0.25);
   border-radius: var(--border-radius-sm);
   border: 1px solid var(--border-color);
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .party-modal-member-card.is-leader {
@@ -1292,6 +1315,8 @@ textarea {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
 .modal-member-name {
@@ -1301,6 +1326,7 @@ textarea {
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .badge-leader {
@@ -1311,21 +1337,28 @@ textarea {
   padding: 1px 5px;
   border-radius: 3px;
   letter-spacing: 0.5px;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .modal-member-role {
   font-size: 0.78rem;
   color: var(--text-secondary);
+  word-break: break-word;
 }
 
 .modal-member-runes {
   font-size: 0.75rem;
   color: var(--accent-gold);
   background-color: rgba(223, 178, 58, 0.08);
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 4px;
   border: 1px dashed rgba(223, 178, 58, 0.3);
   text-align: right;
+  flex-shrink: 0;
+  white-space: normal;
+  word-break: break-word;
+  max-width: 45%;
 }
 
 .turn-flow-display {
@@ -1662,10 +1695,11 @@ textarea {
   }
 
   /* パーティカード内の5体メンバーチップ（スマホ最適化） */
-  .party-members-row {
+  .party-monsters-row {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 4px;
+    padding: 6px 4px;
   }
 
   .party-member-chip {
@@ -1799,6 +1833,211 @@ textarea {
 
   .nav-label {
     font-size: 0.72rem;
+  }
+}
+
+/* ==========================================================================
+   タブレット表示 最適化 (Tablet Responsive: 641px - 1024px)
+   ========================================================================== */
+@media (min-width: 641px) and (max-width: 1024px) {
+  /* 1. アプリ全体・余白 */
+  .app-content {
+    padding: 16px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .app-header {
+    padding: 14px 20px;
+  }
+
+  .app-header h1 {
+    font-size: 1.3rem;
+  }
+
+  /* 2. 検索・フィルターセクション */
+  .search-filter-section {
+    padding: 14px 20px;
+    gap: 12px;
+  }
+
+  .search-box input {
+    height: 46px;
+    padding: 10px 40px 10px 52px;
+    font-size: 0.92rem;
+  }
+
+  .attribute-filters {
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .attr-btn {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+  }
+
+  .dungeon-filter-section {
+    padding: 10px 20px;
+    gap: 8px;
+    overflow-x: auto;
+  }
+
+  .dungeon-btn {
+    padding: 7px 14px;
+    font-size: 0.85rem;
+  }
+
+  /* 3. モンスター一覧 */
+  .monster-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .monster-card {
+    padding: 16px;
+  }
+
+  .monster-name {
+    font-size: 1.05rem;
+  }
+
+  /* 4. カイロス周回パーティ一覧（タブレット縦向きでは1列でゆったり美しく表示） */
+  .party-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .party-card {
+    padding: 18px 20px;
+    gap: 14px;
+  }
+
+  .party-name {
+    font-size: 1.15rem;
+    line-height: 1.35;
+  }
+
+  .party-monsters-row {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+    padding: 12px 10px;
+  }
+
+  .party-member-chip {
+    padding: 4px 2px;
+  }
+
+  .party-chip-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 0.8rem;
+  }
+
+  .party-chip-name {
+    font-size: 0.78rem;
+    margin-top: 3px;
+  }
+
+  .party-chip-role {
+    font-size: 0.68rem;
+    display: block;
+  }
+
+  .party-turn-order {
+    padding: 8px 14px;
+    font-size: 0.84rem;
+  }
+
+  /* 5. モーダル表示（タブレット中央ポップアップ最適化） */
+  .modal-backdrop {
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .modal-container {
+    width: 90% !important;
+    max-width: 640px !important;
+    max-height: 85vh !important;
+    border: 2px solid var(--accent-gold) !important;
+    border-radius: var(--border-radius-lg) !important;
+    margin: auto !important;
+  }
+
+  .party-modal-container {
+    max-width: 680px !important;
+  }
+
+  .modal-header {
+    padding: 18px 22px;
+    position: relative;
+  }
+
+  .modal-header h2 {
+    font-size: 1.3rem;
+    padding-right: 44px;
+  }
+
+  .modal-close-btn {
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    font-size: 1.8rem;
+  }
+
+  .modal-body {
+    padding: 18px 22px;
+    padding-bottom: 24px !important;
+    gap: 16px;
+  }
+
+  .modal-footer {
+    position: static !important;
+    background: transparent !important;
+    padding: 16px 22px !important;
+    border-top: 1px solid var(--border-color) !important;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+}
+
+/* タブレット横向き（900px〜1024px）のパーティ2列表示微調整 */
+@media (min-width: 900px) and (max-width: 1024px) {
+  .party-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+
+  .party-card {
+    padding: 14px;
+  }
+
+  .party-name {
+    font-size: 1.02rem;
+  }
+
+  .party-monsters-row {
+    gap: 4px;
+    padding: 8px 4px;
+  }
+
+  .party-chip-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.72rem;
+  }
+
+  .party-chip-name {
+    font-size: 0.7rem;
+  }
+
+  .party-chip-role {
+    font-size: 0.62rem;
+  }
+
+  .monster-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
