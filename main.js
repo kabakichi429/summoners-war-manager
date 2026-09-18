@@ -170,6 +170,19 @@ const PRESET_MONSTERS = [
     generalMemo: "コラボイベントで全プレイヤーにスキルマ・星6Lv40で配布された超優秀モンスター。クリ率・クリダメ・攻撃力をしっかり盛ることで、カイロスボスの体力を一撃で消し飛ばす。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-wind-ifrit",
+    name: "風イフリート (アカムアミール)",
+    attribute: "風",
+    stars: 5,
+    role: "弱化比例超火力アタッカー / 全体スタン / 巨人深淵特効",
+    recommendedRunes: "激怒 + 刃 または 猛攻 + 刃 (攻撃/クリダメ/攻撃 または 速度/クリダメ/攻撃)",
+    guildMemo: "全体攻撃2種（スタン＋弱化比例）持ち。ガレオン等の全体盾割りと合わせてアリーナ・占領戦の速攻攻めで活躍。",
+    cairosMemo: "【巨人深淵Hardの救世主・低ルーン高安定の核】\n巨人は水属性のため完全な有利属性（クリ率+15%ボーナス・被ダメ大幅減・強打判定）。\nスキル3「マッハクラッシュ」は敵にかかっている弱化効果1つにつきダメージが約30%〜40%跳ね上がり、フリルレアの縦割り＋攻撃弱化が入ったボスに十数万ダメージを叩き出す。\nジュリーの「HP満タン維持」のような厳しい条件がなく、純正星5の高耐久のためボスの反撃で即死しない。",
+    generalMemo: "ギルドショップの召喚ピースで誰でも入手可能。クリ率は有利ボーナス込みで「85%」あれば100%クリティカル確定。ジュリーのルーン敷居に苦戦している場合の最良の乗り換え先。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
   }
 ];
 
@@ -180,18 +193,39 @@ const PRESET_PARTIES = [
     name: "巨人深淵Hard 高速ヒンメル＆ジュリー軸 (リン・風ホム不要)",
     dungeon: "巨人ダンジョン (深淵Hard)",
     dungeonCategory: "巨人",
-    averageTime: "約32秒",
+    averageTime: "約32秒 (ルーン発展途上時は約50秒)",
     successRate: "99%",
     members: [
       { name: "ルシェン", attribute: "風", role: "ダンジョン攻撃力33%UP (L)・切断で道中殲滅", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
-      { name: "フリルレア", attribute: "風", role: "最速全体盾割り・攻撃弱化デバフ", runes: "闘志+闘志+意志 (速度+110以上)", isLeader: false },
+      { name: "フリルレア", attribute: "風", role: "最速全体盾割り・攻撃弱化デバフ (的中45%+必須)", runes: "闘志+闘志+意志 または 迅速 (速度+110以上)", isLeader: false },
       { name: "ジュリー", attribute: "水", role: "道中wave一掃 (開幕100%全体撃破)", runes: "激怒+刃 または 猛攻+刃 (攻/クリダメ/攻)", isLeader: false },
       { name: "コナミヤ", attribute: "水", role: "リモーション (ヒンメルへ即ターン渡し)", runes: "迅速+闘志 (速度微調整)", isLeader: false },
       { name: "ヒンメル", attribute: "水", role: "ボス特攻2倍火力・味方被ダメ20%軽減 (核)", runes: "激怒+刃 (速度/クリダメ/攻撃)", isLeader: false }
     ],
-    turnOrder: "フリルレア ➔ ジュリー ➔ コナミヤ ➔ ヒンメル ➔ ルシェン",
-    speedTuningMemo: "フリルレア最速（速度+110以上）。ジュリーはフリルレア直後（体力100%維持）。コナミヤはジュリーの直後に動き、即座にリモーションをヒンメルへ渡してボスに高火力スキル2を叩き込ませる。",
-    requirementsMemo: "【ヒンメルのパッシブが超強力】ルシェンのダンジョン攻撃33%UPリーダーで全体火力を底上げ。ボス戦でヒンメルの与ダメージが+100%（2倍）になるため、リンや風ホムなしでもボスを高速粉砕可能！さらに味方の被ダメを20%カットするため巨人の7回反撃事故を完全に防止できます。",
+    turnOrder: "フリルレア ➔ ジュリー ➔ ヒンメル ➔ コナミヤ ➔ ルシェン (または コナミヤ ➔ ヒンメル)",
+    speedTuningMemo: "フリルレア最速（速度+110以上・効果的中45〜54%確保）。ジュリーはフリルレア直後（体力100%維持）。\n【重要！リモーション誤爆防止テクニック】コナミヤは「一番ゲージが低い味方」にリモーションを撃ちます。ジュリー直後に動かすとジュリーに飛ぶ事故があるため、ヒンメルをコナミヤの直前に動かす（フリルレア➔ジュリー➔ヒンメル➔コナミヤ）調整にすると、ヒンメル行動後即リモーションでヒンメルが連続行動し、ボスを一瞬で削れます。",
+    requirementsMemo: "【ヒンメルのパッシブが超強力】ルシェンのダンジョン攻撃33%UPリーダーで全体火力を底上げ。ボス戦でヒンメルの与ダメが+100%（2倍）＆味方被ダメ20%軽減！\n\n【⚠️ルーンが弱い段階での改善・事故防止チェックリスト】\n① ジュリーの火力不足（道中ワンパン不可）：ルーンの攻撃力が低くても、アーティファクトの「水属性への与ダメUP」「スキル3クリダメUP」「体力満タン時クリダメUP」「追加ダメージ（攻撃力比例等）」を厳選するだけで劇的に火力が跳ね上がります。\n② 闘志ルーンの活用：フリルレアやコナミヤに「闘志ルーン」を2〜4セット装備させると、味方全体の攻撃力が+16%〜+32%底上げされ、ジュリーのワンパン敷居が大幅に下がります。\n③ ボスの反撃全滅対策：全滅の原因の9割はボスの7回反撃や地震です。フリルレアの効果的中を「45%〜54%」必ず確保し、「攻撃力弱化」を確実に入れてください。攻撃デバフさえ入ればヒンメル軽減と合わさり即死しません。また、アタッカーにアーティファクトで「水属性からの被ダメ減少」を付けると安定感が劇的に向上します。\n④ クリ率の確保：巨人は水属性のため、水属性のヒンメルやジュリーには属性ボーナスがありません。クリ率は85%〜100%を目指してください。",
+    targetMemo: "ボス直撃ターゲット指定でOK。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-giants-abyss-amir-himmel",
+    name: "巨人深淵Hard アカムアミール＆ヒンメル軸 (ジュリー不要・低ルーン安定1分切り)",
+    dungeon: "巨人ダンジョン (深淵Hard)",
+    dungeonCategory: "巨人",
+    averageTime: "約42秒",
+    successRate: "99%",
+    members: [
+      { name: "ルシェン", attribute: "風", role: "ダンジョン攻撃力33%UP (L)・切断で道中殲滅", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+      { name: "フリルレア", attribute: "風", role: "最速全体盾割り・攻撃弱化デバフ (的中45%+)", runes: "闘志+闘志+意志 または 迅速 (速度+100以上)", isLeader: false },
+      { name: "アカムアミール", attribute: "風", role: "道中一掃＆ボス弱化比例大砲 (有利属性・高耐久)", runes: "激怒+刃 または 猛攻+刃 (攻/クリダメ/攻)", isLeader: false },
+      { name: "ヒンメル", attribute: "水", role: "ボス特攻2倍火力・味方被ダメ20%軽減 (核)", runes: "激怒+刃 (速度/クリダメ/攻撃)", isLeader: false },
+      { name: "コナミヤ", attribute: "水", role: "リモーション (ヒンメルまたはアミールへ即ターン渡し)", runes: "迅速+闘志 (速度微調整)", isLeader: false }
+    ],
+    turnOrder: "フリルレア ➔ ルシェン ➔ アカムアミール ➔ ヒンメル ➔ コナミヤ (または コナミヤ ➔ ヒンメル)",
+    speedTuningMemo: "フリルレア最速。ルシェンとアミールが動いて道中雑魚を一撃粉砕（ジュリーと違って体力100%縛りがないため安定）。ボス戦ではフリルレアの縦割り＋攻撃弱化の上にアミールの弱化比例超火力＋ヒンメルのボス特攻が炸裂。",
+    requirementsMemo: "【ジュリーのルーン敷居が高い場合の最適解！】\n風イフリート（アカムアミール）は巨人と有利属性のため、クリ率+15%ボーナス（クリ率85%で100%確定）と被ダメ軽減が働き、ルーンが発展途上でもボスの反撃で倒されません。\nスキル3「マッハクラッシュ」は弱化効果の数に応じてダメージが激増（フリルレアの盾割り＋攻撃弱化で壊滅的ダメージ）。ジュリーのような「HP満タン維持」のプレッシャーが一切なく、40〜48秒台で超安定して1分切りが可能です。",
     targetMemo: "ボス直撃ターゲット指定でOK。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
@@ -872,6 +906,15 @@ function initApp() {
           saveToLocalStorage();
         }
       }
+
+      // アカムアミールが未登録なら自動追加
+      if (!monsters.some(m => m.id === "preset-wind-ifrit")) {
+        const amir = PRESET_MONSTERS.find(m => m.id === "preset-wind-ifrit");
+        if (amir) {
+          monsters.unshift(amir);
+          saveToLocalStorage();
+        }
+      }
     } catch (e) {
       console.error('Failed to parse local storage data, resetting with presets', e);
       monsters = [...PRESET_MONSTERS];
@@ -898,13 +941,38 @@ function initApp() {
           parties.unshift(himmelParty);
           updated = true;
         }
+      } else {
+        // 既存ヒンメル軸の攻略ヒント・メモを最新化
+        const curHimmel = parties.find(p => p.id === "preset-party-giants-abyss-himmel");
+        const newHimmel = PRESET_PARTIES.find(p => p.id === "preset-party-giants-abyss-himmel");
+        if (curHimmel && newHimmel && curHimmel.requirementsMemo !== newHimmel.requirementsMemo) {
+          curHimmel.requirementsMemo = newHimmel.requirementsMemo;
+          curHimmel.speedTuningMemo = newHimmel.speedTuningMemo;
+          curHimmel.averageTime = newHimmel.averageTime;
+          curHimmel.turnOrder = newHimmel.turnOrder;
+          updated = true;
+        }
+      }
+
+      // 1.5. アカムアミール＆ヒンメル軸パーティの追加（1分切り安定型）
+      if (!parties.some(p => p.id === "preset-party-giants-abyss-amir-himmel")) {
+        const amirHimmelParty = PRESET_PARTIES.find(p => p.id === "preset-party-giants-abyss-amir-himmel");
+        if (amirHimmelParty) {
+          const himmelIdx = parties.findIndex(p => p.id === "preset-party-giants-abyss-himmel");
+          if (himmelIdx !== -1) {
+            parties.splice(himmelIdx + 1, 0, amirHimmelParty);
+          } else {
+            parties.unshift(amirHimmelParty);
+          }
+          updated = true;
+        }
       }
 
       // 2. ルシェン＆シャーマン軸パーティの追加
       if (!parties.some(p => p.id === "preset-party-giants-abyss-lushen-shaman")) {
         const lushenParty = PRESET_PARTIES.find(p => p.id === "preset-party-giants-abyss-lushen-shaman");
         if (lushenParty) {
-          parties.splice(1, 0, lushenParty);
+          parties.splice(2, 0, lushenParty);
           updated = true;
         }
       }
