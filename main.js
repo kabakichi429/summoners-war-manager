@@ -183,6 +183,71 @@ const PRESET_MONSTERS = [
     generalMemo: "ギルドショップの召喚ピースで誰でも入手可能。クリ率は有利ボーナス込みで「85%」あれば100%クリティカル確定。ジュリーのルーン敷居に苦戦している場合の最良の乗り換え先。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-fire-shaina",
+    name: "火チャクラム舞姫 (シャイナ)",
+    attribute: "火",
+    stars: 4,
+    role: "ダンジョン的中リーダー / 防御弱化 / スタン / ブメチャク連携",
+    recommendedRunes: "闘志 + 闘志 + 闘志 または 激怒 + 刃 / 暴走 + 刃 (攻撃/クリダメ/攻撃)",
+    guildMemo: "ブーメラン（サブリナやマルナ等）と組ませることで開幕から防御弱化とスタンをばら撒く。占領戦の星4拠点攻めで強力。",
+    cairosMemo: "【審判・ドラゴン・死ダンの高速化リーダー】\nリーダースキルでダンジョン限定の効果的中が25%上昇。\nパッシブでブーメラン戦士と共に攻撃し、敵全体に防御弱化を付与する。審判のダンジョンでは的中リーダーと防御弱化で味方の火力を最大化する。",
+    generalMemo: "ブーメラン戦士と必ずセットで編成する。ジークのクリバフ編成ではクリ率70%でOK。闘志ルーンを積むことで全体の攻撃力を底上げできる。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-water-julie",
+    name: "水ピエレット (ジュリー)",
+    attribute: "水",
+    stars: 4,
+    role: "道中WAVE一掃 / 全体多段アタッカー / カイロス速攻",
+    recommendedRunes: "激怒 + 刃 または 猛攻 + 刃 (攻撃/クリダメ/攻撃)",
+    guildMemo: "アリーナ攻めでバステトやルシェンと組み合わせた速攻パの露払い役。",
+    cairosMemo: "【巨人深淵・審判のダンジョンの道中殲滅神】\n自身の体力が100%（MAX）の時、スキル3「シャッフル」が最大6連撃の全体攻撃に強化され、道中の雑魚敵・クリスタルを一撃で粉砕する。\n審判ダンジョンでは最速ジークの攻撃＆クリ率バフを受けることで、クリ率70%で確定クリティカルとなり、WAVE1・3を瞬殺できる。",
+    generalMemo: "体力が1でも削れるとスキル3のヒット数が落ちるため、道中で敵に動かれる前に最速クラスで動かすこと。アーティファクトで「体力満タン時クリダメ」「スキル3クリダメ」「水属性への与ダメ」を厳選するとワンパンが非常に安定する。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-water-sabrina",
+    name: "水ブーメラン戦士 (サブリナ)",
+    attribute: "水",
+    stars: 4,
+    role: "協力攻撃 / 与ダメUP＆被ダメ軽減パッシブ / 防御弱化",
+    recommendedRunes: "闘志 + 闘志 + 闘志 または 激怒 + 刃 / 暴走 + 刃 (攻撃/クリダメ/攻撃)",
+    guildMemo: "タリアやシャイナと組んで単体ターゲットを即座に溶かす速攻アタッカー。",
+    cairosMemo: "【双子高速周回の心臓部】\nパッシブ「卓越した指揮」により、味方のチャクラム舞姫が攻撃する際に必ず同時攻撃を行う。\nさらに強化効果のない相手への与ダメージが増加し、受けるダメージを減少させる。シャイナ・タリアと組み合わせることでボスのHPを一瞬で消し飛ばす。",
+    generalMemo: "チャクラム舞姫の行動に合わせて追撃するため、手数と火力が実質2倍になる。審判ダンジョンでは闘志ルーンを3セット積んで味方の火力を大幅に引き上げる役割も担える。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-water-talia",
+    name: "水チャクラム舞姫 (タリア)",
+    attribute: "水",
+    stars: 4,
+    role: "単体超特大フィニッシャー / ボス瞬殺 / カイロス特効",
+    recommendedRunes: "激怒 + 刃 または 猛攻 + 刃 (攻撃/クリダメ/攻撃)",
+    guildMemo: "スキル2の自己バフからのスキル3で相手の耐久モンスを一撃で落とす単体アタッカー。",
+    cairosMemo: "【カイロスボスキラー・最高峰の瞬間単体火力】\nスキル3「回転切り」は対象の体力が半分以下の時にダメージが大幅に跳ね上がる。\nサブリナとの協力攻撃で防御弱化が入ったボスに叩き込むことで、審判ボスの残HPを一撃で消し去るフィニッシャー。ジークのクリバフ込みでクリ率70%確保推奨。",
+    generalMemo: "激怒ルーンでクリダメと攻撃力を限界まで伸ばす。行動順はサブリナやシャイナの後に設定し、防御弱化が入った状態のボスにスキル3を当てるのが鉄則。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-fire-sieq",
+    name: "火ケルベロス (ジーク)",
+    attribute: "火",
+    stars: 2,
+    role: "最速バッファー (攻撃50%UP+クリ率30%UP) / 闘志枠 / 速攻支援",
+    recommendedRunes: "闘志 + 闘志 + 闘志 または 迅速 + 闘志 (速度/クリダメ/攻撃 または 速度/体力/攻撃)",
+    guildMemo: "アリーナ・占領戦でルシェンやカタリーナの開幕バッファーとして運用される。",
+    cairosMemo: "【審判・精霊深淵の最速テンプレバッファー】\nスキル3「遠吠え」で3ターンの間、味方全体の攻撃力を50%UP＆クリティカル率を30%UPする。\nこのスキルのおかげで、パーティ全員のクリ率目標を「70%」まで引き下げることができ、アタッカーのルーン敷居を劇的に緩和する。自身も闘志ルーンを3セット積むことで全体攻撃力+24%に貢献。",
+    generalMemo: "星2で育成が非常に容易。スキルマも簡単。審判周回では味方最速で動かす速度調整（+110〜+130以上推奨）が必須条件。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
   }
 ];
 
@@ -651,6 +716,27 @@ const PRESET_PARTIES = [
     updatedAt: new Date().toISOString()
   },
   {
+    id: "preset-party-punishers-crypt-shaina-twins",
+    name: "審判のダンジョン 【最速25秒】シャイナ＆ブメチャク＋ジーク・ジュリー速攻パ",
+    dungeon: "審判のダンジョン",
+    dungeonCategory: "審判",
+    averageTime: "約25秒 (24〜30秒)",
+    successRate: "99%",
+    members: [
+      { name: "シャイナ", attribute: "火", role: "ダンジョン的中25%UP (L)・全体スタン・防御弱化・ブメチャク連携", runes: "闘志+闘志+闘志 または 激怒/暴走+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+      { name: "ジュリー", attribute: "水", role: "道中WAVE一掃（シャッフルで道中1・3をワンパン）・ボス多段削り", runes: "激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃・クリ率70%+)", isLeader: false },
+      { name: "サブリナ", attribute: "水", role: "ブーメラン協力攻撃・与ダメUP＆被ダメ軽減パッシブ・盾割り", runes: "闘志+闘志+闘志 または 激怒/猛攻+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "タリア", attribute: "水", role: "単体超特大火力フィニッシャー（スキル3体力低下特効）・ボス瞬殺担当", runes: "激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃・クリ率70%+)", isLeader: false },
+      { name: "ジーク", attribute: "火", role: "最速全体バッファー（開幕遠吠えで攻撃力50%UP＆クリ率30%UP付与）・闘志枠", runes: "闘志+闘志+闘志 または 迅速+闘志 (最速・速度/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "ジーク ➔ ジュリー ➔ シャイナ ➔ サブリナ ➔ タリア",
+    speedTuningMemo: "【最速行動順が周回の絶対条件！】\n① ジーク（味方最速）：開幕スキル3「遠吠え」で味方全体の攻撃力50%UP＆クリティカル率30%UPを即座に付与。\n② ジュリー（ジーク直後）：ジークの攻撃＆クリバフが乗った状態でスキル3「シャッフル（体力満タン時）」を放ち、WAVE1およびWAVE3の道中クリスタル・雑魚敵を一撃確殺（ワンパン）で瞬殺突破。\n③ シャイナ：中ボス（WAVE2）および審判のボス（WAVE4）開幕で防御弱化を付与しつつ、サブリナを同時攻撃へ引っ張る。\n④ サブリナ：防御弱化を重ねつつパッシブ効果で味方全体の与ダメージを跳ね上げる。\n⑤ タリア：最後尾からサブリナと共にスキル3を叩き込み、ボスの残体力を一瞬で消し飛ばす。",
+    requirementsMemo: "【審判のダンジョン屈指の最速25秒テンプレ周回パ】\n\n◆ ギミック解説と勝利の方程式：\n審判のボスはゲージ減少を受けると反撃ゲージが増加する厄介なパッシブを持っていますが、この編成はゲージ減少に頼るのではなく、ジークの強力なバフを受けたブメチャク（シャイナ・サブリナ・タリア）の圧倒的な瞬間連続多段火力で「ボスの反撃ゲージが溜まる前（ボスが1回も行動する前）」に叩き潰す速攻構成です。\n\n◆ ルーン・ステータス重要チェックポイント：\n1. ジークのクリ率バフ（+30%）によるルーン恩恵：ジークが常にクリバフを供給するため、ジュリー・タリア・シャイナ・サブリナのクリティカル率は「70%以上」確保するだけで戦闘中は100%確定クリティカルとなります！クリ率に振るステータスを攻撃力・クリダメ・速度に回せるのが最大の強みです。\n2. ジュリーの道中ワンパン火力：WAVE1・3の敵をジュリーのシャッフルで確実に全滅させることが最重要です。ジークのバフがあるため素撃ちより遥かに敷居は下がりますが、アーティファクトで「水属性への与ダメUP」「スキル3クリダメUP」「体力満タン時クリダメUP」を厳選してください。\n3. 「闘志ルーン」の大量採用：ジーク、シャイナ、サブリナのルーンに「闘志ルーン」を積極的に採用（計4〜6セット以上推奨）することで、パーティ全体の攻撃力が劇的に跳ね上がり、ジュリーの道中ワンパンやタリアのボス瞬殺が極めて簡単になります。\n4. シャイナのダンジョン的中リーダー：シャイナのリーダースキルで効果的中が25%UPするため、ルーンの的中サブステが低くてもボスに確実に防御弱化（縦割り）が入ります。",
+    targetMemo: "ボス直撃ターゲット設定（ボス集中攻撃でOK）。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
     id: "preset-party-punishers-crypt",
     name: "審判のダンジョン 高回転ヴェルデパ",
     dungeon: "審判のダンジョン",
@@ -898,23 +984,13 @@ function initApp() {
     try {
       monsters = JSON.parse(localData);
 
-      // ヒンメルが未登録なら自動追加
-      if (!monsters.some(m => m.id === "preset-water-himmel")) {
-        const himmel = PRESET_MONSTERS.find(m => m.id === "preset-water-himmel");
-        if (himmel) {
-          monsters.unshift(himmel);
+      // PRESET_MONSTERSの全モンスターをチェックして未登録なら自動追加
+      PRESET_MONSTERS.forEach(preset => {
+        if (!monsters.some(m => m.id === preset.id)) {
+          monsters.push(preset);
           saveToLocalStorage();
         }
-      }
-
-      // アカムアミールが未登録なら自動追加
-      if (!monsters.some(m => m.id === "preset-wind-ifrit")) {
-        const amir = PRESET_MONSTERS.find(m => m.id === "preset-wind-ifrit");
-        if (amir) {
-          monsters.unshift(amir);
-          saveToLocalStorage();
-        }
-      }
+      });
     } catch (e) {
       console.error('Failed to parse local storage data, resetting with presets', e);
       monsters = [...PRESET_MONSTERS];
@@ -1015,6 +1091,20 @@ function initApp() {
         const colleenParty = PRESET_PARTIES.find(p => p.id === "preset-party-necro-abyss-f2p-colleen");
         if (colleenParty) {
           parties.push(colleenParty);
+          updated = true;
+        }
+      }
+
+      // 5.5. 審判ダンジョン最速25秒パ（シャイナ＆ブメチャク＋ジーク・ジュリー速攻パ）の追加
+      if (!parties.some(p => p.id === "preset-party-punishers-crypt-shaina-twins")) {
+        const shainaParty = PRESET_PARTIES.find(p => p.id === "preset-party-punishers-crypt-shaina-twins");
+        if (shainaParty) {
+          const firstPunisherIdx = parties.findIndex(p => p.dungeonCategory === '審判' || (p.dungeon && p.dungeon.includes('審判')));
+          if (firstPunisherIdx !== -1) {
+            parties.splice(firstPunisherIdx, 0, shainaParty);
+          } else {
+            parties.unshift(shainaParty);
+          }
           updated = true;
         }
       }
