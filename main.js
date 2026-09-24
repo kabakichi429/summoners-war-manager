@@ -189,11 +189,11 @@ const PRESET_MONSTERS = [
     name: "火チャクラム舞姫 (シャイナ)",
     attribute: "火",
     stars: 4,
-    role: "ダンジョン的中リーダー / 防御弱化 / スタン / ブメチャク連携",
+    role: "ダンジョン攻撃力33%リーダー / 防御弱化 / スタン / ブメチャク連携",
     recommendedRunes: "闘志 + 闘志 + 闘志 または 激怒 + 刃 / 暴走 + 刃 (攻撃/クリダメ/攻撃)",
     guildMemo: "ブーメラン（サブリナやマルナ等）と組ませることで開幕から防御弱化とスタンをばら撒く。占領戦の星4拠点攻めで強力。",
-    cairosMemo: "【審判・ドラゴン・死ダンの高速化リーダー】\nリーダースキルでダンジョン限定の効果的中が25%上昇。\nパッシブでブーメラン戦士と共に攻撃し、敵全体に防御弱化を付与する。審判のダンジョンでは的中リーダーと防御弱化で味方の火力を最大化する。",
-    generalMemo: "ブーメラン戦士と必ずセットで編成する。ジークのクリバフ編成ではクリ率70%でOK。闘志ルーンを積むことで全体の攻撃力を底上げできる。",
+    cairosMemo: "【審判・ドラゴン・死ダンの高速化リーダー】\nリーダースキルでダンジョン限定の味方攻撃力が33%上昇。\nパッシブでブーメラン戦士と共に攻撃し、敵全体に防御弱化を付与する。審判のダンジョンでは強力な攻撃力33%リーダーと防御弱化で味方全体の火力を極限まで引き上げる。",
+    generalMemo: "ブーメラン戦士と必ずセットで編成する。ダンジョン攻撃力33%UPリーダーが非常に強力。ジークのクリバフ編成ではクリ率70%でOK。闘志ルーンを積むことで全体の攻撃力をさらに底上げできる。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
   },
@@ -723,7 +723,7 @@ const PRESET_PARTIES = [
     averageTime: "約25秒 (24〜30秒)",
     successRate: "99%",
     members: [
-      { name: "シャイナ", attribute: "火", role: "ダンジョン的中25%UP (L)・全体スタン・防御弱化・ブメチャク連携", runes: "闘志+闘志+闘志 または 激怒/暴走+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+      { name: "シャイナ", attribute: "火", role: "ダンジョン攻撃力33%UP (L)・全体スタン・防御弱化・ブメチャク連携", runes: "闘志+闘志+闘志 または 激怒/暴走+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
       { name: "ジュリー", attribute: "水", role: "道中WAVE一掃（シャッフルで道中1・3をワンパン）・ボス多段削り", runes: "激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃・クリ率70%+)", isLeader: false },
       { name: "サブリナ", attribute: "水", role: "ブーメラン協力攻撃・与ダメUP＆被ダメ軽減パッシブ・盾割り", runes: "闘志+闘志+闘志 または 激怒/猛攻+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
       { name: "タリア", attribute: "水", role: "単体超特大火力フィニッシャー（スキル3体力低下特効）・ボス瞬殺担当", runes: "激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃・クリ率70%+)", isLeader: false },
@@ -731,7 +731,7 @@ const PRESET_PARTIES = [
     ],
     turnOrder: "ジーク ➔ ジュリー ➔ シャイナ ➔ サブリナ ➔ タリア",
     speedTuningMemo: "【最速行動順が周回の絶対条件！】\n① ジーク（味方最速）：開幕スキル3「遠吠え」で味方全体の攻撃力50%UP＆クリティカル率30%UPを即座に付与。\n② ジュリー（ジーク直後）：ジークの攻撃＆クリバフが乗った状態でスキル3「シャッフル（体力満タン時）」を放ち、WAVE1およびWAVE3の道中クリスタル・雑魚敵を一撃確殺（ワンパン）で瞬殺突破。\n③ シャイナ：中ボス（WAVE2）および審判のボス（WAVE4）開幕で防御弱化を付与しつつ、サブリナを同時攻撃へ引っ張る。\n④ サブリナ：防御弱化を重ねつつパッシブ効果で味方全体の与ダメージを跳ね上げる。\n⑤ タリア：最後尾からサブリナと共にスキル3を叩き込み、ボスの残体力を一瞬で消し飛ばす。",
-    requirementsMemo: "【審判のダンジョン屈指の最速25秒テンプレ周回パ】\n\n◆ ギミック解説と勝利の方程式：\n審判のボスはゲージ減少を受けると反撃ゲージが増加する厄介なパッシブを持っていますが、この編成はゲージ減少に頼るのではなく、ジークの強力なバフを受けたブメチャク（シャイナ・サブリナ・タリア）の圧倒的な瞬間連続多段火力で「ボスの反撃ゲージが溜まる前（ボスが1回も行動する前）」に叩き潰す速攻構成です。\n\n◆ ルーン・ステータス重要チェックポイント：\n1. ジークのクリ率バフ（+30%）によるルーン恩恵：ジークが常にクリバフを供給するため、ジュリー・タリア・シャイナ・サブリナのクリティカル率は「70%以上」確保するだけで戦闘中は100%確定クリティカルとなります！クリ率に振るステータスを攻撃力・クリダメ・速度に回せるのが最大の強みです。\n2. ジュリーの道中ワンパン火力：WAVE1・3の敵をジュリーのシャッフルで確実に全滅させることが最重要です。ジークのバフがあるため素撃ちより遥かに敷居は下がりますが、アーティファクトで「水属性への与ダメUP」「スキル3クリダメUP」「体力満タン時クリダメUP」を厳選してください。\n3. 「闘志ルーン」の大量採用：ジーク、シャイナ、サブリナのルーンに「闘志ルーン」を積極的に採用（計4〜6セット以上推奨）することで、パーティ全体の攻撃力が劇的に跳ね上がり、ジュリーの道中ワンパンやタリアのボス瞬殺が極めて簡単になります。\n4. シャイナのダンジョン的中リーダー：シャイナのリーダースキルで効果的中が25%UPするため、ルーンの的中サブステが低くてもボスに確実に防御弱化（縦割り）が入ります。",
+    requirementsMemo: "【審判のダンジョン屈指の最速25秒テンプレ周回パ】\n\n◆ ギミック解説と勝利の方程式：\n審判のボスはゲージ減少を受けると反撃ゲージが増加する厄介なパッシブを持っていますが、この編成はゲージ減少に頼るのではなく、ジークの強力なバフを受けたブメチャク（シャイナ・サブリナ・タリア）の圧倒的な瞬間連続多段火力で「ボスの反撃ゲージが溜まる前（ボスが1回も行動する前）」に叩き潰す速攻構成です。\n\n◆ ルーン・ステータス重要チェックポイント：\n1. ジークのクリ率バフ（+30%）によるルーン恩恵：ジークが常にクリバフを供給するため、ジュリー・タリア・シャイナ・サブリナのクリティカル率は「70%以上」確保するだけで戦闘中は100%確定クリティカルとなります！クリ率に振るステータスを攻撃力・クリダメ・速度に回せるのが最大の強みです。\n2. ジュリーの道中ワンパン火力：WAVE1・3の敵をジュリーのシャッフルで確実に全滅させることが最重要です。ジークのバフがあるため素撃ちより遥かに敷居は下がりますが、アーティファクトで「水属性への与ダメUP」「スキル3クリダメUP」「体力満タン時クリダメUP」を厳選してください。\n3. 「闘志ルーン」の大量採用：ジーク、シャイナ、サブリナのルーンに「闘志ルーン」を積極的に採用（計4〜6セット以上推奨）することで、パーティ全体の攻撃力が劇的に跳ね上がり、ジュリーの道中ワンパンやタリアのボス瞬殺が極めて簡単になります。\n4. シャイナのダンジョン攻撃力33%UPリーダー：シャイナの強力なダンジョン攻撃33%UPリーダースキルにより、ジュリーの道中ワンパン火力、およびブメチャク（シャイナ・サブリナ・タリア）の対ボス瞬殺火力が飛躍的に底上げされます。",
     targetMemo: "ボス直撃ターゲット設定（ボス集中攻撃でOK）。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
@@ -991,6 +991,18 @@ function initApp() {
           saveToLocalStorage();
         }
       });
+
+      // シャイナのリーダースキル更新パッチ（的中 ➔ 攻撃力33%UP）
+      const curShaina = monsters.find(m => m.id === "preset-fire-shaina" || m.name.includes("シャイナ"));
+      if (curShaina && curShaina.role && curShaina.role.includes("的中")) {
+        const newShaina = PRESET_MONSTERS.find(m => m.id === "preset-fire-shaina");
+        if (newShaina) {
+          curShaina.role = newShaina.role;
+          curShaina.cairosMemo = newShaina.cairosMemo;
+          curShaina.generalMemo = newShaina.generalMemo;
+          saveToLocalStorage();
+        }
+      }
     } catch (e) {
       console.error('Failed to parse local storage data, resetting with presets', e);
       monsters = [...PRESET_MONSTERS];
@@ -1146,6 +1158,20 @@ function initApp() {
             if (lushen && !lushen.isLeader) {
               lushen.isLeader = true;
               lushen.role = "ダンジョン攻撃力33%UP (L)・切断で道中殲滅";
+              updated = true;
+            }
+          }
+
+          // 審判のダンジョン シャイナ軸パーティのリーダースキル・攻略メモの最新化
+          if (p.id === 'preset-party-punishers-crypt-shaina-twins') {
+            const shaina = p.members.find(m => m.name === 'シャイナ');
+            if (shaina && shaina.role && shaina.role.includes('的中')) {
+              shaina.role = "ダンジョン攻撃力33%UP (L)・全体スタン・防御弱化・ブメチャク連携";
+              updated = true;
+            }
+            const presetShainaParty = PRESET_PARTIES.find(pr => pr.id === 'preset-party-punishers-crypt-shaina-twins');
+            if (presetShainaParty && p.requirementsMemo !== presetShainaParty.requirementsMemo) {
+              p.requirementsMemo = presetShainaParty.requirementsMemo;
               updated = true;
             }
           }
