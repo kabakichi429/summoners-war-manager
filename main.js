@@ -1236,6 +1236,69 @@ const PRESET_PARTIES = [
     isFavorite: false,
     updatedAt: new Date().toISOString()
   },
+  {
+    id: "preset-party-tartaros-koto-bale-bastet-kaki",
+    name: "【タルタロス迷宮・コトス(火)】バーレイグ＆バステト・火鬼・ガレオン・ライリー 特大シールド＆ゲージ加速パ (水デコイ・Hell超安定)",
+    dungeon: "タルタロスの迷宮 (コトス・火)",
+    dungeonCategory: "タルタロス",
+    averageTime: "約1分25秒",
+    successRate: "99%",
+    members: [
+      { name: "バーレイグ", attribute: "火", role: "ギルバト攻撃44%UP (L)・知識5「雷神降臨」で激怒ルーン＆ボス即殺フィニッシャー", runes: "激怒+意志 または 猛攻+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+      { name: "バステト", attribute: "水", role: "開幕ゲージ25%UP＋攻撃バフ＋特大シールド＋スキル1/2剣折り・水属性デコイ", runes: "迅速+意志 (速度/体力/体力 速度+110以上)", isLeader: false },
+      { name: "ガレオン", attribute: "水", role: "スキル3略奪タイム(全体盾割り＋全体攻撃バフ)・水属性デコイ", runes: "迅速+意志 または 暴走+意志 (速度/体力/的中 的中50%+)", isLeader: false },
+      { name: "火鬼", attribute: "火", role: "全体高火力スキル2＋自己回復・防御比例の圧倒的攻撃力＆耐久 (右腕一掃の核)", runes: "猛攻+守護 または 暴走+守護 (攻撃/攻撃/防御 または 速度/攻撃/防御)", isLeader: false },
+      { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＋持続回復＋全体回復＋攻撃バフ (デバフ完全遮断)", runes: "暴走+意志 (速度/体力/体力)", isLeader: false }
+    ],
+    turnOrder: "バステト ➔ ガレオン ➔ ライリー ➔ 火鬼 ➔ バーレイグ",
+    speedTuningMemo: "バステトが最速でスキル3（ゲージUP＋特大シールド＋攻撃バフ）を展開。ガレオンがスキル3略奪タイムで左右ルーンとボスに全体盾割りを付与。ライリーが免疫を張り、火鬼のスキル2全体攻撃とバーレイグの知識特大砲で右腕（激怒ルーン）を一瞬で粉砕します。",
+    requirementsMemo: "【水属性2体＋特大シールドで焦熱地獄を完封！】\n・バステトのスキル3による分厚いシールド（約8,000〜10,000耐久）により、コトスの全体攻撃「焦熱地獄」を受けてもシールドが吸収してHPが一切削れません。\n・水属性のバステトとガレオンがコトスの攻撃を引き受けるため、弱点属性であるライリー（風）への被弾が激減します。\n・バステトのスキル1・2でボスに剣折り（攻撃力減少）を付与でき、事故率を完全にゼロにします。\n・ガレオンの全体盾割りから火鬼の全体攻撃とバーレイグの防御無視知識砲が重なり、右腕（激怒ルーン）を最速1ターンで破壊可能です。",
+    targetMemo: "【激怒ルーン（右腕）最優先】開幕は必ず右腕の激怒ルーンをターゲット指定。破壊後はボス本体を集中攻撃。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-tartaros-koto-bale-himmel-kaki",
+    name: "【タルタロス迷宮・コトス(火)】バーレイグ＆ヒンメル・火鬼・ガレオン・ライリー 被ダメ軽減＆勇者カウンターパ (手持ち特化・超耐久速攻)",
+    dungeon: "タルタロスの迷宮 (コトス・火)",
+    dungeonCategory: "タルタロス",
+    averageTime: "約1分20秒",
+    successRate: "98%",
+    members: [
+      { name: "バーレイグ", attribute: "火", role: "ギルバト攻撃44%UP (L)・知識5「雷神降臨」フィニッシャー", runes: "激怒+意志 または 猛攻+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+      { name: "ヒンメル", attribute: "水", role: "【水属性有利】味方被ダメ20%軽減パッシブ＋全体防御バフ＋ボス特効強烈打点", runes: "激怒+刃 または 猛攻+刃 (速度/クリダメ/攻撃)", isLeader: false },
+      { name: "ガレオン", attribute: "水", role: "全体盾割り＋攻撃バフ・水属性受け", runes: "迅速+意志 (速度/体力/的中 的中50%+)", isLeader: false },
+      { name: "火鬼", attribute: "火", role: "スキル2全体高火力＋パッシブ超耐久 (攻撃44%バフで爆発的打点)", runes: "猛攻+守護 または 暴走+守護 (攻撃/攻撃/防御)", isLeader: false },
+      { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＋全体回復＋攻撃バフ (持続ダメ・火傷完全無効)", runes: "暴走+意志 (速度/体力/体力)", isLeader: false }
+    ],
+    turnOrder: "ガレオン ➔ ライリー ➔ ヒンメル ➔ 火鬼 ➔ バーレイグ",
+    speedTuningMemo: "ガレオンが先手で全体盾割りを付与。ライリーが免疫とバフを展開し、ヒンメルと火鬼が右腕（激怒）を削り、バーレイグの雷神降臨でトドメを刺します。",
+    requirementsMemo: "【ヒンメルの被ダメカットパッシブで即死を完全阻止！】\n・ヒンメルがいることで味方全体の被ダメージが常時大きく軽減されるため、ボスの焦熱地獄を受けても壊滅しません。\n・水属性のヒンメルはコトスに対して属性有利（被ダメ減少・クリ率UP）。\n・バーレイグのギルド攻撃44%UPリーダーがヒンメルと火鬼の攻撃力を極限まで高め、激怒のルーンを一瞬で破壊します。\n・ライリーの免疫により火傷やスタンを遮断。巨人深淵Hard等で使用している強力なルーンをそのまま流用できるのも大きな強みです。",
+    targetMemo: "【右腕（激怒ルーン）集中撃破】激怒ルーンを破壊後、ボス本体をターゲット。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-tartaros-koto-bale-fran-kaki",
+    name: "【タルタロス迷宮・コトス(火)】バーレイグ＆フラン・火鬼・ガレオン・ライリー 二重免疫＆常時剣折りパ (デバフ完全遮断・事故率0%)",
+    dungeon: "タルタロスの迷宮 (コトス・火)",
+    dungeonCategory: "タルタロス",
+    averageTime: "約1分30秒",
+    successRate: "99%",
+    members: [
+      { name: "バーレイグ", attribute: "火", role: "ギルバト攻撃44%UP (L)・知識5「雷神降臨」特大砲", runes: "激怒+意志 または 猛攻+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+      { name: "フラン", attribute: "光", role: "スキル1多段確定剣折り(攻撃弱化)＋全体2T免疫＋大回復/弱化解除", runes: "迅速+元気 (速度/体力/体力 速度+90以上)", isLeader: false },
+      { name: "ガレオン", attribute: "水", role: "全体盾割り＋攻撃バフ・水属性受け", runes: "迅速+意志 (速度/体力/的中)", isLeader: false },
+      { name: "火鬼", attribute: "火", role: "スキル2全体強打＋パッシブ高耐久・右腕粉砕役", runes: "猛攻+守護 または 暴走+守護 (攻撃/攻撃/防御)", isLeader: false },
+      { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＋持続回復＋全体回復 (フランと二重免疫)", runes: "暴走+意志 (速度/体力/体力)", isLeader: false }
+    ],
+    turnOrder: "ガレオン ➔ フラン ➔ ライリー ➔ 火鬼 ➔ バーレイグ",
+    speedTuningMemo: "ガレオンが全体盾割り、フランがボスにスキル1で「剣折り（攻撃力減少）」を付与。ライリーとフランの2枚体制で免疫とバフを切らさず維持します。",
+    requirementsMemo: "【二重免疫と常時剣折りによる絶対防御】\n・ライリーとフランの二重免疫により、コトスからの持続ダメージ・スタン・烙印が一切通りません。\n・フランのスキル1多段攻撃でボスに剣折り（攻撃力減少）がほぼ確実に決まるため、焦熱地獄の威力が半減します。\n・万が一誰かがピンチになっても、フランのスキル2単体大回復＋弱化解除ですぐに体力を満タンにリカバリーできます。",
+    targetMemo: "右腕（激怒ルーン）最優先 ➔ ボス本体直撃。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
 
   // -------------------------------------------------------------
   // 7-8. 【ユーザー手持ち活用】風の守護者 ギエス (Guilles)
@@ -1847,20 +1910,20 @@ const PRESET_RAID_SETS = [
 ];
 
 // -----------------------------------------------------------------------------
-// 1-4. 異次元レイド (Dimension Raid) プリセットデータ (3フェーズ連続戦闘・計15枠)
+// 1-4. 異次元レイド (Dimension Raid) プリセットデータ (3フェーズ連続戦闘・各フェーズ5体・計15枠)
 // -----------------------------------------------------------------------------
 const PRESET_DIMENSION_RAID_SETS = [
   {
     id: "preset-dim-raid-set-standard-speed",
-    name: "【最速約1分05秒・定番】異次元レイド 瞬殺突破セット",
+    name: "【最速約1分05秒・定番】異次元レイド 瞬殺突破セット (カルザン開催週想定)",
     tag: "最速・最高峰テンプレ",
     averageTime: "約1分05秒〜1分15秒",
     successRate: "99%",
-    summary: "Phase 1はヴェルデ＆2Aイヌガミで高速突破、Phase 2はルシェン＆風イフで一掃、Phase 3はジュリー＆ヴィゴル・ベラデオンで瞬殺する最速王道構成。",
-    strategyMemo: "【各フェーズの攻略ポイント】\n・Phase 1（★4以下）：ヴェルデハイルのゲージ回し＋フランの免疫/攻撃バフ。ラオークとクローの連携でボスのHPを即座に削り切ります。\n・Phase 2（風属性統一）：ルシェンの切断とアミールの弱化比例超火力でボスのシールドと体力を一瞬で消滅させます。ライリーが常時免疫を維持。\n・Phase 3（4タイプ編成）：攻撃型（ジュリー/バーレイグ）＋防御型（ベラデオン）＋体力型（ヴィゴル）＋サポート型（デルフォイ）。ヴィゴルの盾割りと速度バフから一気にフィニッシュ！",
-    requirementsMemo: "【ステータス基準】\n・ヴェルデハイル: クリ率100%必須、速度+80以上\n・クロー・アミール・ジュリー: 激怒ルーン、クリ率85%以上、クリダメ180%以上\n・ライリー・フラン・ヴィゴル: 迅速/暴走、速度+100以上、高耐久",
+    summary: "Phase 1はヴェルデ＆2Aイヌガミで高速突破、Phase 2はルシェン＆風イフで繭ミニオンを一掃、Phase 3はアイアン(2A)のダメージ減少無視とカルカノ・ジュリーでシールドを瞬殺貫通する王道最速構成。",
+    strategyMemo: "【各フェーズの攻略ポイント】\n・Phase 1（カルザン制限・★4以下）：ヴェルデハイルのゲージ回し＋フランの免疫/攻撃バフ。ラオークとクローの連携でボスのHPを即座に削り切り、逃走させます。\n・Phase 2（繭＆ミニオン殲滅戦）：逃げたボスが繭でHP回復する前に、ルシェンの切断とアミールの弱化比例超火力で取り巻きのミニオンを一瞬で消滅させます。ボスの回復を阻止することでPhase 3のボスの攻撃力上昇を大幅にカット！\n・Phase 3（覚醒ボス決戦・シールド破壊）：ボスが「次元歪曲（被ダメ激減シールド）」を張るため、アイアン(火リビング2A)とカルカノの「ダメージ減少効果無視」スキルでシールドを貫通破壊！ヴィゴルとジュリー、デルフォイのサポートで一気に畳み掛けます。",
+    requirementsMemo: "【ステータス基準】\n・ヴェルデハイル: クリ率100%必須、速度+80以上\n・アイアン(2A): 守護/意志、防御+1400以上、クリダメ型推奨（シールド貫通の要）\n・カルカノ: 猛攻/激怒+意志、攻撃+1300以上、クリ率70%以上\n・クロー・アミール・ルシェン: 激怒ルーン、クリダメ180%以上\n・ライリー・フラン・ヴィゴル: 迅速/暴走、速度+100以上、高耐久",
     phase1: {
-      name: "PHASE 1: カルザン制限 (★4以下のみ)",
+      name: "PHASE 1: カルザン制限 (★4以下のみ・ボス逃走まで)",
       rule: "★4以下のみ出撃可能",
       leaderInfo: "ヴェルデハイル (ダンジョン攻撃速度28%UP)",
       members: [
@@ -1872,40 +1935,41 @@ const PRESET_DIMENSION_RAID_SETS = [
       ]
     },
     phase2: {
-      name: "PHASE 2: エルニア制限 (風属性統一)",
-      rule: "同一属性のみ出撃可能",
+      name: "PHASE 2: 繭＆ミニオン殲滅戦 (ボスの回復阻止)",
+      rule: "固定条件 (ミニオン高速殲滅)",
       leaderInfo: "ルシェン (ダンジョン攻撃力33%UP)",
       members: [
-        { name: "ルシェン", attribute: "風", role: "攻撃33%UP (L)・切断の魔法で道中＆ボス大打撃", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
-        { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＆攻撃バフ・回復 (反射遮断)", runes: "暴走+意志 (速度/体力/体力)" },
+        { name: "ルシェン", attribute: "風", role: "攻撃33%UP (L)・切断の魔法でミニオン一掃", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+        { name: "アカムアミール", attribute: "風", role: "全体スタン＆弱化比例大砲でミニオン殲滅", runes: "激怒+刃 (攻/クリダメ/攻)" },
+        { name: "フレスベルグ", attribute: "風", role: "全体速度バフ＋攻撃バフ＋烙印付与", runes: "迅速+刃 (速度/クリダメ/攻撃)" },
         { name: "タラニス", attribute: "風", role: "全体防御バフ＋自己復活＆味方蘇生保険", runes: "守護+守護+意志 (速度/防御/防御)" },
-        { name: "アカムアミール", attribute: "風", role: "全体スタン＆弱化比例大砲 (有利属性超火力)", runes: "激怒+刃 (攻/クリダメ/攻)" },
-        { name: "フレスベルグ", attribute: "風", role: "全体速度バフ＋攻撃バフ＋烙印付与", runes: "迅速+刃 (速度/クリダメ/攻撃)" }
+        { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＆攻撃バフ・回復", runes: "暴走+意志 (速度/体力/体力)" }
       ]
     },
     phase3: {
-      name: "PHASE 3: サクリファス制限 (4タイプ各1体)",
-      rule: "攻撃・防御・体力・サポート各1体",
-      leaderInfo: "なし (タイプバランス編成)",
+      name: "PHASE 3: 覚醒ボス決戦 (シールド貫通瞬殺)",
+      rule: "固定条件 (ダメージ減少無視が特効)",
+      leaderInfo: "アイアン (味方防御力UP)",
       members: [
-        { name: "ジュリー", attribute: "水", role: "【攻撃型】開幕スキル3超特大多段SHOTでボス瞬殺", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
-        { name: "ベラデオン", attribute: "光", role: "【防御型/2A】スキル1確定盾割り＋ゲージ上げ＆回復", runes: "迅速+元気 (速度/防御/体力)" },
-        { name: "ヴィゴル", attribute: "水", role: "【体力型/2A】全体速度バフ＋持続回復＋3連盾割り", runes: "迅速+元気 (速度/体力/体力)" },
-        { name: "デルフォイ", attribute: "風", role: "【サポート型】全体弱化解除＋2ターン全体免疫＋回復", runes: "迅速+意志 (速度/体力/防御)" }
+        { name: "アイアン", attribute: "火", role: "【特効核/2A】防御UP (L)・「ダメージ減少効果無視」で次元歪曲シールド貫通破壊", runes: "守護+守護+意志 (防御/クリダメ/防御)", isLeader: true },
+        { name: "カルカノ", attribute: "火", role: "パッシブ確定盾割り＋「ダメージ減少効果無視」超精密射撃", runes: "猛攻+意志 (攻撃/クリダメ/攻撃)" },
+        { name: "ジュリー", attribute: "水", role: "開幕スキル3超特大多段SHOTでボス瞬殺削り", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "ヴィゴル", attribute: "水", role: "全体速度バフ＋持続回復＋3連盾割り (2A)", runes: "迅速+元気 (速度/体力/体力)" },
+        { name: "デルフォイ", attribute: "風", role: "全体弱化解除＋2ターン全体免疫＋回復", runes: "迅速+意志 (速度/体力/防御)" }
       ]
     }
   },
   {
     id: "preset-dim-raid-set-user-himmel-taranis",
-    name: "【ユーザー手持ち最適化・事故ゼロ】ヒンメル＆タラニス・ライリー投入 鉄壁安定セット",
+    name: "【ユーザー手持ち最適化・事故ゼロ】ヒンメル＆アイアン・ライリー投入 鉄壁安定セット (カルザン開催週想定)",
     tag: "手持ち特化・絶対事故ゼロ",
     averageTime: "約1分20秒〜1分30秒",
     successRate: "99%",
-    summary: "所持モンスター（ヒンメル、タラニス、ライリー、ヴェルデ、フラン、ローレン等）を100%活用！Phase 3でヒンメルのボス特攻2倍打点と被ダメ20%カットが炸裂し、事故ゼロでクリア。",
-    strategyMemo: "【ユーザー手持ちの強みをフル活用する構成】\n・Phase 1はヴェルデハイル・フラン・ローレン・クロー・アスター。ローレンの持続盾割りとアスターの多段で安定削り。\n・Phase 2はライリーとタラニスの鉄壁タッグ＋アカムアミール＆フレスベルグ＆シェノン。防御バフと免疫で被ダメージを最小限に抑えます。\n・Phase 3は【攻撃:ヒンメル】＋【防御:ディアス】＋【体力:ヴィゴル】＋【サポート:ルル(2A)】。ディアス（被ダメ15%減）とヒンメル（被ダメ20%減）の二重パッシブで最大35%被ダメカット！ヒンメルのスキルでボスを安全に叩き割ります。",
-    requirementsMemo: "【ルーン・育成の目安】\n・ヒンメル: 激怒+刃 (速度/クリダメ/攻撃) ボス戦与ダメ+100%の特大火力。\n・タラニス: 守護+守護+意志 (速度/防御/防御) 防御+1300以上。\n・ライリー: 暴走+意志 (速度/体力/体力) 常時バフを回す。\n・ディアス: 守護+反撃 (防御/防御/体力) 前衛耐久。",
+    summary: "所持モンスター（ヒンメル、タラニス、ライリー、アイアン、ヴェルデ、フラン、ローレン等）を100%活用！Phase 2でミニオンを封殺し、Phase 3でアイアンのシールド貫通とヒンメルのボス特攻2倍打点が炸裂。",
+    strategyMemo: "【ユーザー手持ちの強みをフル活用する構成】\n・Phase 1はヴェルデハイル・フラン・ローレン・クロー・アスター。ローレンの持続盾割りとアスターの多段で安定削り。\n・Phase 2はライリーとタラニスの鉄壁タッグ＋アカムアミール＆フレスベルグ＆シェノン。全体防御バフと免疫を維持しながらミニオンを瞬殺し、ボスのHP回復を最小限に抑えます。\n・Phase 3は【アイアン(火リビング2A)】がボスの次元歪曲シールドを「ダメージ減少無視」で一撃粉砕！さらにヒンメルの与ダメ2倍特攻とディアス(被ダメ15%減)＋ヒンメル(被ダメ20%減)の二重パッシブで最大35%被ダメカット！ヴィゴルとルル(2A)で事故を完全にゼロ化します。",
+    requirementsMemo: "【ルーン・育成の目安】\n・ヒンメル: 激怒+刃 (速度/クリダメ/攻撃) ボス戦与ダメ+100%の特大火力。\n・アイアン(2A): 守護+守護+意志 (防御/クリダメ/防御) シールド貫通役。\n・ディアス: 守護+反撃 (防御/防御/体力) 被ダメ15%減パッシブ＆盾割り。\n・タラニス: 守護+守護+意志 (速度/防御/防御) 防御+1300以上。\n・ライリー: 暴走+意志 (速度/体力/体力) 常時バフを回す。",
     phase1: {
-      name: "PHASE 1: カルザン制限 (★4以下のみ)",
+      name: "PHASE 1: カルザン制限 (★4以下のみ・ボス逃走まで)",
       rule: "★4以下のみ出撃可能",
       leaderInfo: "ヴェルデハイル (ダンジョン攻撃速度28%UP)",
       members: [
@@ -1917,40 +1981,41 @@ const PRESET_DIMENSION_RAID_SETS = [
       ]
     },
     phase2: {
-      name: "PHASE 2: エルニア制限 (風属性統一)",
-      rule: "同一属性のみ出撃可能",
+      name: "PHASE 2: 繭＆ミニオン殲滅戦 (ボスの回復阻止)",
+      rule: "固定条件 (ミニオン高速殲滅)",
       leaderInfo: "アカムアミール (全属性攻撃速度24%UP)",
       members: [
-        { name: "アカムアミール", attribute: "風", role: "速度24%UP (L)・全体スタン＆弱化比例大砲", runes: "激怒+刃 (攻/クリダメ/攻)", isLeader: true },
-        { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＆攻撃バフ・回復 (反射封殺)", runes: "暴走+意志 (速度/体力/体力)" },
+        { name: "アカムアミール", attribute: "風", role: "速度24%UP (L)・全体スタン＆弱化比例大砲でミニオン殲滅", runes: "激怒+刃 (攻/クリダメ/攻)", isLeader: true },
+        { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＆攻撃バフ・回復", runes: "暴走+意志 (速度/体力/体力)" },
         { name: "タラニス", attribute: "風", role: "全体防御バフ＋自己復活＆味方蘇生保険 (事故ゼロ)", runes: "守護+守護+意志 (速度/防御/防御)" },
         { name: "フレスベルグ", attribute: "風", role: "全体速度バフ＋攻撃バフ＋烙印・持続回復", runes: "迅速+刃 (速度/クリダメ/攻撃)" },
         { name: "シェノン", attribute: "風", role: "全体防御バフ＋攻撃バフ＋速度デバフ (2A)", runes: "絶望+元気 (速度/体力/体力)" }
       ]
     },
     phase3: {
-      name: "PHASE 3: サクリファス制限 (4タイプ各1体)",
-      rule: "攻撃・防御・体力・サポート各1体",
+      name: "PHASE 3: 覚醒ボス決戦 (シールド貫通＆ヒンメル特攻)",
+      rule: "固定条件 (ダメージ減少無視が特効)",
       leaderInfo: "ディアス (全属性抵抗30%UP)",
       members: [
-        { name: "ヒンメル", attribute: "水", role: "【攻撃型】ボス特効与ダメ2倍・味方被ダメ20%軽減 (核)", runes: "激怒+刃 (速度/クリダメ/攻撃)" },
-        { name: "ディアス", attribute: "闇", role: "【防御型】抵抗30%UP (L)・味方被ダメ15%カット・盾割り", runes: "守護+反撃 (防御/防御/体力)", isLeader: true },
-        { name: "ヴィゴル", attribute: "水", role: "【体力型/2A】全体速度バフ＋回復＋クリ被弾軽減＋3連盾割り", runes: "迅速+元気 (速度/体力/体力)" },
-        { name: "ルル", attribute: "水", role: "【サポート型/2A】二重弱化解除＋全体免疫＋持続回復", runes: "暴走+元気 (速度/体力/体力)" }
+        { name: "ヒンメル", attribute: "水", role: "ボス特効与ダメ2倍・味方被ダメ20%軽減 (核)", runes: "激怒+刃 (速度/クリダメ/攻撃)" },
+        { name: "アイアン", attribute: "火", role: "【特効核/2A】「ダメージ減少効果無視」でボスの次元歪曲シールドを粉砕", runes: "守護+守護+意志 (防御/クリダメ/防御)" },
+        { name: "ディアス", attribute: "闇", role: "抵抗30%UP (L)・味方被ダメ15%カット・盾割り (ヒンメルと被ダメ35%減)", runes: "守護+反撃 (防御/防御/体力)", isLeader: true },
+        { name: "ヴィゴル", attribute: "水", role: "全体速度バフ＋回復＋クリ被弾軽減＋3連盾割り (2A)", runes: "迅速+元気 (速度/体力/体力)" },
+        { name: "ルル", attribute: "水", role: "二重弱化解除＋全体免疫＋持続回復 (2A)", runes: "暴走+元気 (速度/体力/体力)" }
       ]
     }
   },
   {
     id: "preset-dim-raid-set-f2p-safe",
-    name: "【完全無課金・調合配布F2P】低ルーン敷居 確実クリアセット",
+    name: "【完全無課金・調合配布F2P】アイアン＆ヴェラモス投入 確実クリアセット (カルザン開催週想定)",
     tag: "無課金・調合配布のみ",
-    averageTime: "約1分40秒",
+    averageTime: "約1分35秒〜1分45秒",
     successRate: "99%",
-    summary: "ガチャ純5を一切使わず、調合モンスター（ヴェラモス等）と2次覚醒・秘密ダンジョンキャラのみで構成された初心者・無課金向け安心セット。",
-    strategyMemo: "【F2P攻略のポイント】\n・Phase 1はカリン(L)の全体攻撃バフとラオーク・クローの連携で突破。\n・Phase 2は調合純5のヴェラモス(L)とシグマルス、コナミヤ、メガン、ヴィゴルによる水属性統一パーティ。ヴェラモスが毎ターン持続を解除するため安定感抜群。\n・Phase 3は攻撃:クロー、防御:ベラデオン、体力:エスシール、サポート:フラン。回復とバフが豊富で事故がありません。",
-    requirementsMemo: "【ステータス基準】\n・全員星6Lv40、主要キャラは2次覚醒完了。\n・迅速・元気・刃など基本ルーンで組めるため、ルーン厳選の初期段階でもクリア可能。",
+    summary: "ガチャ純5不要！調合（ヴェラモス、シグマルス）と2次覚醒・配布キャラのみで15枠完全重複なしで構築。Phase 2は全体攻撃でミニオン殲滅、Phase 3はアイアン(2A)のシールド貫通とヴェラモスの毎ターン解除で確実に攻略。",
+    strategyMemo: "【F2P攻略のポイント】\n・Phase 1（★4以下）：カリン(L)の全体攻撃バフとフランの免疫。ラオークとクローの連携でボスの体力を削り切ります。\n・Phase 2（ミニオン殲滅）：シグマルスの全体攻撃凍結＋敵体力比例大砲、コナミヤのリモーション、メガンとバナードのバフ・ゲージ加速で繭の周りのミニオンを素早く処理し、ボスのHP回復を阻止します。\n・Phase 3（覚醒ボス決戦）：ヴェラモス(L)が毎ターン味方のデバフを自動解除し、アイアン(2A)が「ダメージ減少無視」でボスのシールドを突破！ベラデオン(2A)の盾割りとジンク(2A)の強化阻止＆攻撃デバフでボスを無力化して安全に討伐します。",
+    requirementsMemo: "【ステータス基準】\n・全員星6Lv40、主要キャラは2次覚醒完了。\n・アイアン(2A): 守護+守護+元気 (防御/防御/体力 または 防御/クリダメ/防御)\n・ヴェラモス: 迅速+元気 (速度+90以上、体力+22000以上)\n・クロー・シグマルス: 猛攻/激怒+刃 (クリ率85%以上、クリダメ160%以上)\n・カリン・フラン・ベラデオン: 速度+90以上、高耐久",
     phase1: {
-      name: "PHASE 1: カルザン制限 (★4以下のみ)",
+      name: "PHASE 1: カルザン制限 (★4以下のみ・ボス逃走まで)",
       rule: "★4以下のみ出撃可能",
       leaderInfo: "カリン (味方攻撃力UP)",
       members: [
@@ -1958,30 +2023,31 @@ const PRESET_DIMENSION_RAID_SETS = [
         { name: "フラン", attribute: "光", role: "全体免疫＋回復＋攻撃バフ", runes: "迅速+元気" },
         { name: "ラオーク", attribute: "火", role: "協力攻撃・確定盾割り (2A)", runes: "猛攻+刃" },
         { name: "クロー", attribute: "闇", role: "弱化特効超火力フィニッシャー (2A)", runes: "猛攻+刃 または 激怒" },
-        { name: "ヴィゴル", attribute: "水", role: "全体回復＋速度バフ＋3連盾割り (2A)", runes: "迅速+元気" }
+        { name: "ローレン", attribute: "光", role: "確定盾割り＋ゲージ下げ＋速度低下", runes: "迅速+集中" }
       ]
     },
     phase2: {
-      name: "PHASE 2: エルニア制限 (水属性統一)",
-      rule: "同一属性のみ出撃可能",
-      leaderInfo: "ヴェラモス (味方体力33%UP)",
+      name: "PHASE 2: 繭＆ミニオン殲滅戦 (ボスの回復阻止)",
+      rule: "固定条件 (ミニオン高速殲滅)",
+      leaderInfo: "シグマルス (ダンジョン体力44%UP)",
       members: [
-        { name: "ヴェラモス", attribute: "闇", role: "体力33%UP (L)・毎ターン味方弱化解除＋持続", runes: "迅速+元気 (※属性注意：風属性統一の場合はアミールに変更)", isLeader: true },
+        { name: "シグマルス", attribute: "水", role: "体力44%UP (L)・敵体力比例全体大砲＆凍結でミニオン一掃", runes: "猛攻+刃", isLeader: true },
         { name: "コナミヤ", attribute: "水", role: "リモーション＋全体弱化解除＋回復", runes: "迅速+元気" },
-        { name: "シグマルス", attribute: "水", role: "調合星5・敵最大体力比例大砲＋攻撃デバフ", runes: "猛攻+刃" },
-        { name: "メガン", attribute: "水", role: "全体攻撃＆防御バフ＋ゲージ上げ＋剥がし", runes: "迅速+集中" },
-        { name: "ヴィゴル", attribute: "水", role: "回復＋速度バフ＋3連盾割り (2A)", runes: "迅速+元気" }
+        { name: "メガン", attribute: "水", role: "全体攻撃＆防御バフ＋ゲージ上げ＋強化阻止", runes: "迅速+集中" },
+        { name: "ヴィゴル", attribute: "水", role: "全体速度バフ＋回復＋3連盾割り (2A)", runes: "迅速+元気" },
+        { name: "バナード", attribute: "風", role: "全体ゲージ上げ＋速度バフ＋攻撃・防御デバフ (2A)", runes: "迅速+元気" }
       ]
     },
     phase3: {
-      name: "PHASE 3: サクリファス制限 (4タイプ各1体)",
-      rule: "攻撃・防御・体力・サポート各1体",
-      leaderInfo: "なし (F2Pバランス型)",
+      name: "PHASE 3: 覚醒ボス決戦 (シールド貫通＆弱化解除)",
+      rule: "固定条件 (ダメージ減少無視が特効)",
+      leaderInfo: "ヴェラモス (全属性体力33%UP)",
       members: [
-        { name: "クロー", attribute: "闇", role: "【攻撃型/2A】弱化特効大打撃", runes: "激怒+刃 または 猛攻" },
-        { name: "ベラデオン", attribute: "光", role: "【防御型/2A】スキル1確定盾割り＋ゲージ上げ＆回復", runes: "迅速+元気" },
-        { name: "エスシール", attribute: "光", role: "【体力型/2A】回復＋全体速度バフ＋連撃", runes: "迅速+元気" },
-        { name: "フラン", attribute: "光", role: "【サポート型】全体免疫＋攻撃バフ＋回復", runes: "迅速+反撃" }
+        { name: "ヴェラモス", attribute: "闇", role: "体力33%UP (L)・毎ターン味方全体弱化解除＋持続", runes: "迅速+元気", isLeader: true },
+        { name: "アイアン", attribute: "火", role: "【特効核/2A】無課金2A！「ダメージ減少効果無視」でボスの次元歪曲シールド貫通破壊", runes: "守護+守護+元気" },
+        { name: "ベラデオン", attribute: "光", role: "スキル1確定盾割り＋全体ゲージ上げ＆回復＋剥がし (2A)", runes: "迅速+元気" },
+        { name: "エスシール", attribute: "光", role: "全体速度バフ＋全体回復＋スキル3「捕食者の連撃」 (2A)", runes: "迅速+元気" },
+        { name: "ジンク", attribute: "闇", role: "全体強化阻害＋全体攻撃/防御デバフでボスを完全無力化 (2A)", runes: "絶望+守護" }
       ]
     }
   }
@@ -2470,6 +2536,14 @@ function initApp() {
 
       // 9. 異界レイドパーティの自動追加
       PRESET_PARTIES.filter(pr => pr.dungeonCategory === '異界レイド').forEach(pr => {
+        if (!parties.some(p => p.id === pr.id)) {
+          parties.push(pr);
+          updated = true;
+        }
+      });
+
+      // 10. タルタロスの迷宮・コトス新パーティの自動追加
+      PRESET_PARTIES.filter(pr => pr.id.startsWith('preset-party-tartaros-koto-bale-')).forEach(pr => {
         if (!parties.some(p => p.id === pr.id)) {
           parties.push(pr);
           updated = true;
@@ -3800,9 +3874,9 @@ function renderDimensionRaidSets() {
       </div>
 
       <div class="dim-raid-phases-grid">
-        ${renderPhaseCard(set.phase1, 1, 'phase-1', '★4以下のみ')}
-        ${renderPhaseCard(set.phase2, 2, 'phase-2', '同一属性のみ')}
-        ${renderPhaseCard(set.phase3, 3, 'phase-3', '4タイプ各1体')}
+        ${renderPhaseCard(set.phase1, 1, 'phase-1', set.phase1?.rule || '週替わり次元制限')}
+        ${renderPhaseCard(set.phase2, 2, 'phase-2', set.phase2?.rule || '固定条件 (ミニオン高速殲滅)')}
+        ${renderPhaseCard(set.phase3, 3, 'phase-3', set.phase3?.rule || '固定条件 (シールド貫通)')}
       </div>
 
       <div class="raid-set-footer">
@@ -3831,9 +3905,49 @@ function renderDimensionRaidSets() {
 function openDimensionRaidModal(setId) {
   if (!elements.dimRaidDetailModal) return;
 
-  const set = dimensionRaidSets.find(s => s.id === setId) || PRESET_DIMENSION_RAID_SETS.find(s => s.id === setId);
+  const set = setId ? (dimensionRaidSets.find(s => s.id === setId) || PRESET_DIMENSION_RAID_SETS.find(s => s.id === setId)) : null;
+
+  // 既存の動的セクションがあれば削除
+  const existingDynamic = document.getElementById('dim-raid-modal-dynamic-section');
+  if (existingDynamic) {
+    existingDynamic.remove();
+  }
+
   if (set && elements.dimRaidModalTitle) {
     elements.dimRaidModalTitle.textContent = `${set.name} 攻略基準`;
+
+    // 選択されたセット固有の攻略詳細セクションを冒頭に挿入
+    const dynamicDiv = document.createElement('div');
+    dynamicDiv.id = 'dim-raid-modal-dynamic-section';
+    dynamicDiv.className = 'party-detail-section';
+    dynamicDiv.style.background = 'rgba(168, 85, 247, 0.12)';
+    dynamicDiv.style.border = '1px solid rgba(168, 85, 247, 0.4)';
+    dynamicDiv.style.borderRadius = '8px';
+    dynamicDiv.style.padding = '14px';
+    dynamicDiv.style.marginBottom = '18px';
+    dynamicDiv.innerHTML = `
+      <h3 style="color:#d8b4fe; font-size:1rem; margin-bottom:8px;"><span class="section-icon">🎯</span> 【選択中】${escapeHtml(set.name)} 攻略特記事項</h3>
+      <div style="display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap;">
+        <span class="dim-raid-tag-pill">${escapeHtml(set.tag)}</span>
+        <span class="party-meta-pill">⏱️ 平均 ${escapeHtml(set.averageTime)}</span>
+        <span class="party-meta-pill winrate">🏆 勝率 ${escapeHtml(set.successRate)}</span>
+      </div>
+      <p style="font-size:0.85rem; color:#f3e8ff; margin-bottom:12px; line-height:1.5;">${escapeHtml(set.summary)}</p>
+      
+      <div style="background:rgba(15,23,42,0.6); padding:10px 12px; border-radius:6px; margin-bottom:10px; border:1px solid rgba(251, 191, 36, 0.25);">
+        <strong style="color:#fbbf24; font-size:0.85rem; display:block; margin-bottom:4px;">⚔️ 各フェーズの実戦戦略・立ち回り:</strong>
+        <p class="detail-value text-pre" style="margin:0; font-size:0.8rem; color:#cbd5e1;">${escapeHtml(set.strategyMemo)}</p>
+      </div>
+
+      <div style="background:rgba(15,23,42,0.6); padding:10px 12px; border-radius:6px; border:1px solid rgba(56, 189, 248, 0.25);">
+        <strong style="color:#38bdf8; font-size:0.85rem; display:block; margin-bottom:4px;">📐 推奨ルーン・ステータス基準:</strong>
+        <p class="detail-value text-pre" style="margin:0; font-size:0.8rem; color:#cbd5e1;">${escapeHtml(set.requirementsMemo)}</p>
+      </div>
+    `;
+
+    if (elements.dimRaidModalBody) {
+      elements.dimRaidModalBody.insertBefore(dynamicDiv, elements.dimRaidModalBody.firstChild);
+    }
   } else if (elements.dimRaidModalTitle) {
     elements.dimRaidModalTitle.textContent = "異次元レイド 攻略要件＆ステータス基準";
   }
