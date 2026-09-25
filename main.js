@@ -296,7 +296,7 @@ const PRESET_MONSTERS = [
     role: "常時被ダメ20%カットパッシブ / 確定盾割り / 攻撃力弱化 / 迷宮・レイド",
     recommendedRunes: "元気 + 元気 + 反撃 または 守護 + 元気 + 反撃 (体力/体力/防御)",
     guildMemo: "パッシブ「騎士の道」で自身以外の味方全員が受けるダメージを常に20%カットする。反撃ルーンで盾割りをばら撒く。",
-    cairosMemo: "【タルタロスの迷宮・コト＆タルタロスの特効役】味方の被ダメを常時20%カットし、ヒンメルと重複して被ダメ最大40%減！スキル1で防御弱化、スキル2でコトを無力化する攻撃力弱化（剣折り）を付与。",
+    cairosMemo: "【タルタロスの迷宮・コトス＆タルタロスの特効役】味方の被ダメを常時20%カットし、ヒンメルと重複して被ダメ最大40%減！スキル1で防御弱化、スキル2でコトスを無力化する攻撃力弱化（剣折り）を付与。",
     generalMemo: "二次覚醒でステータスが星5並に上昇。反撃ルーンを積むことで相手の行動時に盾割り・剣折りをばら撒ける。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
@@ -1009,32 +1009,32 @@ const PRESET_PARTIES = [
     updatedAt: new Date().toISOString()
   },
 
-  // 7-2. 火の守護者 コト (Koto) - 計2編成
+  // 7-2. 火の守護者 コトス (Kotos) - 計2編成
   {
     id: "preset-party-tartaros-koto-atkbreak-f2p",
-    name: "【タルタロス迷宮・コト(火)】セオマルス＆ヴィゴル・カリン 剣折り超耐久パ (即死回避)",
-    dungeon: "タルタロスの迷宮 (コト・火)",
+    name: "【タルタロス迷宮・コトス(火)】セオマルス＆ヴィゴル・カリン 剣折り超耐久パ (即死回避)",
+    dungeon: "タルタロスの迷宮 (コトス・火)",
     dungeonCategory: "タルタロス",
     averageTime: "約1分40秒〜2分10秒",
     successRate: "99%",
     members: [
       { name: "セオマルス", attribute: "水", role: "全属性クリ率24%UP (L)・粘るで即死回避・単体盾割り＋高火力", runes: "暴走+刃 または 猛攻+刃 (速度/クリダメ/攻撃)", isLeader: true },
-      { name: "カリン", attribute: "火", role: "【コト特効】スキル1確定2連剣折り(攻撃弱化)＋全体回復/攻撃バフ", runes: "反撃+元気+元気 (速度/体力/防御 的中40%+)", isLeader: false },
+      { name: "カリン", attribute: "火", role: "【コトス特効】スキル1確定2連剣折り(攻撃弱化)＋全体回復/攻撃バフ", runes: "反撃+元気+元気 (速度/体力/防御 的中40%+)", isLeader: false },
       { name: "ヴィゴル", attribute: "水", role: "全体回復＋速度バフ＋クリ被弾軽減バフ＋3連盾割り", runes: "迅速+元気 または 暴走+元気 (速度/体力/体力 体力+25000以上)", isLeader: false },
       { name: "エマ", attribute: "水", role: "防御力バフ＋全体シールド付与＋回復 (焦熱地獄の被ダメ半減)", runes: "迅速+元気 または 暴走+元気 (速度/体力/体力)", isLeader: false },
       { name: "コベール", attribute: "水", role: "隠密で被ダメ50%軽減＋防御無視超特大火力 (ボス削り役)", runes: "激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
     ],
     turnOrder: "ヴィゴル ➔ カリン ➔ エマ ➔ セオマルス ➔ コベール",
-    speedTuningMemo: "ヴィゴルとカリンが先手を取り、開幕からコトに「攻撃力弱化（剣折り）」と「防御弱化（盾割り）」を付与。エマの防御バフを事前に張ることで、激怒全体攻撃の被ダメージを極限まで抑えます。",
-    requirementsMemo: "【コト攻略の最重要鉄則：攻撃力弱化（剣折り）を絶対に切らさない！】\n・コトの「焦熱地獄」は攻撃力弱化（剣折り）が入っていればダメージが半分以下になり、さらにエマの防御バフやヴィゴルのクリ被弾軽減バフが重なれば、味方全員が耐えきれます。\n・カリンに「反撃ルーン」を積んでおくと、コトの攻撃に対してスキル1で即座に攻撃力弱化を上書きできるため非常に安定します。\n・セオマルスはパッシブ「粘る」があるため、万が一の最大激怒でも絶対に倒されず、最後の削り役として完璧です。\n・【代用モンスター】\nコベール ➔ チャウ(水ドラゴンナイト)、水パンダ、アナベル、タリア(水チャクラム)\nエマ ➔ ルル(二次覚醒)、フラン、バステト、アベリオ(水ドルイド)\nカリン ➔ コリーン(星2だが優秀)、火パンダ(雄飛)",
+    speedTuningMemo: "ヴィゴルとカリンが先手を取り、開幕からコトスに「攻撃力弱化（剣折り）」と「防御弱化（盾割り）」を付与。エマの防御バフを事前に張ることで、激怒全体攻撃の被ダメージを極限まで抑えます。",
+    requirementsMemo: "【コトス攻略の最重要鉄則：攻撃力弱化（剣折り）を絶対に切らさない！】\n・コトスの「焦熱地獄」は攻撃力弱化（剣折り）が入っていればダメージが半分以下になり、さらにエマの防御バフやヴィゴルのクリ被弾軽減バフが重なれば、味方全員が耐えきれます。\n・カリンに「反撃ルーン」を積んでおくと、コトスの攻撃に対してスキル1で即座に攻撃力弱化を上書きできるため非常に安定します。\n・セオマルスはパッシブ「粘る」があるため、万が一の最大激怒でも絶対に倒されず、最後の削り役として完璧です。\n・【代用モンスター】\nコベール ➔ チャウ(水ドラゴンナイト)、水パンダ、アナベル、タリア(水チャクラム)\nエマ ➔ ルル(二次覚醒)、フラン、バステト、アベリオ(水ドルイド)\nカリン ➔ コリーン(星2だが優秀)、火パンダ(雄飛)",
     targetMemo: "【破壊ルーン・反撃ルーン最優先】戦闘中に出現する破壊ルーン・反撃ルーンを最優先で破壊。カリンの剣折りをボスに常時維持しつつ本体を攻撃。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
   },
   {
     id: "preset-party-tartaros-koto-chow-bastet",
-    name: "【タルタロス迷宮・コト(火)】チャウ＆バステト 水属性鉄壁耐久パ (自己再生・被ダメ最小化)",
-    dungeon: "タルタロスの迷宮 (コト・火)",
+    name: "【タルタロス迷宮・コトス(火)】チャウ＆バステト 水属性鉄壁耐久パ (自己再生・被ダメ最小化)",
+    dungeon: "タルタロスの迷宮 (コトス・火)",
     dungeonCategory: "タルタロス",
     averageTime: "約1分30秒",
     successRate: "99%",
@@ -1046,9 +1046,9 @@ const PRESET_PARTIES = [
       { name: "セオマルス", attribute: "水", role: "高火力アタッカー＋盾割り＋粘るパッシブ", runes: "暴走+刃 (速度/クリダメ/攻撃)", isLeader: false }
     ],
     turnOrder: "バステト ➔ カリン ➔ アナベル ➔ セオマルス ➔ チャウ",
-    speedTuningMemo: "バステトのシールドと攻撃バフを開幕展開し、カリンとバステトのダブル剣折りでコトを完全に骨抜きにします。",
+    speedTuningMemo: "バステトのシールドと攻撃バフを開幕展開し、カリンとバステトのダブル剣折りでコトスを完全に骨抜きにします。",
     requirementsMemo: "【純5水属性モンスターによる圧倒的安定感】\n・チャウは自身のターンごとにデバフ解除と回復を行うため、長期戦になっても絶対に倒れません。\n・バステトのシールドとカリンの剣折りにより、焦熱地獄の直撃を受けてもHPゲージがほとんど削れません。",
-    targetMemo: "ルーンが出現したら速やかに単体攻撃で撃破し、コト本体を叩きます。",
+    targetMemo: "ルーンが出現したら速やかに単体攻撃で撃破し、コトス本体を叩きます。",
     isFavorite: false,
     updatedAt: new Date().toISOString()
   },
@@ -1114,7 +1114,7 @@ const PRESET_PARTIES = [
     ],
     turnOrder: "フラン ➔ ローレン ➔ ルル ➔ 水ホムンクルス ➔ ブリアン",
     speedTuningMemo: "フランとルルを高速化（速度+80〜100）し、タルタロスのブレスが来る前に必ず免疫を張ります。ブリアンは鈍足高耐久（体力35000〜40000）にしておき、味方が落とされた瞬間にスキル3で即座に全員満タン近くまで回復しながら蘇生します。",
-    requirementsMemo: "【タルタロス攻略の最重要鉄則：中ボス3体を倒してから挑むこと】\n・レオス、コト、ギエスを倒すとボスのパッシブ強化が解除され、難易度が劇的に下がります。必ず中ボス撃破後に挑戦してください（Hard/Hell共通）。\n・【腕のターゲット優先順位】\n① 左腕（崩壊の手）：攻撃ゲージ満タンで即死級の壊滅攻撃を放つため、最優先で左腕を破壊！\n② 右腕（創造の手）：ボスに強力なシールドを張るため、ローレンで剥がすか破壊。\n③ 本体：腕を落としたらボス本体にローレンの盾割りを入れ、水ホムの持続や通常攻撃で一気に削ります。\n・【蘇生役ブリアンの安心感】\nタルタロス戦はどれだけ対策してもボスの暴走や集中攻撃で1体落ちることがあります。ブリアン（またはトリアーナ）がいることで、味方が倒れても即座に体力を平準化して復活させ、何事もなかったかのように立て直せます。\n・【代用モンスター】\nブリアン ➔ トリアーナ(風ハープ: 即死回避パッシブ＋免疫回復)、エラドリエル(風アーク)、イオヌ(光エピキオン司祭)、ミシェル(二次覚醒)\n水ホムンクルス ➔ アカムアミール、セオマルス、風ドリアード(メリア)、イエロメ\nローレン ➔ 火パンダ(雄飛: 調合星5・盾割り＋弱化解除＋持続回復で超優秀)",
+    requirementsMemo: "【タルタロス攻略の最重要鉄則：中ボス3体を倒してから挑むこと】\n・レオス、コトス、ギエスを倒すとボスのパッシブ強化が解除され、難易度が劇的に下がります。必ず中ボス撃破後に挑戦してください（Hard/Hell共通）。\n・【腕のターゲット優先順位】\n① 左腕（崩壊の手）：攻撃ゲージ満タンで即死級の壊滅攻撃を放つため、最優先で左腕を破壊！\n② 右腕（創造の手）：ボスに強力なシールドを張るため、ローレンで剥がすか破壊。\n③ 本体：腕を落としたらボス本体にローレンの盾割りを入れ、水ホムの持続や通常攻撃で一気に削ります。\n・【蘇生役ブリアンの安心感】\nタルタロス戦はどれだけ対策してもボスの暴走や集中攻撃で1体落ちることがあります。ブリアン（またはトリアーナ）がいることで、味方が倒れても即座に体力を平準化して復活させ、何事もなかったかのように立て直せます。\n・【代用モンスター】\nブリアン ➔ トリアーナ(風ハープ: 即死回避パッシブ＋免疫回復)、エラドリエル(風アーク)、イオヌ(光エピキオン司祭)、ミシェル(二次覚醒)\n水ホムンクルス ➔ アカムアミール、セオマルス、風ドリアード(メリア)、イエロメ\nローレン ➔ 火パンダ(雄飛: 調合星5・盾割り＋弱化解除＋持続回復で超優秀)",
     targetMemo: "【ターゲット順序】：左腕（崩壊の手）最優先 ➔ 右腕（創造の手） ➔ ボス本体。左腕を常に注視してゲージが溜まる前に落とすのが最大のコツです。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
@@ -1213,26 +1213,26 @@ const PRESET_PARTIES = [
   },
 
   // -------------------------------------------------------------
-  // 7-7. 【ユーザー手持ち活用】火の守護者 コト (Koto)
+  // 7-7. 【ユーザー手持ち活用】火の守護者 コトス (Kotos)
   // -------------------------------------------------------------
   {
     id: "preset-party-tartaros-koto-himmel-darion",
-    name: "【タルタロス迷宮・コト(火)】ヒンメル＆ダリオン 二重被ダメ軽減耐久パ (手持ち活用・焦熱地獄耐え)",
-    dungeon: "タルタロスの迷宮 (コト・火)",
+    name: "【タルタロス迷宮・コトス(火)】ヒンメル＆ダリオン 二重被ダメ軽減耐久パ (手持ち活用・焦熱地獄耐え)",
+    dungeon: "タルタロスの迷宮 (コトス・火)",
     dungeonCategory: "タルタロス",
     averageTime: "約1分45秒",
     successRate: "99%",
     members: [
       { name: "ヒンメル", attribute: "水", role: "水属性有利・ボス特効2倍火力＋味方被ダメ20%軽減＋全体防御バフ (核)", runes: "激怒+刃 または 猛攻+刃 (速度/クリダメ/攻撃)", isLeader: true },
-      { name: "ダリオン", attribute: "光", role: "【コト特効】味方被ダメ20%軽減＋スキル2剣折り(攻撃弱化)で焦熱地獄の被ダメ半減！", runes: "反撃+元気+元気 (体力/体力/防御)", isLeader: false },
+      { name: "ダリオン", attribute: "光", role: "【コトス特効】味方被ダメ20%軽減＋スキル2剣折り(攻撃弱化)で焦熱地獄の被ダメ半減！", runes: "反撃+元気+元気 (体力/体力/防御)", isLeader: false },
       { name: "ライリー", attribute: "風", role: "毎ターン全体回復＋攻撃バフ＋免疫 (持続ダメージ解除)", runes: "暴走+意志 (速度/体力/体力)", isLeader: false },
       { name: "タラニス", attribute: "風", role: "全体防御バフ＋万が一の蘇生保険＋自己復活", runes: "守護+守護+意志 (速度/防御/防御)", isLeader: false },
       { name: "バーレイグ", attribute: "火", role: "高火力雷神降臨 (代用: カリン / セオマルス / ヴィゴル)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
     ],
     turnOrder: "ダリオン ➔ ライリー ➔ タラニス ➔ ヒンメル ➔ バーレイグ",
-    speedTuningMemo: "ダリオンがコトにスキル2で「攻撃力弱化（剣折り）」を素早く付与。ヒンメルが水属性の有利ボーナスを活かしてボスに大ダメージを与えます。",
-    requirementsMemo: "【ヒンメル＆ダリオンの二重被ダメカットで焦熱地獄を完封】\n・ダリオンのスキル2「攻撃力弱化（剣折り）」が入っていればコトの火力は半減します。\n・さらにダリオンとヒンメルのパッシブで味方全体の被ダメが約40%カットされ、焦熱地獄でも即死しません。\n・水属性のヒンメルがボス特効2倍の攻撃で安全にコトを削り切ります。",
-    targetMemo: "破壊ルーン・反撃ルーンが出現したら先に処理し、コト本体を攻撃。",
+    speedTuningMemo: "ダリオンがコトスにスキル2で「攻撃力弱化（剣折り）」を素早く付与。ヒンメルが水属性の有利ボーナスを活かしてボスに大ダメージを与えます。",
+    requirementsMemo: "【ヒンメル＆ダリオンの二重被ダメカットで焦熱地獄を完封】\n・ダリオンのスキル2「攻撃力弱化（剣折り）」が入っていればコトスの火力は半減します。\n・さらにダリオンとヒンメルのパッシブで味方全体の被ダメが約40%カットされ、焦熱地獄でも即死しません。\n・水属性のヒンメルがボス特効2倍の攻撃で安全にコトスを削り切ります。",
+    targetMemo: "破壊ルーン・反撃ルーンが出現したら先に処理し、コトス本体を攻撃。",
     isFavorite: false,
     updatedAt: new Date().toISOString()
   },
@@ -1260,18 +1260,272 @@ const PRESET_PARTIES = [
     targetMemo: "吸血ルーン・絶望ルーンが出現したら速やかに破壊し、ギエス本体に雷神降臨を叩き込みます。",
     isFavorite: false,
     updatedAt: new Date().toISOString()
+  },
+
+  // -------------------------------------------------------------
+  // 8. 異界レイド (ソロ・カドゥルー5階) 各チーム個別編成
+  // -------------------------------------------------------------
+  {
+    id: "preset-party-raid-bj5-team1-bale",
+    name: "【異界レイド・TEAM 1】バーレイグ特大砲チーム (BJ5連携・メイン火力)",
+    dungeon: "異界レイド (ソロ・カドゥルー5階)",
+    dungeonCategory: "異界レイド",
+    averageTime: "約27秒〜35秒",
+    successRate: "99%",
+    members: [
+      { name: "バーレイグ", attribute: "火", role: "攻撃44%UP (L)・知識5「雷神降臨」でボスHPを消滅させる", runes: "激怒+意志 (攻撃/クリダメ/攻撃 クリ率81%+)", isLeader: true },
+      { name: "フラン", attribute: "光", role: "【前衛】全体2T免疫＋攻撃バフ＋全体回復＋剣折り", runes: "迅速+闘志 (速度/体力/体力 防御+1000)", isLeader: false },
+      { name: "ローレン", attribute: "光", role: "【前衛】単体確定盾割り＋速度デバフ＋ゲージダウン", runes: "迅速+闘志 (速度/体力/防御 的中45%+)", isLeader: false },
+      { name: "ヤンセン", attribute: "闇", role: "死亡味方蘇生＋攻撃ゲージ上昇でバーレイグ再動", runes: "闘志+闘志+意志 (体力/体力/防御)", isLeader: false },
+      { name: "カリン", attribute: "火", role: "開幕全体攻撃バフ＋スキル1確定剣折り＋回復", runes: "反撃+闘志+闘志 (速度/体力/防御)", isLeader: false }
+    ],
+    turnOrder: "カリン ➔ フラン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ ヤンセン",
+    speedTuningMemo: "カリンとフランが先手で攻撃バフと免疫を展開。ローレンが確定盾割りを入れ、バーレイグが知識5でボスHPを一気に削り落とします。",
+    requirementsMemo: "【BJ5チーム1の要点】バーレイグの火力が最重要（攻撃+1700以上、クリダメ220%以上）。前衛のフラン・ローレンは防御+1000以上を確保。",
+    targetMemo: "ボス本体を集中攻撃（カドゥルー5階）。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-raid-user-team1-bale-darion",
+    name: "【異界レイド・手持ち最適化】バーレイグ＆ダリオン・フラン 知識砲撃パ (被ダメ20%減＆超高火力)",
+    dungeon: "異界レイド (ソロ・カドゥルー5階)",
+    dungeonCategory: "異界レイド",
+    averageTime: "約45秒〜55秒",
+    successRate: "99%",
+    members: [
+      { name: "バーレイグ", attribute: "火", role: "攻撃44%UP (L)・知識5「雷神降臨」フィニッシャー", runes: "激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+      { name: "ダリオン", attribute: "光", role: "【前衛】味方被ダメ20%常時軽減＋スキル1盾割り＋スキル2剣折り", runes: "反撃+元気+元気 (体力/体力/防御 防御+1200+)", isLeader: false },
+      { name: "フラン", attribute: "光", role: "【前衛】全体免疫＋攻撃バフ＋回復＋剣折り", runes: "迅速+元気 (速度/体力/防御 防御+1100+)", isLeader: false },
+      { name: "ローレン", attribute: "光", role: "単体確定盾割り＋速度デバフ＋ゲージダウン", runes: "迅速+集中 (速度/体力/体力 的中45%+)", isLeader: false },
+      { name: "カリン", attribute: "火", role: "開幕全体攻撃バフ＋回復阻害＋剣折り", runes: "反撃+元気 (速度/体力/防御)", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ カリン ➔ ローレン ➔ ダリオン ➔ バーレイグ",
+    speedTuningMemo: "フランとカリンで攻撃バフを維持。ダリオンのスキル2でボスの攻撃力を半減させ、バーレイグの雷神降臨で吹き飛ばします。",
+    requirementsMemo: "【手持ち直結ソロレイド】ダリオンのパッシブで味方全体の被ダメを20%カットするため、前衛が絶対に落とされません。",
+    targetMemo: "ボス本体を集中攻撃（カドゥルー5階）。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-raid-user-team2-taranis-riley",
+    name: "【異界レイド・手持ち最適化】タラニス＆ライリー・クロー 鉄壁蘇生＆弱化特効パ (事故率0%完全安定)",
+    dungeon: "異界レイド (ソロ・カドゥルー5階)",
+    dungeonCategory: "異界レイド",
+    averageTime: "約45秒〜55秒",
+    successRate: "99%",
+    members: [
+      { name: "テサリオン", attribute: "火", role: "全属性クリ率24%UP (L)・パッシブ忘却＋盾割り高打点", runes: "暴走+刃 (速度/クリダメ/攻撃)", isLeader: true },
+      { name: "タラニス", attribute: "風", role: "【前衛】全体防御バフ＋味方蘇生(事故完全ゼロ)＋自己復活＋挑発", runes: "守護+守護+意志 (速度/防御/防御 防御+1400+)", isLeader: false },
+      { name: "火パンダ", attribute: "火", role: "【前衛】調合星5・全体持続回復＋弱化解除＋多段デバフ", runes: "守護+元気+反撃 (防御/防御/体力 防御+1300+)", isLeader: false },
+      { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＋攻撃バフ＋回復 (ブレス完封)", runes: "暴走+意志 (速度/体力/体力)", isLeader: false },
+      { name: "クロー", attribute: "闇", role: "弱化特効「傷口ほじくり返し」で大ダメージ", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "ライリー ➔ タラニス ➔ 火パンダ ➔ テサリオン ➔ クロー",
+    speedTuningMemo: "ライリーの毎ターン免疫でスタンを防ぎ、タラニスの全体防御バフで前衛の被ダメを最小化。クローが弱化特効で削り切ります。",
+    requirementsMemo: "【タラニスの蘇生保険】万が一味方が落とされてもタラニスが即座に蘇生。タラニス自身も自動復活するため全滅しません。",
+    targetMemo: "ボス本体を集中攻撃（カドゥルー5階）。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-raid-user-team3-himmel-twins",
+    name: "【異界レイド・手持ち最適化】ヒンメル＆ディアス・ブメチャク 二重被ダメ軽減パ (被ダメ35%減＆連続攻撃)",
+    dungeon: "異界レイド (ソロ・カドゥルー5階)",
+    dungeonCategory: "異界レイド",
+    averageTime: "約45秒〜55秒",
+    successRate: "99%",
+    members: [
+      { name: "ディアス", attribute: "闇", role: "抵抗30%UP (L)・味方被ダメ15%カット・盾割り＋回復阻害", runes: "守護+反撃+元気 (防御/防御/体力 防御+1300+)", isLeader: true },
+      { name: "ヴィゴル", attribute: "水", role: "【前衛】全体回復＋速度バフ＋クリ被弾軽減バフ＋3連盾割り", runes: "迅速+元気 (速度/体力/体力)", isLeader: false },
+      { name: "ヒンメル", attribute: "水", role: "味方被ダメ20%カットパッシブ＋全体防御バフ＋ボス特効2倍打点", runes: "激怒+刃 (速度/クリダメ/攻撃)", isLeader: false },
+      { name: "デルフォイ", attribute: "風", role: "全体弱化解除＋免疫＋回復", runes: "迅速+元気 (速度/体力/防御)", isLeader: false },
+      { name: "シャイナ", attribute: "火", role: "防御弱化＋ブメチャク連携攻撃", runes: "猛攻+刃 (速度/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "デルフォイ ➔ ヴィゴル ➔ ディアス ➔ シャイナ ➔ ヒンメル",
+    speedTuningMemo: "ディアス（被ダメ15%カット）とヒンメル（被ダメ20%カット）の二重パッシブで被ダメージが最大35%減少。ブメチャク連携で削ります。",
+    requirementsMemo: "【ヒンメル＆ディアスの超耐久】前衛・後衛ともに被ダメージが劇的に減り、カドゥルーのジャンプ後ブレスを余裕で耐え抜きます。",
+    targetMemo: "ボス本体を集中攻撃（カドゥルー5階）。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  }
+];
+
+// -----------------------------------------------------------------------------
+// 1-3. 異界レイド (1人レイド・ソロレイド) プリセットデータ (3チーム同時出撃・計18体)
+// -----------------------------------------------------------------------------
+const PRESET_RAID_SETS = [
+  {
+    id: "preset-raid-set-bj5-inugami",
+    name: "【最速約27秒・定番】BJ5＆イヌガミ連携 超高速ソロレイド",
+    tag: "最速・最高峰テンプレ",
+    averageTime: "約27秒〜35秒",
+    successRate: "99%",
+    summary: "バーレイグの知識5雷神降臨2連打＋二次覚醒イヌガミ協力攻撃による、カドゥルー5階の最速瞬殺ソロレイド。闘志ルーンを大量に積み、ジャンプ前後を一瞬で飛ばします。",
+    strategyMemo: "【BJ5＆イヌガミ連携の基本鉄則】\n・チーム1のバーレイグがボスのジャンプ前とジャンプ後に知識5雷神降臨を放ち、全体ダメージの約70%を一気に削り切ります。\n・チーム2のイヌガミ（クロー・ラオーク）が協力攻撃で開幕から防御弱化と持続、弱化特効火力を叩き込みます。\n・チーム3はテサリオンのクリ率24%UPリーダーで全体のクリ率を底上げし、弱化解除と耐久をサポートします。\n・闘志ルーン（味方攻撃+8%）を前衛やサポーターに可能な限り積むことで、バーレイグの一撃あたりのダメージが飛躍的に伸びます。",
+    speedTuningMemo: "【行動順】\nチーム1: カリン ➔ フラン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ ヤンセン\nチーム2: ディアス ➔ 火パンダ ➔ コナミヤ ➔ ラオーク ➔ クロー ➔ ナオミ\nチーム3: ベラデオン ➔ ヴィゴル ➔ デルフォイ ➔ ルル ➔ テサリオン ➔ ステラ",
+    requirementsMemo: "【ステータス基準とルーン】\n・バーレイグ: 激怒+意志 (攻撃力+1700以上、クリ率81%以上、クリダメ220%以上、知識5でボス体力の35%以上削れる火力)\n・前衛 (フラン、ローレン、ディアス、火パンダ、ベラデオン、ヴィゴル): 防御力+1200〜1400以上、体力+20000以上\n・後衛アタッカー (クロー、ラオーク、ナオミ、ステラ): クリ率81%以上 (テサリオンLS込みで100%)、攻撃+1200以上、クリダメ160%以上\n・サポーター (カリン、ヤンセン、コナミヤ、デルフォイ、ルル): 闘志・意志・迅速ルーン、効果抵抗50%+、効果的中45%+",
+    team1: {
+      name: "TEAM 1: バーレイグ特大砲チーム (メイン火力)",
+      leaderInfo: "バーレイグ (ギルバト/レイド攻撃44%UP)",
+      frontline: [
+        { name: "フラン", attribute: "光", role: "全体2T免疫＋攻撃バフ＋全体回復＋剣折り", runes: "迅速+闘志 (速度/体力/体力 防御+1000)" },
+        { name: "ローレン", attribute: "光", role: "単体確定盾割り＋速度デバフ＋ゲージダウン", runes: "迅速+闘志 (速度/体力/防御 的中45%+)" }
+      ],
+      backline: [
+        { name: "バーレイグ", attribute: "火", role: "【核】攻撃44%UP (L)・知識5「雷神降臨」でボスHPを消滅させる", runes: "激怒+意志 (攻撃/クリダメ/攻撃 クリ率81%+)", isLeader: true },
+        { name: "ヤンセン", attribute: "闇", role: "死亡味方蘇生＋攻撃ゲージ上昇でバーレイグ再動", runes: "闘志+闘志+意志 (体力/体力/防御)" },
+        { name: "カリン", attribute: "火", role: "開幕全体攻撃バフ＋スキル1確定剣折り＋回復", runes: "反撃+闘志+闘志 (速度/体力/防御)" },
+        { name: "ダリオン", attribute: "光", role: "味方被ダメ20%常時カット＋確定盾割り＋剣折り", runes: "闘志+闘志+反撃 (体力/体力/防御)" }
+      ]
+    },
+    team2: {
+      name: "TEAM 2: 二次覚醒イヌガミ協力＆速攻デバフチーム (サブ火力)",
+      leaderInfo: "ディアス (全属性抵抗30%UP)",
+      frontline: [
+        { name: "ディアス", attribute: "闇", role: "全属性抵抗30%UP (L)・味方被ダメ15%カット・盾割り＋回復不可", runes: "守護+反撃+闘志 (防御/防御/体力 防御+1300+)", isLeader: true },
+        { name: "火パンダ", attribute: "火", role: "調合星5・弱化解除＋全体持続回復＋多段盾割り/剣折り/速度デバフ", runes: "守護+守護+反撃 (防御/防御/体力)" }
+      ],
+      backline: [
+        { name: "クロー", attribute: "闇", role: "二次覚醒・弱化特効「傷口ほじくり返し」で特大火力＋盾割り烙印", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "ラオーク", attribute: "火", role: "二次覚醒・味方2体引き連れ協力攻撃＋確定盾割り", runes: "暴走+刃 (速度/クリダメ/攻撃)" },
+        { name: "ナオミ", attribute: "風", role: "二次覚醒・デバフ対象への確定クリティカル＋持続ダメージ", runes: "猛攻+刃 (攻撃/クリダメ/攻撃 クリ率不要)" },
+        { name: "コナミヤ", attribute: "水", role: "全体デバフ完全解除＋全体回復＋リモーション", runes: "迅速+元気 (速度/体力/体力 速度+110+)" }
+      ]
+    },
+    team3: {
+      name: "TEAM 3: クリ率リーダー＆耐久弱化解除チーム (サポート＆ダメ押し)",
+      leaderInfo: "テサリオン (全属性クリ率24%UP)",
+      frontline: [
+        { name: "ベラデオン", attribute: "光", role: "二次覚醒・スキル1確定盾割り＋全体ゲージ上昇＆回復", runes: "迅速+元気 (速度/防御/体力 防御+1200+)" },
+        { name: "ヴィゴル", attribute: "水", role: "二次覚醒・全体回復＋速度バフ＋クリ被弾軽減バフ＋3連盾割り", runes: "迅速+元気 (速度/体力/体力 体力+25000+)" }
+      ],
+      backline: [
+        { name: "テサリオン", attribute: "火", role: "全属性クリ率24%UP (L)・パッシブ忘却＋盾割り高打点", runes: "暴走+反撃 (速度/クリダメ/攻撃)", isLeader: true },
+        { name: "デルフォイ", attribute: "風", role: "全体弱化解除＋2ターン全体免疫＋回復＋スキル延長", runes: "迅速+意志 (速度/体力/防御)" },
+        { name: "ルル", attribute: "水", role: "二次覚醒・二重弱化解除＋免疫付与＋持続回復 (ブレス完全耐性)", runes: "暴走+元気 (速度/体力/体力)" },
+        { name: "ステラ", attribute: "水", role: "速度比例最大7連撃＋烙印付与＋盾割り＋ゲージ下げ", runes: "迅速+刃 (速度/クリダメ/攻撃 速度+100+)" }
+      ]
+    }
+  },
+  {
+    id: "preset-raid-set-user-bale-himmel-taranis",
+    name: "【ユーザー手持ち最適化・超安定1分切り】バーレイグ＆ヒンメル・タラニス・ダリオン軸 手持ち特化ソロレイド",
+    tag: "ユーザー手持ち直結・絶対事故ゼロ",
+    averageTime: "約45秒〜55秒",
+    successRate: "99%",
+    summary: "所持モンスター（バーレイグ、ヒンメル、タラニス、ライリー、ダリオン、フラン、ローレン、カリン等）を100%投入！タラニスの蘇生保険とヒンメル＆ダリオンの二重被ダメカットで、どんな乱数でも全滅しない1分切り周回を実現。",
+    strategyMemo: "【ユーザー手持ちの強みを限界突破させるソロレイド構成】\n・TEAM 1にバーレイグ、ダリオン、フラン、ローレンを配置し、ダリオンのパッシブでチーム全体の被ダメを20%カットしながら安全に大砲を撃ちます。\n・TEAM 2はタラニス（全体防御バフ＋味方蘇生＋自己復活）とライリー（毎ターン全体免疫＆攻撃バフ）の風属性鉄壁タッグ。クローとテサリオンが火力を出します。\n・TEAM 3はヒンメル（味方被ダメ20%カット＋全体防御バフ）とディアス（被ダメ15%カット）を配置。ブメチャク（シャイナ・サブリナ）の連携でボスのゲージとHPをガリガリ削ります。\n・全チームに強烈な被ダメ軽減と弱化解除・回復が揃っているため、カドゥルーのブレスが連続しても全く崩れません。",
+    speedTuningMemo: "【行動順】\nチーム1: フラン ➔ カリン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ コナミヤ\nチーム2: ライリー ➔ タラニス ➔ 火パンダ ➔ テサリオン ➔ ラオーク ➔ クロー\nチーム3: デルフォイ ➔ ヴィゴル ➔ ディアス ➔ シャイナ ➔ サブリナ ➔ ヒンメル",
+    requirementsMemo: "【育成・ルーンの目安】\n・バーレイグ: 激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃) 知識5の火力を最優先。\n・タラニス: 守護+守護+意志 (速度/防御/防御) 防御力+1300以上を確保し、前衛の要に。\n・ヒンメル: 激怒+刃 (速度/クリダメ/攻撃) 後衛から防御バフと高打点を供給。\n・ライリー: 暴走+意志 または 迅速+元気 (速度/体力/体力) 最速クラスで回す。\n・ダリオン: 反撃+元気+元気 (体力/体力/防御) 前衛配置で反撃盾割りと剣折り。",
+    team1: {
+      name: "TEAM 1: バーレイグ＆ダリオン・フラン 知識砲撃チーム",
+      leaderInfo: "バーレイグ (攻撃44%UP)",
+      frontline: [
+        { name: "ダリオン", attribute: "光", role: "味方被ダメ20%軽減＋スキル1盾割り＋スキル2剣折り", runes: "反撃+元気+元気 (体力/体力/防御 防御+1200+)" },
+        { name: "フラン", attribute: "光", role: "全体免疫＋攻撃バフ＋回復＋剣折り (前衛耐久型)", runes: "迅速+元気 (速度/体力/防御 防御+1100+)" }
+      ],
+      backline: [
+        { name: "バーレイグ", attribute: "火", role: "攻撃44%UP (L)・知識5「雷神降臨」フィニッシャー", runes: "激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+        { name: "ローレン", attribute: "光", role: "単体確定盾割り＋速度デバフ＋ゲージダウン", runes: "迅速+集中 (速度/体力/体力 的中45%+)" },
+        { name: "カリン", attribute: "火", role: "開幕全体攻撃バフ＋回復阻害＋剣折り", runes: "反撃+元気 (速度/体力/防御)" },
+        { name: "コナミヤ", attribute: "水", role: "全体弱化解除＋リモーション＋回復", runes: "迅速+元気 (速度/体力/体力)" }
+      ]
+    },
+    team2: {
+      name: "TEAM 2: タラニス＆ライリー・クロー 鉄壁蘇生＆弱化特効チーム",
+      leaderInfo: "テサリオン (クリ率24%UP)",
+      frontline: [
+        { name: "タラニス", attribute: "風", role: "全体防御バフ＋味方蘇生(事故完全ゼロ)＋自己復活＋挑発", runes: "守護+守護+意志 (速度/防御/防御 防御+1400+)" },
+        { name: "火パンダ", attribute: "火", role: "調合星5・全体持続回復＋弱化解除＋多段デバフ", runes: "守護+元気+反撃 (防御/防御/体力 防御+1300+)" }
+      ],
+      backline: [
+        { name: "テサリオン", attribute: "火", role: "全属性クリ率24%UP (L)・パッシブ忘却＋盾割り高打点", runes: "暴走+刃 (速度/クリダメ/攻撃)", isLeader: true },
+        { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＋攻撃バフ＋回復 (ブレス完封)", runes: "暴走+意志 (速度/体力/体力)" },
+        { name: "クロー", attribute: "闇", role: "弱化特効「傷口ほじくり返し」で大ダメージ", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "ラオーク", attribute: "火", role: "協力攻撃＋確定盾割り (回転率UP)", runes: "暴走+刃 (速度/クリダメ/攻撃)" }
+      ]
+    },
+    team3: {
+      name: "TEAM 3: ヒンメル＆ディアス・ブメチャク 二重被ダメカットチーム",
+      leaderInfo: "ディアス (抵抗30%UP)",
+      frontline: [
+        { name: "ディアス", attribute: "闇", role: "抵抗30%UP (L)・味方被ダメ15%カット・盾割り＋回復阻害", runes: "守護+反撃+元気 (防御/防御/体力 防御+1300+)", isLeader: true },
+        { name: "ヴィゴル", attribute: "水", role: "全体回復＋速度バフ＋クリ被弾軽減バフ＋3連盾割り", runes: "迅速+元気 (速度/体力/体力)" }
+      ],
+      backline: [
+        { name: "ヒンメル", attribute: "水", role: "味方被ダメ20%カットパッシブ＋全体防御バフ＋ボス特効2倍打点", runes: "激怒+刃 (速度/クリダメ/攻撃)" },
+        { name: "デルフォイ", attribute: "風", role: "全体弱化解除＋免疫＋回復", runes: "迅速+元気 (速度/体力/防御)" },
+        { name: "シャイナ", attribute: "火", role: "防御弱化＋ブメチャク連携攻撃", runes: "猛攻+刃 (速度/クリダメ/攻撃)" },
+        { name: "サブリナ", attribute: "水", role: "味方被ダメ減少・与ダメ増加パッシブ＋ブメチャク連携", runes: "暴走+刃 (速度/クリダメ/攻撃)" }
+      ]
+    }
+  },
+  {
+    id: "preset-raid-set-f2p-stable",
+    name: "【完全無課金F2P・調合＆配布中心】初心者〜中級者向け 完全安定ソロレイド",
+    tag: "完全無課金・調合＆二次覚醒",
+    averageTime: "約1分10秒〜1分30秒",
+    successRate: "99%",
+    summary: "ガチャ純5を1体も使わず、調合モンスター（バーレイグ、火パンダ、ヴェラモス）と、二次覚醒（クロー、ベラデオン、ダリオン、ルル、カリン、コナミヤ）のみで100%組める、ソロレイド入門〜中級者向け完全無課金鉄壁編成。",
+    strategyMemo: "【完全無課金でもカドゥルー5階を確実にクリアできる理由】\n・チーム1: バーレイグの調合星5高火力＋ダリオンの被ダメ20%カットで手堅く削る。\n・チーム2: 火パンダ（調合星5）が前衛で耐え、クローが弱化特効で削り、ルルがデバフを解除。\n・チーム3: ディアス（配布）が前衛で耐え、ヴェラモス（調合星5）が毎ターン味方全員のデバフをパッシブ解除。\n・3チームすべてに「弱化解除役」「回復役」「剣折り役」「盾割り役」が必ず1体以上入っているため、誰かが落とされても崩壊しません。",
+    speedTuningMemo: "【行動順】\nチーム1: カリン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ コナミヤ ➔ ベラデオン\nチーム2: 火パンダ ➔ デルフォイ ➔ ルル ➔ テサリオン ➔ ラオーク ➔ クロー\nチーム3: フラン ➔ ディアス ➔ ヴィゴル ➔ ヴェラモス ➔ エルガー ➔ ステラ",
+    requirementsMemo: "【初心者向けステータス目標】\n・前衛6体（ダリオン、カリン、火パンダ、デルフォイ、ディアス、ヴィゴル）は「防御力+1100以上、体力+18000以上」を必ず達成すること。\n・弱化解除役（コナミヤ、ルル、ヴェラモス、デルフォイ）は効果抵抗を60%以上に高めておくと、ボスのスタンを受けずに解除スキルを使えます。",
+    team1: {
+      name: "TEAM 1: バーレイグ＆カリン・ダリオン砲",
+      leaderInfo: "バーレイグ (攻撃44%UP)",
+      frontline: [
+        { name: "ダリオン", attribute: "光", role: "味方被ダメ20%カット＋確定盾割り＋剣折り", runes: "反撃+元気+元気 (体力/体力/防御)" },
+        { name: "カリン", attribute: "火", role: "開幕全体攻撃バフ＋回復阻害＋剣折り (前衛高耐久)", runes: "反撃+元気+守護 (速度/体力/防御)" }
+      ],
+      backline: [
+        { name: "バーレイグ", attribute: "火", role: "攻撃44%UP (L)・知識5「雷神降臨」砲", runes: "猛攻+刃 または 激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+        { name: "ローレン", attribute: "光", role: "単体確定盾割り＋速度デバフ＋ゲージダウン", runes: "迅速+集中 (速度/体力/体力)" },
+        { name: "コナミヤ", attribute: "水", role: "全体弱化解除＋リモーション＋回復", runes: "迅速+元気 (速度/体力/体力)" },
+        { name: "ベラデオン", attribute: "光", role: "二次覚醒・盾割り＋ゲージUP回復", runes: "迅速+元気 (速度/体力/防御)" }
+      ]
+    },
+    team2: {
+      name: "TEAM 2: 火パンダ＆クロー・デルフォイ持続耐久",
+      leaderInfo: "テサリオン (クリ率24%UP)",
+      frontline: [
+        { name: "火パンダ", attribute: "火", role: "調合星5・全体持続回復＋弱化解除＋多段盾割り/剣折り", runes: "守護+守護+反撃 (防御/防御/体力)" },
+        { name: "デルフォイ", attribute: "風", role: "全体弱化解除＋免疫＋回復 (前衛耐久)", runes: "守護+元気+意志 (速度/防御/体力)" }
+      ],
+      backline: [
+        { name: "テサリオン", attribute: "火", role: "クリ率24%UP (L)・忘却パッシブ＋盾割り打点", runes: "暴走+刃 (速度/クリダメ/攻撃)", isLeader: true },
+        { name: "クロー", attribute: "闇", role: "二次覚醒・弱化特効「傷口ほじくり返し」火力", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "ラオーク", attribute: "火", role: "二次覚醒・協力攻撃＋確定盾割り", runes: "暴走+刃 (速度/クリダメ/攻撃)" },
+        { name: "ルル", attribute: "水", role: "二次覚醒・二重弱化解除＋免疫＋持続回復", runes: "暴走+元気 (速度/体力/体力)" }
+      ]
+    },
+    team3: {
+      name: "TEAM 3: ディアス＆ヴェラモス・ステラ弱化解除",
+      leaderInfo: "ディアス (抵抗30%UP)",
+      frontline: [
+        { name: "ディアス", attribute: "闇", role: "抵抗30%UP (L)・味方被ダメ15%カット・盾割り＋回復阻害", runes: "守護+守護+反撃 (防御/防御/体力)", isLeader: true },
+        { name: "ヴィゴル", attribute: "水", role: "全体回復＋速度バフ＋クリ被弾軽減バフ＋盾割り", runes: "迅速+元気 (速度/体力/体力)" }
+      ],
+      backline: [
+        { name: "ヴェラモス", attribute: "闇", role: "調合星5・毎ターン味方の弱化効果を自動解除＋全体持続", runes: "迅速+元気 (速度/体力/防御)" },
+        { name: "フラン", attribute: "光", role: "全体免疫＋攻撃バフ＋回復＋剣折り", runes: "迅速+元気 (速度/体力/体力)" },
+        { name: "ステラ", attribute: "水", role: "速度比例連撃＋烙印付与＋盾割り", runes: "迅速+刃 (速度/クリダメ/攻撃)" },
+        { name: "エルガー", attribute: "闇", role: "配布純5・全体攻撃バフ＋吸血バフ＋多段デバフ", runes: "猛攻+刃 (速度/クリダメ/攻撃)" }
+      ]
+    }
   }
 ];
 
 // 2. 状態管理
 let monsters = [];
 let parties = [];
-let activeTab = 'all'; // 'all', 'guild', 'cairos', 'form'
+let raidSets = [];
+let activeTab = 'all'; // 'all', 'guild', 'cairos', 'raid', 'form'
 let cairosSubtab = 'party'; // 'party', 'monsters'
 let guildSubtab = 'tartaros'; // 'tartaros', 'monsters'
-let tartarosBossFilter = 'all'; // 'all', 'レオス', 'コト', 'ギエス', 'タルタロス'
+let tartarosBossFilter = 'all'; // 'all', 'レオス', 'コトス', 'ギエス', 'タルタロス'
 let attributeFilter = 'all'; // 'all', '火', '水', '風', '光', '闇'
-let dungeonFilter = 'all'; // 'all', 'タルタロス', '巨人', 'ドラゴン', '死のダンジョン', '精霊', '鋼鉄', '審判'
+let dungeonFilter = 'all'; // 'all', '異界レイド', 'タルタロス', '巨人', 'ドラゴン', '死のダンジョン', '精霊', '鋼鉄', '審判'
 let searchQuery = '';
 let currentEditId = null;
 let currentPartyEditId = null;
@@ -1289,6 +1543,10 @@ const elements = {
   monsterListAll: document.getElementById('monster-list-all'),
   monsterListGuild: document.getElementById('monster-list-guild'),
   monsterListCairos: document.getElementById('monster-list-cairos'),
+  
+  partyListRaid: document.getElementById('raid-party-list'),
+  raidSetCount: document.getElementById('raid-set-count'),
+  btnAddRaidParty: document.getElementById('btn-add-raid-party'),
   
   monsterCount: document.getElementById('monster-count'),
   guildCount: document.getElementById('guild-count'),
@@ -1694,6 +1952,27 @@ function initApp() {
             }
             updated = true;
           }
+          // 8. タルタロスの迷宮 コト表記の自動修正（「コト」➔「コトス」）
+          if (p.dungeon && p.dungeon.includes('コト・火')) {
+            p.dungeon = p.dungeon.replace('コト・火', 'コトス・火');
+            updated = true;
+          }
+          if (p.name && p.name.includes('コト(火)')) {
+            p.name = p.name.replace('コト(火)', 'コトス(火)');
+            updated = true;
+          }
+          if (p.name && p.name.includes('コト・火')) {
+            p.name = p.name.replace('コト・火', 'コトス・火');
+            updated = true;
+          }
+        }
+      });
+
+      // 9. 異界レイドパーティの自動追加
+      PRESET_PARTIES.filter(pr => pr.dungeonCategory === '異界レイド').forEach(pr => {
+        if (!parties.some(p => p.id === pr.id)) {
+          parties.push(pr);
+          updated = true;
         }
       });
 
@@ -1709,6 +1988,35 @@ function initApp() {
     parties = [...PRESET_PARTIES];
     savePartiesToLocalStorage();
     showToast('カイロス周回パーティ初期データを読み込みました！');
+  }
+
+  // 異界レイドデータのロード
+  const localRaidData = localStorage.getItem('summoners_war_raid_data');
+  if (localRaidData) {
+    try {
+      raidSets = JSON.parse(localRaidData);
+      let raidUpdated = false;
+      PRESET_RAID_SETS.forEach(preset => {
+        const curIdx = raidSets.findIndex(s => s.id === preset.id);
+        if (curIdx === -1) {
+          raidSets.push(preset);
+          raidUpdated = true;
+        } else {
+          // メモやチーム内容を最新化
+          raidSets[curIdx] = preset;
+          raidUpdated = true;
+        }
+      });
+      if (raidUpdated) {
+        saveRaidSetsToLocalStorage();
+      }
+    } catch (e) {
+      raidSets = [...PRESET_RAID_SETS];
+      saveRaidSetsToLocalStorage();
+    }
+  } else {
+    raidSets = [...PRESET_RAID_SETS];
+    saveRaidSetsToLocalStorage();
   }
   
   sortMonsters();
@@ -1781,6 +2089,7 @@ function renderAll() {
   renderMonsterList('cairos', elements.monsterListCairos, elements.cairosCount);
   renderParties();
   renderGuildTartarosParties();
+  renderRaidParties();
 }
 
 // リストの描画
@@ -2360,7 +2669,7 @@ const BOSS_STRATEGY_DATA = {
     title: 'タルタロスの迷宮 4大ボス攻略概要',
     badge: '15編成登録済',
     badgeClass: 'bg-tartaros',
-    text: '<strong>【迷宮攻略の鉄則】</strong>中ボス（レオス・コト・ギエス）を倒すとタルタロス主の強化パッシブが解除されます。各ボスのギミックに特化した最適編成を選んで挑戦しましょう！'
+    text: '<strong>【迷宮攻略の鉄則】</strong>中ボス（レオス・コトス・ギエス）を倒すとタルタロス主の強化パッシブが解除されます。各ボスのギミックに特化した最適編成を選んで挑戦しましょう！'
   },
   'レオス': {
     theme: 'theme-leos',
@@ -2370,13 +2679,21 @@ const BOSS_STRATEGY_DATA = {
     badgeClass: 'bg-水',
     text: '<strong>【免疫を切らさない＋左右ルーン破壊】</strong>レオスの「凍結の息（スキル延長）」と「絶対零度（全体凍結）」は免疫で100%遮断可能！ジュリー等の全体攻撃型は被弾で火力が落ちるため、フレスベルグやシュタルク等の風属性単体アタッカーで左右ルーン（凍結・激怒）を最優先破壊しましょう。'
   },
-  'コト': {
+  'コトス': {
     theme: 'theme-koto',
     icon: '🔥',
-    title: '火の守護者 コト (Koto) 攻略の掟',
+    title: '火の守護者 コトス (Kotos) 攻略の掟',
     badge: '火属性ボス',
     badgeClass: 'bg-火',
-    text: '<strong>【攻撃弱化(剣折り)＋被ダメカット】</strong>コトの「焦熱地獄」は即死級ですが、ダリオンのスキル2等で<strong>剣折りを入れるとダメージが半減</strong>します！さらにダリオン＋ヒンメルの二重パッシブで被ダメ40%カットし、水属性有利アタッカーで安全に撃破します。'
+    text: '<strong>【攻撃弱化(剣折り)＋被ダメカット】</strong>コトスの「焦熱地獄」は即死級ですが、ダリオンのスキル2等で<strong>剣折りを入れるとダメージが半減</strong>します！さらにダリオン＋ヒンメルの二重パッシブで被ダメ40%カットし、水属性有利アタッカーで安全に撃破します。'
+  },
+  'コト': { // 後方互換性のためエイリアス
+    theme: 'theme-koto',
+    icon: '🔥',
+    title: '火の守護者 コトス (Kotos) 攻略の掟',
+    badge: '火属性ボス',
+    badgeClass: 'bg-火',
+    text: '<strong>【攻撃弱化(剣折り)＋被ダメカット】</strong>コトスの「焦熱地獄」は即死級ですが、ダリオンのスキル2等で<strong>剣折りを入れるとダメージが半減</strong>します！さらにダリオン＋ヒンメルの二重パッシブで被ダメ40%カットし、水属性有利アタッカーで安全に撃破します。'
   },
   'ギエス': {
     theme: 'theme-guilles',
@@ -2407,7 +2724,7 @@ function renderGuildTartarosParties() {
   // 各ボスのカウント更新
   const countAll = tartarosParties.length;
   const countLeos = tartarosParties.filter(p => (p.dungeon && p.dungeon.includes('レオス')) || (p.name && p.name.includes('レオス'))).length;
-  const countKoto = tartarosParties.filter(p => (p.dungeon && p.dungeon.includes('コト')) || (p.name && p.name.includes('コト'))).length;
+  const countKoto = tartarosParties.filter(p => (p.dungeon && (p.dungeon.includes('コトス') || p.dungeon.includes('コト'))) || (p.name && (p.name.includes('コトス') || p.name.includes('コト')))).length;
   const countGuilles = tartarosParties.filter(p => (p.dungeon && p.dungeon.includes('ギエス')) || (p.name && p.name.includes('ギエス'))).length;
   const countTartarus = tartarosParties.filter(p => (p.dungeon && (p.dungeon.includes('タルタロス・主') || p.dungeon.includes('タルタロス (主)'))) || (p.name && (p.name.includes('タルタロス(主)') || p.name.includes('タルタロス・主')))).length;
 
@@ -2533,6 +2850,238 @@ function switchTartarosBoss(boss) {
     });
   }
   renderGuildTartarosParties();
+}
+
+// -----------------------------------------------------------------------------
+// 5-4. 異界レイド (1人レイド・ソロレイド) 描画ロジック & 詳細モーダル
+// -----------------------------------------------------------------------------
+
+function saveRaidSetsToLocalStorage() {
+  localStorage.setItem('summoners_war_raid_data', JSON.stringify(raidSets));
+}
+
+function renderRaidParties() {
+  if (!elements.partyListRaid) return;
+  elements.partyListRaid.innerHTML = '';
+
+  const filteredSets = raidSets.filter(set => {
+    if (searchQuery.trim() === '') return true;
+    const q = searchQuery.toLowerCase();
+    const nameMatch = (set.name || '').toLowerCase().includes(q);
+    const summaryMatch = (set.summary || '').toLowerCase().includes(q);
+    const reqMatch = (set.requirementsMemo || '').toLowerCase().includes(q);
+    const speedMatch = (set.speedTuningMemo || '').toLowerCase().includes(q);
+    
+    // 各チームのメンバー検索
+    const teams = [set.team1, set.team2, set.team3];
+    const memberMatch = teams.some(t => {
+      if (!t) return false;
+      const allMembers = [...(t.frontline || []), ...(t.backline || [])];
+      return allMembers.some(m => (m.name || '').toLowerCase().includes(q) || (m.role || '').toLowerCase().includes(q));
+    });
+
+    return nameMatch || summaryMatch || reqMatch || speedMatch || memberMatch;
+  });
+
+  if (elements.raidSetCount) {
+    elements.raidSetCount.textContent = filteredSets.length;
+  }
+
+  if (filteredSets.length === 0) {
+    const emptyDiv = document.createElement('div');
+    emptyDiv.className = 'empty-state';
+    emptyDiv.innerHTML = `
+      <div class="empty-icon">🔍</div>
+      <p style="font-weight: 600; color: #fff; margin-bottom: 6px;">条件に一致するレイド構成が見つかりません</p>
+      <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">「${escapeHtml(searchQuery)}」の検索条件を変更してください。</p>
+    `;
+    elements.partyListRaid.appendChild(emptyDiv);
+    return;
+  }
+
+  filteredSets.forEach(set => {
+    const card = document.createElement('div');
+    card.className = 'raid-set-card';
+    card.id = `raid-set-${set.id}`;
+
+    // チーム生成ヘルパー
+    const renderTeamBox = (team, num, highlightClass) => {
+      if (!team) return '';
+      const renderMonsters = (list) => {
+        return list.map(m => `
+          <div class="raid-mini-chip ${m.isLeader ? 'is-leader' : ''}">
+            <div class="raid-mini-attr attr-${m.attribute}">${m.attribute}</div>
+            <div class="raid-mini-name">${escapeHtml(m.name)}</div>
+            <div class="raid-mini-role">${escapeHtml(m.role || '')}</div>
+            ${m.runes ? `<div class="raid-mini-runes">${escapeHtml(m.runes)}</div>` : ''}
+          </div>
+        `).join('');
+      };
+
+      return `
+        <div class="raid-team-box ${highlightClass}">
+          <div class="raid-team-header">
+            <span class="raid-team-tag">TEAM ${num}</span>
+            <span class="raid-team-title">${escapeHtml(team.name.replace(/^TEAM \d+:\s*/, ''))}</span>
+          </div>
+          <div class="raid-team-leader-info">
+            <span>👑 ${escapeHtml(team.leaderInfo || 'リーダー設定済')}</span>
+          </div>
+          <div class="raid-line-section">
+            <div class="raid-line-label">🛡️ 前衛 (Frontline)</div>
+            <div class="raid-line-monsters">
+              ${renderMonsters(team.frontline || [])}
+            </div>
+          </div>
+          <div class="raid-line-section">
+            <div class="raid-line-label">⚔️ 後衛 (Backline)</div>
+            <div class="raid-line-monsters">
+              ${renderMonsters(team.backline || [])}
+            </div>
+          </div>
+        </div>
+      `;
+    };
+
+    card.innerHTML = `
+      <div class="raid-set-header">
+        <div class="raid-set-title-wrap">
+          <span class="raid-set-badge-tag">${escapeHtml(set.tag || 'ソロレイド')}</span>
+          <h4 class="raid-set-name">${escapeHtml(set.name)}</h4>
+          <div class="raid-set-meta">
+            <span class="raid-meta-time">⏱️ ${escapeHtml(set.averageTime)}</span>
+            <span class="raid-meta-rate">🛡️ 勝率 ${escapeHtml(set.successRate)}</span>
+            <span>👥 3チーム同時出撃 (計18体)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="raid-teams-grid">
+        ${renderTeamBox(set.team1, 1, 'team-highlight-1')}
+        ${renderTeamBox(set.team2, 2, 'team-highlight-2')}
+        ${renderTeamBox(set.team3, 3, 'team-highlight-3')}
+      </div>
+
+      <div class="raid-set-footer">
+        <div class="raid-set-summary-text">
+          💡 ${escapeHtml(set.summary)}
+        </div>
+        <button class="btn-raid-detail" data-set-id="${set.id}">
+          <span>📖 詳細攻略・18体ステータス基準</span>
+        </button>
+      </div>
+    `;
+
+    // 詳細ボタンイベント
+    const detailBtn = card.querySelector('.btn-raid-detail');
+    if (detailBtn) {
+      detailBtn.addEventListener('click', () => {
+        openRaidSetDetailModal(set.id);
+      });
+    }
+
+    elements.partyListRaid.appendChild(card);
+  });
+}
+
+// 異界レイドセット詳細モーダル
+function openRaidSetDetailModal(setId) {
+  const set = raidSets.find(s => s.id === setId) || PRESET_RAID_SETS.find(s => s.id === setId);
+  if (!set) return;
+
+  elements.partyModalDungeon.textContent = "異界レイド (ソロ・カドゥルー5階)";
+  elements.partyModalDungeon.className = "party-modal-dungeon bg-raid";
+  elements.partyModalName.textContent = set.name;
+  elements.partyModalTime.textContent = set.averageTime;
+  elements.partyModalRate.textContent = set.successRate;
+
+  // 18体メンバー表示エリアの構築
+  elements.partyModalMembersList.innerHTML = '';
+  const teamsContainer = document.createElement('div');
+  teamsContainer.style.display = 'flex';
+  teamsContainer.style.flexDirection = 'column';
+  teamsContainer.style.gap = '16px';
+  teamsContainer.style.width = '100%';
+
+  const renderModalTeam = (team, num, borderCol) => {
+    if (!team) return;
+    const teamWrapper = document.createElement('div');
+    teamWrapper.style.background = 'rgba(15, 23, 42, 0.7)';
+    teamWrapper.style.border = `1px solid ${borderCol}`;
+    teamWrapper.style.borderRadius = '8px';
+    teamWrapper.style.padding = '12px';
+
+    teamWrapper.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;">
+        <span style="font-weight:800; font-size:0.9rem; color:${borderCol};">TEAM ${num}: ${escapeHtml(team.name.replace(/^TEAM \d+:\s*/, ''))}</span>
+        <span style="font-size:0.75rem; color:#fbbf24; font-weight:700;">👑 ${escapeHtml(team.leaderInfo)}</span>
+      </div>
+      <div style="font-size:0.75rem; color:#94a3b8; font-weight:700; margin-bottom:4px;">🛡️ 【前衛】(耐久ライン: 防御+1200〜1400 / 体力+20000)</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:6px; margin-bottom:10px;">
+        ${team.frontline.map(m => `
+          <div style="background:rgba(30,41,59,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:6px 8px; font-size:0.78rem;">
+            <div style="font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
+              <span class="attr-${m.attribute}" style="font-size:0.6rem; padding:1px 5px; border-radius:3px;">${m.attribute}</span>
+              ${escapeHtml(m.name)}
+            </div>
+            <div style="font-size:0.7rem; color:#94a3b8; margin-top:2px;">${escapeHtml(m.role)}</div>
+            <div style="font-size:0.68rem; color:#38bdf8; margin-top:2px;">📌 ${escapeHtml(m.runes)}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div style="font-size:0.75rem; color:#94a3b8; font-weight:700; margin-bottom:4px;">⚔️ 【後衛】(アタッカー＆弱化解除・サポート)</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:6px;">
+        ${team.backline.map(m => `
+          <div style="background:rgba(30,41,59,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:6px 8px; font-size:0.78rem;">
+            <div style="font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
+              <span class="attr-${m.attribute}" style="font-size:0.6rem; padding:1px 5px; border-radius:3px;">${m.attribute}</span>
+              ${escapeHtml(m.name)}
+              ${m.isLeader ? '<span style="color:#fbbf24; font-size:0.7rem;">👑(L)</span>' : ''}
+            </div>
+            <div style="font-size:0.7rem; color:#94a3b8; margin-top:2px;">${escapeHtml(m.role)}</div>
+            <div style="font-size:0.68rem; color:#38bdf8; margin-top:2px;">📌 ${escapeHtml(m.runes)}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    teamsContainer.appendChild(teamWrapper);
+  };
+
+  renderModalTeam(set.team1, 1, '#f43f5e');
+  renderModalTeam(set.team2, 2, '#38bdf8');
+  renderModalTeam(set.team3, 3, '#c084fc');
+  elements.partyModalMembersList.appendChild(teamsContainer);
+
+  // 行動順・速度調整
+  if (set.speedTuningMemo && set.speedTuningMemo.trim() !== '') {
+    elements.partyModalTurnOrder.textContent = set.speedTuningMemo;
+    elements.partyModalSpeedSection.style.display = 'block';
+  } else {
+    elements.partyModalSpeedSection.style.display = 'none';
+  }
+
+  // ステータス基準と重要鉄則
+  if (set.requirementsMemo && set.requirementsMemo.trim() !== '') {
+    elements.partyModalRequirements.textContent = set.requirementsMemo;
+    elements.partyModalReqSection.style.display = 'block';
+  } else {
+    elements.partyModalReqSection.style.display = 'none';
+  }
+
+  // 攻略メモ
+  if (set.strategyMemo && set.strategyMemo.trim() !== '') {
+    elements.partyModalTarget.textContent = set.strategyMemo;
+    elements.partyModalTargetSection.style.display = 'block';
+  } else {
+    elements.partyModalTargetSection.style.display = 'none';
+  }
+
+  if (elements.btnEditPartyFromModal) {
+    elements.btnEditPartyFromModal.style.display = 'none';
+  }
+
+  elements.partyDetailModal.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
 
 // 6. モーダル（詳細）制御
@@ -2717,6 +3266,12 @@ function setupEventListeners() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
           return;
         }
+        if (btn.dataset.dungeon === '異界レイド') {
+          // 異界レイドタブへスムーズにジャンプ
+          switchTab('raid');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
         elements.dungeonBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         dungeonFilter = btn.dataset.dungeon;
@@ -2838,7 +3393,7 @@ function setupEventListeners() {
   if (elements.btnAddGuildParty) {
     elements.btnAddGuildParty.addEventListener('click', () => {
       let defaultDungeonName = 'タルタロスの迷宮 (レオス・水)';
-      if (tartarosBossFilter === 'コト') defaultDungeonName = 'タルタロスの迷宮 (コト・火)';
+      if (tartarosBossFilter === 'コトス' || tartarosBossFilter === 'コト') defaultDungeonName = 'タルタロスの迷宮 (コトス・火)';
       else if (tartarosBossFilter === 'ギエス') defaultDungeonName = 'タルタロスの迷宮 (ギエス・風)';
       else if (tartarosBossFilter === 'タルタロス') defaultDungeonName = 'タルタロスの迷宮 (タルタロス・主)';
       openPartyForm(null, defaultDungeonName);
@@ -2851,6 +3406,13 @@ function setupEventListeners() {
       btn.addEventListener('click', () => {
         switchTartarosBoss(btn.dataset.boss);
       });
+    });
+  }
+
+  // 異界レイド パーティ追加ボタン
+  if (elements.btnAddRaidParty) {
+    elements.btnAddRaidParty.addEventListener('click', () => {
+      openPartyForm(null, '異界レイド (ソロ・カドゥルー5階)');
     });
   }
 }

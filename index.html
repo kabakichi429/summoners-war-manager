@@ -89,8 +89,8 @@
           <button class="boss-tab-btn boss-tab-leos" data-boss="レオス">
             <span class="boss-tab-icon">💧</span> レオス (水・<span id="count-boss-leos">5</span>)
           </button>
-          <button class="boss-tab-btn boss-tab-koto" data-boss="コト">
-            <span class="boss-tab-icon">🔥</span> コト (火・<span id="count-boss-koto">3</span>)
+          <button class="boss-tab-btn boss-tab-koto" data-boss="コトス">
+            <span class="boss-tab-icon">🔥</span> コトス (火・<span id="count-boss-koto">3</span>)
           </button>
           <button class="boss-tab-btn boss-tab-guilles" data-boss="ギエス">
             <span class="boss-tab-icon">🍃</span> ギエス (風・<span id="count-boss-guilles">3</span>)
@@ -142,6 +142,7 @@
       <!-- ダンジョン別フィルター (パーティ表示時) -->
       <div class="dungeon-filters" id="dungeon-filter-area">
         <button class="dungeon-btn active" data-dungeon="all">すべて</button>
+        <button class="dungeon-btn dungeon-raid" data-dungeon="異界レイド">異界レイド</button>
         <button class="dungeon-btn dungeon-tartaros" data-dungeon="タルタロス">迷宮ボス</button>
         <button class="dungeon-btn dungeon-giants" data-dungeon="巨人">巨人深淵</button>
         <button class="dungeon-btn dungeon-dragons" data-dungeon="ドラゴン">ドラゴン深淵</button>
@@ -166,6 +167,68 @@
         <div class="monster-grid" id="monster-list-cairos">
           <!-- JSで動的に生成 -->
         </div>
+      </div>
+    </div>
+
+    <!-- 異界レイドタブ (1人レイド・ソロレイド) -->
+    <div id="tab-content-raid" class="tab-pane">
+      <!-- レイド戦略概要バナー -->
+      <div class="raid-strategy-card">
+        <div class="raid-strategy-header">
+          <div class="raid-strategy-title-wrap">
+            <span class="raid-strategy-icon">👹</span>
+            <div>
+              <h3 class="raid-strategy-title">異界レイド カドゥルー5階 (ソロレイド)</h3>
+              <p class="raid-strategy-subtitle">プレイヤー単独で3チーム（前衛・後衛 計18体）を同時指揮する最高難度コンテンツ</p>
+            </div>
+          </div>
+          <span class="raid-strategy-badge">3チーム同時出撃</span>
+        </div>
+        <div class="raid-strategy-rules-grid">
+          <div class="raid-rule-item">
+            <span class="raid-rule-num">①</span>
+            <div class="raid-rule-text">
+              <strong>モンスター重複不可</strong>
+              <span>18体すべて異なるモンスターで編成（カリンやダリオンも1体のみ）</span>
+            </div>
+          </div>
+          <div class="raid-rule-item">
+            <span class="raid-rule-num">②</span>
+            <div class="raid-rule-text">
+              <strong>前衛は防御+1200以上</strong>
+              <span>前衛（2〜4体）はボスの激しい連撃に耐える高耐久（反撃・闘志ルーン推奨）</span>
+            </div>
+          </div>
+          <div class="raid-rule-item">
+            <span class="raid-rule-num">③</span>
+            <div class="raid-rule-text">
+              <strong>リーダー3種分散</strong>
+              <span>「攻撃力UP」「クリ率UP」「抵抗力UP」を3チームに分散し全体恩恵</span>
+            </div>
+          </div>
+          <div class="raid-rule-item">
+            <span class="raid-rule-num">④</span>
+            <div class="raid-rule-text">
+              <strong>剣折り・回復阻害・解除</strong>
+              <span>攻撃弱化（剣折り）と回復阻害を絶対に切らさず、弱化解除役を各チーム配置</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ツールバー -->
+      <div class="raid-toolbar">
+        <div class="list-summary">
+          <span id="raid-set-count">3</span>セットの1人レイド構成 (計9チーム / 54枠)
+        </div>
+        <button id="btn-add-raid-party" class="btn btn-primary btn-sm">
+          <span>＋ 新規レイド編成</span>
+        </button>
+      </div>
+
+      <!-- レイドセット一覧コンテナ -->
+      <div class="raid-sets-container" id="raid-party-list">
+        <!-- JSで動的に生成 -->
       </div>
     </div>
 
@@ -385,9 +448,10 @@
               <option value="鋼鉄のダンジョン">鋼鉄のダンジョン</option>
               <option value="審判のダンジョン">審判のダンジョン</option>
               <option value="タルタロスの迷宮 (レオス・水)">タルタロスの迷宮 (レオス・水)</option>
-              <option value="タルタロスの迷宮 (コト・火)">タルタロスの迷宮 (コト・火)</option>
+              <option value="タルタロスの迷宮 (コトス・火)">タルタロスの迷宮 (コトス・火)</option>
               <option value="タルタロスの迷宮 (ギエス・風)">タルタロスの迷宮 (ギエス・風)</option>
               <option value="タルタロスの迷宮 (タルタロス・主)">タルタロスの迷宮 (タルタロス・主)</option>
+              <option value="異界レイド (ソロ・カドゥルー5階)">異界レイド (ソロ・カドゥルー5階)</option>
               <option value="その他">その他</option>
             </select>
           </div>
@@ -624,6 +688,12 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
       </span>
       <span class="nav-label">カイロス</span>
+    </button>
+    <button class="nav-item" data-tab="raid">
+      <span class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+      </span>
+      <span class="nav-label">異界レイド</span>
     </button>
     <button class="nav-item" data-tab="form" id="nav-item-form">
       <span class="nav-icon">
