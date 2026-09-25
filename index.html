@@ -232,6 +232,120 @@
       </div>
     </div>
 
+    <!-- 次元ホールタブ (遺跡攻略・2次覚醒・異次元レイド) -->
+    <div id="tab-content-dimension" class="tab-pane">
+      <!-- 次元ホール サブナビゲーション -->
+      <div class="dimension-subnav">
+        <div class="subnav-tabs">
+          <button class="subnav-tab active" id="btn-dim-subnav-raid" data-dim-subtab="raid">
+            <span class="subnav-icon">🌌</span> 異次元レイド (<span id="dim-raid-count">3</span>)
+          </button>
+          <button class="subnav-tab" id="btn-dim-subnav-remains" data-dim-subtab="remains">
+            <span class="subnav-icon">🏛️</span> 各次元の遺跡 (5階) (<span id="dim-remains-count">0</span>)
+          </button>
+          <button class="subnav-tab" id="btn-dim-subnav-awakening" data-dim-subtab="awakening">
+            <span class="subnav-icon">⚡</span> 2次覚醒ダンジョン (<span id="dim-awakening-count">0</span>)
+          </button>
+        </div>
+        <button id="btn-add-dim-party" class="btn btn-gold-sm">
+          <span>＋</span> 次元パーティ追加
+        </button>
+      </div>
+
+      <!-- 1. 異次元レイド サブペイン -->
+      <div id="dim-subpane-raid" class="dim-subpane active">
+        <!-- 異次元レイド戦略概要バナー -->
+        <div class="dim-raid-strategy-card">
+          <div class="dim-raid-strategy-header">
+            <div class="dim-raid-strategy-title-wrap">
+              <span class="dim-raid-strategy-icon">🌌</span>
+              <div>
+                <h3 class="dim-raid-strategy-title">異次元レイド (Dimension Raid)</h3>
+                <p class="dim-raid-strategy-subtitle">古代練磨石・ジェムを獲得する3フェーズ連続戦闘（Phase 1: ★4以下 / Phase 2: 同属性 / Phase 3: 4タイプ）</p>
+              </div>
+            </div>
+            <span class="dim-raid-strategy-badge">3フェーズ連戦</span>
+          </div>
+          <div class="dim-raid-rules-grid">
+            <div class="dim-rule-item">
+              <span class="dim-rule-num">P1</span>
+              <div class="dim-rule-text">
+                <strong>カルザン制限 (★4以下のみ)</strong>
+                <span>純正★4以下のモンスターのみ編成可能。ヴェルデハイル(L)やフラン、二次覚醒ラオーク・クローが大活躍</span>
+              </div>
+            </div>
+            <div class="dim-rule-item">
+              <span class="dim-rule-num">P2</span>
+              <div class="dim-rule-text">
+                <strong>エルニア制限 (同属性のみ)</strong>
+                <span>全滅・転換後に同一属性のみ出撃。ライリー・タラニス・ルシェン・アミール等の風統一パが最メジャー</span>
+              </div>
+            </div>
+            <div class="dim-rule-item">
+              <span class="dim-rule-num">P3</span>
+              <div class="dim-rule-text">
+                <strong>サクリファス制限 (4タイプ各1体)</strong>
+                <span>攻撃・防御・体力・サポートの4タイプ各1体編成。ヒンメル/バーレイグ等の超高火力で最終決着</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="raid-toolbar">
+          <div class="list-summary">
+            異次元レイド 攻略セット (<span id="dim-raid-set-count">3</span>編成)
+          </div>
+          <button id="btn-open-dim-raid-modal" class="btn btn-secondary btn-sm">
+            <span>📖 異次元レイド解説・ステータス基準</span>
+          </button>
+        </div>
+
+        <!-- 異次元レイドセット一覧 -->
+        <div class="dim-raid-sets-container" id="dim-raid-set-list">
+          <!-- JSで動的生成 -->
+        </div>
+      </div>
+
+      <!-- 2. 各次元の遺跡 (5階) サブペイン -->
+      <div id="dim-subpane-remains" class="dim-subpane" style="display: none;">
+        <!-- 次元フィルター -->
+        <div class="dim-filter-bar" id="dim-remains-filter-bar">
+          <button class="dim-filter-btn active" data-dim-remains="all">すべて</button>
+          <button class="dim-filter-btn dim-btn-karzhan" data-dim-remains="カルザン">🦅 カルザン (★4以下)</button>
+          <button class="dim-filter-btn dim-btn-ellunia" data-dim-remains="エルニア">🌲 エルニア (同属性)</button>
+          <button class="dim-filter-btn dim-btn-lumel" data-dim-remains="ルメール">🏜️ ルメール (★15以下)</button>
+          <button class="dim-filter-btn dim-btn-khalderun" data-dim-remains="サクリファス">💀 サクリファス (4タイプ)</button>
+          <button class="dim-filter-btn dim-btn-catria" data-dim-remains="カトリア">🛡️ カトリア (速度制限)</button>
+        </div>
+
+        <!-- 選択中の次元の制限＆攻略ガイドバナー -->
+        <div class="dim-remains-guide-banner" id="dim-remains-guide-banner">
+          <!-- JSで動的生成 -->
+        </div>
+
+        <div class="party-grid" id="dim-remains-party-list">
+          <!-- JSで動的生成 -->
+        </div>
+      </div>
+
+      <!-- 3. 2次覚醒ダンジョン サブペイン -->
+      <div id="dim-subpane-awakening" class="dim-subpane" style="display: none;">
+        <!-- 2次覚醒フィルター -->
+        <div class="dim-filter-bar" id="dim-awakening-filter-bar">
+          <button class="dim-filter-btn active" data-dim-awakening="all">すべて</button>
+          <button class="dim-filter-btn" data-dim-awakening="イヌガミ">イヌガミ (カルザン)</button>
+          <button class="dim-filter-btn" data-dim-awakening="オオカミ人間">オオカミ人間 (カルザン)</button>
+          <button class="dim-filter-btn" data-dim-awakening="ピクシー">ピクシー (エルニア)</button>
+          <button class="dim-filter-btn" data-dim-awakening="グリムリッパー">死神 (サクリファス)</button>
+          <button class="dim-filter-btn" data-dim-awakening="フランケン・リビングアーマー">フランケン/リビ強 (カトリア)</button>
+        </div>
+
+        <div class="party-grid" id="dim-awakening-party-list">
+          <!-- JSで動的生成 -->
+        </div>
+      </div>
+    </div>
+
     <!-- 登録・編集タブ -->
     <div id="tab-content-form" class="tab-pane">
       <div class="form-container">
@@ -452,6 +566,13 @@
               <option value="タルタロスの迷宮 (ギエス・風)">タルタロスの迷宮 (ギエス・風)</option>
               <option value="タルタロスの迷宮 (タルタロス・主)">タルタロスの迷宮 (タルタロス・主)</option>
               <option value="異界レイド (ソロ・カドゥルー5階)">異界レイド (ソロ・カドゥルー5階)</option>
+              <option value="次元ホール (異次元レイド)">次元ホール (異次元レイド)</option>
+              <option value="次元ホール (カルザン遺跡 5階)">次元ホール (カルザン遺跡 5階)</option>
+              <option value="次元ホール (エルニア遺跡 5階)">次元ホール (エルニア遺跡 5階)</option>
+              <option value="次元ホール (ルメール遺跡 5階)">次元ホール (ルメール遺跡 5階)</option>
+              <option value="次元ホール (サクリファス遺跡 5階)">次元ホール (サクリファス遺跡 5階)</option>
+              <option value="次元ホール (カトリア遺跡 5階)">次元ホール (カトリア遺跡 5階)</option>
+              <option value="次元ホール (2次覚醒ダンジョン)">次元ホール (2次覚醒ダンジョン)</option>
               <option value="その他">その他</option>
             </select>
           </div>
@@ -669,6 +790,98 @@
     </div>
   </div>
 
+  <!-- 異次元レイド詳細解説モーダル -->
+  <div class="modal-backdrop" id="dim-raid-detail-modal" style="display: none;">
+    <div class="modal-container party-modal-container dim-raid-modal-container">
+      <div class="modal-header">
+        <div class="modal-title-area">
+          <div class="party-modal-tags">
+            <span class="party-dungeon-badge dim-badge">次元ホール</span>
+            <span class="party-meta-pill">🌌 異次元レイド</span>
+            <span class="party-meta-pill winrate">🏆 3フェーズ完全攻略</span>
+          </div>
+          <h2 id="dim-raid-modal-title">異次元レイド 攻略要件＆ステータス基準</h2>
+        </div>
+        <button id="dim-raid-modal-close" class="modal-close-btn">&times;</button>
+      </div>
+
+      <div class="modal-body form-scroll-body" id="dim-raid-modal-body">
+        <!-- 概要 -->
+        <div class="party-detail-section">
+          <h3><span class="section-icon">📜</span> 異次元レイドの基本ルールと戦闘フロー</h3>
+          <p class="detail-value text-pre">
+【戦闘概要】
+異次元レイドは、古代の練磨石・ジェム（古代ルーンの強化素材）を獲得するための最高難度PVEコンテンツです。
+1つの戦闘で3つの異なるフェーズ（Phase 1 ➔ Phase 2 ➔ Phase 3）が連続して発生し、各フェーズごとに異なる次元ホールの出撃制限ルールが適用されます。
+
+【重要：フェーズ切り替えの仕組み】
+・Phase 1（カルザンルール）：モンスターが全滅するかボスを削り切るとPhase 2へ自動移行。
+・Phase 2（エルニアルール）：Phase 1の編成とは別に、指定された同一属性のチームが出撃。
+・Phase 3（サクリファスルール）：4タイプ（攻撃・防御・体力・サポート）各1体の最終決戦チームが出撃。
+※各フェーズのモンスターは重複不可です（15体すべて別モンスター）。
+          </p>
+        </div>
+
+        <!-- Phase 1 解説 -->
+        <div class="party-detail-section dim-phase-section dim-phase-1">
+          <h3><span class="section-icon">🦅</span> Phase 1：カルザン制限 (純正★4以下のみ)</h3>
+          <p class="detail-value text-pre">
+【編成の要点】
+・ヴェルデハイル(L)による回転力＋フランの免疫・攻撃バフ・回復が王道。
+・二次覚醒ラオーク（協力攻撃）と二次覚醒クロー（弱化特効大打撃）でボスのHPを高速で削り落とします。
+・防御弱化と攻撃弱化（剣折り）を初手から切らさないことが安定の秘訣。
+
+【推奨ステータス基準】
+・ヴェルデハイル: 暴走+反撃 (クリ率100%必須、速度+80以上、体力+15000以上)
+・フラン: 迅速+反撃/元気 (速度+110以上、効果抵抗50%以上、体力+18000以上)
+・二次覚醒クロー: 激怒+刃 (攻撃+1400以上、クリ率85%以上、クリダメ180%以上)
+・二次覚醒ラオーク: 暴走+刃 (攻撃+1300以上、クリ率85%以上、クリダメ160%以上)
+          </p>
+        </div>
+
+        <!-- Phase 2 解説 -->
+        <div class="party-detail-section dim-phase-section dim-phase-2">
+          <h3><span class="section-icon">🌲</span> Phase 2：エルニア制限 (同一属性のみ出撃)</h3>
+          <p class="detail-value text-pre">
+【編成の要点】
+・最も安定するのは「風属性統一パーティ」。
+・ライリー（毎ターン全体免疫＆攻撃バフ）とタラニス（全体防御バフ＋自己復活＆味方蘇生）の組み合わせが鉄壁。
+・アタッカーは風イフリート（アカムアミール）やルシェン、サバナ、フレスベルグを採用。
+
+【推奨ステータス基準】
+・ライリー: 暴走+意志 (速度+100以上、体力+25000以上、防御+800以上)
+・タラニス: 守護+守護+意志 (速度+70以上、防御+1400以上、体力+18000以上)
+・アカムアミール: 激怒+刃 (攻撃+1300以上、クリ率85%以上、クリダメ170%以上)
+・フレスベルグ: 迅速+刃 (速度+90以上、体力+15000以上、攻撃バフ＆速度バフ供給)
+          </p>
+        </div>
+
+        <!-- Phase 3 解説 -->
+        <div class="party-detail-section dim-phase-section dim-phase-3">
+          <h3><span class="section-icon">💀</span> Phase 3：サクリファス制限 (4タイプ各1体編成)</h3>
+          <p class="detail-value text-pre">
+【編成の要点】
+・「攻撃型」「防御型」「体力型」「サポート型」から各1体ずつ選出（計4体）。
+・ボスの最終狂暴化前に、超高火力アタッカー（ヒンメル、バーレイグ、ジュリーなど）で一気に押し切る。
+・防御型にはタラニス、風パンダ、コッパー、あるいは二次覚醒ベラデオン。
+・体力型には二次覚醒ヴィゴル（回復・速度バフ・盾割り）が最適。
+・サポート型にはルル(2A)やデルフォイ（弱化解除＋免疫）を配置。
+
+【推奨ステータス基準】
+・攻撃型 (ヒンメル/バーレイグ): 激怒+刃 (速度+80以上、クリ率85%以上、クリダメ200%以上)
+・防御型 (風パンダ/ベラデオン): 守護/暴走 (防御+1300以上、体力+18000以上)
+・体力型 (ヴィゴル): 迅速+元気 (速度+115以上、体力+28000以上)
+・サポート型 (デルフォイ/ルル): 迅速+意志 (速度+100以上、効果抵抗70%以上)
+          </p>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button id="dim-raid-modal-btn-close" class="btn btn-primary" style="margin-left: auto;">閉じる</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 下部ナビゲーションバー -->
   <nav class="app-nav">
     <button class="nav-item active" data-tab="all">
@@ -694,6 +907,12 @@
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
       </span>
       <span class="nav-label">異界レイド</span>
+    </button>
+    <button class="nav-item" data-tab="dimension">
+      <span class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+      </span>
+      <span class="nav-label">次元ホール</span>
     </button>
     <button class="nav-item" data-tab="form" id="nav-item-form">
       <span class="nav-icon">

@@ -1348,6 +1348,336 @@ const PRESET_PARTIES = [
     targetMemo: "ボス本体を集中攻撃（カドゥルー5階）。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
+  },
+  // --- 次元ホール (Dimension Hole) 遺跡5階＆2次覚醒 ---
+  {
+    id: "preset-party-dim-karzhan-speed",
+    name: "【カルザン遺跡5階】ヴェルデ＆クロー・ラオーク高速パ (★4以下制限)",
+    dungeon: "次元ホール (カルザン遺跡 5階)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "カルザン",
+    dimensionType: "remains",
+    constraintBadge: "★4以下制限",
+    averageTime: "約40秒",
+    successRate: "99%",
+    members: [
+      { name: "ヴェルデハイル", attribute: "火", role: "速度リーダー・ゲージ回し (L)", runes: "暴走+反撃 (クリ率100%必須)", isLeader: true },
+      { name: "フラン", attribute: "光", role: "全体免疫＋攻撃バフ＋回復＋剣折り", runes: "迅速+反撃 または 暴走", isLeader: false },
+      { name: "ヴィゴル", attribute: "水", role: "全体回復＋速度バフ＋3連盾割り (2A)", runes: "迅速+元気 (速度/体力/体力)", isLeader: false },
+      { name: "ラオーク", attribute: "火", role: "協力攻撃でスキル短縮＋確定盾割り (2A)", runes: "暴走+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "クロー", attribute: "闇", role: "弱化特効「傷口ほじくり返し」でボス瞬殺 (2A)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ ヴィゴル ➔ ラオーク ➔ クロー ➔ ヴェルデハイル",
+    speedTuningMemo: "フランが最速で免疫と剣バフ。ヴィゴルの速度バフ・盾割りからラオークの協力攻撃で味方を連撃させ、クローの一撃でボスのHPを消し去ります。",
+    requirementsMemo: "【★4以下のみ出撃可能】ヴェルデハイルのクリ率100%は絶対。クローは激怒ルーンでクリダメ180%以上推奨。カルザン遺跡5階の古代ルーン周回テンプレ。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-karzhan-safe-f2p",
+    name: "【カルザン遺跡5階】ヴェルデ＆ローレン・カリン 安定F2Pパ (★4以下制限)",
+    dungeon: "次元ホール (カルザン遺跡 5階)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "カルザン",
+    dimensionType: "remains",
+    constraintBadge: "★4以下制限",
+    averageTime: "約52秒",
+    successRate: "99%",
+    members: [
+      { name: "ヴェルデハイル", attribute: "火", role: "速度リーダー・全体ゲージ押し上げ (L)", runes: "迅速+刃 または 暴走 (クリ率100%)", isLeader: true },
+      { name: "カリン", attribute: "火", role: "全体攻撃バフ＋確定剣折り＋回復阻害＋回復", runes: "反撃+元気+元気 (速度/体力/防御)", isLeader: false },
+      { name: "ローレン", attribute: "光", role: "ボス単体確定盾割り＋ゲージ下げ＋剥がし", runes: "迅速+集中 (速度/体力/的中45%+)", isLeader: false },
+      { name: "フラン", attribute: "光", role: "全体免疫＋持続回復＋攻撃力低下", runes: "迅速+元気 (速度/体力/体力)", isLeader: false },
+      { name: "クロー", attribute: "闇", role: "弱化特効単体大砲 (2A)", runes: "激怒+刃 または 猛攻+刃", isLeader: false }
+    ],
+    turnOrder: "ローレン ➔ カリン ➔ フラン ➔ クロー ➔ ヴェルデハイル",
+    speedTuningMemo: "ローレンがボスのゲージを下げて行動を封じ、カリンが剣折りを入れて被ダメを無力化。クローで着実に削り切ります。",
+    requirementsMemo: "【ルーン敷居の低い高安定パ】ローレンとカリンが常時ボスの攻撃力を下げてゲージを奪うため、事故率ゼロで確実に周回可能です。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-ellunia-wind",
+    name: "【エルニア遺跡5階】ライリー＆タラニス・ルシェン風統一パ (同属性制限)",
+    dungeon: "次元ホール (エルニア遺跡 5階)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "エルニア",
+    dimensionType: "remains",
+    constraintBadge: "風属性統一",
+    averageTime: "約55秒",
+    successRate: "99%",
+    members: [
+      { name: "ルシェン", attribute: "風", role: "ダンジョン攻撃33%UP (L)・道中切断一撃一掃", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+      { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＆攻撃バフ・回復 (反射封殺)", runes: "暴走+意志 (速度/体力/体力)", isLeader: false },
+      { name: "タラニス", attribute: "風", role: "全体防御バフ＋自己復活＆味方蘇生保険 (事故ゼロ)", runes: "守護+守護+意志 (速度/防御/防御)", isLeader: false },
+      { name: "アカムアミール", attribute: "風", role: "全体スタン＆弱化比例大砲 (有利属性・高耐久)", runes: "激怒+刃 (攻/クリダメ/攻)", isLeader: false },
+      { name: "フレスベルグ", attribute: "風", role: "全体速度バフ＋攻撃バフ＋烙印・持続回復", runes: "迅速+刃 (速度/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "フレスベルグ ➔ ライリー ➔ タラニス ➔ ルシェン ➔ アカムアミール",
+    speedTuningMemo: "フレスベルグが加速しライリーが常時免疫を張ってボスの反射・絶望スタンを封殺。タラニスの防御バフで耐久を極限まで高め、アミールとルシェンで削り切ります。",
+    requirementsMemo: "【同属性のみ出撃可能（風統一）】エルニアボスは属性反射と強力な全体攻撃を持つため、ライリーの常時免疫とタラニスの蘇生保険が最適解。古代絶望・意志ルーン周回の決定版。",
+    targetMemo: "道中ルシェン一掃、ボス階はボス集中攻撃。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-ellunia-f2p-wind",
+    name: "【エルニア遺跡5階】アカムアミール＆ライリー・シェノン F2P風属性パ",
+    dungeon: "次元ホール (エルニア遺跡 5階)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "エルニア",
+    dimensionType: "remains",
+    constraintBadge: "風属性統一",
+    averageTime: "約1分10秒",
+    successRate: "99%",
+    members: [
+      { name: "アカムアミール", attribute: "風", role: "全体速度リーダー・弱化比例大砲 (L)", runes: "猛攻+刃 または 激怒", isLeader: true },
+      { name: "ライリー", attribute: "風", role: "調合星5・常時全体免疫＋攻撃バフ＋回復", runes: "暴走+元気 (速度/体力/体力)", isLeader: false },
+      { name: "シェノン", attribute: "風", role: "全体防御バフ＋攻撃バフ＋速度低下デバフ (2A)", runes: "絶望+元気 (速度/体力/体力)", isLeader: false },
+      { name: "バナード", attribute: "風", role: "全体ゲージアップ＋速度バフ＋盾割り/剣折り (2A)", runes: "迅速+集中 (速度最速)", isLeader: false },
+      { name: "フレスベルグ", attribute: "風", role: "攻撃・速度バフ＋烙印＋自己回復", runes: "迅速+刃 (速度/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "バナード ➔ フレスベルグ ➔ ライリー ➔ シェノン ➔ アカムアミール",
+    speedTuningMemo: "バナードとフレスベルグで超高速回転。シェノンとライリーの二重バフで被ダメージを最小限に抑え、アミールがトドメを刺します。",
+    requirementsMemo: "【完全無課金（F2P）編成】調合と2次覚醒・ギルドショップキャラのみで構成。ルーン敷居が低く、誰でも確実に周回可能です。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-lumel-stars15",
+    name: "【ルメール遺跡5階】フラン＆クロー・ラオーク・ヴィゴル速攻パ (合計★15制限)",
+    dungeon: "次元ホール (ルメール遺跡 5階)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "ルメール",
+    dimensionType: "remains",
+    constraintBadge: "合計★15以下",
+    averageTime: "約45秒",
+    successRate: "99%",
+    members: [
+      { name: "フラン", attribute: "光", role: "【純★3】攻撃バフ・免疫・回復・剣折り", runes: "迅速+反撃 (速度/体力/体力)", isLeader: false },
+      { name: "クロー", attribute: "闇", role: "【純★3/2A】弱化特効超火力フィニッシャー", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "ラオーク", attribute: "火", role: "【純★3/2A】協力攻撃でスキル短縮＋確定盾割り", runes: "暴走+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "ヴィゴル", attribute: "水", role: "【純★3/2A】全体回復＋速度バフ＋3連盾割り", runes: "迅速+元気 (速度/体力/体力)", isLeader: false },
+      { name: "ベラデオン", attribute: "光", role: "【純★3/2A】ゲージアップ＋回復＋剥がし＋盾割り", runes: "迅速+元気 (速度/防御/体力)", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ ヴィゴル ➔ ベラデオン ➔ ラオーク ➔ クロー",
+    speedTuningMemo: "純正★3×5体＝合計★15ジャストの制限クリア編成！フランとヴィゴルのバフからベラデオン・ラオークが盾割りを入れ、クローが瞬殺します。",
+    requirementsMemo: "【編成モンスターの純正星の合計が★15以下】二次覚醒により実質星5並のステータスを発揮。ボスの吸血・反撃をヴィゴルの回復阻害とクローの瞬間火力で圧倒します。",
+    targetMemo: "ボス集中攻撃。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-lumel-verde-stars15",
+    name: "【ルメール遺跡5階】ヴェルデ＆クロー・ラオーク・シェノン (合計★15制限)",
+    dungeon: "次元ホール (ルメール遺跡 5階)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "ルメール",
+    dimensionType: "remains",
+    constraintBadge: "合計★15以下",
+    averageTime: "約48秒",
+    successRate: "99%",
+    members: [
+      { name: "ヴェルデハイル", attribute: "火", role: "【純★4】速度リーダー・全体ゲージ回し (L)", runes: "暴走+反撃 (クリ率100%必須)", isLeader: true },
+      { name: "シェノン", attribute: "風", role: "【純★2/2A】全体防御バフ＋攻撃バフ", runes: "絶望+元気 (速度/体力/体力)", isLeader: false },
+      { name: "フラン", attribute: "光", role: "【純★3】全体免疫＋回復＋攻撃バフ", runes: "迅速+元気", isLeader: false },
+      { name: "ラオーク", attribute: "火", role: "【純★3/2A】協力攻撃・盾割り", runes: "暴走+刃", isLeader: false },
+      { name: "クロー", attribute: "闇", role: "【純★3/2A】弱化特効超火力フィニッシャー", runes: "激怒+刃", isLeader: false }
+    ],
+    turnOrder: "シェノン ➔ フラン ➔ ラオーク ➔ クロー ➔ ヴェルデハイル",
+    speedTuningMemo: "純4ヴェルデ(4)＋純2シェノン(2)＋純3フラン(3)＋純3ラオーク(3)＋純3クロー(3)＝合計★15！ヴェルデのゲージ回しで手数を圧倒します。",
+    requirementsMemo: "ヴェルデハイルを入れたい場合の最適解。星2のシェノン（2次覚醒）を採用することで合計星15に抑えつつ強力な攻防バフを確保できます。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-khalderun-types",
+    name: "【サクリファス遺跡5階】クロー＆タラニス・ヴィゴル・フラン 4タイプ鉄壁パ",
+    dungeon: "次元ホール (サクリファス遺跡 5階)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "サクリファス",
+    dimensionType: "remains",
+    constraintBadge: "4タイプ各1体",
+    averageTime: "約50秒",
+    successRate: "99%",
+    members: [
+      { name: "クロー", attribute: "闇", role: "【攻撃型/2A】弱化特効「傷口ほじくり返し」でボス瞬殺", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "タラニス", attribute: "風", role: "【防御型】全体防御バフ＋自己復活＆味方蘇生保険 (事故ゼロ)", runes: "守護+守護+意志 (速度/防御/防御)", isLeader: false },
+      { name: "ヴィゴル", attribute: "水", role: "【体力型/2A】全体速度バフ＋持続回復＋3連盾割り", runes: "迅速+元気 (速度/体力/体力)", isLeader: false },
+      { name: "フラン", attribute: "光", role: "【サポート型】全体免疫＋攻撃バフ＋弱化解除・回復", runes: "迅速+反撃 (速度/体力/体力)", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ ヴィゴル ➔ タラニス ➔ クロー",
+    speedTuningMemo: "フランが免疫と攻撃バフを張り死の宣告・持続を完封。ヴィゴルの速度バフ・盾割りからタラニスが防御バフを重ね、クローが特大ダメージで即死させます。",
+    requirementsMemo: "【攻撃・防御・体力・サポートから各1体出撃（計4体）】ボスの死の宣告ギミックをフランの免疫で完全に無効化。万一の事故もタラニスの蘇生保険で100%防ぎます。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-khalderun-f2p",
+    name: "【サクリファス遺跡5階】クロー＆ベラデオン・エスシール・ルル F2P 4タイプパ",
+    dungeon: "次元ホール (サクリファス遺跡 5階)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "サクリファス",
+    dimensionType: "remains",
+    constraintBadge: "4タイプ各1体",
+    averageTime: "約1分05秒",
+    successRate: "99%",
+    members: [
+      { name: "クロー", attribute: "闇", role: "【攻撃型/2A】弱化特効ボス削り", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "ベラデオン", attribute: "光", role: "【防御型/2A】スキル1確定盾割り＋ゲージ上げ＆回復", runes: "迅速+元気 (速度/防御/体力)", isLeader: false },
+      { name: "エスシール", attribute: "光", role: "【体力型/2A】回復＋全体速度バフ＋強化剥がし連撃", runes: "迅速+元気 (速度/体力/体力)", isLeader: false },
+      { name: "ルル", attribute: "水", role: "【サポート型/2A】全体二重弱化解除＋持続回復＋免疫", runes: "暴走+元気 (速度/体力/体力)", isLeader: false }
+    ],
+    turnOrder: "エスシール ➔ ベラデオン ➔ ルル ➔ クロー",
+    speedTuningMemo: "エスシールの速度バフからベラデオンが盾割りを入れ、ルルがデバフを解除しつつクローがトドメを刺します。",
+    requirementsMemo: "【星3・2次覚醒のみの完全F2P編成】純5不使用。ルルの高い弱化解除能力でボスの持続ダメージを無効化します。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-catria-bulldozer",
+    name: "【カトリア遺跡5階】ブルドーザー＆コッパー・ライリー 防御無視速攻パ",
+    dungeon: "次元ホール (カトリア遺跡 5階)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "カトリア",
+    dimensionType: "remains",
+    constraintBadge: "速度制限対応",
+    averageTime: "約1分05秒",
+    successRate: "99%",
+    members: [
+      { name: "ブルドーザー", attribute: "火", role: "防御無視特大打点 (2A)", runes: "守護+守護+意志 (防御/クリダメ/防御)", isLeader: false },
+      { name: "コッパー", attribute: "風", role: "防御無視「雷落とし」でボス粉砕 (2A)", runes: "守護+守護+刃 (防御/クリダメ/防御)", isLeader: false },
+      { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＆攻撃・防御バフ", runes: "暴走+意志 (速度/体力/体力)", isLeader: false },
+      { name: "フラン", attribute: "光", role: "全体攻撃バフ＋回復＋剣折り", runes: "迅速+元気 (速度/体力/体力)", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ ライリー ➔ ブルドーザー ➔ コッパー",
+    speedTuningMemo: "フランとライリーが味方の攻撃力と防御力を高め、ブルドーザーとコッパーがボスの硬いシールドや防御力を無視して数万ダメージで撃ち抜きます。",
+    requirementsMemo: "【カトリア遺跡攻略】ボスの高防御・シールドを防御無視で破壊するのが最も安全。守護ルーンや意志ルーンで防御力を限界まで高めてください。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  // --- 次元ホール 2次覚醒ダンジョン ---
+  {
+    id: "preset-party-dim-awk-inugami",
+    name: "【イヌガミ2次覚醒】ヴェルデ＆フラン・ラオーク・クロー 高速周回パ (カルザン)",
+    dungeon: "次元ホール (2次覚醒ダンジョン)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "カルザン",
+    dimensionType: "awakening",
+    constraintBadge: "イヌガミ2次覚醒",
+    averageTime: "約38秒",
+    successRate: "99%",
+    members: [
+      { name: "ヴェルデハイル", attribute: "火", role: "速度リーダー・ゲージ回し (L)", runes: "暴走+反撃 (クリ率100%必須)", isLeader: true },
+      { name: "フラン", attribute: "光", role: "全体免疫＋攻撃バフ＋回復", runes: "迅速+反撃", isLeader: false },
+      { name: "ラオーク", attribute: "火", role: "協力攻撃・盾割り (2A)", runes: "暴走+刃 (攻撃/クリダメ/攻撃)", isLeader: false },
+      { name: "クロー", attribute: "闇", role: "弱化特効超火力フィニッシャー (2A)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ ラオーク ➔ クロー ➔ ヴェルデハイル",
+    speedTuningMemo: "イヌガミ2次覚醒ダンジョン最速構成。フランのバフからラオークが味方を連撃させ、クローがボスを一撃粉砕。",
+    requirementsMemo: "育成枠（2次覚醒対象のイヌガミ）を入れる場合はラオークと入れ替えて3体引率（ヴェルデ・フラン・クロー＋育成枠）でも50秒台安定。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-awk-werewolf",
+    name: "【オオカミ人間2次覚醒】ヴェルデ＆フラン・クロー・ヴィゴル 高速周回パ (カルザン)",
+    dungeon: "次元ホール (2次覚醒ダンジョン)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "カルザン",
+    dimensionType: "awakening",
+    constraintBadge: "オオカミ人間2次覚醒",
+    averageTime: "約40秒",
+    successRate: "99%",
+    members: [
+      { name: "ヴェルデハイル", attribute: "火", role: "速度リーダー・ゲージ回し (L)", runes: "暴走+反撃 (クリ率100%必須)", isLeader: true },
+      { name: "フラン", attribute: "光", role: "全体免疫＋攻撃バフ＋回復", runes: "迅速+反撃", isLeader: false },
+      { name: "ヴィゴル", attribute: "水", role: "全体回復＋速度バフ＋3連盾割り (2A)", runes: "迅速+元気", isLeader: false },
+      { name: "クロー", attribute: "闇", role: "弱化特効超火力 (2A)", runes: "激怒+刃", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ ヴィゴル ➔ クロー ➔ ヴェルデハイル",
+    speedTuningMemo: "ヴィゴルの速度バフと盾割りからクローが特大打点を叩き込みます。",
+    requirementsMemo: "オオカミ人間（ヴィゴル、エスシール、ジュルタン）の2次覚醒育成用。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-awk-pixie",
+    name: "【ピクシー2次覚醒】ルシェン＆ライリー・タラニス・シェノン 風属性パ (エルニア)",
+    dungeon: "次元ホール (2次覚醒ダンジョン)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "エルニア",
+    dimensionType: "awakening",
+    constraintBadge: "ピクシー2次覚醒",
+    averageTime: "約45秒",
+    successRate: "99%",
+    members: [
+      { name: "ルシェン", attribute: "風", role: "攻撃リーダー・切断で道中一掃 (L)", runes: "激怒+刃", isLeader: true },
+      { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＆攻撃バフ", runes: "暴走+意志", isLeader: false },
+      { name: "タラニス", attribute: "風", role: "全体防御バフ・蘇生保険", runes: "守護+守護+意志", isLeader: false },
+      { name: "シェノン", attribute: "風", role: "【2次覚醒育成枠】攻防バフ・速度低下", runes: "絶望+元気", isLeader: false }
+    ],
+    turnOrder: "ライリー ➔ タラニス ➔ シェノン ➔ ルシェン",
+    speedTuningMemo: "風ピクシー（シェノン）の2次覚醒引率パ。ライリーとタラニスがいるため事故率ゼロ。",
+    requirementsMemo: "エルニアの同属性制限（風属性統一）。シェノンを安全に2次覚醒させられます。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-awk-grim",
+    name: "【死神2次覚醒】サト＆ベラデオン・ヴィゴル・フラン 4タイプパ (サクリファス)",
+    dungeon: "次元ホール (2次覚醒ダンジョン)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "サクリファス",
+    dimensionType: "awakening",
+    constraintBadge: "死神2次覚醒",
+    averageTime: "約52秒",
+    successRate: "99%",
+    members: [
+      { name: "サト", attribute: "火", role: "【攻撃型/2次覚醒育成枠】持続ダメージ倍加", runes: "絶望+集中 または 迅速", isLeader: false },
+      { name: "ベラデオン", attribute: "光", role: "【防御型/2A】スキル1確定盾割り＋ゲージ回復", runes: "迅速+元気", isLeader: false },
+      { name: "ヴィゴル", attribute: "水", role: "【体力型/2A】全体速度バフ＋回復＋盾割り", runes: "迅速+元気", isLeader: false },
+      { name: "フラン", attribute: "光", role: "【サポート型】全体免疫＋攻撃バフ＋回復", runes: "迅速+反撃", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ ヴィゴル ➔ ベラデオン ➔ サト",
+    speedTuningMemo: "死神（サト、スレイン、プロマン）を2次覚醒させるための4タイプ縛り引率編成。",
+    requirementsMemo: "フランの免疫で道中・ボスの持続ダメージを遮断し、安定して死神を育成できます。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-dim-awk-franken",
+    name: "【フランケン/リビ強2次覚醒】ブルドーザー＆コッパー・ライリー・フラン (カトリア)",
+    dungeon: "次元ホール (2次覚醒ダンジョン)",
+    dungeonCategory: "次元ホール",
+    dimensionArea: "カトリア",
+    dimensionType: "awakening",
+    constraintBadge: "フランケン/リビ強2次覚醒",
+    averageTime: "約58秒",
+    successRate: "99%",
+    members: [
+      { name: "ブルドーザー", attribute: "火", role: "防御無視特大打点 (2A)", runes: "守護+守護+意志", isLeader: false },
+      { name: "コッパー", attribute: "風", role: "防御無視雷落とし (2A)", runes: "守護+守護+刃", isLeader: false },
+      { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＆攻撃・防御バフ", runes: "暴走+意志", isLeader: false },
+      { name: "フラン", attribute: "光", role: "全体攻撃バフ＋回復", runes: "迅速+元気", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ ライリー ➔ ブルドーザー ➔ コッパー",
+    speedTuningMemo: "ブルドーザー（火フランケン）やコッパー（風リビングアーマー）、アイアン等の2次覚醒引率パ。",
+    requirementsMemo: "高防御モンスターを防御無視で瞬殺するため、カトリアの硬いギミックを突破できます。",
+    targetMemo: "ボス直撃ターゲット設定。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
   }
 ];
 
@@ -1516,13 +1846,158 @@ const PRESET_RAID_SETS = [
   }
 ];
 
+// -----------------------------------------------------------------------------
+// 1-4. 異次元レイド (Dimension Raid) プリセットデータ (3フェーズ連続戦闘・計15枠)
+// -----------------------------------------------------------------------------
+const PRESET_DIMENSION_RAID_SETS = [
+  {
+    id: "preset-dim-raid-set-standard-speed",
+    name: "【最速約1分05秒・定番】異次元レイド 瞬殺突破セット",
+    tag: "最速・最高峰テンプレ",
+    averageTime: "約1分05秒〜1分15秒",
+    successRate: "99%",
+    summary: "Phase 1はヴェルデ＆2Aイヌガミで高速突破、Phase 2はルシェン＆風イフで一掃、Phase 3はジュリー＆ヴィゴル・ベラデオンで瞬殺する最速王道構成。",
+    strategyMemo: "【各フェーズの攻略ポイント】\n・Phase 1（★4以下）：ヴェルデハイルのゲージ回し＋フランの免疫/攻撃バフ。ラオークとクローの連携でボスのHPを即座に削り切ります。\n・Phase 2（風属性統一）：ルシェンの切断とアミールの弱化比例超火力でボスのシールドと体力を一瞬で消滅させます。ライリーが常時免疫を維持。\n・Phase 3（4タイプ編成）：攻撃型（ジュリー/バーレイグ）＋防御型（ベラデオン）＋体力型（ヴィゴル）＋サポート型（デルフォイ）。ヴィゴルの盾割りと速度バフから一気にフィニッシュ！",
+    requirementsMemo: "【ステータス基準】\n・ヴェルデハイル: クリ率100%必須、速度+80以上\n・クロー・アミール・ジュリー: 激怒ルーン、クリ率85%以上、クリダメ180%以上\n・ライリー・フラン・ヴィゴル: 迅速/暴走、速度+100以上、高耐久",
+    phase1: {
+      name: "PHASE 1: カルザン制限 (★4以下のみ)",
+      rule: "★4以下のみ出撃可能",
+      leaderInfo: "ヴェルデハイル (ダンジョン攻撃速度28%UP)",
+      members: [
+        { name: "ヴェルデハイル", attribute: "火", role: "速度28%UP (L)・全体ゲージ回し", runes: "暴走+反撃 (クリ率100%必須)", isLeader: true },
+        { name: "フラン", attribute: "光", role: "全体免疫＋攻撃バフ＋全体回復＋剣折り", runes: "迅速+反撃 (速度/体力/体力)" },
+        { name: "ラオーク", attribute: "火", role: "協力攻撃でスキル短縮＋確定盾割り (2A)", runes: "暴走+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "クロー", attribute: "闇", role: "弱化特効「傷口ほじくり返し」でボス削り (2A)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "カリン", attribute: "火", role: "攻撃バフ＋確定剣折り＋回復阻害", runes: "反撃+闘志+闘志 (速度/体力/防御)" }
+      ]
+    },
+    phase2: {
+      name: "PHASE 2: エルニア制限 (風属性統一)",
+      rule: "同一属性のみ出撃可能",
+      leaderInfo: "ルシェン (ダンジョン攻撃力33%UP)",
+      members: [
+        { name: "ルシェン", attribute: "風", role: "攻撃33%UP (L)・切断の魔法で道中＆ボス大打撃", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: true },
+        { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＆攻撃バフ・回復 (反射遮断)", runes: "暴走+意志 (速度/体力/体力)" },
+        { name: "タラニス", attribute: "風", role: "全体防御バフ＋自己復活＆味方蘇生保険", runes: "守護+守護+意志 (速度/防御/防御)" },
+        { name: "アカムアミール", attribute: "風", role: "全体スタン＆弱化比例大砲 (有利属性超火力)", runes: "激怒+刃 (攻/クリダメ/攻)" },
+        { name: "フレスベルグ", attribute: "風", role: "全体速度バフ＋攻撃バフ＋烙印付与", runes: "迅速+刃 (速度/クリダメ/攻撃)" }
+      ]
+    },
+    phase3: {
+      name: "PHASE 3: サクリファス制限 (4タイプ各1体)",
+      rule: "攻撃・防御・体力・サポート各1体",
+      leaderInfo: "なし (タイプバランス編成)",
+      members: [
+        { name: "ジュリー", attribute: "水", role: "【攻撃型】開幕スキル3超特大多段SHOTでボス瞬殺", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "ベラデオン", attribute: "光", role: "【防御型/2A】スキル1確定盾割り＋ゲージ上げ＆回復", runes: "迅速+元気 (速度/防御/体力)" },
+        { name: "ヴィゴル", attribute: "水", role: "【体力型/2A】全体速度バフ＋持続回復＋3連盾割り", runes: "迅速+元気 (速度/体力/体力)" },
+        { name: "デルフォイ", attribute: "風", role: "【サポート型】全体弱化解除＋2ターン全体免疫＋回復", runes: "迅速+意志 (速度/体力/防御)" }
+      ]
+    }
+  },
+  {
+    id: "preset-dim-raid-set-user-himmel-taranis",
+    name: "【ユーザー手持ち最適化・事故ゼロ】ヒンメル＆タラニス・ライリー投入 鉄壁安定セット",
+    tag: "手持ち特化・絶対事故ゼロ",
+    averageTime: "約1分20秒〜1分30秒",
+    successRate: "99%",
+    summary: "所持モンスター（ヒンメル、タラニス、ライリー、ヴェルデ、フラン、ローレン等）を100%活用！Phase 3でヒンメルのボス特攻2倍打点と被ダメ20%カットが炸裂し、事故ゼロでクリア。",
+    strategyMemo: "【ユーザー手持ちの強みをフル活用する構成】\n・Phase 1はヴェルデハイル・フラン・ローレン・クロー・アスター。ローレンの持続盾割りとアスターの多段で安定削り。\n・Phase 2はライリーとタラニスの鉄壁タッグ＋アカムアミール＆フレスベルグ＆シェノン。防御バフと免疫で被ダメージを最小限に抑えます。\n・Phase 3は【攻撃:ヒンメル】＋【防御:ディアス】＋【体力:ヴィゴル】＋【サポート:ルル(2A)】。ディアス（被ダメ15%減）とヒンメル（被ダメ20%減）の二重パッシブで最大35%被ダメカット！ヒンメルのスキルでボスを安全に叩き割ります。",
+    requirementsMemo: "【ルーン・育成の目安】\n・ヒンメル: 激怒+刃 (速度/クリダメ/攻撃) ボス戦与ダメ+100%の特大火力。\n・タラニス: 守護+守護+意志 (速度/防御/防御) 防御+1300以上。\n・ライリー: 暴走+意志 (速度/体力/体力) 常時バフを回す。\n・ディアス: 守護+反撃 (防御/防御/体力) 前衛耐久。",
+    phase1: {
+      name: "PHASE 1: カルザン制限 (★4以下のみ)",
+      rule: "★4以下のみ出撃可能",
+      leaderInfo: "ヴェルデハイル (ダンジョン攻撃速度28%UP)",
+      members: [
+        { name: "ヴェルデハイル", attribute: "火", role: "速度28%UP (L)・全体ゲージ押し上げ", runes: "暴走+反撃 (クリ率100%必須)", isLeader: true },
+        { name: "フラン", attribute: "光", role: "全体免疫＋攻撃バフ＋回復＋剣折り", runes: "迅速+元気 (速度/体力/体力)" },
+        { name: "ローレン", attribute: "光", role: "ボス単体確定盾割り＋速度低下＋ゲージ下げ", runes: "迅速+集中 (速度/体力/的中45%+)" },
+        { name: "クロー", attribute: "闇", role: "弱化特効「傷口ほじくり返し」でボス削り (2A)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "アスター", attribute: "火", role: "多段攻撃・ボス体力削り・持続", runes: "吸血+反撃 または 暴走+反撃" }
+      ]
+    },
+    phase2: {
+      name: "PHASE 2: エルニア制限 (風属性統一)",
+      rule: "同一属性のみ出撃可能",
+      leaderInfo: "アカムアミール (全属性攻撃速度24%UP)",
+      members: [
+        { name: "アカムアミール", attribute: "風", role: "速度24%UP (L)・全体スタン＆弱化比例大砲", runes: "激怒+刃 (攻/クリダメ/攻)", isLeader: true },
+        { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＆攻撃バフ・回復 (反射封殺)", runes: "暴走+意志 (速度/体力/体力)" },
+        { name: "タラニス", attribute: "風", role: "全体防御バフ＋自己復活＆味方蘇生保険 (事故ゼロ)", runes: "守護+守護+意志 (速度/防御/防御)" },
+        { name: "フレスベルグ", attribute: "風", role: "全体速度バフ＋攻撃バフ＋烙印・持続回復", runes: "迅速+刃 (速度/クリダメ/攻撃)" },
+        { name: "シェノン", attribute: "風", role: "全体防御バフ＋攻撃バフ＋速度デバフ (2A)", runes: "絶望+元気 (速度/体力/体力)" }
+      ]
+    },
+    phase3: {
+      name: "PHASE 3: サクリファス制限 (4タイプ各1体)",
+      rule: "攻撃・防御・体力・サポート各1体",
+      leaderInfo: "ディアス (全属性抵抗30%UP)",
+      members: [
+        { name: "ヒンメル", attribute: "水", role: "【攻撃型】ボス特効与ダメ2倍・味方被ダメ20%軽減 (核)", runes: "激怒+刃 (速度/クリダメ/攻撃)" },
+        { name: "ディアス", attribute: "闇", role: "【防御型】抵抗30%UP (L)・味方被ダメ15%カット・盾割り", runes: "守護+反撃 (防御/防御/体力)", isLeader: true },
+        { name: "ヴィゴル", attribute: "水", role: "【体力型/2A】全体速度バフ＋回復＋クリ被弾軽減＋3連盾割り", runes: "迅速+元気 (速度/体力/体力)" },
+        { name: "ルル", attribute: "水", role: "【サポート型/2A】二重弱化解除＋全体免疫＋持続回復", runes: "暴走+元気 (速度/体力/体力)" }
+      ]
+    }
+  },
+  {
+    id: "preset-dim-raid-set-f2p-safe",
+    name: "【完全無課金・調合配布F2P】低ルーン敷居 確実クリアセット",
+    tag: "無課金・調合配布のみ",
+    averageTime: "約1分40秒",
+    successRate: "99%",
+    summary: "ガチャ純5を一切使わず、調合モンスター（ヴェラモス等）と2次覚醒・秘密ダンジョンキャラのみで構成された初心者・無課金向け安心セット。",
+    strategyMemo: "【F2P攻略のポイント】\n・Phase 1はカリン(L)の全体攻撃バフとラオーク・クローの連携で突破。\n・Phase 2は調合純5のヴェラモス(L)とシグマルス、コナミヤ、メガン、ヴィゴルによる水属性統一パーティ。ヴェラモスが毎ターン持続を解除するため安定感抜群。\n・Phase 3は攻撃:クロー、防御:ベラデオン、体力:エスシール、サポート:フラン。回復とバフが豊富で事故がありません。",
+    requirementsMemo: "【ステータス基準】\n・全員星6Lv40、主要キャラは2次覚醒完了。\n・迅速・元気・刃など基本ルーンで組めるため、ルーン厳選の初期段階でもクリア可能。",
+    phase1: {
+      name: "PHASE 1: カルザン制限 (★4以下のみ)",
+      rule: "★4以下のみ出撃可能",
+      leaderInfo: "カリン (味方攻撃力UP)",
+      members: [
+        { name: "カリン", attribute: "火", role: "全体攻撃バフ＋確定剣折り＋回復阻害 (L)", runes: "反撃+元気+元気", isLeader: true },
+        { name: "フラン", attribute: "光", role: "全体免疫＋回復＋攻撃バフ", runes: "迅速+元気" },
+        { name: "ラオーク", attribute: "火", role: "協力攻撃・確定盾割り (2A)", runes: "猛攻+刃" },
+        { name: "クロー", attribute: "闇", role: "弱化特効超火力フィニッシャー (2A)", runes: "猛攻+刃 または 激怒" },
+        { name: "ヴィゴル", attribute: "水", role: "全体回復＋速度バフ＋3連盾割り (2A)", runes: "迅速+元気" }
+      ]
+    },
+    phase2: {
+      name: "PHASE 2: エルニア制限 (水属性統一)",
+      rule: "同一属性のみ出撃可能",
+      leaderInfo: "ヴェラモス (味方体力33%UP)",
+      members: [
+        { name: "ヴェラモス", attribute: "闇", role: "体力33%UP (L)・毎ターン味方弱化解除＋持続", runes: "迅速+元気 (※属性注意：風属性統一の場合はアミールに変更)", isLeader: true },
+        { name: "コナミヤ", attribute: "水", role: "リモーション＋全体弱化解除＋回復", runes: "迅速+元気" },
+        { name: "シグマルス", attribute: "水", role: "調合星5・敵最大体力比例大砲＋攻撃デバフ", runes: "猛攻+刃" },
+        { name: "メガン", attribute: "水", role: "全体攻撃＆防御バフ＋ゲージ上げ＋剥がし", runes: "迅速+集中" },
+        { name: "ヴィゴル", attribute: "水", role: "回復＋速度バフ＋3連盾割り (2A)", runes: "迅速+元気" }
+      ]
+    },
+    phase3: {
+      name: "PHASE 3: サクリファス制限 (4タイプ各1体)",
+      rule: "攻撃・防御・体力・サポート各1体",
+      leaderInfo: "なし (F2Pバランス型)",
+      members: [
+        { name: "クロー", attribute: "闇", role: "【攻撃型/2A】弱化特効大打撃", runes: "激怒+刃 または 猛攻" },
+        { name: "ベラデオン", attribute: "光", role: "【防御型/2A】スキル1確定盾割り＋ゲージ上げ＆回復", runes: "迅速+元気" },
+        { name: "エスシール", attribute: "光", role: "【体力型/2A】回復＋全体速度バフ＋連撃", runes: "迅速+元気" },
+        { name: "フラン", attribute: "光", role: "【サポート型】全体免疫＋攻撃バフ＋回復", runes: "迅速+反撃" }
+      ]
+    }
+  }
+];
+
 // 2. 状態管理
 let monsters = [];
 let parties = [];
 let raidSets = [];
-let activeTab = 'all'; // 'all', 'guild', 'cairos', 'raid', 'form'
+let dimensionRaidSets = [];
+let activeTab = 'all'; // 'all', 'guild', 'cairos', 'raid', 'dimension', 'form'
 let cairosSubtab = 'party'; // 'party', 'monsters'
 let guildSubtab = 'tartaros'; // 'tartaros', 'monsters'
+let dimensionSubtab = 'raid'; // 'raid', 'remains', 'awakening'
+let dimensionRemainsFilter = 'all'; // 'all', 'カルザン', 'エルニア', 'ルメール', 'サクリファス', 'カトリア'
+let dimensionAwakeningFilter = 'all'; // 'all', 'イヌガミ', 'オオカミ人間', 'ピクシー', 'グリムリッパー', 'フランケン・リビングアーマー'
 let tartarosBossFilter = 'all'; // 'all', 'レオス', 'コトス', 'ギエス', 'タルタロス'
 let attributeFilter = 'all'; // 'all', '火', '水', '風', '光', '闇'
 let dungeonFilter = 'all'; // 'all', '異界レイド', 'タルタロス', '巨人', 'ドラゴン', '死のダンジョン', '精霊', '鋼鉄', '審判'
@@ -1548,6 +2023,31 @@ const elements = {
   raidSetCount: document.getElementById('raid-set-count'),
   btnAddRaidParty: document.getElementById('btn-add-raid-party'),
   
+  // 次元ホール関連
+  btnDimSubnavRaid: document.getElementById('btn-dim-subnav-raid'),
+  btnDimSubnavRemains: document.getElementById('btn-dim-subnav-remains'),
+  btnDimSubnavAwakening: document.getElementById('btn-dim-subnav-awakening'),
+  dimSubpaneRaid: document.getElementById('dim-subpane-raid'),
+  dimSubpaneRemains: document.getElementById('dim-subpane-remains'),
+  dimSubpaneAwakening: document.getElementById('dim-subpane-awakening'),
+  dimRaidCount: document.getElementById('dim-raid-count'),
+  dimRemainsCount: document.getElementById('dim-remains-count'),
+  dimAwakeningCount: document.getElementById('dim-awakening-count'),
+  dimRaidSetCount: document.getElementById('dim-raid-set-count'),
+  btnAddDimParty: document.getElementById('btn-add-dim-party'),
+  btnOpenDimRaidModal: document.getElementById('btn-open-dim-raid-modal'),
+  dimRaidSetList: document.getElementById('dim-raid-set-list'),
+  dimRemainsPartyList: document.getElementById('dim-remains-party-list'),
+  dimAwakeningPartyList: document.getElementById('dim-awakening-party-list'),
+  dimRemainsFilterBtns: document.querySelectorAll('#dim-remains-filter-bar .dim-filter-btn'),
+  dimAwakeningFilterBtns: document.querySelectorAll('#dim-awakening-filter-bar .dim-filter-btn'),
+  dimRemainsGuideBanner: document.getElementById('dim-remains-guide-banner'),
+  dimRaidDetailModal: document.getElementById('dim-raid-detail-modal'),
+  dimRaidModalClose: document.getElementById('dim-raid-modal-close'),
+  dimRaidModalBtnClose: document.getElementById('dim-raid-modal-btn-close'),
+  dimRaidModalTitle: document.getElementById('dim-raid-modal-title'),
+  dimRaidModalBody: document.getElementById('dim-raid-modal-body'),
+
   monsterCount: document.getElementById('monster-count'),
   guildCount: document.getElementById('guild-count'),
   guildCountSub: document.getElementById('guild-count-sub'),
@@ -2018,10 +2518,42 @@ function initApp() {
     raidSets = [...PRESET_RAID_SETS];
     saveRaidSetsToLocalStorage();
   }
+
+  // 異次元レイドデータのロード
+  const localDimRaidData = localStorage.getItem('summoners_war_dim_raid_data');
+  if (localDimRaidData) {
+    try {
+      dimensionRaidSets = JSON.parse(localDimRaidData);
+      let dimRaidUpdated = false;
+      PRESET_DIMENSION_RAID_SETS.forEach(preset => {
+        const curIdx = dimensionRaidSets.findIndex(s => s.id === preset.id);
+        if (curIdx === -1) {
+          dimensionRaidSets.push(preset);
+          dimRaidUpdated = true;
+        } else {
+          dimensionRaidSets[curIdx] = preset;
+          dimRaidUpdated = true;
+        }
+      });
+      if (dimRaidUpdated) {
+        saveDimensionRaidSetsToLocalStorage();
+      }
+    } catch (e) {
+      dimensionRaidSets = [...PRESET_DIMENSION_RAID_SETS];
+      saveDimensionRaidSetsToLocalStorage();
+    }
+  } else {
+    dimensionRaidSets = [...PRESET_DIMENSION_RAID_SETS];
+    saveDimensionRaidSetsToLocalStorage();
+  }
   
   sortMonsters();
   sortParties();
   renderAll();
+}
+
+function saveDimensionRaidSetsToLocalStorage() {
+  localStorage.setItem('summoners_war_dim_raid_data', JSON.stringify(dimensionRaidSets));
 }
 
 function sortParties() {
@@ -2090,6 +2622,7 @@ function renderAll() {
   renderParties();
   renderGuildTartarosParties();
   renderRaidParties();
+  renderDimensionView();
 }
 
 // リストの描画
@@ -3084,6 +3617,417 @@ function openRaidSetDetailModal(setId) {
   document.body.style.overflow = 'hidden';
 }
 
+// -----------------------------------------------------------------------------
+// 5-4. 次元ホール (Dimension Hole) 描画・制御ロジック
+// -----------------------------------------------------------------------------
+
+function renderDimensionView() {
+  // カウンターの更新
+  const remainsCount = parties.filter(p => p.dimensionType === 'remains' || (p.dungeon && p.dungeon.includes('遺跡'))).length;
+  const awakeningCount = parties.filter(p => p.dimensionType === 'awakening' || (p.dungeon && p.dungeon.includes('2次覚醒'))).length;
+
+  if (elements.dimRaidCount) elements.dimRaidCount.textContent = dimensionRaidSets.length;
+  if (elements.dimRemainsCount) elements.dimRemainsCount.textContent = remainsCount;
+  if (elements.dimAwakeningCount) elements.dimAwakeningCount.textContent = awakeningCount;
+  if (elements.dimRaidSetCount) elements.dimRaidSetCount.textContent = dimensionRaidSets.length;
+
+  if (dimensionSubtab === 'raid') {
+    renderDimensionRaidSets();
+  } else if (dimensionSubtab === 'remains') {
+    renderDimensionRemainsParties();
+  } else if (dimensionSubtab === 'awakening') {
+    renderDimensionAwakeningParties();
+  }
+}
+
+// 次元ホールのサブタブ切り替え
+function switchDimensionSubtab(subtab) {
+  dimensionSubtab = subtab;
+
+  const tabs = [
+    { id: 'raid', btn: elements.btnDimSubnavRaid, pane: elements.dimSubpaneRaid },
+    { id: 'remains', btn: elements.btnDimSubnavRemains, pane: elements.dimSubpaneRemains },
+    { id: 'awakening', btn: elements.btnDimSubnavAwakening, pane: elements.dimSubpaneAwakening }
+  ];
+
+  tabs.forEach(t => {
+    if (t.id === subtab) {
+      if (t.btn) t.btn.classList.add('active');
+      if (t.pane) {
+        t.pane.style.display = 'block';
+        t.pane.classList.add('active');
+      }
+    } else {
+      if (t.btn) t.btn.classList.remove('active');
+      if (t.pane) {
+        t.pane.style.display = 'none';
+        t.pane.classList.remove('active');
+      }
+    }
+  });
+
+  if (subtab === 'raid') {
+    renderDimensionRaidSets();
+  } else if (subtab === 'remains') {
+    updateDimensionRemainsGuideBanner(dimensionRemainsFilter);
+    renderDimensionRemainsParties();
+  } else if (subtab === 'awakening') {
+    renderDimensionAwakeningParties();
+  }
+}
+
+// 次元遺跡フィルター切り替え
+function switchDimensionRemainsFilter(area) {
+  dimensionRemainsFilter = area;
+
+  if (elements.dimRemainsFilterBtns) {
+    elements.dimRemainsFilterBtns.forEach(btn => {
+      if (btn.dataset.dimRemains === area) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  updateDimensionRemainsGuideBanner(area);
+  renderDimensionRemainsParties();
+}
+
+// 2次覚醒フィルター切り替え
+function switchDimensionAwakeningFilter(target) {
+  dimensionAwakeningFilter = target;
+
+  if (elements.dimAwakeningFilterBtns) {
+    elements.dimAwakeningFilterBtns.forEach(btn => {
+      if (btn.dataset.dimAwakening === target) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  renderDimensionAwakeningParties();
+}
+
+// 遺跡ガイドバナーの更新
+function updateDimensionRemainsGuideBanner(area) {
+  if (!elements.dimRemainsGuideBanner) return;
+
+  const guides = {
+    'all': '<strong>🏛️ 各次元の遺跡（5階）攻略</strong>: 各次元（カルザン・エルニア・ルメール・サクリファス・カトリア）ごとに異なる特殊出撃制限があり、古代ルーンや古代練磨石を獲得する最高峰コンテンツです。',
+    'カルザン': '<strong>🦅 カルザン遺跡 5階 (古代の意志・果報・反撃)</strong>: <span class="guide-rule">制限：純正★4以下のみ</span> ボスの高火力に対して、ヴェルデハイル(L)のゲージ回し＋フランの免疫/剣バフ、二次覚醒ラオーク＆クローの連携で速攻攻略が鉄板！',
+    'エルニア': '<strong>🌲 エルニア遺跡 5階 (古代の絶望・吸血・意志)</strong>: <span class="guide-rule">制限：同一属性のみ</span> ボスは属性反射＆全体大打撃を使用。ライリーの常時全体免疫とタラニスの全体防御バフ＆蘇生を軸にした風属性統一パが最メジャー＆事故ゼロ！',
+    'ルメール': '<strong>🏜️ ルメール遺跡 5階 (古代の激怒・忍耐・高揚)</strong>: <span class="guide-rule">制限：編成モンスターの純正星合計★15以下</span> 星3モンスター5体（フラン、2Aラオーク、2Aクロー、2Aヴィゴル、2Aベラデオン）で合計★15！ボスの吸血をヴィゴルの回復阻害とクローの瞬間火力で圧倒！',
+    'サクリファス': '<strong>💀 サクリファス遺跡 5階 (古代の迅速・刃・集中)</strong>: <span class="guide-rule">制限：4タイプ（攻撃・防御・体力・サポート各1体）</span> 死神の死の宣告や持続をフランの免疫で完封。クロー(攻)＋タラニス(防)＋ヴィゴル(体)＋フラン(サポ)の鉄壁バランスパがおすすめ！',
+    'カトリア': '<strong>🛡️ カトリア遺跡 5階 (古代の守護・保護・闘志)</strong>: <span class="guide-rule">制限：速度制限</span> ボスの硬いシールドや高防御力を、ブルドーザーやコッパーの防御無視攻撃で一撃粉砕するのが最も安全！'
+  };
+
+  elements.dimRemainsGuideBanner.innerHTML = guides[area] || guides['all'];
+}
+
+// 異次元レイドセットの描画 (3フェーズ一括カード)
+function renderDimensionRaidSets() {
+  if (!elements.dimRaidSetList) return;
+  elements.dimRaidSetList.innerHTML = '';
+
+  const filteredSets = dimensionRaidSets.filter(set => {
+    if (searchQuery.trim() === '') return true;
+    const q = searchQuery.toLowerCase();
+    const nameMatch = (set.name || '').toLowerCase().includes(q);
+    const summaryMatch = (set.summary || '').toLowerCase().includes(q);
+    const reqMatch = (set.requirementsMemo || '').toLowerCase().includes(q);
+    const phases = [set.phase1, set.phase2, set.phase3];
+    const memberMatch = phases.some(p => {
+      if (!p || !p.members) return false;
+      return p.members.some(m => (m.name || '').toLowerCase().includes(q) || (m.role || '').toLowerCase().includes(q));
+    });
+    return nameMatch || summaryMatch || reqMatch || memberMatch;
+  });
+
+  if (filteredSets.length === 0) {
+    elements.dimRaidSetList.innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">🌌</span>
+        <p>該当する異次元レイド編成が見つかりません</p>
+      </div>
+    `;
+    return;
+  }
+
+  filteredSets.forEach(set => {
+    const card = document.createElement('div');
+    card.className = 'dim-raid-set-card';
+
+    const renderPhaseCard = (phase, num, phaseClass, ruleText) => {
+      if (!phase) return '';
+      return `
+        <div class="dim-phase-card ${phaseClass}">
+          <div class="dim-phase-header">
+            <span class="dim-phase-name">${escapeHtml(phase.name)}</span>
+            <span class="dim-phase-rule-badge">${escapeHtml(ruleText || phase.rule)}</span>
+          </div>
+          <div style="font-size:0.72rem; color:#fbbf24; font-weight:700;">
+            👑 ${escapeHtml(phase.leaderInfo)}
+          </div>
+          <div class="dim-phase-members-list">
+            ${phase.members.map(m => `
+              <div class="dim-phase-member-item">
+                <div class="dim-phase-member-main">
+                  <span class="attr-badge attr-${m.attribute}" style="font-size:0.6rem; padding:1px 5px;">${m.attribute}</span>
+                  <span style="font-weight:700; color:#fff;">${escapeHtml(m.name)}</span>
+                  ${m.isLeader ? '<span class="dim-member-leader-badge">L</span>' : ''}
+                </div>
+                <span class="dim-member-role-text" title="${escapeHtml(m.role)}">${escapeHtml(m.role)}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;
+    };
+
+    card.innerHTML = `
+      <div class="dim-raid-set-header">
+        <div class="dim-raid-set-title-group">
+          <span class="dim-raid-tag-pill">${escapeHtml(set.tag)}</span>
+          <h3 class="dim-raid-set-name">${escapeHtml(set.name)}</h3>
+        </div>
+        <div class="dim-raid-set-meta">
+          <span class="party-meta-pill">⏱️ ${escapeHtml(set.averageTime)}</span>
+          <span class="party-meta-pill winrate">🏆 勝率 ${escapeHtml(set.successRate)}</span>
+        </div>
+      </div>
+
+      <div class="dim-raid-phases-grid">
+        ${renderPhaseCard(set.phase1, 1, 'phase-1', '★4以下のみ')}
+        ${renderPhaseCard(set.phase2, 2, 'phase-2', '同一属性のみ')}
+        ${renderPhaseCard(set.phase3, 3, 'phase-3', '4タイプ各1体')}
+      </div>
+
+      <div class="raid-set-footer">
+        <div class="raid-set-summary-text">
+          💡 ${escapeHtml(set.summary)}
+        </div>
+        <button class="btn-dim-raid-detail" data-dim-set-id="${set.id}">
+          <span>📖 異次元レイド解説・ステータス基準</span>
+        </button>
+      </div>
+    `;
+
+    // 詳細解説ボタン
+    const detailBtn = card.querySelector('.btn-dim-raid-detail');
+    if (detailBtn) {
+      detailBtn.addEventListener('click', () => {
+        openDimensionRaidModal(set.id);
+      });
+    }
+
+    elements.dimRaidSetList.appendChild(card);
+  });
+}
+
+// 異次元レイド詳細モーダル制御
+function openDimensionRaidModal(setId) {
+  if (!elements.dimRaidDetailModal) return;
+
+  const set = dimensionRaidSets.find(s => s.id === setId) || PRESET_DIMENSION_RAID_SETS.find(s => s.id === setId);
+  if (set && elements.dimRaidModalTitle) {
+    elements.dimRaidModalTitle.textContent = `${set.name} 攻略基準`;
+  } else if (elements.dimRaidModalTitle) {
+    elements.dimRaidModalTitle.textContent = "異次元レイド 攻略要件＆ステータス基準";
+  }
+
+  elements.dimRaidDetailModal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDimensionRaidModal() {
+  if (!elements.dimRaidDetailModal) return;
+  elements.dimRaidDetailModal.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+// 各次元の遺跡（5階）パーティの描画
+function renderDimensionRemainsParties() {
+  if (!elements.dimRemainsPartyList) return;
+  elements.dimRemainsPartyList.innerHTML = '';
+
+  let remainsParties = parties.filter(p => {
+    return p.dimensionType === 'remains' || (p.dungeon && p.dungeon.includes('遺跡'));
+  });
+
+  // 次元エリアフィルター
+  if (dimensionRemainsFilter !== 'all') {
+    remainsParties = remainsParties.filter(p => {
+      return (p.dimensionArea === dimensionRemainsFilter) || (p.dungeon && p.dungeon.includes(dimensionRemainsFilter));
+    });
+  }
+
+  // 検索フィルター
+  if (searchQuery.trim() !== '') {
+    const q = searchQuery.toLowerCase();
+    remainsParties = remainsParties.filter(p => {
+      const nameMatch = (p.name || '').toLowerCase().includes(q);
+      const reqMatch = (p.requirementsMemo || '').toLowerCase().includes(q);
+      const speedMatch = (p.speedTuningMemo || '').toLowerCase().includes(q);
+      const memberMatch = (p.members || []).some(m => (m.name || '').toLowerCase().includes(q) || (m.role || '').toLowerCase().includes(q));
+      return nameMatch || reqMatch || speedMatch || memberMatch;
+    });
+  }
+
+  if (remainsParties.length === 0) {
+    elements.dimRemainsPartyList.innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">🏛️</span>
+        <p>該当する遺跡周回パーティが登録されていません</p>
+      </div>
+    `;
+    return;
+  }
+
+  remainsParties.forEach(party => {
+    const card = createDimensionPartyCard(party);
+    elements.dimRemainsPartyList.appendChild(card);
+  });
+}
+
+// 2次覚醒ダンジョン パーティの描画
+function renderDimensionAwakeningParties() {
+  if (!elements.dimAwakeningPartyList) return;
+  elements.dimAwakeningPartyList.innerHTML = '';
+
+  let awkParties = parties.filter(p => {
+    return p.dimensionType === 'awakening' || (p.dungeon && p.dungeon.includes('2次覚醒'));
+  });
+
+  // 2次覚醒ターゲットフィルター
+  if (dimensionAwakeningFilter !== 'all') {
+    awkParties = awkParties.filter(p => {
+      if (dimensionAwakeningFilter === 'フランケン・リビングアーマー') {
+        return (p.name && (p.name.includes('フランケン') || p.name.includes('リビングアーマー') || p.name.includes('ブルドーザー') || p.name.includes('コッパー'))) ||
+               (p.constraintBadge && (p.constraintBadge.includes('フランケン') || p.constraintBadge.includes('リビングアーマー')));
+      }
+      return (p.name && p.name.includes(dimensionAwakeningFilter)) ||
+             (p.constraintBadge && p.constraintBadge.includes(dimensionAwakeningFilter));
+    });
+  }
+
+  // 検索フィルター
+  if (searchQuery.trim() !== '') {
+    const q = searchQuery.toLowerCase();
+    awkParties = awkParties.filter(p => {
+      const nameMatch = (p.name || '').toLowerCase().includes(q);
+      const reqMatch = (p.requirementsMemo || '').toLowerCase().includes(q);
+      const memberMatch = (p.members || []).some(m => (m.name || '').toLowerCase().includes(q) || (m.role || '').toLowerCase().includes(q));
+      return nameMatch || reqMatch || memberMatch;
+    });
+  }
+
+  if (awkParties.length === 0) {
+    elements.dimAwakeningPartyList.innerHTML = `
+      <div class="empty-state">
+        <span class="empty-icon">⚡</span>
+        <p>該当する2次覚醒周回パーティが登録されていません</p>
+      </div>
+    `;
+    return;
+  }
+
+  awkParties.forEach(party => {
+    const card = createDimensionPartyCard(party);
+    elements.dimAwakeningPartyList.appendChild(card);
+  });
+}
+
+// 次元ホール用の汎用パーティカード生成ヘルパー
+function createDimensionPartyCard(party) {
+  const card = document.createElement('div');
+  card.className = 'party-card';
+
+  const constraintHtml = party.constraintBadge ? `
+    <span class="dim-constraint-badge">
+      <span>🔒</span>${escapeHtml(party.constraintBadge)}
+    </span>
+  ` : '';
+
+  card.innerHTML = `
+    <div class="party-card-header">
+      <div class="party-title-wrap">
+        <div class="party-badge-group">
+          <span class="party-dungeon-badge dim-badge">${escapeHtml(party.dungeon)}</span>
+          ${constraintHtml}
+        </div>
+        <h3 class="party-name">${escapeHtml(party.name)}</h3>
+      </div>
+      <button class="btn-favorite ${party.isFavorite ? 'active' : ''}" data-party-id="${party.id}" title="お気に入り">
+        ${party.isFavorite ? '★' : '☆'}
+      </button>
+    </div>
+
+    <div class="party-meta-row">
+      ${party.averageTime ? `<span class="party-meta-pill">⏱️ ${escapeHtml(party.averageTime)}</span>` : ''}
+      ${party.successRate ? `<span class="party-meta-pill winrate">🏆 勝率 ${escapeHtml(party.successRate)}</span>` : ''}
+    </div>
+
+    <div class="party-members-row">
+      ${(party.members || []).map(m => `
+        <div class="party-member-chip attr-${m.attribute} ${m.isLeader ? 'leader' : ''}">
+          <span class="member-attr-dot"></span>
+          <span class="member-chip-name">${escapeHtml(m.name)}</span>
+          ${m.isLeader ? '<span class="member-leader-crown" title="リーダー">👑</span>' : ''}
+        </div>
+      `).join('')}
+    </div>
+
+    ${party.turnOrder ? `
+      <div class="party-turn-flow">
+        <span class="turn-label">行動順:</span>
+        <span class="turn-text">${escapeHtml(party.turnOrder)}</span>
+      </div>
+    ` : ''}
+
+    <div class="party-card-footer">
+      <button class="btn-party-action btn-view-party" data-party-id="${party.id}">
+        <span>📖</span> 詳細・要件を見る
+      </button>
+      <div class="party-card-subactions">
+        <button class="btn-icon-sm btn-edit-party" data-party-id="${party.id}" title="編集">✏️</button>
+        <button class="btn-icon-sm btn-delete-party" data-party-id="${party.id}" title="削除">🗑️</button>
+      </div>
+    </div>
+  `;
+
+  // イベントリスナーの付与
+  const btnFavorite = card.querySelector('.btn-favorite');
+  btnFavorite.addEventListener('click', (e) => {
+    e.stopPropagation();
+    togglePartyFavorite(party.id);
+  });
+
+  const btnView = card.querySelector('.btn-view-party');
+  btnView.addEventListener('click', () => openPartyDetailModal(party.id));
+
+  const btnEdit = card.querySelector('.btn-edit-party');
+  btnEdit.addEventListener('click', (e) => {
+    e.stopPropagation();
+    openPartyForm(party.id);
+  });
+
+  const btnDelete = card.querySelector('.btn-delete-party');
+  btnDelete.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (confirm(`周回パーティ「${party.name}」を削除しますか？`)) {
+      parties = parties.filter(p => p.id !== party.id);
+      savePartiesToLocalStorage();
+      renderAll();
+      showToast(`「${party.name}」を削除しました。`);
+    }
+  });
+
+  return card;
+}
+
 // 6. モーダル（詳細）制御
 function openDetailModal(id) {
   const monster = monsters.find(m => m.id === id);
@@ -3415,6 +4359,70 @@ function setupEventListeners() {
       openPartyForm(null, '異界レイド (ソロ・カドゥルー5階)');
     });
   }
+
+  // 次元ホール サブタブ切り替え
+  if (elements.btnDimSubnavRaid) {
+    elements.btnDimSubnavRaid.addEventListener('click', () => switchDimensionSubtab('raid'));
+  }
+  if (elements.btnDimSubnavRemains) {
+    elements.btnDimSubnavRemains.addEventListener('click', () => switchDimensionSubtab('remains'));
+  }
+  if (elements.btnDimSubnavAwakening) {
+    elements.btnDimSubnavAwakening.addEventListener('click', () => switchDimensionSubtab('awakening'));
+  }
+
+  // 次元ホール パーティ追加ボタン
+  if (elements.btnAddDimParty) {
+    elements.btnAddDimParty.addEventListener('click', () => {
+      let defaultDungeon = '次元ホール (カルザン遺跡 5階)';
+      if (dimensionSubtab === 'raid') {
+        defaultDungeon = '次元ホール (異次元レイド)';
+      } else if (dimensionSubtab === 'remains') {
+        if (dimensionRemainsFilter !== 'all') {
+          defaultDungeon = `次元ホール (${dimensionRemainsFilter}遺跡 5階)`;
+        } else {
+          defaultDungeon = '次元ホール (カルザン遺跡 5階)';
+        }
+      } else if (dimensionSubtab === 'awakening') {
+        defaultDungeon = '次元ホール (2次覚醒ダンジョン)';
+      }
+      openPartyForm(null, defaultDungeon);
+    });
+  }
+
+  // 次元遺跡フィルターボタン
+  if (elements.dimRemainsFilterBtns) {
+    elements.dimRemainsFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        switchDimensionRemainsFilter(btn.dataset.dimRemains);
+      });
+    });
+  }
+
+  // 2次覚醒フィルターボタン
+  if (elements.dimAwakeningFilterBtns) {
+    elements.dimAwakeningFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        switchDimensionAwakeningFilter(btn.dataset.dimAwakening);
+      });
+    });
+  }
+
+  // 異次元レイド解説モーダル開閉
+  if (elements.btnOpenDimRaidModal) {
+    elements.btnOpenDimRaidModal.addEventListener('click', () => openDimensionRaidModal());
+  }
+  if (elements.dimRaidModalClose) {
+    elements.dimRaidModalClose.addEventListener('click', closeDimensionRaidModal);
+  }
+  if (elements.dimRaidModalBtnClose) {
+    elements.dimRaidModalBtnClose.addEventListener('click', closeDimensionRaidModal);
+  }
+  if (elements.dimRaidDetailModal) {
+    elements.dimRaidDetailModal.addEventListener('click', (e) => {
+      if (e.target === elements.dimRaidDetailModal) closeDimensionRaidModal();
+    });
+  }
 }
 
 // タブ切り替え制御
@@ -3439,7 +4447,7 @@ function switchTab(tabId) {
     }
   });
   
-  // 検索・フィルターエリアは、「すべて」「ギルド戦」「カイロス」タブの時だけ表示する
+  // 検索・フィルターエリアは、「すべて」「ギルド戦」「カイロス」「次元ホール」タブの時だけ表示する
   if (tabId === 'form') {
     elements.searchFilterArea.style.display = 'none';
   } else {
@@ -3459,6 +4467,11 @@ function switchTab(tabId) {
   // カイロスタブを開いたときはサブタブ状態を同期
   if (tabId === 'cairos') {
     switchCairosSubtab(cairosSubtab);
+  }
+
+  // 次元ホールタブを開いたときはサブタブ状態を同期
+  if (tabId === 'dimension') {
+    switchDimensionSubtab(dimensionSubtab);
   }
   
   // リストの最描画
@@ -3561,10 +4574,12 @@ function closeSyncModal() {
 // データをBase64エンコード付き同期コードに変換 (UTF-8対応)
 function generateSyncCode() {
   const payload = {
-    version: 1,
+    version: 2,
     exportedAt: new Date().toISOString(),
     monsters: monsters,
-    parties: parties
+    parties: parties,
+    raidSets: raidSets,
+    dimensionRaidSets: dimensionRaidSets
   };
   const jsonStr = JSON.stringify(payload);
   // UTF-8対応のBase64エンコード
@@ -3610,12 +4625,14 @@ function copyToClipboardFallback(text) {
 function handleDownloadBackup() {
   const payload = {
     appName: "SummonersWar_Manager",
-    version: "1.0",
+    version: "2.0",
     exportedAt: new Date().toISOString(),
     monstersCount: monsters.length,
     partiesCount: parties.length,
     monsters: monsters,
-    parties: parties
+    parties: parties,
+    raidSets: raidSets,
+    dimensionRaidSets: dimensionRaidSets
   };
   const jsonStr = JSON.stringify(payload, null, 2);
   const blob = new Blob([jsonStr], { type: 'application/json' });
@@ -3680,7 +4697,9 @@ function parseSyncPayload(rawInput) {
 
   return {
     monsters: Array.isArray(data.monsters) ? data.monsters : [],
-    parties: Array.isArray(data.parties) ? data.parties : []
+    parties: Array.isArray(data.parties) ? data.parties : [],
+    raidSets: Array.isArray(data.raidSets) ? data.raidSets : [],
+    dimensionRaidSets: Array.isArray(data.dimensionRaidSets) ? data.dimensionRaidSets : []
   };
 }
 
@@ -3691,6 +4710,14 @@ function applySyncData(payload, mode = 'replace') {
     if (confirm(confirmMsg)) {
       monsters = payload.monsters;
       parties = payload.parties;
+      if (payload.raidSets && payload.raidSets.length > 0) {
+        raidSets = payload.raidSets;
+        saveRaidSetsToLocalStorage();
+      }
+      if (payload.dimensionRaidSets && payload.dimensionRaidSets.length > 0) {
+        dimensionRaidSets = payload.dimensionRaidSets;
+        saveDimensionRaidSetsToLocalStorage();
+      }
       saveToLocalStorage();
       savePartiesToLocalStorage();
       sortMonsters();
@@ -3724,6 +4751,24 @@ function applySyncData(payload, mode = 'replace') {
         pAdded++;
       }
     });
+
+    if (payload.raidSets && payload.raidSets.length > 0) {
+      payload.raidSets.forEach(newR => {
+        const idx = raidSets.findIndex(r => r.id === newR.id || r.name === newR.name);
+        if (idx !== -1) raidSets[idx] = newR;
+        else raidSets.push(newR);
+      });
+      saveRaidSetsToLocalStorage();
+    }
+
+    if (payload.dimensionRaidSets && payload.dimensionRaidSets.length > 0) {
+      payload.dimensionRaidSets.forEach(newDr => {
+        const idx = dimensionRaidSets.findIndex(dr => dr.id === newDr.id || dr.name === newDr.name);
+        if (idx !== -1) dimensionRaidSets[idx] = newDr;
+        else dimensionRaidSets.push(newDr);
+      });
+      saveDimensionRaidSetsToLocalStorage();
+    }
 
     saveToLocalStorage();
     savePartiesToLocalStorage();
