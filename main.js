@@ -840,6 +840,185 @@ const PRESET_PARTIES = [
     targetMemo: "ボス直撃ターゲット設定。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
+  },
+
+  // -------------------------------------------------------------
+  // 7. タルタロスの迷宮 (Tartarus' Labyrinth) 4大ボス安定攻略パーティ
+  // -------------------------------------------------------------
+  // 7-1. 水の守護者 レオス (Leos) - 計2編成
+  {
+    id: "preset-party-tartaros-leos-immune-f2p",
+    name: "【タルタロス迷宮・レオス(水)】デルフォイ＆フラン 二重免疫安定パ (完全事故防止)",
+    dungeon: "タルタロスの迷宮 (レオス・水)",
+    dungeonCategory: "タルタロス",
+    averageTime: "約1分30秒〜2分 (安定クリア最優先)",
+    successRate: "99%",
+    members: [
+      { name: "デルフォイ", attribute: "風", role: "風防御40%UP (L)・全体解除＋2T免疫＋回復・スキル延長", runes: "迅速+意志 または 暴走+元気 (速度/体力/体力)", isLeader: true },
+      { name: "フラン", attribute: "光", role: "全体2T免疫＋攻撃バフ＋全体回復・スキル1剣折り", runes: "迅速+意志 または 迅速+元気 (速度/体力/体力 速度+90以上)", isLeader: false },
+      { name: "ルル", attribute: "水", role: "全体解除＋免疫＋持続回復 (デルフォイと二重免疫維持)", runes: "迅速+元気 または 暴走+意志 (速度/体力/体力)", isLeader: false },
+      { name: "風パンダ", attribute: "風", role: "高耐久・反撃・防御バフ・持続削り (ボス削り役)", runes: "暴走+守護 または 守護+守護+意志 (速度/防御/防御)", isLeader: false },
+      { name: "アカムアミール", attribute: "風", role: "有利属性アタッカー・弱化比例大砲 (全体削り・高耐久)", runes: "猛攻+刃 または 激怒+刃 (速度/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ デルフォイ ➔ ルル ➔ 風パンダ ➔ アカムアミール",
+    speedTuningMemo: "フラン最速（速度+90〜110）、デルフォイをその直後（速度+80〜100）に動かして開幕から味方全体に免疫を維持。ルルはフラン・デルフォイの直後に動き、デバフ即時解除と免疫の隙間を完全に埋めるトリプルサポート体制にします。",
+    requirementsMemo: "【レオス攻略の最重要鉄則：免疫を切らさない！】\n・レオスは「絶対零度」で全体を凍結させ、「凍結の息」でスキル延長＆氷結を付与してきますが、免疫状態であればすべて100%無効化できます。\n・フラン＋デルフォイ＋ルルの3体体制（トリプル免疫・解除）にすることで、オートでも免疫が途切れる瞬間がなくなり、事故率がほぼゼロになります。\n・【ルーンの注意点】レオスの凍結ルーンで暴走ルーンが無効化されることがあるため、迅速や元気・守護・意志などステータス重視のルーン構成が極めて安定します。\n・【代用モンスター】\nデルフォイ ➔ 火アーク(ヴェラジュエル)、アメリア、トリアーナ\n風パンダ ➔ 風ドリアード(メリア)、チャウンスン(風天舞姫)、エラドリエル\nアカムアミール ➔ ルシェン、風神獣僧(リテッシュ)、風キャノンガール、風ホムンクルス",
+    targetMemo: "【フォーカスルーン最優先】戦闘中に出現する左右のルーン（特に凍結ルーン・激怒ルーン）はボスの攻撃を凶悪化させるため、出現したら最優先でタップして破壊してください。ルーン破壊後はボス本体を集中攻撃。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-tartaros-leos-wind-bruiser",
+    name: "【タルタロス迷宮・レオス(水)】風パンダ＆チャウンスン 風属性耐久反撃パ (ルーン封印耐性)",
+    dungeon: "タルタロスの迷宮 (レオス・水)",
+    dungeonCategory: "タルタロス",
+    averageTime: "約2分",
+    successRate: "98%",
+    members: [
+      { name: "風パンダ", attribute: "風", role: "ギルバト防御44%UP (L)・反撃＋防御バフ＋持続削り", runes: "守護+守護+意志 (速度/防御/防御 防御+1400以上)", isLeader: true },
+      { name: "デルフォイ", attribute: "風", role: "全体解除＋2T免疫＋回復＋スキル延長", runes: "迅速+意志 (速度/体力/防御)", isLeader: false },
+      { name: "チャウンスン", attribute: "風", role: "体力ゲージ合わせ回復＋攻撃バフ＋全体回復", runes: "暴走+元気 または 迅速+元気 (速度/体力/体力)", isLeader: false },
+      { name: "フラン", attribute: "光", role: "免疫＋攻撃バフ＋回復＋剣折り", runes: "迅速+元気 (速度/体力/体力)", isLeader: false },
+      { name: "メリア", attribute: "風", role: "持続ダメージばら撒き＋持続延長＋ゲージ下げ毒殺", runes: "絶望+集中 または 迅速+元気 (速度/体力/的中)", isLeader: false }
+    ],
+    turnOrder: "デルフォイ ➔ フラン ➔ チャウンスン ➔ メリア ➔ 風パンダ",
+    speedTuningMemo: "デルフォイ・フランで先手を取って免疫を張り、チャウンスンで体力を満タン維持。メリアの持続ダメージでレオスの体力を削っていきます。",
+    requirementsMemo: "【風属性統一による圧倒的耐久】\n・水属性ボスに対して全員有利属性となるため、被ダメージ大幅減少＋ミス発生＋クリ率+15%ボーナスが常時働きます。\n・レオスの凍結ルーンで暴走ルーンが無効化されてもステータス負けしないよう、守護・元気・意志などのステータス補正ルーンを厚めに積むのが隠れたコツです。",
+    targetMemo: "左右のルーンが出現したら先に処理し、その後ボス本体を攻撃。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+
+  // 7-2. 火の守護者 コト (Koto) - 計2編成
+  {
+    id: "preset-party-tartaros-koto-atkbreak-f2p",
+    name: "【タルタロス迷宮・コト(火)】セオマルス＆ヴィゴル・カリン 剣折り超耐久パ (即死回避)",
+    dungeon: "タルタロスの迷宮 (コト・火)",
+    dungeonCategory: "タルタロス",
+    averageTime: "約1分40秒〜2分10秒",
+    successRate: "99%",
+    members: [
+      { name: "セオマルス", attribute: "水", role: "全属性クリ率24%UP (L)・粘るで即死回避・単体盾割り＋高火力", runes: "暴走+刃 または 猛攻+刃 (速度/クリダメ/攻撃)", isLeader: true },
+      { name: "カリン", attribute: "火", role: "【コト特効】スキル1確定2連剣折り(攻撃弱化)＋全体回復/攻撃バフ", runes: "反撃+元気+元気 (速度/体力/防御 的中40%+)", isLeader: false },
+      { name: "ヴィゴル", attribute: "水", role: "全体回復＋速度バフ＋クリ被弾軽減バフ＋3連盾割り", runes: "迅速+元気 または 暴走+元気 (速度/体力/体力 体力+25000以上)", isLeader: false },
+      { name: "エマ", attribute: "水", role: "防御力バフ＋全体シールド付与＋回復 (焦熱地獄の被ダメ半減)", runes: "迅速+元気 または 暴走+元気 (速度/体力/体力)", isLeader: false },
+      { name: "コベール", attribute: "水", role: "隠密で被ダメ50%軽減＋防御無視超特大火力 (ボス削り役)", runes: "激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "ヴィゴル ➔ カリン ➔ エマ ➔ セオマルス ➔ コベール",
+    speedTuningMemo: "ヴィゴルとカリンが先手を取り、開幕からコトに「攻撃力弱化（剣折り）」と「防御弱化（盾割り）」を付与。エマの防御バフを事前に張ることで、激怒全体攻撃の被ダメージを極限まで抑えます。",
+    requirementsMemo: "【コト攻略の最重要鉄則：攻撃力弱化（剣折り）を絶対に切らさない！】\n・コトの「焦熱地獄」は攻撃力弱化（剣折り）が入っていればダメージが半分以下になり、さらにエマの防御バフやヴィゴルのクリ被弾軽減バフが重なれば、味方全員が耐えきれます。\n・カリンに「反撃ルーン」を積んでおくと、コトの攻撃に対してスキル1で即座に攻撃力弱化を上書きできるため非常に安定します。\n・セオマルスはパッシブ「粘る」があるため、万が一の最大激怒でも絶対に倒されず、最後の削り役として完璧です。\n・【代用モンスター】\nコベール ➔ チャウ(水ドラゴンナイト)、水パンダ、アナベル、タリア(水チャクラム)\nエマ ➔ ルル(二次覚醒)、フラン、バステト、アベリオ(水ドルイド)\nカリン ➔ コリーン(星2だが優秀)、火パンダ(雄飛)",
+    targetMemo: "【破壊ルーン・反撃ルーン最優先】戦闘中に出現する破壊ルーン・反撃ルーンを最優先で破壊。カリンの剣折りをボスに常時維持しつつ本体を攻撃。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-tartaros-koto-chow-bastet",
+    name: "【タルタロス迷宮・コト(火)】チャウ＆バステト 水属性鉄壁耐久パ (自己再生・被ダメ最小化)",
+    dungeon: "タルタロスの迷宮 (コト・火)",
+    dungeonCategory: "タルタロス",
+    averageTime: "約1分30秒",
+    successRate: "99%",
+    members: [
+      { name: "チャウ", attribute: "水", role: "ギルバト体力44%UP (L)・毎ターン自力回復＋弱化解除・粘り強さSSS", runes: "暴走+果報 または 吸血+元気 (速度/クリダメ/体力 または 体力/クリダメ/体力)", isLeader: true },
+      { name: "バステト", attribute: "水", role: "攻撃バフ＋全体シールド＋ゲージUP・スキル2で剣折り/盾割り", runes: "迅速+意志 (速度/体力/体力 速度+110以上)", isLeader: false },
+      { name: "アナベル", attribute: "水", role: "全体解除＋全体ヒール＋3ターン全体防御弱化", runes: "暴走+元気 (速度/攻撃/体力)", isLeader: false },
+      { name: "カリン", attribute: "火", role: "確定2連剣折り＋全体回復＋攻撃バフ", runes: "反撃+反撃+元気 (速度/体力/防御)", isLeader: false },
+      { name: "セオマルス", attribute: "水", role: "高火力アタッカー＋盾割り＋粘るパッシブ", runes: "暴走+刃 (速度/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "バステト ➔ カリン ➔ アナベル ➔ セオマルス ➔ チャウ",
+    speedTuningMemo: "バステトのシールドと攻撃バフを開幕展開し、カリンとバステトのダブル剣折りでコトを完全に骨抜きにします。",
+    requirementsMemo: "【純5水属性モンスターによる圧倒的安定感】\n・チャウは自身のターンごとにデバフ解除と回復を行うため、長期戦になっても絶対に倒れません。\n・バステトのシールドとカリンの剣折りにより、焦熱地獄の直撃を受けてもHPゲージがほとんど削れません。",
+    targetMemo: "ルーンが出現したら速やかに単体攻撃で撃破し、コト本体を叩きます。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+
+  // 7-3. 風の守護者 ギエス (Guilles) - 計2編成
+  {
+    id: "preset-party-tartaros-guilles-healblock-f2p",
+    name: "【タルタロス迷宮・ギエス(風)】テサリオン＆カリン・火パンダ 回復阻害完封パ (HP吸収阻止)",
+    dungeon: "タルタロスの迷宮 (ギエス・風)",
+    dungeonCategory: "タルタロス",
+    averageTime: "約1分40秒〜2分10秒",
+    successRate: "99%",
+    members: [
+      { name: "テサリオン", attribute: "火", role: "全属性効果抵抗41%UP (L)・デバフ比例追加ダメ・スキル2盾割り", runes: "暴走+刃 または 猛攻+刃 (速度/クリダメ/攻撃 または 速度/体力/攻撃)", isLeader: true },
+      { name: "カリン", attribute: "火", role: "【ギエス特効】スキル2回復阻害(回復不可)付与！＋スキル1剣折り＋回復", runes: "反撃+元気+元気 または 迅速+集中 (速度/体力/防御 的中45%+)", isLeader: false },
+      { name: "火パンダ", attribute: "火", role: "調合星5・多段デバフ(回復不可・剣折り・盾割り)＋全体持続回復/解除", runes: "守護+守護+元気 または 暴走+守護 (防御/防御/体力)", isLeader: false },
+      { name: "フラン", attribute: "光", role: "全体免疫＋攻撃バフ＋回復＋攻撃弱化", runes: "迅速+元気 (速度/体力/体力)", isLeader: false },
+      { name: "ラオーク", attribute: "火", role: "協力攻撃でカリン/火パンダを誘発し回復阻害と盾割りを常時更新", runes: "暴走+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ カリン ➔ 火パンダ ➔ テサリオン ➔ ラオーク",
+    speedTuningMemo: "フランが最速で免疫を展開。カリンがギエスにスキル2で回復阻害を入れ、火パンダがスキル3でデバフを重ねます。ラオークの協力攻撃でカリンが呼ばれると回復阻害や剣折りが即座に再付与されます。",
+    requirementsMemo: "【ギエス攻略の最重要鉄則：回復阻害（回復不可）を切らさない！】\n・ギエスは攻撃時に大回復してくるため、回復阻害が入っていないと削ったHPがすべて元通りになってしまいます。カリンと火パンダの2枚体制で回復不可を維持すれば、ギエスのHP吸収を完全無効化できます。\n・全員火属性（＋光フラン）で編成することで、ギエスの風属性攻撃に対して被ダメージ激減＆強打・ミス発生となり、耐久面が極めて安全になります。\n・【代用モンスター】\nテサリオン ➔ カルカノ(火スナイパー)、ヴェルデハイル、火ヘルハウンド(ジーク)\n火パンダ ➔ ヴェラジュエル(火アーク)、シファ(火九尾の狐: 回復阻害持ち)、スカー(火オオカミ人間)\nラオーク ➔ ブランディア(火極地女王)、火ホムンクルス、ケン(火シャドウクロー)",
+    targetMemo: "【吸血ルーン・絶望ルーン最優先】吸血ルーンや絶望ルーンが出現したら最優先で破壊。ボスに回復不可デバフを維持しながら集中攻撃。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-tartaros-guilles-carcano-brandia",
+    name: "【タルタロス迷宮・ギエス(風)】カルカノ＆ヴェラジュエル 高火力即殺パ (持続免疫＆防御無視)",
+    dungeon: "タルタロスの迷宮 (ギエス・風)",
+    dungeonCategory: "タルタロス",
+    averageTime: "約1分15秒",
+    successRate: "99%",
+    members: [
+      { name: "カルカノ", attribute: "火", role: "ギルバト速度24%UP (L)・毎ターン確定盾割り・隠密で被ダメ半減＆超高火力", runes: "激怒+意志 または 暴走+意志 (速度/クリダメ/攻撃)", isLeader: true },
+      { name: "ヴェラジュエル", attribute: "火", role: "全体解除＋3ターン免疫＋攻撃ゲージアップ", runes: "暴走+意志 (速度/防御/防御)", isLeader: false },
+      { name: "カリン", attribute: "火", role: "回復不可＋攻撃弱化＋回復＋攻撃バフ", runes: "反撃+元気+集中 (速度/体力/防御)", isLeader: false },
+      { name: "火パンダ", attribute: "火", role: "回復不可・盾割り・持続回復・反撃", runes: "暴走+守護 (防御/防御/体力)", isLeader: false },
+      { name: "ブランディア", attribute: "火", role: "弱化数比例の核弾頭スキル3でギエスのHPを一撃で消し去る", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "ヴェラジュエル ➔ カリン ➔ 火パンダ ➔ カルカノ ➔ ブランディア",
+    speedTuningMemo: "ヴェラジュエルの3ターン免疫でギエスの咆哮デバフを遮断。カリンの回復阻害と火パンダの多段デバフが入った瞬間、ブランディアのスキル3を叩き込みます。",
+    requirementsMemo: "【免疫維持と圧倒的瞬間火力】\n・ヴェラジュエルの3T免疫でボスのデバフを寄せ付けません。\n・カリンの回復不可が入った状態でブランディアがスキル3を撃てば、ボスのHPを一気に消し飛ばすことができます。",
+    targetMemo: "ルーンが出たらカルカノ等の単体攻撃で即座に破壊し、ボスを集中砲火。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
+  },
+
+  // 7-4. 迷宮の主 タルタロス (Tartarus) - 計2編成
+  {
+    id: "preset-party-tartaros-boss-revive-f2p",
+    name: "【タルタロス迷宮・タルタロス(主)】フラン＆ブリアン・ルル 蘇生＋二重免疫パ (事故率0%完全安定)",
+    dungeon: "タルタロスの迷宮 (タルタロス・主)",
+    dungeonCategory: "タルタロス",
+    averageTime: "約2分30秒〜3分 (確実な生還・クリア)",
+    successRate: "99%",
+    members: [
+      { name: "フラン", attribute: "光", role: "攻撃速度10%UP (L)・全体2T免疫＋攻撃バフ＋全体回復・スキル1剣折り", runes: "迅速+元気 (速度/体力/体力 速度+90以上)", isLeader: true },
+      { name: "ブリアン", attribute: "風", role: "【タルタロス最強の保険】味方全員の体力を均等化して蘇生！・スキル2全体剣折り", runes: "絶望+元気 または 元気+元気+元気 (体力/体力/体力 体力+30000以上)", isLeader: false },
+      { name: "ルル", attribute: "水", role: "全体解除＋免疫＋持続回復 (フランと合わせて二重免疫を維持)", runes: "迅速+元気 または 暴走+元気 (速度/体力/体力)", isLeader: false },
+      { name: "ローレン", attribute: "光", role: "単体確定盾割り＋速度デバフ＋ゲージダウン＋強化剥がし (右腕シールド解除)", runes: "迅速+集中 (速度/体力/体力 的中45%+)", isLeader: false },
+      { name: "水ホムンクルス", attribute: "水", role: "全体持続ダメージ＋割合削りアタッカー (ボス本体と腕を安全に削る)", runes: "絶望+集中 または 猛攻+刃 (速度/体力/攻撃)", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ ローレン ➔ ルル ➔ 水ホムンクルス ➔ ブリアン",
+    speedTuningMemo: "フランとルルを高速化（速度+80〜100）し、タルタロスのブレスが来る前に必ず免疫を張ります。ブリアンは鈍足高耐久（体力35000〜40000）にしておき、味方が落とされた瞬間にスキル3で即座に全員満タン近くまで回復しながら蘇生します。",
+    requirementsMemo: "【タルタロス攻略の最重要鉄則：中ボス3体を倒してから挑むこと】\n・レオス、コト、ギエスを倒すとボスのパッシブ強化が解除され、難易度が劇的に下がります。必ず中ボス撃破後に挑戦してください（Hard/Hell共通）。\n・【腕のターゲット優先順位】\n① 左腕（崩壊の手）：攻撃ゲージ満タンで即死級の壊滅攻撃を放つため、最優先で左腕を破壊！\n② 右腕（創造の手）：ボスに強力なシールドを張るため、ローレンで剥がすか破壊。\n③ 本体：腕を落としたらボス本体にローレンの盾割りを入れ、水ホムの持続や通常攻撃で一気に削ります。\n・【蘇生役ブリアンの安心感】\nタルタロス戦はどれだけ対策してもボスの暴走や集中攻撃で1体落ちることがあります。ブリアン（またはトリアーナ）がいることで、味方が倒れても即座に体力を平準化して復活させ、何事もなかったかのように立て直せます。\n・【代用モンスター】\nブリアン ➔ トリアーナ(風ハープ: 即死回避パッシブ＋免疫回復)、エラドリエル(風アーク)、イオヌ(光エピキオン司祭)、ミシェル(二次覚醒)\n水ホムンクルス ➔ アカムアミール、セオマルス、風ドリアード(メリア)、イエロメ\nローレン ➔ 火パンダ(雄飛: 調合星5・盾割り＋弱化解除＋持続回復で超優秀)",
+    targetMemo: "【ターゲット順序】：左腕（崩壊の手）最優先 ➔ 右腕（創造の手） ➔ ボス本体。左腕を常に注視してゲージが溜まる前に落とすのが最大のコツです。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: "preset-party-tartaros-boss-triana-melia",
+    name: "【タルタロス迷宮・タルタロス(主)】トリアーナ＆メリア・火パンダ 即死回避持続パ (オート安定)",
+    dungeon: "タルタロスの迷宮 (タルタロス・主)",
+    dungeonCategory: "タルタロス",
+    averageTime: "約2分",
+    successRate: "99%",
+    members: [
+      { name: "トリアーナ", attribute: "風", role: "迷宮用抵抗33%UP (L)・味方即死を完全無効化＋即ターン獲得・解除免疫", runes: "暴走+意志 (速度/体力/体力 体力+25000以上)", isLeader: true },
+      { name: "フラン", attribute: "光", role: "全体免疫＋攻撃バフ＋回復＋剣折り", runes: "迅速+元気 (速度/体力/体力)", isLeader: false },
+      { name: "火パンダ", attribute: "火", role: "調合星5・全体持続回復＋弱化解除＋多段盾割り・剣折り・反撃", runes: "守護+守護+元気 (防御/防御/体力)", isLeader: false },
+      { name: "メリア", attribute: "風", role: "毎ターン持続ダメージ＋持続延長＋ゲージダウンで本体と腕を素早く削る", runes: "絶望+集中 (速度/体力/的中)", isLeader: false },
+      { name: "エマ", attribute: "水", role: "防御力バフ＋全体シールド＋強化剥がし＋ヒール", runes: "暴走+元気 (速度/体力/体力)", isLeader: false }
+    ],
+    turnOrder: "フラン ➔ エマ ➔ トリアーナ ➔ 火パンダ ➔ メリア",
+    speedTuningMemo: "フランとエマで免疫・防御バフ・シールドを展開。トリアーナのパッシブで即死事故を未然に防止します。",
+    requirementsMemo: "【トリアーナの即死耐性パッシブが最強】\n・トリアーナのパッシブがあるため、万が一左腕の即死攻撃が飛んできても味方が倒れず耐えられます。\n・火パンダとエマの防御バフ＋シールド＋持続回復が常に回り続け、メリアの持続ダメージでタルタロス本体と腕を安全確実に溶かします。",
+    targetMemo: "左腕（崩壊の手） ➔ 右腕 ➔ 本体の順にターゲット。",
+    isFavorite: false,
+    updatedAt: new Date().toISOString()
   }
 ];
 
@@ -849,7 +1028,7 @@ let parties = [];
 let activeTab = 'all'; // 'all', 'guild', 'cairos', 'form'
 let cairosSubtab = 'party'; // 'party', 'monsters'
 let attributeFilter = 'all'; // 'all', '火', '水', '風', '光', '闇'
-let dungeonFilter = 'all'; // 'all', '巨人', 'ドラゴン', '死のダンジョン', '精霊', '鋼鉄', '審判'
+let dungeonFilter = 'all'; // 'all', 'タルタロス', '巨人', 'ドラゴン', '死のダンジョン', '精霊', '鋼鉄', '審判'
 let searchQuery = '';
 let currentEditId = null;
 let currentPartyEditId = null;
@@ -967,7 +1146,10 @@ const elements = {
   btnApplySyncReplace: document.getElementById('btn-apply-sync-replace'),
   btnApplySyncMerge: document.getElementById('btn-apply-sync-merge'),
   syncFileInput: document.getElementById('sync-file-input'),
-  btnTriggerFileInput: document.getElementById('btn-trigger-file-input')
+  btnTriggerFileInput: document.getElementById('btn-trigger-file-input'),
+
+  // タルタロスの迷宮 クイックバナー
+  bannerGoTartaros: document.getElementById('banner-go-tartaros')
 };
 
 // 4. アプリ起動処理
@@ -1120,6 +1302,24 @@ function initApp() {
           updated = true;
         }
       }
+
+      // 5.8. タルタロスの迷宮 4大ボス攻略パーティ（レオス/コト/ギエス/タルタロス 計8編成）の追加・最新化
+      PRESET_PARTIES.filter(p => p.dungeonCategory === 'タルタロス').forEach(preset => {
+        const curIdx = parties.findIndex(p => p.id === preset.id);
+        if (curIdx === -1) {
+          parties.push(preset);
+          updated = true;
+        } else {
+          if (parties[curIdx].requirementsMemo !== preset.requirementsMemo) {
+            parties[curIdx].requirementsMemo = preset.requirementsMemo;
+            parties[curIdx].speedTuningMemo = preset.speedTuningMemo;
+            parties[curIdx].targetMemo = preset.targetMemo;
+            parties[curIdx].turnOrder = preset.turnOrder;
+            parties[curIdx].members = preset.members;
+            updated = true;
+          }
+        }
+      });
 
       // 6. 全ダンジョンの追加プリセット（ドラゴン、精霊、鋼鉄、審判など）の自動同期
       PRESET_PARTIES.forEach(preset => {
@@ -1751,6 +1951,7 @@ function handlePartyFormSubmit(e) {
   else if (dungeon.includes('精霊')) dungeonCategory = '精霊';
   else if (dungeon.includes('鋼鉄')) dungeonCategory = '鋼鉄';
   else if (dungeon.includes('審判')) dungeonCategory = '審判';
+  else if (dungeon.includes('タルタロス') || dungeon.includes('迷宮')) dungeonCategory = 'タルタロス';
 
   // メンバー5体の収集
   const members = [];
@@ -2114,6 +2315,26 @@ function setupEventListeners() {
   if (elements.btnTriggerFileInput && elements.syncFileInput) {
     elements.btnTriggerFileInput.addEventListener('click', () => elements.syncFileInput.click());
     elements.syncFileInput.addEventListener('change', handleSyncFileSelect);
+  }
+
+  // ギルド戦タブ内のタルタロス迷宮クイックバナー
+  if (elements.bannerGoTartaros) {
+    elements.bannerGoTartaros.addEventListener('click', () => {
+      switchTab('cairos');
+      switchCairosSubtab('party');
+      if (elements.dungeonBtns) {
+        elements.dungeonBtns.forEach(btn => {
+          if (btn.dataset.dungeon === 'タルタロス') {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+      }
+      dungeonFilter = 'タルタロス';
+      renderParties();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 }
 

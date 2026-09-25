@@ -64,6 +64,18 @@
 
     <!-- ギルドメモタブ -->
     <div id="tab-content-guild" class="tab-pane">
+      <!-- タルタロスの迷宮 クイックバナー -->
+      <div class="guild-tartaros-banner" id="banner-go-tartaros">
+        <div class="banner-content">
+          <div class="banner-icon">🏰</div>
+          <div class="banner-text">
+            <h3>タルタロスの迷宮 4大ボス攻略パーティ</h3>
+            <p>レオス(水)・コト(火)・ギエス(風)・タルタロス(主)の超安定テンプレをチェック！</p>
+          </div>
+        </div>
+        <span class="banner-btn">編成を見る ❯</span>
+      </div>
+
       <div class="list-summary">
         ギルド・アリーナ対策メモ付き (<span id="guild-count">0</span>)
       </div>
@@ -92,6 +104,7 @@
       <!-- ダンジョン別フィルター (パーティ表示時) -->
       <div class="dungeon-filters" id="dungeon-filter-area">
         <button class="dungeon-btn active" data-dungeon="all">すべて</button>
+        <button class="dungeon-btn dungeon-tartaros" data-dungeon="タルタロス">迷宮ボス</button>
         <button class="dungeon-btn dungeon-giants" data-dungeon="巨人">巨人深淵</button>
         <button class="dungeon-btn dungeon-dragons" data-dungeon="ドラゴン">ドラゴン深淵</button>
         <button class="dungeon-btn dungeon-necro" data-dungeon="死のダンジョン">死ダン深淵</button>
@@ -333,6 +346,10 @@
               <option value="精霊のダンジョン (10階)">精霊のダンジョン (10階)</option>
               <option value="鋼鉄のダンジョン">鋼鉄のダンジョン</option>
               <option value="審判のダンジョン">審判のダンジョン</option>
+              <option value="タルタロスの迷宮 (レオス・水)">タルタロスの迷宮 (レオス・水)</option>
+              <option value="タルタロスの迷宮 (コト・火)">タルタロスの迷宮 (コト・火)</option>
+              <option value="タルタロスの迷宮 (ギエス・風)">タルタロスの迷宮 (ギエス・風)</option>
+              <option value="タルタロスの迷宮 (タルタロス・主)">タルタロスの迷宮 (タルタロス・主)</option>
               <option value="その他">その他</option>
             </select>
           </div>
