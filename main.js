@@ -1268,6 +1268,8 @@ let monsters = [];
 let parties = [];
 let activeTab = 'all'; // 'all', 'guild', 'cairos', 'form'
 let cairosSubtab = 'party'; // 'party', 'monsters'
+let guildSubtab = 'tartaros'; // 'tartaros', 'monsters'
+let tartarosBossFilter = 'all'; // 'all', 'レオス', 'コト', 'ギエス', 'タルタロス'
 let attributeFilter = 'all'; // 'all', '火', '水', '風', '光', '闇'
 let dungeonFilter = 'all'; // 'all', 'タルタロス', '巨人', 'ドラゴン', '死のダンジョン', '精霊', '鋼鉄', '審判'
 let searchQuery = '';
@@ -1290,6 +1292,8 @@ const elements = {
   
   monsterCount: document.getElementById('monster-count'),
   guildCount: document.getElementById('guild-count'),
+  guildCountSub: document.getElementById('guild-count-sub'),
+  guildTartarosCount: document.getElementById('guild-tartaros-count'),
   cairosCount: document.getElementById('cairos-count'),
   
   btnResetPreset: document.getElementById('btn-reset-preset'),
@@ -1338,6 +1342,21 @@ const elements = {
   btnAddParty: document.getElementById('btn-add-party'),
   dungeonFilterArea: document.getElementById('dungeon-filter-area'),
   dungeonBtns: document.querySelectorAll('.dungeon-btn'),
+
+  // ギルド戦サブナビ＆タルタロス迷宮ボスタブ
+  btnGuildSubnavTartaros: document.getElementById('btn-guild-subnav-tartaros'),
+  btnGuildSubnavMonsters: document.getElementById('btn-guild-subnav-monsters'),
+  guildSubpaneTartaros: document.getElementById('guild-subpane-tartaros'),
+  guildSubpaneMonsters: document.getElementById('guild-subpane-monsters'),
+  btnAddGuildParty: document.getElementById('btn-add-guild-party'),
+  bossTabBtns: document.querySelectorAll('.boss-tab-btn'),
+  bossStrategyBanner: document.getElementById('boss-strategy-banner'),
+  partyListGuildTartaros: document.getElementById('party-list-guild-tartaros'),
+  countBossAll: document.getElementById('count-boss-all'),
+  countBossLeos: document.getElementById('count-boss-leos'),
+  countBossKoto: document.getElementById('count-boss-koto'),
+  countBossGuilles: document.getElementById('count-boss-guilles'),
+  countBossTartarus: document.getElementById('count-boss-tartarus'),
 
   // パーティ詳細モーダル
   partyDetailModal: document.getElementById('party-detail-modal'),
@@ -1756,8 +1775,12 @@ function escapeHtml(string) {
 function renderAll() {
   renderMonsterList('all', elements.monsterListAll, elements.monsterCount);
   renderMonsterList('guild', elements.monsterListGuild, elements.guildCount);
+  if (elements.guildCountSub) {
+    elements.guildCountSub.textContent = elements.guildCount ? elements.guildCount.textContent : '0';
+  }
   renderMonsterList('cairos', elements.monsterListCairos, elements.cairosCount);
   renderParties();
+  renderGuildTartarosParties();
 }
 
 // リストの描画
@@ -2081,6 +2104,7 @@ function togglePartyFavorite(id) {
     sortParties();
     savePartiesToLocalStorage();
     renderParties();
+    renderGuildTartarosParties();
     showToast(party.isFavorite ? `「${party.name}」をお気に入りに登録しました` : `「${party.name}」のお気に入りを解除しました`);
   }
 }
@@ -2166,7 +2190,7 @@ function closePartyDetailModal() {
 }
 
 // パーティ編集フォームを開く
-function openPartyForm(id = null) {
+function openPartyForm(id = null, defaultDungeon = null) {
   currentPartyEditId = id;
   const isEdit = Boolean(id);
 
@@ -2205,9 +2229,9 @@ function openPartyForm(id = null) {
       }
     });
   } else {
-    elements.partyFormTitle.textContent = '周回パーティ新規登録';
+    elements.partyFormTitle.textContent = defaultDungeon && defaultDungeon.includes('迷宮') ? '迷宮攻略パーティ新規登録' : '周回パーティ新規登録';
     elements.formPartyId.value = '';
-    elements.formPartyDungeon.value = '巨人ダンジョン (深淵Hard)';
+    elements.formPartyDungeon.value = defaultDungeon || '巨人ダンジョン (深淵Hard)';
   }
 
   elements.partyFormModal.style.display = 'flex';
@@ -2292,6 +2316,7 @@ function handlePartyFormSubmit(e) {
   sortParties();
   savePartiesToLocalStorage();
   renderParties();
+  renderGuildTartarosParties();
   closePartyForm();
 
   // 詳細モーダルが開いていた場合は最新データで再表示
@@ -2321,6 +2346,193 @@ function switchCairosSubtab(subtab) {
     if (elements.btnAddParty) elements.btnAddParty.style.display = 'none';
     renderMonsterList('cairos', elements.monsterListCairos, elements.cairosCount);
   }
+}
+
+// -----------------------------------------------------------------------------
+// 5-3. ギルド戦 タルタロスの迷宮 ボス別パーティ描画・タブ制御
+// -----------------------------------------------------------------------------
+
+// ボス別ワンポイント戦略データ
+const BOSS_STRATEGY_DATA = {
+  all: {
+    theme: '',
+    icon: '🏰',
+    title: 'タルタロスの迷宮 4大ボス攻略概要',
+    badge: '15編成登録済',
+    badgeClass: 'bg-tartaros',
+    text: '<strong>【迷宮攻略の鉄則】</strong>中ボス（レオス・コト・ギエス）を倒すとタルタロス主の強化パッシブが解除されます。各ボスのギミックに特化した最適編成を選んで挑戦しましょう！'
+  },
+  'レオス': {
+    theme: 'theme-leos',
+    icon: '💧',
+    title: '水の守護者 レオス (Leos) 攻略の掟',
+    badge: '水属性ボス',
+    badgeClass: 'bg-水',
+    text: '<strong>【免疫を切らさない＋左右ルーン破壊】</strong>レオスの「凍結の息（スキル延長）」と「絶対零度（全体凍結）」は免疫で100%遮断可能！ジュリー等の全体攻撃型は被弾で火力が落ちるため、フレスベルグやシュタルク等の風属性単体アタッカーで左右ルーン（凍結・激怒）を最優先破壊しましょう。'
+  },
+  'コト': {
+    theme: 'theme-koto',
+    icon: '🔥',
+    title: '火の守護者 コト (Koto) 攻略の掟',
+    badge: '火属性ボス',
+    badgeClass: 'bg-火',
+    text: '<strong>【攻撃弱化(剣折り)＋被ダメカット】</strong>コトの「焦熱地獄」は即死級ですが、ダリオンのスキル2等で<strong>剣折りを入れるとダメージが半減</strong>します！さらにダリオン＋ヒンメルの二重パッシブで被ダメ40%カットし、水属性有利アタッカーで安全に撃破します。'
+  },
+  'ギエス': {
+    theme: 'theme-guilles',
+    icon: '🍃',
+    title: '風の守護者 ギエス (Guilles) 攻略の掟',
+    badge: '風属性ボス',
+    badgeClass: 'bg-風',
+    text: '<strong>【回復阻害(回復不可)でHP吸収を完全阻止】</strong>ギエスは攻撃時に与ダメの100%を吸収するため、カリン等のスキルで<strong>回復不可デバフを常時維持</strong>するのが最重要！火属性のバーレイグ知識砲撃やカルカノで一撃粉砕を狙います。'
+  },
+  'タルタロス': {
+    theme: 'theme-tartarus',
+    icon: '👑',
+    title: '迷宮の主 タルタロス (Tartarus) 攻略の掟',
+    badge: '最終主ボス',
+    badgeClass: 'bg-tartaros',
+    text: '<strong>【中ボス3体撃破後に挑戦＋左腕最優先破壊】</strong>中ボス撃破でボスの全パッシブを解除。戦闘時は即死級攻撃を放つ<strong>左腕（崩壊の手）を最優先破壊</strong>！事故防止にタラニスやブリアン、トリアーナ等の蘇生・即死回避役を必ず編成しましょう。'
+  }
+};
+
+// ギルド戦 タルタロス迷宮パーティの描画
+function renderGuildTartarosParties() {
+  if (!elements.partyListGuildTartaros) return;
+  elements.partyListGuildTartaros.innerHTML = '';
+
+  // タルタロス迷宮パーティのみを抽出
+  const tartarosParties = parties.filter(p => p.dungeonCategory === 'タルタロス' || (p.dungeon && p.dungeon.includes('タルタロス')));
+
+  // 各ボスのカウント更新
+  const countAll = tartarosParties.length;
+  const countLeos = tartarosParties.filter(p => (p.dungeon && p.dungeon.includes('レオス')) || (p.name && p.name.includes('レオス'))).length;
+  const countKoto = tartarosParties.filter(p => (p.dungeon && p.dungeon.includes('コト')) || (p.name && p.name.includes('コト'))).length;
+  const countGuilles = tartarosParties.filter(p => (p.dungeon && p.dungeon.includes('ギエス')) || (p.name && p.name.includes('ギエス'))).length;
+  const countTartarus = tartarosParties.filter(p => (p.dungeon && (p.dungeon.includes('タルタロス・主') || p.dungeon.includes('タルタロス (主)'))) || (p.name && (p.name.includes('タルタロス(主)') || p.name.includes('タルタロス・主')))).length;
+
+  if (elements.guildTartarosCount) elements.guildTartarosCount.textContent = countAll;
+  if (elements.countBossAll) elements.countBossAll.textContent = countAll;
+  if (elements.countBossLeos) elements.countBossLeos.textContent = countLeos;
+  if (elements.countBossKoto) elements.countBossKoto.textContent = countKoto;
+  if (elements.countBossGuilles) elements.countBossGuilles.textContent = countGuilles;
+  if (elements.countBossTartarus) elements.countBossTartarus.textContent = countTartarus;
+
+  // フィルタリング処理（ボス別タブ＋検索キーワード）
+  const filtered = tartarosParties.filter(party => {
+    // 1. ボス別フィルター
+    if (tartarosBossFilter !== 'all') {
+      const dungeonMatch = (party.dungeon || '').includes(tartarosBossFilter);
+      const nameMatch = (party.name || '').includes(tartarosBossFilter);
+      if (!dungeonMatch && !nameMatch) {
+        return false;
+      }
+    }
+
+    // 2. 検索キーワードフィルター
+    if (searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase();
+      const nameMatch = (party.name || '').toLowerCase().includes(q);
+      const dungeonMatch = (party.dungeon || '').toLowerCase().includes(q);
+      const turnMatch = (party.turnOrder || '').toLowerCase().includes(q);
+      const speedMatch = (party.speedTuningMemo || '').toLowerCase().includes(q);
+      const reqMatch = (party.requirementsMemo || '').toLowerCase().includes(q);
+      const targetMatch = (party.targetMemo || '').toLowerCase().includes(q);
+      const memberMatch = party.members && party.members.some(m =>
+        (m.name || '').toLowerCase().includes(q) ||
+        (m.role || '').toLowerCase().includes(q) ||
+        (m.runes || '').toLowerCase().includes(q)
+      );
+
+      return nameMatch || dungeonMatch || turnMatch || speedMatch || reqMatch || targetMatch || memberMatch;
+    }
+
+    return true;
+  });
+
+  // 戦略バナー更新
+  updateBossStrategyBanner();
+
+  if (filtered.length === 0) {
+    const emptyDiv = document.createElement('div');
+    emptyDiv.className = 'empty-state';
+    emptyDiv.innerHTML = `
+      <div class="empty-icon">🏰</div>
+      <p style="font-weight: 600; color: #fff; margin-bottom: 6px;">該当する迷宮ボス攻略パーティがありません</p>
+      <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">
+        ${searchQuery ? `検索ワード: 「${escapeHtml(searchQuery)}」 ` : ''}
+        ${tartarosBossFilter !== 'all' ? `ボス: 「${escapeHtml(tartarosBossFilter)}」` : ''} で絞り込み中です。
+      </p>
+      <button class="btn btn-primary btn-sm" id="btn-reset-tartaros-boss-filter">
+        🔄 すべての迷宮ボスを表示
+      </button>
+    `;
+    const resetBtn = emptyDiv.querySelector('#btn-reset-tartaros-boss-filter');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        switchTartarosBoss('all');
+      });
+    }
+    elements.partyListGuildTartaros.appendChild(emptyDiv);
+    return;
+  }
+
+  filtered.forEach(party => {
+    elements.partyListGuildTartaros.appendChild(createPartyCard(party));
+  });
+}
+
+// ボス別ワンポイント戦略バナーの更新
+function updateBossStrategyBanner() {
+  if (!elements.bossStrategyBanner) return;
+  const data = BOSS_STRATEGY_DATA[tartarosBossFilter] || BOSS_STRATEGY_DATA.all;
+  
+  elements.bossStrategyBanner.className = `boss-strategy-banner ${data.theme || ''}`;
+  elements.bossStrategyBanner.innerHTML = `
+    <div class="strategy-icon">${data.icon}</div>
+    <div class="strategy-content">
+      <div class="strategy-title">
+        <span>${data.title}</span>
+        <span class="strategy-badge party-dungeon-badge ${data.badgeClass || ''}">${data.badge}</span>
+      </div>
+      <p class="strategy-text">${data.text}</p>
+    </div>
+  `;
+}
+
+// ギルド戦サブタブ切り替え（迷宮 / モンスター）
+function switchGuildSubtab(subtab) {
+  guildSubtab = subtab;
+  if (elements.btnGuildSubnavTartaros) {
+    elements.btnGuildSubnavTartaros.classList.toggle('active', subtab === 'tartaros');
+  }
+  if (elements.btnGuildSubnavMonsters) {
+    elements.btnGuildSubnavMonsters.classList.toggle('active', subtab === 'monsters');
+  }
+  if (elements.guildSubpaneTartaros) {
+    elements.guildSubpaneTartaros.style.display = subtab === 'tartaros' ? 'block' : 'none';
+    elements.guildSubpaneTartaros.classList.toggle('active', subtab === 'tartaros');
+  }
+  if (elements.guildSubpaneMonsters) {
+    elements.guildSubpaneMonsters.style.display = subtab === 'monsters' ? 'block' : 'none';
+    elements.guildSubpaneMonsters.classList.toggle('active', subtab === 'monsters');
+  }
+  if (subtab === 'tartaros') {
+    renderGuildTartarosParties();
+  } else {
+    renderMonsterList('guild', elements.monsterListGuild, elements.guildCount);
+  }
+}
+
+// 迷宮ボス切り替えタブ
+function switchTartarosBoss(boss) {
+  tartarosBossFilter = boss;
+  if (elements.bossTabBtns) {
+    elements.bossTabBtns.forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.boss === boss);
+    });
+  }
+  renderGuildTartarosParties();
 }
 
 // 6. モーダル（詳細）制御
@@ -2497,6 +2709,14 @@ function setupEventListeners() {
   if (elements.dungeonBtns) {
     elements.dungeonBtns.forEach(btn => {
       btn.addEventListener('click', () => {
+        if (btn.dataset.dungeon === 'タルタロス') {
+          // ギルド戦タブのタルタロス迷宮へスムーズにジャンプ
+          switchTab('guild');
+          switchGuildSubtab('tartaros');
+          switchTartarosBoss('all');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          return;
+        }
         elements.dungeonBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         dungeonFilter = btn.dataset.dungeon;
@@ -2540,6 +2760,7 @@ function setupEventListeners() {
           parties = parties.filter(p => p.id !== currentPartyDetailId);
           savePartiesToLocalStorage();
           renderParties();
+          renderGuildTartarosParties();
           closePartyDetailModal();
           showToast(`「${party.name}」を削除しました。`);
         }
@@ -2605,23 +2826,31 @@ function setupEventListeners() {
     elements.syncFileInput.addEventListener('change', handleSyncFileSelect);
   }
 
-  // ギルド戦タブ内のタルタロス迷宮クイックバナー
-  if (elements.bannerGoTartaros) {
-    elements.bannerGoTartaros.addEventListener('click', () => {
-      switchTab('cairos');
-      switchCairosSubtab('party');
-      if (elements.dungeonBtns) {
-        elements.dungeonBtns.forEach(btn => {
-          if (btn.dataset.dungeon === 'タルタロス') {
-            btn.classList.add('active');
-          } else {
-            btn.classList.remove('active');
-          }
-        });
-      }
-      dungeonFilter = 'タルタロス';
-      renderParties();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  // ギルド戦サブタブ切り替え
+  if (elements.btnGuildSubnavTartaros) {
+    elements.btnGuildSubnavTartaros.addEventListener('click', () => switchGuildSubtab('tartaros'));
+  }
+  if (elements.btnGuildSubnavMonsters) {
+    elements.btnGuildSubnavMonsters.addEventListener('click', () => switchGuildSubtab('monsters'));
+  }
+
+  // ギルド戦 迷宮パーティ追加ボタン
+  if (elements.btnAddGuildParty) {
+    elements.btnAddGuildParty.addEventListener('click', () => {
+      let defaultDungeonName = 'タルタロスの迷宮 (レオス・水)';
+      if (tartarosBossFilter === 'コト') defaultDungeonName = 'タルタロスの迷宮 (コト・火)';
+      else if (tartarosBossFilter === 'ギエス') defaultDungeonName = 'タルタロスの迷宮 (ギエス・風)';
+      else if (tartarosBossFilter === 'タルタロス') defaultDungeonName = 'タルタロスの迷宮 (タルタロス・主)';
+      openPartyForm(null, defaultDungeonName);
+    });
+  }
+
+  // 迷宮ボスタブボタン
+  if (elements.bossTabBtns) {
+    elements.bossTabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        switchTartarosBoss(btn.dataset.boss);
+      });
     });
   }
 }
@@ -2658,6 +2887,11 @@ function switchTab(tabId) {
   // フォームタブに遷移する際は、新規追加ならフォームをクリアする
   if (tabId === 'form' && !elements.formId.value) {
     resetForm();
+  }
+
+  // ギルド戦タブを開いたときはサブタブ状態を同期
+  if (tabId === 'guild') {
+    switchGuildSubtab(guildSubtab);
   }
 
   // カイロスタブを開いたときはサブタブ状態を同期

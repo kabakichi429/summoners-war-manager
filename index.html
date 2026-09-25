@@ -62,25 +62,63 @@
       </div>
     </div>
 
-    <!-- ギルドメモタブ -->
+    <!-- ギルド戦タブ -->
     <div id="tab-content-guild" class="tab-pane">
-      <!-- タルタロスの迷宮 クイックバナー -->
-      <div class="guild-tartaros-banner" id="banner-go-tartaros">
-        <div class="banner-content">
-          <div class="banner-icon">🏰</div>
-          <div class="banner-text">
-            <h3>タルタロスの迷宮 4大ボス攻略パーティ</h3>
-            <p>レオス(水)・コト(火)・ギエス(風)・タルタロス(主)の超安定テンプレをチェック！</p>
-          </div>
+      <!-- ギルドサブナビゲーション -->
+      <div class="guild-subnav">
+        <div class="subnav-tabs">
+          <button class="subnav-tab active" id="btn-guild-subnav-tartaros" data-guild-subtab="tartaros">
+            <span class="subnav-icon">🏰</span> タルタロス迷宮 (<span id="guild-tartaros-count">15</span>)
+          </button>
+          <button class="subnav-tab" id="btn-guild-subnav-monsters" data-guild-subtab="monsters">
+            <span class="subnav-icon">🛡️</span> モンスターメモ (<span id="guild-count">0</span>)
+          </button>
         </div>
-        <span class="banner-btn">編成を見る ❯</span>
+        <button id="btn-add-guild-party" class="btn btn-gold-sm">
+          <span>＋</span> 迷宮パーティ追加
+        </button>
       </div>
 
-      <div class="list-summary">
-        ギルド・アリーナ対策メモ付き (<span id="guild-count">0</span>)
+      <!-- 迷宮ボス別タブ・パーティ一覧サブペイン -->
+      <div id="guild-subpane-tartaros" class="guild-subpane active">
+        <!-- ボス別タブバー -->
+        <div class="tartaros-boss-tabs" id="tartaros-boss-tab-area">
+          <button class="boss-tab-btn active" data-boss="all">
+            <span class="boss-tab-icon">🏰</span> すべて (<span id="count-boss-all">15</span>)
+          </button>
+          <button class="boss-tab-btn boss-tab-leos" data-boss="レオス">
+            <span class="boss-tab-icon">💧</span> レオス (水・<span id="count-boss-leos">5</span>)
+          </button>
+          <button class="boss-tab-btn boss-tab-koto" data-boss="コト">
+            <span class="boss-tab-icon">🔥</span> コト (火・<span id="count-boss-koto">3</span>)
+          </button>
+          <button class="boss-tab-btn boss-tab-guilles" data-boss="ギエス">
+            <span class="boss-tab-icon">🍃</span> ギエス (風・<span id="count-boss-guilles">3</span>)
+          </button>
+          <button class="boss-tab-btn boss-tab-tartarus" data-boss="タルタロス">
+            <span class="boss-tab-icon">👑</span> タルタロス (主・<span id="count-boss-tartarus">4</span>)
+          </button>
+        </div>
+
+        <!-- ボス別ワンポイント戦略バナー -->
+        <div class="boss-strategy-banner" id="boss-strategy-banner">
+          <!-- JSで選択ボスに応じて動的に表示 -->
+        </div>
+
+        <!-- 迷宮パーティ一覧コンテナ -->
+        <div class="party-grid" id="party-list-guild-tartaros">
+          <!-- JSで動的に生成 -->
+        </div>
       </div>
-      <div class="monster-grid" id="monster-list-guild">
-        <!-- JSで動的に生成 -->
+
+      <!-- ギルド戦モンスター一覧サブペイン -->
+      <div id="guild-subpane-monsters" class="guild-subpane" style="display: none;">
+        <div class="list-summary">
+          ギルド・アリーナ対策メモ付き (<span id="guild-count-sub">0</span>)
+        </div>
+        <div class="monster-grid" id="monster-list-guild">
+          <!-- JSで動的に生成 -->
+        </div>
       </div>
     </div>
 
