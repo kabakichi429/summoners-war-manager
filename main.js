@@ -542,6 +542,27 @@ const PRESET_PARTIES = [
     updatedAt: new Date().toISOString()
   },
   {
+    id: "preset-party-dragons-abyss-silvertail-verde",
+    name: "ドラゴン深淵Hard 【超安定・常時攻撃バフ＆ゲージ爆加速】ヴェルデ＆シルバーテイル・カイル・双子軸",
+    dungeon: "ドラゴンダンジョン (深淵Hard)",
+    dungeonCategory: "ドラゴン",
+    averageTime: "約45秒〜55秒",
+    successRate: "99%",
+    members: [
+      { name: "ヴェルデハイル", attribute: "火", role: "ダンジョン速度28%UP (L)・全体ゲージ回し (最遅調整・クリ率100%必須)", runes: "暴走+反撃 または 激怒+刃 (攻撃/クリダメ/攻撃 または 速度/クリ率/体力)", isLeader: true },
+      { name: "シルバーテイル", attribute: "水", role: "常時全体攻撃バフ(パッシブ)・全体ゲージ下げ＆ミス・盾割り(S1)・弱化自動解除", runes: "迅速+集中 または 闘志+闘志+意志 (速度/体力/的中 的中55%+)", isLeader: false },
+      { name: "カイル", attribute: "水", role: "ボス特効最大体力比例アタッカー・消滅フィニッシャー (核)", runes: "激怒+刃 (攻撃/クリダメ/攻撃 クリ率85%+必須)", isLeader: false },
+      { name: "シャイナ", attribute: "火", role: "火チャクラム・全体盾割り＆スタン・ゲージ下げ・ブメチャク連携", runes: "暴走+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃 的中45〜55%)", isLeader: false },
+      { name: "サブリナ", attribute: "水", role: "水ブーメラン・盾割り＆回復阻害・被ダメ減＆与ダメ増パッシブ・双子連撃", runes: "暴走+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
+    ],
+    turnOrder: "サブリナ ➔ シャイナ ➔ シルバーテイル ➔ カイル ➔ ヴェルデハイル",
+    speedTuningMemo: "【ヴェルデハイルは最遅に設定！】サブリナとシャイナが先に動いて盾割りを付与。シルバーテイルの攻撃バフを受けたカイルが最大体力比例の大ダメージを叩き込み、最後に動くヴェルデハイルが味方全員のゲージを一瞬で40%満タンに引き戻します。右タワーやボスに動かれる前に高速殲滅可能です。",
+    requirementsMemo: "【シルバーテイルの常時攻撃バフ×ヴェルデのゲージ加速で削り残しゼロ！】\n・ローレンを抜き、シルバーテイルとヴェルデハイルを両方採用した超安定速攻パ。\n・盾割りはシルバーテイル(S1)・シャイナ(パッシブ&S2)・サブリナ(S2)の3体が所持しているため常に維持されます。\n・シルバーテイルのパッシブ（常時攻撃バフ）によりカイルと双子の火力が約1.5倍に激増し、ボスの体力30%以下発狂ゾーンを一瞬で消し飛ばします。\n・ヴェルデハイルのクリ率100%は絶対条件。カイルは対火有利属性ボーナスを含めクリ率85%以上（確定クリティカル）を確保してください。",
+    targetMemo: "ボス直撃ターゲット指定でOK（右クリスタルの免疫が張られる前に撃破）。",
+    isFavorite: true,
+    updatedAt: new Date().toISOString()
+  },
+  {
     id: "preset-party-necro-abyss-seren",
     name: "死ダン深淵Hard 【最速】セレン＆アビゲイル軸 (最速テンプレ)",
     dungeon: "死のダンジョン (深淵Hard)",
@@ -2414,6 +2435,19 @@ function initApp() {
           }
         }
       });
+
+      // 5.9. ドラゴン深淵Hard 【超安定】シルバーテイル＆ヴェルデハイル軸の追加・最新化
+      const stVerdePreset = PRESET_PARTIES.find(p => p.id === "preset-party-dragons-abyss-silvertail-verde");
+      if (stVerdePreset) {
+        const curIdx = parties.findIndex(p => p.id === stVerdePreset.id);
+        if (curIdx === -1) {
+          parties.push(stVerdePreset);
+          updated = true;
+        } else {
+          parties[curIdx] = stVerdePreset;
+          updated = true;
+        }
+      }
 
       // 6. 全ダンジョンの追加プリセット（ドラゴン、精霊、鋼鉄、審判など）の自動同期
       PRESET_PARTIES.forEach(preset => {
