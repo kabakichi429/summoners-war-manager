@@ -2831,13 +2831,36 @@ function toggleFavorite(id) {
 // 5-2. カイロス周回パーティ 描画・操作ロジック
 // -----------------------------------------------------------------------------
 
+// カイロスダンジョン所属判定（タルタロス迷宮・異界レイド・次元ホール等は除外）
+function isCairosParty(party) {
+  if (!party) return false;
+  // タルタロス迷宮、異界レイド、次元ホールは明確に除外
+  if (party.dungeonCategory === 'タルタロス' || (party.dungeon && party.dungeon.includes('タルタロス'))) return false;
+  if (party.dungeonCategory === '異界レイド' || (party.dungeon && party.dungeon.includes('異界レイド'))) return false;
+  if (party.dungeonCategory === '次元ホール' || (party.dungeon && party.dungeon.includes('次元ホール'))) return false;
+  if (party.dimensionType || party.dimensionArea) return false;
+
+  // カイロス系カテゴリ
+  const cairosCategories = ['巨人', 'ドラゴン', '死のダンジョン', '精霊', '鋼鉄', '審判'];
+  if (cairosCategories.includes(party.dungeonCategory)) return true;
+
+  const d = (party.dungeon || '');
+  if (d.includes('巨人') || d.includes('ドラゴン') || d.includes('死のダンジョン') || d.includes('精霊') || d.includes('鋼鉄') || d.includes('審判') || d.includes('カイロス')) return true;
+
+  // その他未分類で上記除外コンテンツでない場合もカイロス周回パーティとして許容
+  return true;
+}
+
 // 周回パーティ一覧の描画
 function renderParties() {
   if (!elements.partyListCairos) return;
   elements.partyListCairos.innerHTML = '';
 
-  const filtered = parties.filter(party => {
-    // 1. ダンジョン別フィルター
+  // カイロスダンジョン専用のパーティのみを抽出
+  const cairosParties = parties.filter(isCairosParty);
+
+  const filtered = cairosParties.filter(party => {
+    // 1. ダンジョン別フィルター (allの場合はカイロス全ダンジョン)
     if (dungeonFilter !== 'all') {
       const matchCategory = party.dungeonCategory === dungeonFilter;
       const matchDungeonName = (party.dungeon || '').includes(dungeonFilter);
@@ -4580,6 +4603,14 @@ function switchTab(tabId) {
 
   // カイロスタブを開いたときはサブタブ状態を同期
   if (tabId === 'cairos') {
+    if (dungeonFilter === 'タルタロス' || dungeonFilter === '異界レイド') {
+      dungeonFilter = 'all';
+      if (elements.dungeonBtns) {
+        elements.dungeonBtns.forEach(b => {
+          b.classList.toggle('active', b.dataset.dungeon === 'all');
+        });
+      }
+    }
     switchCairosSubtab(cairosSubtab);
   }
 
