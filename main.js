@@ -1393,42 +1393,42 @@ const PRESET_PARTIES = [
   },
   {
     id: "preset-party-raid-user-team2-taranis-riley",
-    name: "【異界レイド・手持ち最適化】タラニス＆ライリー・クロー 鉄壁蘇生＆弱化特効パ (事故率0%完全安定)",
+    name: "【異界レイド・手持ち最適化】シルバーテイル＆タラニス・クロー 攻撃爆増＆弱化特効パ",
     dungeon: "異界レイド (ソロ・カドゥルー5階)",
     dungeonCategory: "異界レイド",
     averageTime: "約45秒〜55秒",
     successRate: "99%",
     members: [
-      { name: "テサリオン", attribute: "火", role: "全属性クリ率24%UP (L)・パッシブ忘却＋盾割り高打点", runes: "暴走+刃 (速度/クリダメ/攻撃)", isLeader: true },
+      { name: "シルバーテイル", attribute: "水", role: "全属性攻撃33%UP (L)・常時味方攻撃バフ＋全体ゲージ下げ＆ミス＋盾割り", runes: "迅速+集中 または 闘志 (速度/体力/的中)", isLeader: true },
       { name: "タラニス", attribute: "風", role: "【前衛】全体防御バフ＋味方蘇生(事故完全ゼロ)＋自己復活＋挑発", runes: "守護+守護+意志 (速度/防御/防御 防御+1400+)", isLeader: false },
-      { name: "火パンダ", attribute: "火", role: "【前衛】調合星5・全体持続回復＋弱化解除＋多段デバフ", runes: "守護+元気+反撃 (防御/防御/体力 防御+1300+)", isLeader: false },
+      { name: "ベラデオン", attribute: "光", role: "【前衛・火パンダ代用/2A】スキル1確定盾割り＋全体大回復＆ゲージ上昇", runes: "守護+元気+集中 (速度/防御/体力 防御+1200+)", isLeader: false },
       { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＋攻撃バフ＋回復 (ブレス完封)", runes: "暴走+意志 (速度/体力/体力)", isLeader: false },
       { name: "クロー", attribute: "闇", role: "弱化特効「傷口ほじくり返し」で大ダメージ", runes: "激怒+刃 (攻撃/クリダメ/攻撃)", isLeader: false }
     ],
-    turnOrder: "ライリー ➔ タラニス ➔ 火パンダ ➔ テサリオン ➔ クロー",
-    speedTuningMemo: "ライリーの毎ターン免疫でスタンを防ぎ、タラニスの全体防御バフで前衛の被ダメを最小化。クローが弱化特効で削り切ります。",
-    requirementsMemo: "【タラニスの蘇生保険】万が一味方が落とされてもタラニスが即座に蘇生。タラニス自身も自動復活するため全滅しません。",
+    turnOrder: "ライリー ➔ ベラデオン ➔ タラニス ➔ シルバーテイル ➔ クロー",
+    speedTuningMemo: "ライリーの毎ターン免疫でスタンを防ぎ、タラニスの全体防御バフで前衛の被ダメを最小化。シルバーテイルの常時攻撃バフを受けたクローが弱化特効で削り切ります。",
+    requirementsMemo: "【火パンダ＆テサリオン代用】テサリオンの代わりにシルバーテイルをリーダー配置（全属性攻撃33%UP＋常時攻撃バフ）し、火パンダの代わりにベラデオン(2A)を前衛に置くことで、火力とゲージ回転が劇的に向上します。",
     targetMemo: "ボス本体を集中攻撃（カドゥルー5階）。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
   },
   {
     id: "preset-party-raid-user-team3-himmel-twins",
-    name: "【異界レイド・手持ち最適化】ヒンメル＆ディアス・ブメチャク 二重被ダメ軽減パ (被ダメ35%減＆連続攻撃)",
+    name: "【異界レイド・手持ち最適化】ヴェラモス＆ヒンメル・トリアーナ・双子 鉄壁即死回避＆連撃パ",
     dungeon: "異界レイド (ソロ・カドゥルー5階)",
     dungeonCategory: "異界レイド",
     averageTime: "約45秒〜55秒",
     successRate: "99%",
     members: [
-      { name: "ディアス", attribute: "闇", role: "抵抗30%UP (L)・味方被ダメ15%カット・盾割り＋回復阻害", runes: "守護+反撃+元気 (防御/防御/体力 防御+1300+)", isLeader: true },
-      { name: "ヴィゴル", attribute: "水", role: "【前衛】全体回復＋速度バフ＋クリ被弾軽減バフ＋3連盾割り", runes: "迅速+元気 (速度/体力/体力)", isLeader: false },
+      { name: "ヴェラモス", attribute: "闇", role: "全属性体力33%UP (L)・毎ターン味方全員のデバフを自動解除＋回復", runes: "迅速+元気 または 暴走 (速度/体力/体力)", isLeader: true },
+      { name: "ヴィゴル", attribute: "水", role: "【前衛】全体回復＋速度バフ＋クリ被弾軽減バフ＋3連盾割り", runes: "迅速+元気 (速度/体力/体力 防御+1000+)", isLeader: false },
+      { name: "トリアーナ", attribute: "風", role: "【前衛・ディアス代用】パッシブ味方即死100%回避＋全体弱化解除＆免疫＆シールド", runes: "守護+元気+意志 (速度/体力/防御 防御+1200+)", isLeader: false },
       { name: "ヒンメル", attribute: "水", role: "味方被ダメ20%カットパッシブ＋全体防御バフ＋ボス特効2倍打点", runes: "激怒+刃 (速度/クリダメ/攻撃)", isLeader: false },
-      { name: "デルフォイ", attribute: "風", role: "全体弱化解除＋免疫＋回復", runes: "迅速+元気 (速度/体力/防御)", isLeader: false },
       { name: "シャイナ", attribute: "火", role: "防御弱化＋ブメチャク連携攻撃", runes: "猛攻+刃 (速度/クリダメ/攻撃)", isLeader: false }
     ],
-    turnOrder: "デルフォイ ➔ ヴィゴル ➔ ディアス ➔ シャイナ ➔ ヒンメル",
-    speedTuningMemo: "ディアス（被ダメ15%カット）とヒンメル（被ダメ20%カット）の二重パッシブで被ダメージが最大35%減少。ブメチャク連携で削ります。",
-    requirementsMemo: "【ヒンメル＆ディアスの超耐久】前衛・後衛ともに被ダメージが劇的に減り、カドゥルーのジャンプ後ブレスを余裕で耐え抜きます。",
+    turnOrder: "トリアーナ ➔ ヴィゴル ➔ ヴェラモス ➔ シャイナ ➔ ヒンメル",
+    speedTuningMemo: "ヴェラモスの全属性体力33%UPリーダーで18体全体のHPを底上げし、毎ターン自動デバフ解除。万一の即死もトリアーナが100%無効化します。",
+    requirementsMemo: "【ディアス＆デルフォイ代用】デルフォイの代わりに調合星5ヴェラモス、ディアスの代わりにトリアーナを前衛に採用。ヒンメルの被ダメ20%カットと合わせて絶対安全にブメチャク連携で削り切ります。",
     targetMemo: "ボス本体を集中攻撃（カドゥルー5階）。",
     isFavorite: true,
     updatedAt: new Date().toISOString()
@@ -1824,14 +1824,14 @@ const PRESET_RAID_SETS = [
   },
   {
     id: "preset-raid-set-user-bale-himmel-taranis",
-    name: "【ユーザー手持ち最適化・超安定1分切り】バーレイグ＆ヒンメル・タラニス・ダリオン軸 手持ち特化ソロレイド",
-    tag: "ユーザー手持ち直結・絶対事故ゼロ",
+    name: "【ユーザー手持ち特化・完全代用型】シルバーテイル＆ヴェラモス・ヒンメル軸 超安定ソロレイド",
+    tag: "火パンダ/テサリオン/ディアス/デルフォイ完全代用",
     averageTime: "約45秒〜55秒",
     successRate: "99%",
-    summary: "所持モンスター（バーレイグ、ヒンメル、タラニス、ライリー、ダリオン、フラン、ローレン、カリン等）を100%投入！タラニスの蘇生保険とヒンメル＆ダリオンの二重被ダメカットで、どんな乱数でも全滅しない1分切り周回を実現。",
-    strategyMemo: "【ユーザー手持ちの強みを限界突破させるソロレイド構成】\n・TEAM 1にバーレイグ、ダリオン、フラン、ローレンを配置し、ダリオンのパッシブでチーム全体の被ダメを20%カットしながら安全に大砲を撃ちます。\n・TEAM 2はタラニス（全体防御バフ＋味方蘇生＋自己復活）とライリー（毎ターン全体免疫＆攻撃バフ）の風属性鉄壁タッグ。クローとテサリオンが火力を出します。\n・TEAM 3はヒンメル（味方被ダメ20%カット＋全体防御バフ）とディアス（被ダメ15%カット）を配置。ブメチャク（シャイナ・サブリナ）の連携でボスのゲージとHPをガリガリ削ります。\n・全チームに強烈な被ダメ軽減と弱化解除・回復が揃っているため、カドゥルーのブレスが連続しても全く崩れません。",
-    speedTuningMemo: "【行動順】\nチーム1: フラン ➔ カリン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ コナミヤ\nチーム2: ライリー ➔ タラニス ➔ 火パンダ ➔ テサリオン ➔ ラオーク ➔ クロー\nチーム3: デルフォイ ➔ ヴィゴル ➔ ディアス ➔ シャイナ ➔ サブリナ ➔ ヒンメル",
-    requirementsMemo: "【育成・ルーンの目安】\n・バーレイグ: 激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃) 知識5の火力を最優先。\n・タラニス: 守護+守護+意志 (速度/防御/防御) 防御力+1300以上を確保し、前衛の要に。\n・ヒンメル: 激怒+刃 (速度/クリダメ/攻撃) 後衛から防御バフと高打点を供給。\n・ライリー: 暴走+意志 または 迅速+元気 (速度/体力/体力) 最速クラスで回す。\n・ダリオン: 反撃+元気+元気 (体力/体力/防御) 前衛配置で反撃盾割りと剣折り。",
+    summary: "火パンダ・テサリオン・ディアス・デルフォイを一切使わず、調合・配布・育成済みモンスター（シルバーテイル、ヴェラモス、ベラデオン、トリアーナ）で完全代用！シルバーテイルの攻撃33%UP＆常時攻撃バフと、ヴェラモスの体力33%UP＆自動弱化解除により、元の編成以上の超火力と絶対安定を実現。",
+    strategyMemo: "【火パンダ・テサリオン・ディアス・デルフォイの完璧な代用と超強力シナジー】\\n・TEAM 1: ダリオンの被ダメ20%カットパッシブ＋フラン・カリンの二重攻撃バフでバーレイグが安全に大砲を叩き込みます。\\n・TEAM 2 (火パンダ＆テサリオン代用): テサリオンの代わりにシルバーテイルをリーダー配置（全属性攻撃力33%UP＋常時味方攻撃バフ）！火パンダの代わりにベラデオン(2A)を前衛配置し、確定盾割りと全体大回復・ゲージ上げでクローとラオークの火力を爆発させます。\\n・TEAM 3 (ディアス＆デルフォイ代用): デルフォイの代わりにヴェラモスをリーダー配置（全属性体力33%UP＋毎ターン味方全員のデバフを自動解除）！ディアスの代わりにトリアーナを前衛配置し、万が一の即死をパッシブで100%回避。ヒンメルの被ダメ20%カットと合わせて鉄壁の耐久と双子連撃で削り切ります。\\n・【リーダースキル神連携】シルバーテイル（攻撃33%UP）× ヴェラモス（体力33%UP）が18体全員に乗るため、全滅が完全にあり得ない超高速安定周回が可能です。",
+    speedTuningMemo: "【行動順】\\nチーム1: フラン ➔ カリン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ コナミヤ\\nチーム2: ライリー ➔ ベラデオン ➔ タラニス ➔ シルバーテイル ➔ ラオーク ➔ クロー\\nチーム3: トリアーナ ➔ ヴィゴル ➔ ヴェラモス ➔ シャイナ ➔ サブリナ ➔ ヒンメル",
+    requirementsMemo: "【育成・ルーンの目安】\\n・シルバーテイル: 迅速+集中 または 闘志 (速度/体力/的中) 全属性攻撃33%UPリーダー枠。パッシブで味方全体の攻撃力を常時底上げ。\\n・ベラデオン(2A): 迅速+元気 または 守護+元気 (速度/防御/体力 防御+1200以上、体力+20000以上) 前衛配置。\\n・ヴェラモス: 暴走/迅速+元気 (速度/体力/体力 体力+22000以上) 全属性体力33%UPリーダー枠。毎ターン味方のスタンや忘却を自動解除。\\n・トリアーナ: 守護+元気+意志 (速度/体力/防御 防御+1200以上、体力+22000以上) 前衛配置。即死回避パッシブで事故率0%。\\n・バーレイグ: 激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃)\\n・タラニス: 守護+守護+意志 (速度/防御/防御 防御+1400以上)\\n・ヒンメル: 激怒+刃 (速度/クリダメ/攻撃) 後衛から防御バフと2倍火力を供給。",
     team1: {
       name: "TEAM 1: バーレイグ＆ダリオン・フラン 知識砲撃チーム",
       leaderInfo: "バーレイグ (攻撃44%UP)",
@@ -1847,29 +1847,29 @@ const PRESET_RAID_SETS = [
       ]
     },
     team2: {
-      name: "TEAM 2: タラニス＆ライリー・クロー 鉄壁蘇生＆弱化特効チーム",
-      leaderInfo: "テサリオン (クリ率24%UP)",
+      name: "TEAM 2: シルバーテイル＆タラニス・クロー 攻撃爆増＆弱化特効チーム",
+      leaderInfo: "シルバーテイル (全属性攻撃力33%UP)",
       frontline: [
         { name: "タラニス", attribute: "風", role: "全体防御バフ＋味方蘇生(事故完全ゼロ)＋自己復活＋挑発", runes: "守護+守護+意志 (速度/防御/防御 防御+1400+)" },
-        { name: "火パンダ", attribute: "火", role: "調合星5・全体持続回復＋弱化解除＋多段デバフ", runes: "守護+元気+反撃 (防御/防御/体力 防御+1300+)" }
+        { name: "ベラデオン", attribute: "光", role: "【火パンダ代用/2A】スキル1確定盾割り＋全体大回復＆ゲージ上昇", runes: "守護+元気+集中 (速度/防御/体力 防御+1200+)" }
       ],
       backline: [
-        { name: "テサリオン", attribute: "火", role: "全属性クリ率24%UP (L)・パッシブ忘却＋盾割り高打点", runes: "暴走+刃 (速度/クリダメ/攻撃)", isLeader: true },
+        { name: "シルバーテイル", attribute: "水", role: "【テサリオン代用】全属性攻撃33%UP (L)・常時味方攻撃バフ＋全体ゲージ下げ＆ミス＋盾割り", runes: "迅速+集中 または 闘志 (速度/体力/的中)", isLeader: true },
         { name: "ライリー", attribute: "風", role: "毎ターン全体免疫＋攻撃バフ＋回復 (ブレス完封)", runes: "暴走+意志 (速度/体力/体力)" },
         { name: "クロー", attribute: "闇", role: "弱化特効「傷口ほじくり返し」で大ダメージ", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
         { name: "ラオーク", attribute: "火", role: "協力攻撃＋確定盾割り (回転率UP)", runes: "暴走+刃 (速度/クリダメ/攻撃)" }
       ]
     },
     team3: {
-      name: "TEAM 3: ヒンメル＆ディアス・ブメチャク 二重被ダメカットチーム",
-      leaderInfo: "ディアス (抵抗30%UP)",
+      name: "TEAM 3: ヴェラモス＆ヒンメル・トリアーナ・双子 鉄壁即死回避＆連撃チーム",
+      leaderInfo: "ヴェラモス (全属性体力33%UP)",
       frontline: [
-        { name: "ディアス", attribute: "闇", role: "抵抗30%UP (L)・味方被ダメ15%カット・盾割り＋回復阻害", runes: "守護+反撃+元気 (防御/防御/体力 防御+1300+)", isLeader: true },
-        { name: "ヴィゴル", attribute: "水", role: "全体回復＋速度バフ＋クリ被弾軽減バフ＋3連盾割り", runes: "迅速+元気 (速度/体力/体力)" }
+        { name: "ヴィゴル", attribute: "水", role: "全体回復＋速度バフ＋クリ被弾軽減バフ＋3連盾割り", runes: "迅速+元気 (速度/体力/体力 防御+1000+)" },
+        { name: "トリアーナ", attribute: "風", role: "【ディアス代用】パッシブ味方即死100%回避＋全体弱化解除＆免疫＆シールド", runes: "守護+元気+意志 (速度/体力/防御 防御+1200+)" }
       ],
       backline: [
+        { name: "ヴェラモス", attribute: "闇", role: "【デルフォイ代用】全属性体力33%UP (L)・毎ターン味方全員のデバフを自動解除＋回復", runes: "迅速+元気 または 暴走 (速度/体力/体力)", isLeader: true },
         { name: "ヒンメル", attribute: "水", role: "味方被ダメ20%カットパッシブ＋全体防御バフ＋ボス特効2倍打点", runes: "激怒+刃 (速度/クリダメ/攻撃)" },
-        { name: "デルフォイ", attribute: "風", role: "全体弱化解除＋免疫＋回復", runes: "迅速+元気 (速度/体力/防御)" },
         { name: "シャイナ", attribute: "火", role: "防御弱化＋ブメチャク連携攻撃", runes: "猛攻+刃 (速度/クリダメ/攻撃)" },
         { name: "サブリナ", attribute: "水", role: "味方被ダメ減少・与ダメ増加パッシブ＋ブメチャク連携", runes: "暴走+刃 (速度/クリダメ/攻撃)" }
       ]
@@ -2568,10 +2568,14 @@ function initApp() {
         }
       });
 
-      // 9. 異界レイドパーティの自動追加
+      // 9. 異界レイドパーティの自動追加・最新化
       PRESET_PARTIES.filter(pr => pr.dungeonCategory === '異界レイド').forEach(pr => {
-        if (!parties.some(p => p.id === pr.id)) {
+        const curIdx = parties.findIndex(p => p.id === pr.id);
+        if (curIdx === -1) {
           parties.push(pr);
+          updated = true;
+        } else {
+          parties[curIdx] = pr;
           updated = true;
         }
       });
@@ -3653,98 +3657,110 @@ function openRaidSetDetailModal(setId) {
   const set = raidSets.find(s => s.id === setId) || PRESET_RAID_SETS.find(s => s.id === setId);
   if (!set) return;
 
-  elements.partyModalDungeon.textContent = "異界レイド (ソロ・カドゥルー5階)";
-  elements.partyModalDungeon.className = "party-modal-dungeon bg-raid";
-  elements.partyModalName.textContent = set.name;
-  elements.partyModalTime.textContent = set.averageTime;
-  elements.partyModalRate.textContent = set.successRate;
+  if (elements.modalPartyDungeon) {
+    elements.modalPartyDungeon.textContent = "異界レイド (ソロ・カドゥルー5階)";
+    elements.modalPartyDungeon.className = "party-dungeon-badge bg-raid";
+  }
+  if (elements.modalPartyName) elements.modalPartyName.textContent = set.name;
+  if (elements.modalPartyTime) elements.modalPartyTime.textContent = `⏱️ ${set.averageTime}`;
+  if (elements.modalPartyRate) elements.modalPartyRate.textContent = `🏆 ${set.successRate}`;
 
   // 18体メンバー表示エリアの構築
-  elements.partyModalMembersList.innerHTML = '';
-  const teamsContainer = document.createElement('div');
-  teamsContainer.style.display = 'flex';
-  teamsContainer.style.flexDirection = 'column';
-  teamsContainer.style.gap = '16px';
-  teamsContainer.style.width = '100%';
+  if (elements.modalPartyMembers) {
+    elements.modalPartyMembers.innerHTML = '';
+    const teamsContainer = document.createElement('div');
+    teamsContainer.style.display = 'flex';
+    teamsContainer.style.flexDirection = 'column';
+    teamsContainer.style.gap = '16px';
+    teamsContainer.style.width = '100%';
 
-  const renderModalTeam = (team, num, borderCol) => {
-    if (!team) return;
-    const teamWrapper = document.createElement('div');
-    teamWrapper.style.background = 'rgba(15, 23, 42, 0.7)';
-    teamWrapper.style.border = `1px solid ${borderCol}`;
-    teamWrapper.style.borderRadius = '8px';
-    teamWrapper.style.padding = '12px';
+    const renderModalTeam = (team, num, borderCol) => {
+      if (!team) return;
+      const teamWrapper = document.createElement('div');
+      teamWrapper.style.background = 'rgba(15, 23, 42, 0.7)';
+      teamWrapper.style.border = `1px solid ${borderCol}`;
+      teamWrapper.style.borderRadius = '8px';
+      teamWrapper.style.padding = '12px';
 
-    teamWrapper.innerHTML = `
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;">
-        <span style="font-weight:800; font-size:0.9rem; color:${borderCol};">TEAM ${num}: ${escapeHtml(team.name.replace(/^TEAM \d+:\s*/, ''))}</span>
-        <span style="font-size:0.75rem; color:#fbbf24; font-weight:700;">👑 ${escapeHtml(team.leaderInfo)}</span>
-      </div>
-      <div style="font-size:0.75rem; color:#94a3b8; font-weight:700; margin-bottom:4px;">🛡️ 【前衛】(耐久ライン: 防御+1200〜1400 / 体力+20000)</div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:6px; margin-bottom:10px;">
-        ${team.frontline.map(m => `
-          <div style="background:rgba(30,41,59,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:6px 8px; font-size:0.78rem;">
-            <div style="font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
-              <span class="attr-${m.attribute}" style="font-size:0.6rem; padding:1px 5px; border-radius:3px;">${m.attribute}</span>
-              ${escapeHtml(m.name)}
+      teamWrapper.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px;">
+          <span style="font-weight:800; font-size:0.9rem; color:${borderCol};">TEAM ${num}: ${escapeHtml(team.name.replace(/^TEAM \d+:\s*/, ''))}</span>
+          <span style="font-size:0.75rem; color:#fbbf24; font-weight:700;">👑 ${escapeHtml(team.leaderInfo)}</span>
+        </div>
+        <div style="font-size:0.75rem; color:#94a3b8; font-weight:700; margin-bottom:4px;">🛡️ 【前衛】(耐久ライン: 防御+1200〜1400 / 体力+20000)</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:6px; margin-bottom:10px;">
+          ${team.frontline.map(m => `
+            <div style="background:rgba(30,41,59,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:6px 8px; font-size:0.78rem;">
+              <div style="font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
+                <span class="attr-${m.attribute}" style="font-size:0.6rem; padding:1px 5px; border-radius:3px;">${m.attribute}</span>
+                ${escapeHtml(m.name)}
+              </div>
+              <div style="font-size:0.7rem; color:#94a3b8; margin-top:2px;">${escapeHtml(m.role)}</div>
+              <div style="font-size:0.68rem; color:#38bdf8; margin-top:2px;">📌 ${escapeHtml(m.runes)}</div>
             </div>
-            <div style="font-size:0.7rem; color:#94a3b8; margin-top:2px;">${escapeHtml(m.role)}</div>
-            <div style="font-size:0.68rem; color:#38bdf8; margin-top:2px;">📌 ${escapeHtml(m.runes)}</div>
-          </div>
-        `).join('')}
-      </div>
-      <div style="font-size:0.75rem; color:#94a3b8; font-weight:700; margin-bottom:4px;">⚔️ 【後衛】(アタッカー＆弱化解除・サポート)</div>
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:6px;">
-        ${team.backline.map(m => `
-          <div style="background:rgba(30,41,59,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:6px 8px; font-size:0.78rem;">
-            <div style="font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
-              <span class="attr-${m.attribute}" style="font-size:0.6rem; padding:1px 5px; border-radius:3px;">${m.attribute}</span>
-              ${escapeHtml(m.name)}
-              ${m.isLeader ? '<span style="color:#fbbf24; font-size:0.7rem;">👑(L)</span>' : ''}
+          `).join('')}
+        </div>
+        <div style="font-size:0.75rem; color:#94a3b8; font-weight:700; margin-bottom:4px;">⚔️ 【後衛】(アタッカー＆弱化解除・サポート)</div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:6px;">
+          ${team.backline.map(m => `
+            <div style="background:rgba(30,41,59,0.8); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:6px 8px; font-size:0.78rem;">
+              <div style="font-weight:700; color:#fff; display:flex; align-items:center; gap:6px;">
+                <span class="attr-${m.attribute}" style="font-size:0.6rem; padding:1px 5px; border-radius:3px;">${m.attribute}</span>
+                ${escapeHtml(m.name)}
+                ${m.isLeader ? '<span style="color:#fbbf24; font-size:0.7rem;">👑(L)</span>' : ''}
+              </div>
+              <div style="font-size:0.7rem; color:#94a3b8; margin-top:2px;">${escapeHtml(m.role)}</div>
+              <div style="font-size:0.68rem; color:#38bdf8; margin-top:2px;">📌 ${escapeHtml(m.runes)}</div>
             </div>
-            <div style="font-size:0.7rem; color:#94a3b8; margin-top:2px;">${escapeHtml(m.role)}</div>
-            <div style="font-size:0.68rem; color:#38bdf8; margin-top:2px;">📌 ${escapeHtml(m.runes)}</div>
-          </div>
-        `).join('')}
-      </div>
-    `;
-    teamsContainer.appendChild(teamWrapper);
-  };
+          `).join('')}
+        </div>
+      `;
+      teamsContainer.appendChild(teamWrapper);
+    };
 
-  renderModalTeam(set.team1, 1, '#f43f5e');
-  renderModalTeam(set.team2, 2, '#38bdf8');
-  renderModalTeam(set.team3, 3, '#c084fc');
-  elements.partyModalMembersList.appendChild(teamsContainer);
+    renderModalTeam(set.team1, 1, '#f43f5e');
+    renderModalTeam(set.team2, 2, '#38bdf8');
+    renderModalTeam(set.team3, 3, '#c084fc');
+    elements.modalPartyMembers.appendChild(teamsContainer);
+  }
 
   // 行動順・速度調整
-  if (set.speedTuningMemo && set.speedTuningMemo.trim() !== '') {
-    elements.partyModalTurnOrder.textContent = set.speedTuningMemo;
-    elements.partyModalSpeedSection.style.display = 'block';
-  } else {
-    elements.partyModalSpeedSection.style.display = 'none';
+  if (elements.modalPartyTurnOrder && elements.modalSectionPartySpeed) {
+    if (set.speedTuningMemo && set.speedTuningMemo.trim() !== '') {
+      elements.modalPartyTurnOrder.textContent = set.speedTuningMemo;
+      elements.modalSectionPartySpeed.style.display = 'block';
+    } else {
+      elements.modalSectionPartySpeed.style.display = 'none';
+    }
   }
 
   // ステータス基準と重要鉄則
-  if (set.requirementsMemo && set.requirementsMemo.trim() !== '') {
-    elements.partyModalRequirements.textContent = set.requirementsMemo;
-    elements.partyModalReqSection.style.display = 'block';
-  } else {
-    elements.partyModalReqSection.style.display = 'none';
+  if (elements.modalPartyReqMemo && elements.modalSectionPartyReq) {
+    if (set.requirementsMemo && set.requirementsMemo.trim() !== '') {
+      elements.modalPartyReqMemo.textContent = set.requirementsMemo;
+      elements.modalSectionPartyReq.style.display = 'block';
+    } else {
+      elements.modalSectionPartyReq.style.display = 'none';
+    }
   }
 
   // 攻略メモ
-  if (set.strategyMemo && set.strategyMemo.trim() !== '') {
-    elements.partyModalTarget.textContent = set.strategyMemo;
-    elements.partyModalTargetSection.style.display = 'block';
-  } else {
-    elements.partyModalTargetSection.style.display = 'none';
+  if (elements.modalPartyTargetMemo && elements.modalSectionPartyTarget) {
+    if (set.strategyMemo && set.strategyMemo.trim() !== '') {
+      elements.modalPartyTargetMemo.textContent = set.strategyMemo;
+      elements.modalSectionPartyTarget.style.display = 'block';
+    } else {
+      elements.modalSectionPartyTarget.style.display = 'none';
+    }
   }
 
-  if (elements.btnEditPartyFromModal) {
-    elements.btnEditPartyFromModal.style.display = 'none';
-  }
+  // 編集・削除ボタンは非表示
+  if (elements.modalPartyBtnEdit) elements.modalPartyBtnEdit.style.display = 'none';
+  if (elements.modalPartyBtnDelete) elements.modalPartyBtnDelete.style.display = 'none';
 
-  elements.partyDetailModal.classList.add('active');
+  if (elements.partyDetailModal) {
+    elements.partyDetailModal.style.display = 'flex';
+  }
   document.body.style.overflow = 'hidden';
 }
 
