@@ -721,7 +721,10 @@ textarea {
 
 .text-pre {
   white-space: pre-wrap;
-  word-break: break-all;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.75;
+  letter-spacing: 0.2px;
 }
 
 .modal-footer {
@@ -1568,6 +1571,82 @@ textarea {
   font-weight: 600;
   color: #fff;
   border-left: 3px solid var(--accent-gold);
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+/* 異界レイド専用 チーム別行動順カードリスト */
+.raid-turn-order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.raid-turn-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px 14px;
+  transition: all 0.2s ease;
+}
+
+.raid-turn-row:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(20, 30, 55, 0.95);
+}
+
+.raid-turn-team-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.team-badge-1 {
+  background: rgba(244, 63, 94, 0.2);
+  color: #f43f5e;
+  border: 1px solid rgba(244, 63, 94, 0.5);
+}
+
+.team-badge-2 {
+  background: rgba(56, 189, 248, 0.2);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.5);
+}
+
+.team-badge-3 {
+  background: rgba(192, 132, 252, 0.2);
+  color: #c084fc;
+  border: 1px solid rgba(192, 132, 252, 0.5);
+}
+
+.raid-turn-flow-text {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* スマホ表示対応 (画面幅600px以下) */
+@media (max-width: 600px) {
+  .raid-turn-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 8px 10px;
+  }
+  .raid-turn-flow-text {
+    font-size: 0.8rem;
+    line-height: 1.6;
+  }
 }
 
 /* フォーム内 5体メンバー入力グリッド */

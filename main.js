@@ -2102,9 +2102,9 @@ const PRESET_RAID_SETS = [
     averageTime: "約27秒〜35秒",
     successRate: "99%",
     summary: "バーレイグの知識5雷神降臨2連打＋二次覚醒イヌガミ協力攻撃による、カドゥルー5階の最速瞬殺ソロレイド。闘志ルーンを大量に積み、ジャンプ前後を一瞬で飛ばします。",
-    strategyMemo: "【BJ5＆イヌガミ連携の基本鉄則】\n・チーム1のバーレイグがボスのジャンプ前とジャンプ後に知識5雷神降臨を放ち、全体ダメージの約70%を一気に削り切ります。\n・チーム2のイヌガミ（クロー・ラオーク）が協力攻撃で開幕から防御弱化と持続、弱化特効火力を叩き込みます。\n・チーム3はテサリオンのクリ率24%UPリーダーで全体のクリ率を底上げし、弱化解除と耐久をサポートします。\n・闘志ルーン（味方攻撃+8%）を前衛やサポーターに可能な限り積むことで、バーレイグの一撃あたりのダメージが飛躍的に伸びます。",
-    speedTuningMemo: "【行動順】\nチーム1: カリン ➔ フラン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ ヤンセン\nチーム2: ディアス ➔ 火パンダ ➔ コナミヤ ➔ ラオーク ➔ クロー ➔ ナオミ\nチーム3: ベラデオン ➔ ヴィゴル ➔ デルフォイ ➔ ルル ➔ テサリオン ➔ ステラ",
-    requirementsMemo: "【ステータス基準とルーン】\n・バーレイグ: 激怒+意志 (攻撃力+1700以上、クリ率81%以上、クリダメ220%以上、知識5でボス体力の35%以上削れる火力)\n・前衛 (フラン、ローレン、ディアス、火パンダ、ベラデオン、ヴィゴル): 防御力+1200〜1400以上、体力+20000以上\n・後衛アタッカー (クロー、ラオーク、ナオミ、ステラ): クリ率81%以上 (テサリオンLS込みで100%)、攻撃+1200以上、クリダメ160%以上\n・サポーター (カリン、ヤンセン、コナミヤ、デルフォイ、ルル): 闘志・意志・迅速ルーン、効果抵抗50%+、効果的中45%+",
+    strategyMemo: "【BJ5＆イヌガミ連携の基本鉄則】\n\n・チーム1 (バーレイグ大砲): ボスのジャンプ前とジャンプ後に知識5雷神降臨を放ち、全体ダメージの約70%を一気に削り切ります。\n\n・チーム2 (イヌガミ速攻): クロー・ラオークの協力攻撃で開幕から防御弱化と持続、弱化特効火力を叩き込みます。\n\n・チーム3 (クリ率支援＆解除): テサリオンのクリ率24%UPリーダーで18体全体のクリ率を底上げし、弱化解除と耐久をサポートします。\n\n・闘志ルーン: 味方攻撃+8%の闘志ルーンを前衛やサポーターに可能な限り積むことで、バーレイグの一撃あたりのダメージが飛躍的に伸びます。",
+    speedTuningMemo: "チーム1: カリン ➔ フラン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ ヤンセン\nチーム2: ディアス ➔ 火パンダ ➔ コナミヤ ➔ ラオーク ➔ クロー ➔ ナオミ\nチーム3: ベラデオン ➔ ヴィゴル ➔ デルフォイ ➔ ルル ➔ テサリオン ➔ ステラ",
+    requirementsMemo: "【ステータス基準とルーン】\n\n・バーレイグ: 激怒+意志 (攻撃力+1700以上、クリ率81%以上、クリダメ220%以上、知識5でボス体力の35%以上削れる火力)\n\n・前衛 (フラン、ローレン、ディアス、火パンダ、ベラデオン、ヴィゴル): 防御力+1200〜1400以上、体力+20000以上\n\n・後衛アタッカー (クロー、ラオーク、ナオミ、ステラ): クリ率81%以上 (テサリオンLS込みで100%)、攻撃+1200以上、クリダメ160%以上\n\n・サポーター (カリン、ヤンセン、コナミヤ、デルフォイ、ルル): 闘志・意志・迅速ルーン、効果抵抗50%+、効果的中45%+",
     team1: {
       name: "TEAM 1: バーレイグ特大砲チーム (メイン火力)",
       leaderInfo: "バーレイグ (ギルバト/レイド攻撃44%UP)",
@@ -2155,9 +2155,9 @@ const PRESET_RAID_SETS = [
     averageTime: "約45秒〜55秒",
     successRate: "99%",
     summary: "火パンダ・テサリオン・ディアス・デルフォイ・トリアーナを一切使わず、調合・配布・育成済みモンスター（シルバーテイル、ヴェラモス、ベラデオン、ルル）で完全代用！シルバーテイルの攻撃33%UP＆常時攻撃バフと、ヴェラモスの体力33%UP＆自動弱化解除により、元の編成以上の超火力と絶対安定を実現。",
-    strategyMemo: "【火パンダ・テサリオン・ディアス・デルフォイ・トリアーナの完璧な代用と超強力シナジー】\\n・TEAM 1: ダリオンの被ダメ20%カットパッシブ＋フラン・カリンの二重攻撃バフでバーレイグが安全に大砲を叩き込みます。\\n・TEAM 2 (火パンダ＆テサリオン代用): テサリオンの代わりにシルバーテイルをリーダー配置（全属性攻撃力33%UP＋常時味方攻撃バフ）！火パンダの代わりにベラデオン(2A)を前衛配置し、確定盾割りと全体大回復・ゲージ上げでクローとラオークの火力を爆発させます。\\n・TEAM 3 (ディアス/デルフォイ/トリアーナ代用): デルフォイの代わりにヴェラモスをリーダー配置（全属性体力33%UP＋毎ターン味方全員のデバフを自動解除）して前衛タンクを担当！トリアーナの代わりに二次覚醒ルルを後衛に採用し、高回転の全体解除・免疫2ターン・回復でデバフ事故を完封。ディアスの被ダメカットはヒンメル（被ダメ20%カット）とサブリナ（被ダメ減少）が完璧に担うため、即死耐性がなくても全滅の危険は皆無です。\\n・【リーダースキル神連携】シルバーテイル（全属性攻撃33%UP）× ヴェラモス（全属性体力33%UP）が18体全員に乗るため、全滅が完全にあり得ない超高速安定周回が可能です。",
-    speedTuningMemo: "【行動順】\\nチーム1: フラン ➔ カリン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ コナミヤ\\nチーム2: ライリー ➔ ベラデオン ➔ タラニス ➔ シルバーテイル ➔ ラオーク ➔ クロー\\nチーム3: ヴィゴル ➔ ルル ➔ ヴェラモス ➔ シャイナ ➔ サブリナ ➔ ヒンメル",
-    requirementsMemo: "【育成・ルーンの目安】\\n・シルバーテイル: 迅速+集中 または 闘志 (速度/体力/的中) 全属性攻撃33%UPリーダー枠。パッシブで味方全体の攻撃力を常時底上げ。\\n・ベラデオン(2A): 迅速+元気 または 守護+元気 (速度/防御/体力 防御+1200以上、体力+20000以上) 前衛配置。\\n・ヴェラモス: 暴走/迅速+元気 (速度/体力/防御 防御+1200以上、体力+22000以上) 前衛配置＆全属性体力33%UPリーダー枠。毎ターン味方のスタンや忘却を自動解除。\\n・ルル(2A): 迅速+元気 または 暴走+元気 (速度/体力/体力 体力+18000以上、効果抵抗70%推奨) 後衛配置。全体弱化解除＋免疫＋大回復。\\n・バーレイグ: 激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃)\\n・タラニス: 守護+守護+意志 (速度/防御/防御 防御+1400以上)\\n・ヒンメル: 激怒+刃 (速度/クリダメ/攻撃) 後衛から防御バフと2倍火力を供給。",
+    strategyMemo: "【火パンダ・テサリオン・ディアス・デルフォイ・トリアーナの完璧な代用と超強力シナジー】\n\n・TEAM 1 (知識砲撃): ダリオンの被ダメ20%カットパッシブ＋フラン・カリンの二重攻撃バフでバーレイグが安全に大砲を叩き込みます。\n\n・TEAM 2 (火パンダ＆テサリオン代用): テサリオンの代わりにシルバーテイルをリーダー配置（全属性攻撃力33%UP＋常時味方攻撃バフ）！火パンダの代わりにベラデオン(2A)を前衛配置し、確定盾割りと全体大回復・ゲージ上げでクローとラオークの火力を爆発させます。\n\n・TEAM 3 (ディアス/デルフォイ/トリアーナ代用): デルフォイの代わりにヴェラモスをリーダー配置（全属性体力33%UP＋毎ターン味方全員のデバフを自動解除）して前衛タンクを担当！トリアーナの代わりに二次覚醒ルルを後衛に採用し、高回転の全体解除・免疫2ターン・回復でデバフ事故を完封。ディアスの被ダメカットはヒンメル（被ダメ20%カット）とサブリナ（被ダメ減少）が完璧に担うため、即死耐性がなくても全滅の危険は皆無です。\n\n・【リーダースキル神連携】: シルバーテイル（全属性攻撃33%UP）× ヴェラモス（全属性体力33%UP）が18体全員に乗るため、全滅が完全にあり得ない超高速安定周回が可能です。",
+    speedTuningMemo: "チーム1: フラン ➔ カリン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ コナミヤ\nチーム2: ライリー ➔ ベラデオン ➔ タラニス ➔ シルバーテイル ➔ ラオーク ➔ クロー\nチーム3: ヴィゴル ➔ ルル ➔ ヴェラモス ➔ シャイナ ➔ サブリナ ➔ ヒンメル",
+    requirementsMemo: "【18体ステータス基準とルーンの目安】\n\n・シルバーテイル: 迅速+集中 または 闘志 (速度/体力/的中) 全属性攻撃33%UPリーダー枠。パッシブで味方全体の攻撃力を常時底上げ。\n\n・ベラデオン(2A): 迅速+元気 または 守護+元気 (速度/防御/体力 防御+1200以上、体力+20000以上) 前衛配置。確定盾割りと全体大回復。\n\n・ヴェラモス: 暴走/迅速+元気 (速度/体力/防御 防御+1200以上、体力+22000以上) 前衛配置＆全属性体力33%UPリーダー枠。毎ターン味方のスタンや忘却を自動解除。\n\n・ルル(2A): 迅速+元気 または 暴走+元気 (速度/体力/体力 体力+18000以上、効果抵抗70%推奨) 後衛配置。全体弱化解除＋免疫＋大回復。\n\n・バーレイグ: 激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃) 知識大砲フィニッシャー。\n\n・タラニス: 守護+守護+意志 (速度/防御/防御 防御+1400以上) 全体防御バフ＆蘇生保険。\n\n・ヒンメル: 激怒+刃 (速度/クリダメ/攻撃) 後衛から全体防御バフと2倍火力を供給。",
     team1: {
       name: "TEAM 1: バーレイグ＆ダリオン・フラン 知識砲撃チーム",
       leaderInfo: "バーレイグ (攻撃44%UP)",
@@ -2208,9 +2208,9 @@ const PRESET_RAID_SETS = [
     averageTime: "約1分10秒〜1分30秒",
     successRate: "99%",
     summary: "ガチャ純5を1体も使わず、調合モンスター（バーレイグ、火パンダ、ヴェラモス）と、二次覚醒（クロー、ベラデオン、ダリオン、ルル、カリン、コナミヤ）のみで100%組める、ソロレイド入門〜中級者向け完全無課金鉄壁編成。",
-    strategyMemo: "【完全無課金でもカドゥルー5階を確実にクリアできる理由】\n・チーム1: バーレイグの調合星5高火力＋ダリオンの被ダメ20%カットで手堅く削る。\n・チーム2: 火パンダ（調合星5）が前衛で耐え、クローが弱化特効で削り、ルルがデバフを解除。\n・チーム3: ディアス（配布）が前衛で耐え、ヴェラモス（調合星5）が毎ターン味方全員のデバフをパッシブ解除。\n・3チームすべてに「弱化解除役」「回復役」「剣折り役」「盾割り役」が必ず1体以上入っているため、誰かが落とされても崩壊しません。",
-    speedTuningMemo: "【行動順】\nチーム1: カリン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ コナミヤ ➔ ベラデオン\nチーム2: 火パンダ ➔ デルフォイ ➔ ルル ➔ テサリオン ➔ ラオーク ➔ クロー\nチーム3: フラン ➔ ディアス ➔ ヴィゴル ➔ ヴェラモス ➔ エルガー ➔ ステラ",
-    requirementsMemo: "【初心者向けステータス目標】\n・前衛6体（ダリオン、カリン、火パンダ、デルフォイ、ディアス、ヴィゴル）は「防御力+1100以上、体力+18000以上」を必ず達成すること。\n・弱化解除役（コナミヤ、ルル、ヴェラモス、デルフォイ）は効果抵抗を60%以上に高めておくと、ボスのスタンを受けずに解除スキルを使えます。",
+    strategyMemo: "【完全無課金でもカドゥルー5階を確実にクリアできる理由】\n\n・チーム1: バーレイグの調合星5高火力＋ダリオンの被ダメ20%カットで手堅く削る。\n\n・チーム2: 火パンダ（調合星5）が前衛で耐え、クローが弱化特効で削り、ルルがデバフを解除。\n\n・チーム3: ディアス（配布）が前衛で耐え、ヴェラモス（調合星5）が毎ターン味方全員のデバフをパッシブ解除。\n\n・安全設計: 3チームすべてに「弱化解除役」「回復役」「剣折り役」「盾割り役」が必ず1体以上入っているため、誰かが落とされても崩壊しません。",
+    speedTuningMemo: "チーム1: カリン ➔ ローレン ➔ ダリオン ➔ バーレイグ ➔ コナミヤ ➔ ベラデオン\nチーム2: 火パンダ ➔ デルフォイ ➔ ルル ➔ テサリオン ➔ ラオーク ➔ クロー\nチーム3: フラン ➔ ディアス ➔ ヴィゴル ➔ ヴェラモス ➔ エルガー ➔ ステラ",
+    requirementsMemo: "【初心者向けステータス目標】\n\n・前衛6体 (ダリオン、カリン、火パンダ、デルフォイ、ディアス、ヴィゴル): 防御力+1100以上、体力+18000以上を必ず達成すること。\n\n・弱化解除役 (コナミヤ、ルル、ヴェラモス、デルフォイ): 効果抵抗を60%以上に高めておくと、ボスのスタンを受けずに解除スキルを使えます。\n\n・アタッカー (バーレイグ、クロー、テサリオン、ステラ): 攻撃+1100以上、クリ率80%以上、クリダメ150%以上目標。",
     team1: {
       name: "TEAM 1: バーレイグ＆カリン・ダリオン砲",
       leaderInfo: "バーレイグ (攻撃44%UP)",
@@ -3425,6 +3425,11 @@ function openPartyDetailModal(id) {
   elements.modalPartyRate.textContent = party.successRate ? `🏆 ${party.successRate}` : '🏆 勝率未設定';
   elements.modalPartyName.textContent = party.name;
 
+  // 編集・削除ボタンと表示スタイルのリセット
+  if (elements.modalPartyBtnEdit) elements.modalPartyBtnEdit.style.display = 'inline-flex';
+  if (elements.modalPartyBtnDelete) elements.modalPartyBtnDelete.style.display = 'inline-flex';
+  if (elements.modalPartyTurnOrder) elements.modalPartyTurnOrder.className = 'turn-flow-display';
+
   // メンバー5体カード描画
   elements.modalPartyMembers.innerHTML = '';
   const hasAnyLeaderFlagModal = (party.members || []).some(member => typeof member.isLeader === 'boolean');
@@ -4050,30 +4055,69 @@ function openRaidSetDetailModal(setId) {
     elements.modalPartyMembers.appendChild(teamsContainer);
   }
 
-  // 行動順・速度調整
-  if (elements.modalPartyTurnOrder && elements.modalSectionPartySpeed) {
+  // 1. 推奨行動順（チーム1, 2, 3 をそれぞれの独立した行として美しくカード表示）
+  if (elements.modalPartyTurnOrder && elements.modalSectionPartyTurn) {
     if (set.speedTuningMemo && set.speedTuningMemo.trim() !== '') {
-      elements.modalPartyTurnOrder.textContent = set.speedTuningMemo;
-      elements.modalSectionPartySpeed.style.display = 'block';
+      const rawText = set.speedTuningMemo.replace(/\\n/g, '\n');
+      const lines = rawText.split('\n').filter(l => l.trim() !== '');
+      const teamLines = lines.filter(l => l.includes('チーム') || l.includes('TEAM'));
+
+      if (teamLines.length >= 2) {
+        elements.modalPartyTurnOrder.innerHTML = `
+          <div class="raid-turn-order-list">
+            ${teamLines.map((line, idx) => {
+              const teamMatch = line.match(/(?:チーム|TEAM)\s*([123１２３])/i);
+              const teamNum = teamMatch ? teamMatch[1] : (idx + 1);
+              const colorClass = `team-badge-${teamNum}`;
+              const parts = line.split(/:\s*/);
+              const flowText = parts.length > 1 ? parts.slice(1).join(': ') : line;
+              return `
+                <div class="raid-turn-row">
+                  <span class="raid-turn-team-badge ${colorClass}">TEAM ${teamNum}</span>
+                  <div class="raid-turn-flow-text">${escapeHtml(flowText)}</div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+      } else {
+        elements.modalPartyTurnOrder.innerHTML = `
+          <div style="white-space: pre-line; line-height: 1.8; font-size: 0.88rem; padding: 4px 0;">
+            ${escapeHtml(rawText)}
+          </div>
+        `;
+      }
+      elements.modalSectionPartyTurn.style.display = 'block';
     } else {
-      elements.modalSectionPartySpeed.style.display = 'none';
+      elements.modalSectionPartyTurn.style.display = 'none';
     }
   }
 
-  // ステータス基準と重要鉄則
+  // 異界レイドセットでは速度調整メモセクションは不要なので非表示
+  if (elements.modalSectionPartySpeed) {
+    elements.modalSectionPartySpeed.style.display = 'none';
+  }
+
+  // 2. 周回要件・ステータス基準（1行空けの段落分けを確実に反映）
   if (elements.modalPartyReqMemo && elements.modalSectionPartyReq) {
     if (set.requirementsMemo && set.requirementsMemo.trim() !== '') {
-      elements.modalPartyReqMemo.textContent = set.requirementsMemo;
+      const cleanReq = set.requirementsMemo.replace(/\\n/g, '\n');
+      elements.modalPartyReqMemo.textContent = cleanReq;
+      elements.modalPartyReqMemo.style.whiteSpace = 'pre-line';
+      elements.modalPartyReqMemo.style.lineHeight = '1.8';
       elements.modalSectionPartyReq.style.display = 'block';
     } else {
       elements.modalSectionPartyReq.style.display = 'none';
     }
   }
 
-  // 攻略メモ
+  // 3. ボス階ターゲット・立ち回り・シナジー（1行空けの段落分けを確実に反映）
   if (elements.modalPartyTargetMemo && elements.modalSectionPartyTarget) {
     if (set.strategyMemo && set.strategyMemo.trim() !== '') {
-      elements.modalPartyTargetMemo.textContent = set.strategyMemo;
+      const cleanStrat = set.strategyMemo.replace(/\\n/g, '\n');
+      elements.modalPartyTargetMemo.textContent = cleanStrat;
+      elements.modalPartyTargetMemo.style.whiteSpace = 'pre-line';
+      elements.modalPartyTargetMemo.style.lineHeight = '1.8';
       elements.modalSectionPartyTarget.style.display = 'block';
     } else {
       elements.modalSectionPartyTarget.style.display = 'none';
