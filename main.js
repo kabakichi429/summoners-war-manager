@@ -2116,8 +2116,177 @@ const PRESET_PARTIES = [
 // 1-3. 異界レイド (1人レイド・ソロレイド) プリセットデータ (3チーム同時出撃・計18体)
 // -----------------------------------------------------------------------------
 const PRESET_RAID_SETS = [
+  // -------------------------------------------------------------
+  // 🔥 紅炎の魔獣 (火属性レイド) 攻略セット
+  // -------------------------------------------------------------
+  {
+    id: "preset-raid-set-fire-beast-speed-f2p",
+    boss: "紅炎の魔獣",
+    name: "【動画参考・最速約24秒】紅炎の魔獣＆通常兼用 無課金・高速イヌガミ連携ソロレイド (JJ氏型・純5不要)",
+    tag: "🔥 紅炎の魔獣 / 通常兼用 / 24秒最速テンプレ",
+    averageTime: "約24秒〜26秒 (ベスト約23秒)",
+    successRate: "99%",
+    summary: "YouTube参考動画（JJ氏）に準拠した、バレバレ（バーレイグ＋ヤンセン）の蘇生モーションを完全カットした超速攻型。カーリー（火攻撃40%UP）× イヌガミ3種（イカル・クロー・ラオーク）× タークの協力攻撃連打で、紅炎の魔獣と通常カドゥルーを完全同一編成で24秒台周回します。",
+    strategyMemo: "【JJ氏型 24秒台超高速ソロレイドの神髄】\n\n・演出完全カット: ヤンセンやダゴラの死亡・蘇生アニメーションを完全に排除し、通常スキル連動の協力攻撃でボスを即座に削り切ります。\n\n・火属性レイド適性: 風属性を1体も入れず、火・水・光・闇のみで構成。ボスの火属性攻撃による事故を完全に防ぎます。\n\n・TEAM 1 (カーリー火攻撃40%＆イカル協力): カーリーの防御無視打点＋イカル(2A)・クロー(2A)・タークの多重協力攻撃で開幕からボスの体力を溶かします。\n\n・TEAM 2 (クリ率支援＆高速デバフ): セオマルス(全クリ率24%UP)リーダーで全体のクリ率を担保。ベラデオン(2A)とシファの烙印・盾割りで火力を最大化。\n\n・TEAM 3 (連撃＆ダメ押し): ラオーク(2A)の協力攻撃＋ヴィゴル(2A)の回復・速度バフ＋ルル(2A)の弱化解除で安定性と速度を両立。\n\n・闘志ルーン: サポーターや前衛に闘志ルーンを大量に積み、パーティ全体の攻撃力を底上げすることが24秒達成の必須要件です。",
+    speedTuningMemo: "TEAM 1: カリン ➔ ローレン ➔ カーリー ➔ イカル ➔ ターク ➔ クロー\nTEAM 2: ベラデオン ➔ フラン ➔ シファ ➔ セオマルス ➔ エルガー ➔ ステラ\nTEAM 3: ヴィゴル ➔ ルル ➔ ヴェルデハイル ➔ ラオーク ➔ ヒンメル ➔ プリア",
+    requirementsMemo: "【ステータス基準とルーン】\n\n・カーリー: 激怒+刃 または オール闘志 (攻撃/クリダメ/攻撃、攻撃+1400以上、クリ率76%+、クリダメ180%+)\n\n・イカル(2A) / ラオーク(2A): 迅速+集中 / 暴走+刃 (防御+1200以上、速度+90以上、的中40%+)\n\n・クロー(2A): 激怒+刃 (攻撃+1500以上、クリダメ200%以上、弱化特効で特大ダメージ)\n\n・前衛6体 (カーリー、イカル、ベラデオン、フラン、ヴィゴル、ラオーク): 防御力+1100〜1300以上、体力+18000以上\n\n・闘志ルーン: 3チーム全体で8〜12セット以上積むとダメージが跳ね上がり24秒台が安定します。",
+    team1: {
+      name: "TEAM 1: カーリー＆イカル・クロー 協力連撃チーム",
+      leaderInfo: "カーリー (火属性攻撃力40%UP)",
+      frontline: [
+        { name: "カーリー", attribute: "火", role: "火属性攻撃40%UP (L)・防御無視「火神招来」＋攻撃・速度バフ", runes: "激怒+刃 または 闘志×3 (攻撃/クリダメ/攻撃)", isLeader: true },
+        { name: "イカル", attribute: "水", role: "二次覚醒・協力攻撃で味方引き連れ＋盾割り", runes: "守護+闘志+闘志 (防御/防御/体力 防御+1300+)" }
+      ],
+      backline: [
+        { name: "クロー", attribute: "闇", role: "二次覚醒・弱化特効「傷口ほじくり返し」で瞬殺特大打点", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "ターク", attribute: "水", role: "味方2体引き連れ「集団ハント」協力攻撃＋烙印・持続", runes: "迅速+刃 (速度/クリダメ/攻撃)" },
+        { name: "カリン", attribute: "火", role: "全体攻撃バフ＋回復阻害＋スキル1剣折り", runes: "闘志+闘志+反撃 (速度/体力/防御)" },
+        { name: "ローレン", attribute: "光", role: "単体確定盾割り＋速度低下＋ゲージダウン", runes: "迅速+集中 (速度/体力/防御 的中45%+)" }
+      ]
+    },
+    team2: {
+      name: "TEAM 2: セオマルス＆ベラデオン・シファ 弱化烙印チーム",
+      leaderInfo: "セオマルス (全属性クリ率24%UP)",
+      frontline: [
+        { name: "ベラデオン", attribute: "光", role: "二次覚醒・スキル1確定盾割り＋全体大回復＆ゲージ上げ", runes: "守護+元気+闘志 (速度/防御/体力 防御+1200+)" },
+        { name: "フラン", attribute: "光", role: "全体2T免疫＋攻撃バフ＋全体回復＋剣折り", runes: "迅速+闘志 (速度/体力/防御)" }
+      ],
+      backline: [
+        { name: "セオマルス", attribute: "水", role: "全属性クリ率24%UP (L)・粘るパッシブ＆有利属性打点", runes: "暴走+刃 (速度/クリダメ/攻撃)", isLeader: true },
+        { name: "シファ", attribute: "火", role: "烙印付与＋睡眠＋多段攻撃 (ボスの被ダメ25%UP)", runes: "暴走+集中 (速度/クリダメ/攻撃)" },
+        { name: "エルガー", attribute: "闇", role: "配布純5・全体攻撃バフ＋吸血バフ＋多段弱化", runes: "猛攻+刃 (速度/クリダメ/攻撃)" },
+        { name: "ステラ", attribute: "水", role: "速度比例最大7連撃＋烙印付与＋盾割り＋ゲージ下げ", runes: "迅速+刃 (速度/クリダメ/攻撃)" }
+      ]
+    },
+    team3: {
+      name: "TEAM 3: ヴェルデハイル＆ラオーク・ヒンメル ゲージ加速チーム",
+      leaderInfo: "ヴェルデハイル (ダンジョン攻撃速度28%UP)",
+      frontline: [
+        { name: "ヴィゴル", attribute: "水", role: "二次覚醒・全体回復＋速度バフ＋クリ被弾軽減バフ＋3連盾割り", runes: "迅速+元気 (速度/体力/体力 体力+25000+)" },
+        { name: "ラオーク", attribute: "火", role: "二次覚醒・協力攻撃＋確定盾割り (ターン獲得連撃)", runes: "暴走+刃 (速度/クリダメ/攻撃 防御+1000+)" }
+      ],
+      backline: [
+        { name: "ヴェルデハイル", attribute: "火", role: "ダンジョン速度28%UP (L)・毎クリティカル味方ゲージ40%爆加速", runes: "迅速+刃 (速度/クリ率/体力 クリ率100%)", isLeader: true },
+        { name: "ルル", attribute: "水", role: "二次覚醒・全体二重弱化解除＋免疫＋持続回復", runes: "暴走+元気 (速度/体力/体力)" },
+        { name: "ヒンメル", attribute: "水", role: "味方被ダメ20%カットパッシブ＋全体防御バフ＋ボス特効2倍打点", runes: "激怒+刃 (速度/クリダメ/攻撃)" },
+        { name: "プリア", attribute: "火", role: "死亡時味方全体全回復＆弱化全解除パッシブ＋全体ゲージ下げ", runes: "闘志+闘志+意志 (体力/体力/防御)" }
+      ]
+    }
+  },
+  {
+    id: "preset-raid-set-fire-beast-user-special",
+    boss: "紅炎の魔獣",
+    name: "【ユーザー手持ち特化・火レイド最適化】水フリーレン＆水シュタルク・ヒンメル軸 紅炎の魔獣ソロレイド",
+    tag: "🔥 紅炎の魔獣 / 手持ち星5特化 / 超安定",
+    averageTime: "約35秒〜45秒",
+    successRate: "99%",
+    summary: "ユーザー所持の★5（水フリーレン、水シュタルク、水フェルン、水ジャスティス、ヒンメル、バーレイグ、セオマルス、シルバーテイル、ヴェラモス）をフル投入！通常レイドで使っていた風属性（タラニス・ライリー）を完全排除し、紅炎の魔獣（火属性）に対して水属性有利シナジーを極限まで発揮させた超安定特化編成。",
+    strategyMemo: "【風属性完全排除＆水属性コラボモンスター投入の超強力シナジー】\n\n・風属性完全排除: 紅炎の魔獣は火属性ボスのため、風属性（タラニスやライリー）を連れていくと被ダメが激増して壊滅の原因になります。本編成では風属性をゼロにし、水・火・光・闇のみで固めています。\n\n・水シュタルク (前衛不沈タンク): パッシブの被ダメ最大50%カット＋脅威挑発でボスの猛攻を一身に引き受け、前衛の崩壊を完全阻止！\n\n・水フリーレン (防御無視切断): スキル3の防御無視で、ボスの高防御を貫通して一撃で大ダメージを奪います。\n\n・水フェルン (ボスキラー): 単体高打点＋スキル再使用時間短縮で、ボス戦の削り速度を加速させます。\n\n・水ジャスティス (ネリオペ / 全体解除＆CTリセット): 全体デバフ解除＋回復に加え、味方全員のスキル再使用時間を即座に短縮！バーレイグや水フリーレンの大技回転率を飛躍的に高めます。\n\n・【3大リーダースキル重複】: セオマルス(クリ率24%UP) × シルバーテイル(攻撃33%UP) × ヴェラモス(体力33%UP)で18体全体のルーン敷居を劇的に引き下げます。",
+    speedTuningMemo: "TEAM 1: フラン ➔ カリン ➔ ローレン ➔ ダリオン ➔ セオマルス ➔ バーレイグ\nTEAM 2: ベラデオン ➔ シルバーテイル ➔ ラオーク ➔ クロー ➔ 水フェルン ➔ 水フリーレン\nTEAM 3: 水シュタルク ➔ ヴェラモス ➔ ヴィゴル ➔ 水ジャスティス ➔ ルル ➔ ヒンメル",
+    requirementsMemo: "【18体ステータス基準とルーン】\n\n・水シュタルク: 守護+守護+元気 (防御/体力/体力 防御+1400以上、体力+28000以上) 前衛に配置。パッシブ50%カットで絶対に落ちない壁。\n\n・水フリーレン: 激怒+刃 (攻撃/クリダメ/攻撃 攻撃+1500以上、クリ率76%+、クリダメ200%+) 防御無視でボスのHPを消滅させる。\n\n・水ジャスティス: 迅速+元気 または 暴走+意志 (速度/体力/体力 速度+110以上、効果抵抗70%+) 全体解除とCT短縮の核。\n\n・水フェルン: 激怒+刃 (速度/クリダメ/攻撃) ボスキラー単体高火力。\n\n・バーレイグ: 激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃 クリ率76%目標) 知識5フィニッシャー。\n\n・ダリオン: 反撃+元気+守護 (防御+1200以上、体力+20000以上) 味方被ダメ20%常時カット。\n\n・ヒンメル: 激怒+刃 (速度/クリダメ/攻撃) 味方被ダメ20%カット＋ボス特効2倍。",
+    team1: {
+      name: "TEAM 1: セオマルス＆バーレイグ・ダリオン 知識砲撃チーム",
+      leaderInfo: "セオマルス (全属性クリ率24%UP)",
+      frontline: [
+        { name: "ダリオン", attribute: "光", role: "味方被ダメ20%軽減＋スキル1盾割り＋スキル2剣折り", runes: "反撃+元気+元気 (体力/体力/防御 防御+1200+)" },
+        { name: "フラン", attribute: "光", role: "全体免疫＋攻撃バフ＋回復＋剣折り (前衛耐久型)", runes: "迅速+元気 (速度/体力/防御 防御+1100+)" }
+      ],
+      backline: [
+        { name: "セオマルス", attribute: "水", role: "全属性クリ率24%UP (L)・粘るパッシブ＆確定有利属性・高打点アタッカー", runes: "暴走+刃 (速度/クリダメ/攻撃)", isLeader: true },
+        { name: "バーレイグ", attribute: "火", role: "知識5「雷神降臨」フィニッシャー (メイン砲台・クリ率76%+)", runes: "激怒+刃 または 猛攻+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "ローレン", attribute: "光", role: "単体確定盾割り＋速度デバフ＋ゲージダウン", runes: "迅速+集中 (速度/体力/体力 的中45%+)" },
+        { name: "カリン", attribute: "火", role: "開幕全体攻撃バフ＋回復阻害＋剣折り", runes: "反撃+元気 (速度/体力/防御)" }
+      ]
+    },
+    team2: {
+      name: "TEAM 2: シルバーテイル＆水フリーレン・クロー 弱化特効＆切断チーム",
+      leaderInfo: "シルバーテイル (全属性攻撃力33%UP)",
+      frontline: [
+        { name: "ベラデオン", attribute: "光", role: "【2A】スキル1確定盾割り＋全体大回復＆ゲージ上昇", runes: "守護+元気+集中 (速度/防御/体力 防御+1200+)" },
+        { name: "シルバーテイル", attribute: "水", role: "全属性攻撃33%UP (L)・常時味方攻撃バフ＋全体ゲージ下げ＆盾割り", runes: "迅速+集中 または 闘志 (速度/体力/的中)", isLeader: true }
+      ],
+      backline: [
+        { name: "クロー", attribute: "闇", role: "二次覚醒・弱化特効「傷口ほじくり返し」で特大ダメージ", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "ラオーク", attribute: "火", role: "二次覚醒・協力攻撃＋確定盾割り (高回転連撃)", runes: "暴走+刃 (速度/クリダメ/攻撃)" },
+        { name: "水フェルン", attribute: "水", role: "【フリーレンコラボ】単体狙撃ボスキラー＋CT短縮 (火魔獣特効打点)", runes: "激怒+刃 (速度/クリダメ/攻撃)" },
+        { name: "水フリーレン", attribute: "水", role: "【フリーレンコラボ】防御無視スナイパー・ボス高防御貫通切断", runes: "激怒+刃 (攻撃/クリダメ/攻撃 クリ率76%+)" }
+      ]
+    },
+    team3: {
+      name: "TEAM 3: ヴェラモス＆水シュタルク・水ジャスティス 不沈解除チーム",
+      leaderInfo: "ヴェラモス (全属性体力33%UP)",
+      frontline: [
+        { name: "水シュタルク", attribute: "水", role: "【フリーレンコラボ】被ダメ最大50%カットパッシブ＋脅威挑発 (不沈タンク)", runes: "守護+守護+元気 (防御/体力/体力 防御+1400+ 体力+28000+)" },
+        { name: "ヴェラモス", attribute: "闇", role: "全属性体力33%UP (L)・毎ターン味方全員の弱化解除＋持続・高耐久前衛", runes: "暴走/迅速+元気 (速度/体力/防御 防御+1200+)", isLeader: true }
+      ],
+      backline: [
+        { name: "水ジャスティス", attribute: "水", role: "【ネリオペ】全体弱化解除＋全体回復＋味方全員スキルCT即時リセット", runes: "迅速+元気 または 暴走+意志 (速度/体力/体力 速度+110+)" },
+        { name: "ヴィゴル", attribute: "水", role: "二次覚醒・全体回復＋速度バフ＋クリ被弾軽減バフ＋3連盾割り", runes: "迅速+元気 (速度/体力/体力)" },
+        { name: "ルル", attribute: "水", role: "二次覚醒・全体弱化解除＋免疫2ターン＋全体大回復", runes: "迅速+元気 または 暴走+元気 (速度/体力/体力)" },
+        { name: "ヒンメル", attribute: "水", role: "味方被ダメ20%カットパッシブ＋全体防御バフ＋ボス特効2倍打点", runes: "激怒+刃 (速度/クリダメ/攻撃)" }
+      ]
+    }
+  },
+  {
+    id: "preset-raid-set-fire-beast-template",
+    boss: "紅炎の魔獣",
+    name: "【自由編成用テンプレート】紅炎の魔獣 ソロレイド 18体構成テンプレート",
+    tag: "🔥 紅炎の魔獣 / 枠組みテンプレート / カスタマイズ用",
+    averageTime: "目標 30秒〜50秒",
+    successRate: "目標 99%",
+    summary: "紅炎の魔獣（火属性）を1人で攻略するための18体枠組みテンプレート。風属性を排除し、各チームに「前衛2体」「リーダー枠」「防御弱化（盾割り）」「攻撃バフ」「弱化解除」「回復」の必須役割を配置する設計ガイドです。",
+    strategyMemo: "【紅炎の魔獣 テンプレート設計チェックリスト】\n\n・☑ 風属性モンスターを1体も入れていないか？（火属性レイドの鉄則）\n\n・☑ 18体の中にモンスターの重複はないか？（同一キャラは1体のみ）\n\n・☑ 前衛6体（各チーム2体以上）は防御力+1200以上、体力+20000以上を確保できているか？\n\n・☑ 3チームのリーダーに「攻撃力UP」「クリ率UP」「体力UP/速度UP」がバランスよく配置されているか？\n\n・☑ 盾割り（防御弱化）と剣折り（攻撃弱化）、回復阻害が各チームに配置されているか？\n\n・☑ 弱化解除役（ルル、ヴェラモス、水ジャスティス、コナミヤ等）が配置されているか？",
+    speedTuningMemo: "TEAM 1: バフ役 ➔ デバフ役 ➔ サブ火力 ➔ メイン火力 (バーレイグ等)\nTEAM 2: バフ/解除役 ➔ 盾割り役 ➔ 協力攻撃役 ➔ アタッカー\nTEAM 3: 速度バフ役 ➔ 解除役 ➔ 前衛タンク ➔ フィニッシャー",
+    requirementsMemo: "【ステータス基準の目安】\n\n・前衛タンク: 防御力+1200以上、体力+20000以上、反撃・守護・闘志ルーン\n\n・メインアタッカー: 攻撃力+1300以上、クリ率75%以上（クリ率リーダー込み100%）、クリダメ170%以上、激怒・猛攻ルーン\n\n・サポーター/解除役: 効果抵抗60%以上、速度+90以上、体力+18000以上、迅速・暴走・闘志ルーン\n\n・デバッファー: 効果的中45%以上、速度+100以上",
+    team1: {
+      name: "TEAM 1: メイン火力砲撃チーム (枠組み)",
+      leaderInfo: "クリ率UP または 攻撃力UP リーダー",
+      frontline: [
+        { name: "【前衛1】被ダメ軽減/盾割り", attribute: "光", role: "ダリオン等 (被ダメカット＋盾割り＋剣折り)", runes: "反撃+守護+闘志 (防御+1200+)" },
+        { name: "【前衛2】免疫/攻撃バフ", attribute: "光", role: "フラン等 (全体免疫＋攻撃バフ＋回復)", runes: "迅速+闘志 (速度/体力/防御)" }
+      ],
+      backline: [
+        { name: "【後衛1】クリ率リーダー", attribute: "水", role: "セオマルス/テサリオン等 (クリ率24%UPリーダー)", runes: "暴走+刃 (速度/クリダメ/攻撃)", isLeader: true },
+        { name: "【後衛2】メイン大砲", attribute: "火", role: "バーレイグ/ブランディア等 (高火力フィニッシャー)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "【後衛3】確定盾割り", attribute: "光", role: "ローレン等 (確定盾割り＋速度低下＋ゲージ下げ)", runes: "迅速+集中 (的中45%+)" },
+        { name: "【後衛4】攻撃バフ/阻害", attribute: "火", role: "カリン等 (攻撃バフ＋回復阻害＋剣折り)", runes: "反撃+闘志 (速度/体力/防御)" }
+      ]
+    },
+    team2: {
+      name: "TEAM 2: 弱化特効＆協力攻撃チーム (枠組み)",
+      leaderInfo: "攻撃力UP リーダー",
+      frontline: [
+        { name: "【前衛1】高防御盾割り/回復", attribute: "光", role: "ベラデオン(2A) / 火パンダ等 (防御+1200+)", runes: "守護+元気 (防御/防御/体力)" },
+        { name: "【前衛2】攻撃リーダー", attribute: "水", role: "シルバーテイル/カーリー等 (全属性攻撃UPリーダー)", runes: "迅速+集中 または 闘志", isLeader: true }
+      ],
+      backline: [
+        { name: "【後衛1】弱化特効アタッカー", attribute: "闇", role: "クロー(2A)等 (弱化特効「傷口ほじくり返し」)", runes: "激怒+刃 (攻撃/クリダメ/攻撃)" },
+        { name: "【後衛2】協力攻撃", attribute: "火", role: "ラオーク(2A) / ターク等 (味方連携＋盾割り)", runes: "暴走+刃 (速度/クリダメ/攻撃)" },
+        { name: "【後衛3】水属性アタッカー", attribute: "水", role: "水フェルン / 水フリーレン等 (火レイド特効)", runes: "激怒+刃 (速度/クリダメ/攻撃)" },
+        { name: "【後衛4】追加火力/烙印", attribute: "火", role: "シファ / エルガー / ステラ等 (烙印・多段弱化)", runes: "迅速+刃 (速度/クリダメ/攻撃)" }
+      ]
+    },
+    team3: {
+      name: "TEAM 3: 耐久＆弱化解除・連撃チーム (枠組み)",
+      leaderInfo: "体力UP または 速度UP リーダー",
+      frontline: [
+        { name: "【前衛1】不沈タンク/挑発", attribute: "水", role: "水シュタルク / ディアス等 (被ダメカットタンク)", runes: "守護+守護+元気 (防御+1400+)" },
+        { name: "【前衛2】体力リーダー/解除", attribute: "闇", role: "ヴェラモス等 (体力33%UPリーダー＋自動デバフ解除)", runes: "迅速+元気 (防御+1200+)", isLeader: true }
+      ],
+      backline: [
+        { name: "【後衛1】全体弱化解除/免疫", attribute: "水", role: "ルル(2A) / 水ジャスティス等 (二重解除＋免疫＋回復)", runes: "暴走+元気 (抵抗60%+)" },
+        { name: "【後衛2】速度バフ/持続回復", attribute: "水", role: "ヴィゴル(2A)等 (全体回復＋速度バフ＋3連盾割り)", runes: "迅速+元気 (体力+25000+)" },
+        { name: "【後衛3】被ダメ軽減/特効", attribute: "水", role: "ヒンメル等 (被ダメ20%カット＋特大打点)", runes: "激怒+刃 (速度/クリダメ/攻撃)" },
+        { name: "【後衛4】ゲージ加速/保険", attribute: "火", role: "ヴェルデハイル / プリア等 (回転率爆増)", runes: "迅速+刃 (クリ率100%)" }
+      ]
+    }
+  },
+  // -------------------------------------------------------------
+  // ⚡ 混沌のカドゥルー (通常レイド) 攻略セット
+  // -------------------------------------------------------------
   {
     id: "preset-raid-set-bj5-inugami",
+    boss: "カドゥルー",
     name: "【最速約27秒・定番】BJ5＆イヌガミ連携 超高速ソロレイド",
     tag: "最速・最高峰テンプレ",
     averageTime: "約27秒〜35秒",
@@ -2171,6 +2340,7 @@ const PRESET_RAID_SETS = [
   },
   {
     id: "preset-raid-set-user-bale-himmel-taranis",
+    boss: "カドゥルー",
     name: "【ユーザー手持ち特化・完全代用型】シルバーテイル＆ヴェラモス・ヒンメル軸 超安定ソロレイド",
     tag: "火パンダ/テサリオン/ディアス/デルフォイ/トリアーナ代用",
     averageTime: "約45秒〜55秒",
@@ -2224,6 +2394,7 @@ const PRESET_RAID_SETS = [
   },
   {
     id: "preset-raid-set-f2p-stable",
+    boss: "カドゥルー",
     name: "【完全無課金F2P・調合＆配布中心】初心者〜中級者向け 完全安定ソロレイド",
     tag: "完全無課金・調合＆二次覚醒",
     averageTime: "約1分10秒〜1分30秒",
@@ -2433,6 +2604,7 @@ let dimensionSubtab = 'raid'; // 'raid', 'remains', 'awakening'
 let dimensionRemainsFilter = 'all'; // 'all', 'カルザン', 'エルニア', 'ルメール', 'サクリファス', 'カトリア'
 let dimensionAwakeningFilter = 'all'; // 'all', 'イヌガミ', 'オオカミ人間', 'ピクシー', 'グリムリッパー', 'フランケン・リビングアーマー'
 let tartarosBossFilter = 'all'; // 'all', 'レオス', 'コトス', 'ギエス', 'タルタロス'
+let raidBossFilter = 'all'; // 'all', '紅炎の魔獣', 'カドゥルー'
 let attributeFilter = 'all'; // 'all', '火', '水', '風', '光', '闇'
 let dungeonFilter = 'all'; // 'all', '異界レイド', 'タルタロス', '巨人', 'ドラゴン', '死のダンジョン', '精霊', '鋼鉄', '審判'
 let searchQuery = '';
@@ -2456,6 +2628,11 @@ const elements = {
   partyListRaid: document.getElementById('raid-party-list'),
   raidSetCount: document.getElementById('raid-set-count'),
   btnAddRaidParty: document.getElementById('btn-add-raid-party'),
+  raidBossTabBtns: document.querySelectorAll('#raid-boss-tab-area .boss-tab-btn'),
+  raidFireBanner: document.getElementById('raid-fire-banner'),
+  countRaidAll: document.getElementById('count-raid-all'),
+  countRaidFire: document.getElementById('count-raid-fire'),
+  countRaidNormal: document.getElementById('count-raid-normal'),
   
   // 次元ホール関連
   btnDimSubnavRaid: document.getElementById('btn-dim-subnav-raid'),
@@ -3884,13 +4061,33 @@ function renderRaidParties() {
   if (!elements.partyListRaid) return;
   elements.partyListRaid.innerHTML = '';
 
+  // ボス別カウント集計
+  const allCount = raidSets.length;
+  const fireCount = raidSets.filter(s => s.boss === '紅炎の魔獣').length;
+  const normalCount = raidSets.filter(s => s.boss !== '紅炎の魔獣').length;
+
+  if (elements.countRaidAll) elements.countRaidAll.textContent = allCount;
+  if (elements.countRaidFire) elements.countRaidFire.textContent = fireCount;
+  if (elements.countRaidNormal) elements.countRaidNormal.textContent = normalCount;
+
+  // ガイドバナーの表示切り替え（紅炎の魔獣タブまたはすべてタブで表示）
+  if (elements.raidFireBanner) {
+    elements.raidFireBanner.style.display = (raidBossFilter === '紅炎の魔獣' || raidBossFilter === 'all') ? 'block' : 'none';
+  }
+
   const filteredSets = raidSets.filter(set => {
+    // ボスフィルター
+    if (raidBossFilter === '紅炎の魔獣' && set.boss !== '紅炎の魔獣') return false;
+    if (raidBossFilter === 'カドゥルー' && set.boss === '紅炎の魔獣') return false;
+
+    // 検索クエリ
     if (searchQuery.trim() === '') return true;
     const q = searchQuery.toLowerCase();
     const nameMatch = (set.name || '').toLowerCase().includes(q);
     const summaryMatch = (set.summary || '').toLowerCase().includes(q);
     const reqMatch = (set.requirementsMemo || '').toLowerCase().includes(q);
     const speedMatch = (set.speedTuningMemo || '').toLowerCase().includes(q);
+    const bossMatch = (set.boss || '').toLowerCase().includes(q);
     
     // 各チームのメンバー検索
     const teams = [set.team1, set.team2, set.team3];
@@ -3900,7 +4097,7 @@ function renderRaidParties() {
       return allMembers.some(m => (m.name || '').toLowerCase().includes(q) || (m.role || '').toLowerCase().includes(q));
     });
 
-    return nameMatch || summaryMatch || reqMatch || speedMatch || memberMatch;
+    return nameMatch || summaryMatch || reqMatch || speedMatch || bossMatch || memberMatch;
   });
 
   if (elements.raidSetCount) {
@@ -3963,10 +4160,18 @@ function renderRaidParties() {
       `;
     };
 
+    const isFireBeast = set.boss === '紅炎の魔獣';
+    const bossBadgeHtml = isFireBeast 
+      ? `<span class="raid-set-badge-tag" style="background: rgba(255, 71, 87, 0.2); border-color: #ff4757; color: #ff6b81;">🔥 紅炎の魔獣 (火)</span>`
+      : `<span class="raid-set-badge-tag" style="background: rgba(168, 85, 247, 0.2); border-color: #a855f7; color: #c084fc;">⚡ 混沌のカドゥルー</span>`;
+
     card.innerHTML = `
       <div class="raid-set-header">
         <div class="raid-set-title-wrap">
-          <span class="raid-set-badge-tag">${escapeHtml(set.tag || 'ソロレイド')}</span>
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:4px;">
+            ${bossBadgeHtml}
+            <span class="raid-set-badge-tag">${escapeHtml(set.tag || 'ソロレイド')}</span>
+          </div>
           <h4 class="raid-set-name">${escapeHtml(set.name)}</h4>
           <div class="raid-set-meta">
             <span class="raid-meta-time">⏱️ ${escapeHtml(set.averageTime)}</span>
@@ -4004,14 +4209,33 @@ function renderRaidParties() {
   });
 }
 
+// 異界レイド ボス切り替え
+function switchRaidBoss(boss) {
+  raidBossFilter = boss || 'all';
+  if (elements.raidBossTabBtns) {
+    elements.raidBossTabBtns.forEach(btn => {
+      if (btn.dataset.raidBoss === raidBossFilter) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+  if (elements.raidFireBanner) {
+    elements.raidFireBanner.style.display = (raidBossFilter === '紅炎の魔獣' || raidBossFilter === 'all') ? 'block' : 'none';
+  }
+  renderRaidParties();
+}
+
 // 異界レイドセット詳細モーダル
 function openRaidSetDetailModal(setId) {
   const set = raidSets.find(s => s.id === setId) || PRESET_RAID_SETS.find(s => s.id === setId);
   if (!set) return;
 
   if (elements.modalPartyDungeon) {
-    elements.modalPartyDungeon.textContent = "異界レイド (ソロ・カドゥルー5階)";
-    elements.modalPartyDungeon.className = "party-dungeon-badge bg-raid";
+    const isFire = set.boss === "紅炎の魔獣";
+    elements.modalPartyDungeon.textContent = isFire ? "異界レイド (紅炎の魔獣 5階)" : "異界レイド (ソロ・カドゥルー 5階)";
+    elements.modalPartyDungeon.className = isFire ? "party-dungeon-badge bg-fire" : "party-dungeon-badge bg-raid";
   }
   if (elements.modalPartyName) elements.modalPartyName.textContent = set.name;
   if (elements.modalPartyTime) elements.modalPartyTime.textContent = `⏱️ ${set.averageTime}`;
@@ -4931,10 +5155,22 @@ function setupEventListeners() {
     });
   }
 
+  // 異界レイド ボスタブボタン (すべて / 紅炎の魔獣 / カドゥルー)
+  if (elements.raidBossTabBtns) {
+    elements.raidBossTabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        switchRaidBoss(btn.dataset.raidBoss);
+      });
+    });
+  }
+
   // 異界レイド パーティ追加ボタン
   if (elements.btnAddRaidParty) {
     elements.btnAddRaidParty.addEventListener('click', () => {
-      openPartyForm(null, '異界レイド (ソロ・カドゥルー5階)');
+      const defaultDungeon = raidBossFilter === '紅炎の魔獣' 
+        ? '異界レイド (紅炎の魔獣5階)' 
+        : '異界レイド (ソロ・カドゥルー5階)';
+      openPartyForm(null, defaultDungeon);
     });
   }
 
