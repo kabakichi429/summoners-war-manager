@@ -38,7 +38,19 @@
       <input type="text" id="search-input" placeholder="モンスター名、役割、メモを検索...">
       <button id="btn-clear-search" class="clear-search-btn" style="display: none;">&times;</button>
     </div>
+
+    <!-- コンテンツ・区分クイックフィルター（ワールドアリーナ・お気に入り等） -->
+    <div class="content-quick-filters">
+      <button class="content-filter-btn active" data-content-filter="all">すべて</button>
+      <button class="content-filter-btn btn-filter-rta" data-content-filter="rta">
+        <span class="btn-icon-symbol">⚔️</span> ワールドアリーナ (<span id="rta-count">0</span>)
+      </button>
+      <button class="content-filter-btn btn-filter-fav" data-content-filter="fav">
+        <span class="btn-icon-symbol">★</span> お気に入り
+      </button>
+    </div>
     
+    <!-- 属性フィルター（スマホでも闇属性まで1画面で綺麗にタップ可能） -->
     <div class="attribute-filters">
       <button class="attr-btn active" data-attr="all">すべて</button>
       <button class="attr-btn attr-fire" data-attr="火">火</button>
@@ -416,9 +428,96 @@
             <input type="text" id="form-role" placeholder="例: アタッカー, デバッファー, 剥がし, 巨人深淵用">
           </div>
 
+          <!-- 推奨ルーン構成＆かんたん入力アシスタント -->
           <div class="form-group">
-            <label for="form-runes">推奨ルーン構成</label>
+            <div class="rune-label-row">
+              <label for="form-runes">推奨ルーン構成</label>
+              <button type="button" id="btn-auto-format-runes" class="btn-assistant-format" title="「暴走プラス石」や「体力体力体力」などを綺麗な書式に自動整形">
+                ✨ 表記を自動整形
+              </button>
+            </div>
             <input type="text" id="form-runes" placeholder="例: 暴走 + 意志 (速度/体力/体力)">
+            
+            <!-- ルーンかんたん入力アシスタント -->
+            <div class="rune-input-assistant">
+              <!-- 定番セットプリセット -->
+              <div class="assistant-block">
+                <span class="assistant-label">🎯 定番セット:</span>
+                <div class="assistant-chips">
+                  <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 意志">暴走+意志</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="迅速 + 意志">迅速+意志</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="激怒 + 刃">激怒+刃</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="迅速 + 刃">迅速+刃</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="絶望 + 意志">絶望+意志</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 反撃">暴走+反撃</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="闘志 + 闘志 + 闘志">闘志×3</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="吸血 + 反撃">吸血+反撃</button>
+                </div>
+              </div>
+
+              <!-- 2/4/6番メインオプション定番プリセット -->
+              <div class="assistant-block">
+                <span class="assistant-label">👟 2/4/6番スロット:</span>
+                <div class="assistant-chips">
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/体力/体力)">(速度/体力/体力)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/クリダメ/攻撃)">(速度/クリダメ/攻撃)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(攻撃/クリダメ/攻撃)">(攻撃/クリダメ/攻撃)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/体力/防御)">(速度/体力/防御)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(体力/体力/体力)">(体力/体力/体力)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/防御/防御)">(速度/防御/防御)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/クリ率/体力)">(速度/クリ率/体力)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/体力/的中)">(速度/体力/的中)</button>
+                </div>
+              </div>
+
+              <!-- 個別パーツ挿入（クリックで末尾にスムーズ追加） -->
+              <div class="assistant-block assistant-individual">
+                <span class="assistant-label">＋ パーツ追加:</span>
+                <div class="assistant-chips mini-chips">
+                  <!-- 4セット -->
+                  <button type="button" class="rune-part-btn rune-part-4set" data-part="暴走">暴走</button>
+                  <button type="button" class="rune-part-btn rune-part-4set" data-part="迅速">迅速</button>
+                  <button type="button" class="rune-part-btn rune-part-4set" data-part="激怒">激怒</button>
+                  <button type="button" class="rune-part-btn rune-part-4set" data-part="絶望">絶望</button>
+                  <button type="button" class="rune-part-btn rune-part-4set" data-part="吸血">吸血</button>
+                  <button type="button" class="rune-part-btn rune-part-4set" data-part="猛攻">猛攻</button>
+                  <span class="chip-divider">|</span>
+                  <!-- 2セット -->
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="意志">意志</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="刃">刃</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="反撃">反撃</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="守護">守護</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="元気">元気</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="集中">集中</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="闘志">闘志</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="破壊">破壊</button>
+                  <span class="chip-divider">|</span>
+                  <!-- メインOP単語 -->
+                  <button type="button" class="rune-part-btn rune-part-stat" data-part="速度">速度</button>
+                  <button type="button" class="rune-part-btn rune-part-stat" data-part="体力">体力</button>
+                  <button type="button" class="rune-part-btn rune-part-stat" data-part="攻撃">攻撃</button>
+                  <button type="button" class="rune-part-btn rune-part-stat" data-part="防御">防御</button>
+                  <button type="button" class="rune-part-btn rune-part-stat" data-part="クリダメ">クリダメ</button>
+                  <button type="button" class="rune-part-btn rune-part-stat" data-part="クリ率">クリ率</button>
+                  <button type="button" class="rune-part-btn rune-part-clear" id="btn-clear-runes">クリア</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ワールドアリーナ (RTA) 専用設定 -->
+          <div class="form-group-box rta-form-box">
+            <div class="form-group checkbox-group" style="margin-bottom: 8px;">
+              <label class="checkbox-label">
+                <input type="checkbox" id="form-rta">
+                <span class="checkbox-custom"></span>
+                <span class="rta-checkbox-title">⚔️ ワールドアリーナ (RTA) で使用する</span>
+              </label>
+            </div>
+            <div class="form-group" id="form-rta-memo-group">
+              <label for="form-rta-memo">ワールドアリーナ (RTA) 対策・ピック方針メモ</label>
+              <textarea id="form-rta-memo" rows="2" placeholder="例: 先手ピック用、受けパの核、速度300勝負、相手の免疫剥がしに対するカウンター等"></textarea>
+            </div>
           </div>
 
           <div class="form-group">
@@ -459,7 +558,10 @@
     <div class="modal-container">
       <div class="modal-header">
         <div class="modal-title-area">
-          <span class="monster-attr-badge" id="modal-attr-badge">水</span>
+          <div class="modal-badge-row">
+            <span class="monster-attr-badge" id="modal-attr-badge">水</span>
+            <span class="rta-pill-badge" id="modal-rta-badge" style="display: none;">⚔️ RTA (ワリーナ)</span>
+          </div>
           <h2 id="modal-monster-name">水パンダ</h2>
           <div class="monster-stars" id="modal-monster-stars">★★★★★</div>
         </div>
@@ -475,6 +577,11 @@
         <div class="detail-section">
           <h3><span class="section-icon">💎</span> 推奨ルーン</h3>
           <p id="modal-runes" class="detail-value">未登録</p>
+        </div>
+
+        <div class="detail-section" id="modal-section-rta" style="display: none;">
+          <h3><span class="section-icon">⚔️</span> ワールドアリーナ (RTA) 対策・ピック方針</h3>
+          <p id="modal-rta-memo" class="detail-value text-pre">未登録</p>
         </div>
 
         <div class="detail-section" id="modal-section-guild">

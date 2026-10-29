@@ -9,6 +9,8 @@ const PRESET_MONSTERS = [
     stars: 5,
     role: "耐久アタッカー / デバッファー / PVP",
     recommendedRunes: "暴走 + 意志 (速度/体力/体力)",
+    isRta: true,
+    rtaMemo: "【RTAファーストピック・受けパの核】\nスキル3相打ちから頭数を減らす動きが強力。トリアーナ、ヴァネッサ、風パンダ等と好相性。",
     guildMemo: "スキル3の相打ち狙い（自身の体力を70%消費して敵に同等ダメージ）が極めて強力。\n【攻め編成例】\n・水パンダ、風ハープ(トリアーナ)、火アーク(ヴェラジュエル)\nトリアーナのパッシブで水パンダの自傷死を防ぐシナジーが優秀。",
     cairosMemo: "カイロス適性は低め。主にアリーナ・占領戦で運用。",
     generalMemo: "ステータスは体力を最優先。サブステータスで速度と効果抵抗を盛る。スキル2の全体スタン＆剥がしも強力。",
@@ -22,6 +24,8 @@ const PRESET_MONSTERS = [
     stars: 4,
     role: "サポーター / 免役 / 蘇生支援 / PVP",
     recommendedRunes: "暴走 + 意志 (速度/体力/防御)",
+    isRta: true,
+    rtaMemo: "【受けパの絶対的守護神】\n即死無効化パッシブで相手の速攻ワンパン戦術を完全に狂わせる。暴走での割り込み免疫・回復が強い。",
     guildMemo: "パッシブ「救済の響き」で、味方が即死するダメージを受けた時にそのダメージを無効化しターンを獲得する。\n水パンダや風パンダと組み合わせる防衛・攻め双方が強力。",
     cairosMemo: "死のダンジョンなどで事故防止用として使うこともあるが、基本はPVP用。",
     generalMemo: "トリアーナが先に動いてシールドや回復を貼れるよう、速度調整が重要。暴走ルーンでの割り込みが狙い目。",
@@ -35,6 +39,8 @@ const PRESET_MONSTERS = [
     stars: 4,
     role: "ゲージアッパー / カイロス必須 / PVE",
     recommendedRunes: "迅速 + 刃 または 暴走 + 反撃 (速度/クリ率/体力)",
+    isRta: true,
+    rtaMemo: "反撃ルーン特化型。全体攻撃への反撃ゲージアップで相手の行動順を崩壊させるアンチピック。",
     guildMemo: "アリーナ・ギルバトの攻め（速度パ）でリーダーとして使うことがある。",
     cairosMemo: "【カイロス周回の神】\nクリティカルヒット時に味方全員の攻撃ゲージを20%（スキル1なら2回で40%）増加させるパッシブを持つ。\n・巨人深淵、ドラゴンダンジョン、死のダンジョン全てでゲージ回しの要。\n※クリティカル率「100%」が絶対条件。",
     generalMemo: "調合で必ず作成すべき最重要モンスターの一体。クリ率100%を最優先で確保し、次に速度と耐久を盛る。",
@@ -48,6 +54,8 @@ const PRESET_MONSTERS = [
     stars: 3,
     role: "単体剥がし / 速度デバフ / ゲージ下げ / 万能PVE",
     recommendedRunes: "迅速 + 集中 または 暴走 + 反撃 (速度/体力/効果的中)",
+    isRta: false,
+    rtaMemo: "",
     guildMemo: "相手の耐久防衛（水パンなど）を単体で完封できる。持続ダメージや防御弱化、強化剥がしが便利。",
     cairosMemo: "巨人、ドラゴン、タワー攻略で大活躍。\n攻撃するたびに敵のゲージを下げ、防御弱化（縦割り）を付与する。\n【必要ステータス】\n・効果的中: 最低 45% (カイロス用) / 55% (ドラゴンダンジョン用)",
     generalMemo: "秘密のダンジョンで獲得可能。すべての攻撃が多段ヒットで、パッシブによる防御弱化とゲージダウンが凶悪。初心者から上級者まで必須。",
@@ -61,6 +69,8 @@ const PRESET_MONSTERS = [
     stars: 5,
     role: "弱化解除 / アタッカー / カイロス / タワー",
     recommendedRunes: "暴走 + 元気 または 迅速 + 集中 (速度/体力/体力)",
+    isRta: true,
+    rtaMemo: "持続ダメージパやデバフ多用パ（リカ、カルナック等）への強力なカウンターピック。全体スタンと高回転解除が光る。",
     guildMemo: "持続ダメージやスタンを多用してくる防衛に対するカウンターとして有効。",
     cairosMemo: "【巨人ダンジョン安定化の要】\n自身のターンが回ってくるたびに、味方全員の弱化効果（デバフ）を1つ解除し、体力を回復する。\n巨人ダンジョンでボスが付与してくる「防御弱化」を即座に解除して事故を防ぐ。",
     generalMemo: "調合で入手可能。スキル2の全体スタン＆持続ダメージも優秀。PVE攻略における大黒柱。",
@@ -74,6 +84,8 @@ const PRESET_MONSTERS = [
     stars: 5,
     role: "耐久アタッカー / 反撃 / PVP破壊王",
     recommendedRunes: "暴走 + 意志 または 暴走 + 守護 (速度/防御/防御)",
+    isRta: true,
+    rtaMemo: "水属性アタッカーや剥がしの薄い相手に対するイージス艦。防御比例の固定反撃ダメージで単騎逆転できる。",
     guildMemo: "防御力比例アタッカー。パッシブで攻撃を受けるとゲージが上がり、通常攻撃に防御力比例の追加ダメージが乗る。\n【攻め編成例】\n・風パンダ、火アーク、水防衛対策キャラ。ソロ性能も非常に高い。",
     cairosMemo: "カイロスには不向き。完全なPVP（占領戦、アリーナ、RTA）向け。",
     generalMemo: "防御力をとにかく高く盛る（+1500以上目標）。クリダメ型にしなくてもパッシブの固定ダメージで十分火力を出せる。",
@@ -152,6 +164,8 @@ const PRESET_MONSTERS = [
     stars: 5,
     role: "絶対剥がし / ゲージアップ / PVPの神",
     recommendedRunes: "迅速 + 意志 (最速調整)",
+    isRta: true,
+    rtaMemo: "【速攻・コントロールパの絶対神】\n抵抗不可の全体強化解除＋30%ゲージ上げ。相手の意志・免疫を100%崩す。最速を競う。",
     guildMemo: "【攻め性能SSS】\nスキル3「吹き荒れる風」は、敵味方全体のすべての強化・弱化効果を解除し、味方の攻撃ゲージを30%増加させる。\n※この剥がしは「抵抗されない」ため、意志ルーンや免疫防衛を100%崩すことができる。",
     cairosMemo: "カイロスでは不要。ギルバト・アリーナ攻めの核。",
     generalMemo: "速度を極限まで盛る。味方のアタッカー（ルシェンや全体アタッカーなど）がティアナの直後に割り込まれずに動けるように速度調整（速度同調）することが最も重要。",
@@ -2652,6 +2666,7 @@ let parties = [];
 let raidSets = [];
 let dimensionRaidSets = [];
 let activeTab = 'all'; // 'all', 'guild', 'cairos', 'raid', 'dimension', 'form'
+let contentFilter = 'all'; // 'all', 'rta', 'fav' (ワールドアリーナ・お気に入り絞り込み)
 let cairosSubtab = 'party'; // 'party', 'monsters'
 let guildSubtab = 'tartaros'; // 'tartaros', 'monsters'
 let dimensionSubtab = 'raid'; // 'raid', 'remains', 'awakening'
@@ -2674,6 +2689,8 @@ const elements = {
   searchInput: document.getElementById('search-input'),
   btnClearSearch: document.getElementById('btn-clear-search'),
   attrBtns: document.querySelectorAll('.attr-btn'),
+  contentFilterBtns: document.querySelectorAll('.content-filter-btn'),
+  rtaCount: document.getElementById('rta-count'),
   
   monsterListAll: document.getElementById('monster-list-all'),
   monsterListGuild: document.getElementById('monster-list-guild'),
@@ -2731,6 +2748,13 @@ const elements = {
   formStars: document.getElementById('form-stars'),
   formRole: document.getElementById('form-role'),
   formRunes: document.getElementById('form-runes'),
+  formRta: document.getElementById('form-rta'),
+  formRtaMemo: document.getElementById('form-rta-memo'),
+  btnAutoFormatRunes: document.getElementById('btn-auto-format-runes'),
+  runePresetBtns: document.querySelectorAll('.rune-preset-btn'),
+  runeSlotPresetBtns: document.querySelectorAll('.rune-slot-preset-btn'),
+  runePartBtns: document.querySelectorAll('.rune-part-btn'),
+  btnClearRunes: document.getElementById('btn-clear-runes'),
   formGuildMemo: document.getElementById('form-guild'),
   formCairosMemo: document.getElementById('form-cairos'),
   formGeneralMemo: document.getElementById('form-general'),
@@ -2741,10 +2765,13 @@ const elements = {
   detailModal: document.getElementById('detail-modal'),
   modalClose: document.getElementById('modal-close'),
   modalAttrBadge: document.getElementById('modal-attr-badge'),
+  modalRtaBadge: document.getElementById('modal-rta-badge'),
   modalMonsterName: document.getElementById('modal-monster-name'),
   modalMonsterStars: document.getElementById('modal-monster-stars'),
   modalRole: document.getElementById('modal-role'),
   modalRunes: document.getElementById('modal-runes'),
+  modalSectionRta: document.getElementById('modal-section-rta'),
+  modalRtaMemo: document.getElementById('modal-rta-memo'),
   modalGuildMemo: document.getElementById('modal-guild-memo'),
   modalCairosMemo: document.getElementById('modal-cairos-memo'),
   modalGeneralMemo: document.getElementById('modal-general-memo'),
@@ -2877,6 +2904,25 @@ function initApp() {
           curTaranis.guildMemo = newTaranis.guildMemo;
           saveToLocalStorage();
         }
+      }
+
+      // ワールドアリーナ (RTA) 属性の自動マイグレーションパッチ
+      let monstersMigrated = false;
+      monsters.forEach(m => {
+        if (typeof m.isRta === 'undefined') {
+          const preset = PRESET_MONSTERS.find(p => p.id === m.id || p.name === m.name);
+          if (preset && preset.isRta) {
+            m.isRta = true;
+            m.rtaMemo = preset.rtaMemo || '';
+          } else {
+            m.isRta = false;
+            m.rtaMemo = '';
+          }
+          monstersMigrated = true;
+        }
+      });
+      if (monstersMigrated) {
+        saveToLocalStorage();
       }
     } catch (e) {
       console.error('Failed to parse local storage data, resetting with presets', e);
@@ -3301,8 +3347,61 @@ function escapeHtml(string) {
   });
 }
 
+// ルーン文字列の自動整形・補正（音声入力の「暴走プラス石」「体力体力体力」等をサマナ標準書式へ変換）
+function formatRuneText(rawText) {
+  if (!rawText || typeof rawText !== 'string') return '';
+  let text = rawText.trim();
+
+  // 1. 全角英数・記号の半角化
+  text = text.replace(/[Ａ-Ｚａ-ｚ０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0));
+  text = text.replace(/＋/g, ' + ').replace(/／/g, '/');
+
+  // 2. 音声入力特有の誤変換・揺らぎの吸収
+  text = text.replace(/プラス\s*石/gi, '+ 意志');
+  text = text.replace(/プラス\s*いし/gi, '+ 意志');
+  text = text.replace(/プラス\s*意志/gi, '+ 意志');
+  text = text.replace(/\+\s*石/gi, '+ 意志');
+  text = text.replace(/プラス/gi, '+');
+
+  // 3. ルーン名の「+」補正（セットルーンの間に「 + 」を補う）
+  const fourSets = ['暴走', '迅速', '激怒', '絶望', '吸血', '猛攻'];
+  const twoSets = ['意志', '刃', '反撃', '守護', '元気', '集中', '忍耐', '闘志', '決意', '高揚', '命中', '根性', '破壊'];
+
+  fourSets.forEach(f => {
+    twoSets.forEach(t => {
+      const reg = new RegExp(`${f}\\s*(?:\\+|＋)?\\s*${t}`, 'g');
+      text = text.replace(reg, `${f} + ${t}`);
+    });
+  });
+
+  text = text.replace(/闘志\s*×\s*3/g, '闘志 + 闘志 + 闘志');
+  text = text.replace(/闘志\s*3/g, '闘志 + 闘志 + 闘志');
+  text = text.replace(/闘志闘志闘志/g, '闘志 + 闘志 + 闘志');
+
+  // 4. メインオプション（スロット2/4/6）のスラッシュ抜け補正（例: 「体力体力体力」➔「(体力/体力/体力)」）
+  const statsPattern = '(?:速度|体力|攻撃力|攻撃|防御力|防御|クリダメ|クリ率|効果的中|的中|効果抵抗|抵抗)';
+  const slot3Regex = new RegExp(`(?<![\\(/])(${statsPattern})[\\s/、・,]*(${statsPattern})[\\s/、・,]*(${statsPattern})(?![\\)/])`, 'g');
+
+  text = text.replace(slot3Regex, (match, p1, p2, p3) => {
+    const cleanStat = s => s.replace(/力$/, '');
+    return `(${cleanStat(p1)}/${cleanStat(p2)}/${cleanStat(p3)})`;
+  });
+
+  // 連続スペースやフォーマットの最終微調整
+  text = text.replace(/\s+/g, ' ').replace(/\s*\+\s*/g, ' + ').replace(/\(\s+/g, '(').replace(/\s+\)/g, ')');
+  text = text.replace(/([^\s])\(/g, '$1 (');
+
+  return text.trim();
+}
+
 // 5. UI描画ロジック
 function renderAll() {
+  // ワールドアリーナ登録モンスター数の更新
+  const rtaMonstersCount = monsters.filter(m => m.isRta).length;
+  if (elements.rtaCount) {
+    elements.rtaCount.textContent = rtaMonstersCount;
+  }
+
   renderMonsterList('all', elements.monsterListAll, elements.monsterCount);
   renderMonsterList('guild', elements.monsterListGuild, elements.guildCount);
   if (elements.guildCountSub) {
@@ -3325,8 +3424,16 @@ function renderMonsterList(type, containerElement, countElement) {
     if (attributeFilter !== 'all' && monster.attribute !== attributeFilter) {
       return false;
     }
+
+    // 2. コンテンツ・区分クイックフィルター（すべて・RTA・お気に入り）
+    if (contentFilter === 'rta' && !monster.isRta) {
+      return false;
+    }
+    if (contentFilter === 'fav' && !monster.isFavorite) {
+      return false;
+    }
     
-    // 2. タブごとの特化フィルター
+    // 3. タブごとの特化フィルター
     if (type === 'guild' && (!monster.guildMemo || monster.guildMemo.trim() === '')) {
       return false;
     }
@@ -3334,17 +3441,18 @@ function renderMonsterList(type, containerElement, countElement) {
       return false;
     }
     
-    // 3. 検索キーワードフィルター
+    // 4. 検索キーワードフィルター
     if (searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase();
       const nameMatch = monster.name.toLowerCase().includes(q);
       const roleMatch = (monster.role || '').toLowerCase().includes(q);
+      const rtaMatch = (monster.rtaMemo || '').toLowerCase().includes(q);
       const guildMatch = (monster.guildMemo || '').toLowerCase().includes(q);
       const cairosMatch = (monster.cairosMemo || '').toLowerCase().includes(q);
       const generalMatch = (monster.generalMemo || '').toLowerCase().includes(q);
       const runeMatch = (monster.recommendedRunes || '').toLowerCase().includes(q);
       
-      return nameMatch || roleMatch || guildMatch || cairosMatch || generalMatch || runeMatch;
+      return nameMatch || roleMatch || rtaMatch || guildMatch || cairosMatch || generalMatch || runeMatch;
     }
     
     return true;
@@ -3381,7 +3489,8 @@ function createMonsterCard(monster) {
   card.className = `monster-card attr-${monster.attribute}`;
   card.dataset.id = monster.id;
   
-  // ギルド/カイロスメモが存在するかのインジケータ判定
+  // 各メモが存在するかのインジケータ判定
+  const hasRta = monster.isRta || (monster.rtaMemo && monster.rtaMemo.trim() !== '');
   const hasGuild = monster.guildMemo && monster.guildMemo.trim() !== '';
   const hasCairos = monster.cairosMemo && monster.cairosMemo.trim() !== '';
   const hasGeneral = monster.generalMemo && monster.generalMemo.trim() !== '';
@@ -3395,7 +3504,10 @@ function createMonsterCard(monster) {
         <span class="card-name">${escapeHtml(monster.name)}</span>
         <span class="card-stars">${starString}</span>
       </div>
-      <span class="attr-badge attr-${monster.attribute}">${monster.attribute}</span>
+      <div class="card-header-badges">
+        ${monster.isRta ? '<span class="card-rta-badge">⚔️ RTA</span>' : ''}
+        <span class="attr-badge attr-${monster.attribute}">${monster.attribute}</span>
+      </div>
     </div>
     <div class="card-body">
       <div class="card-role">${escapeHtml(monster.role || '役割未設定')}</div>
@@ -3403,22 +3515,37 @@ function createMonsterCard(monster) {
     </div>
     <div class="card-footer">
       <div class="card-indicators">
+        <span class="indicator-icon ${hasRta ? '' : 'inactive'}" title="ワールドアリーナ(RTA)用">⚔️</span>
         <span class="indicator-icon ${hasGuild ? '' : 'inactive'}" title="ギルド対策あり">🛡️</span>
         <span class="indicator-icon ${hasCairos ? '' : 'inactive'}" title="カイロス周回メモあり">🐉</span>
         <span class="indicator-icon ${hasGeneral ? '' : 'inactive'}" title="全般メモあり">📝</span>
       </div>
-      <div class="favorite-btn ${monster.isFavorite ? 'active' : ''}" data-fav-id="${monster.id}">★</div>
+      <div class="card-actions-right">
+        <button type="button" class="btn-card-edit" data-id="${monster.id}" title="モンスター情報を編集">
+          <span>✏️</span> 編集
+        </button>
+        <div class="favorite-btn ${monster.isFavorite ? 'active' : ''}" data-fav-id="${monster.id}">★</div>
+      </div>
     </div>
   `;
   
   // カード全体のクリックイベント（詳細モーダル起動）
   card.addEventListener('click', (e) => {
-    // お気に入りボタンのクリック時は詳細を開かないようにする
-    if (e.target.classList.contains('favorite-btn')) {
+    // お気に入りボタンや編集ボタンのクリック時は詳細を開かないようにする
+    if (e.target.classList.contains('favorite-btn') || e.target.closest('.btn-card-edit')) {
       return;
     }
     openDetailModal(monster.id);
   });
+
+  // 直接編集ボタンイベント（スマホでも即座に編集画面へ移行可能）
+  const btnEdit = card.querySelector('.btn-card-edit');
+  if (btnEdit) {
+    btnEdit.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openFormForEdit(monster.id);
+    });
+  }
   
   // お気に入りトグルイベント
   const favBtn = card.querySelector('.favorite-btn');
@@ -4894,12 +5021,28 @@ function openDetailModal(id) {
   // バッジとテキストの設定
   elements.modalAttrBadge.textContent = monster.attribute;
   elements.modalAttrBadge.className = `monster-attr-badge attr-${monster.attribute}`;
+
+  // ワールドアリーナ (RTA) バッジ
+  if (elements.modalRtaBadge) {
+    elements.modalRtaBadge.style.display = monster.isRta ? 'inline-block' : 'none';
+  }
+
   elements.modalMonsterName.textContent = monster.name;
   elements.modalMonsterStars.textContent = '★'.repeat(parseInt(monster.stars || 5));
   
   elements.modalRole.textContent = monster.role || '未登録';
   elements.modalRunes.textContent = monster.recommendedRunes || '未登録';
   
+  // ワールドアリーナメモ
+  if (elements.modalSectionRta && elements.modalRtaMemo) {
+    if (monster.isRta || (monster.rtaMemo && monster.rtaMemo.trim() !== '')) {
+      elements.modalRtaMemo.textContent = monster.rtaMemo || 'ワールドアリーナ使用モンスター（特記事項なし）';
+      elements.modalSectionRta.style.display = 'block';
+    } else {
+      elements.modalSectionRta.style.display = 'none';
+    }
+  }
+
   // ギルド戦メモ
   if (monster.guildMemo && monster.guildMemo.trim() !== '') {
     elements.modalGuildMemo.textContent = monster.guildMemo;
@@ -4946,6 +5089,15 @@ function openFormForEdit(id) {
   elements.formStars.value = monster.stars;
   elements.formRole.value = monster.role || '';
   elements.formRunes.value = monster.recommendedRunes || '';
+
+  // ワールドアリーナ (RTA) 設定の復元
+  if (elements.formRta) {
+    elements.formRta.checked = Boolean(monster.isRta);
+  }
+  if (elements.formRtaMemo) {
+    elements.formRtaMemo.value = monster.rtaMemo || '';
+  }
+
   elements.formGuildMemo.value = monster.guildMemo || '';
   elements.formCairosMemo.value = monster.cairosMemo || '';
   elements.formGeneralMemo.value = monster.generalMemo || '';
@@ -4960,6 +5112,12 @@ function resetForm() {
   elements.monsterForm.reset();
   elements.formId.value = '';
   elements.formTitle.textContent = '新規モンスター登録';
+  if (elements.formRta) {
+    elements.formRta.checked = false;
+  }
+  if (elements.formRtaMemo) {
+    elements.formRtaMemo.value = '';
+  }
   clearErrors();
 }
 
@@ -4978,8 +5136,20 @@ function setupEventListeners() {
       switchTab(tabId);
     });
   });
+
+  // コンテンツ・区分クイックフィルター（すべて・RTA・お気に入り）
+  if (elements.contentFilterBtns) {
+    elements.contentFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        elements.contentFilterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        contentFilter = btn.dataset.contentFilter || 'all';
+        renderAll();
+      });
+    });
+  }
   
-  // 属性フィルターボタンのクリック
+  // 属性フィルターボタンのクリック（スマホでもタップしやすい全幅グリッド）
   elements.attrBtns.forEach(btn => {
     btn.addEventListener('click', () => {
       elements.attrBtns.forEach(b => b.classList.remove('active'));
@@ -4988,6 +5158,87 @@ function setupEventListeners() {
       renderAll();
     });
   });
+
+  // ルーンかんたん入力アシスタント関連イベント
+  // 1. 表記自動整形ボタン
+  if (elements.btnAutoFormatRunes) {
+    elements.btnAutoFormatRunes.addEventListener('click', () => {
+      const raw = elements.formRunes.value;
+      if (!raw.trim()) {
+        showToast('ルーン構成が入力されていません');
+        return;
+      }
+      const formatted = formatRuneText(raw);
+      elements.formRunes.value = formatted;
+      showToast('ルーン表記を標準形式に整形しました ✨');
+    });
+  }
+
+  // 2. 定番セットボタン（例: 暴走+意志、迅速+刃など）
+  if (elements.runePresetBtns) {
+    elements.runePresetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const setVal = btn.dataset.runeSet;
+        const cur = elements.formRunes.value.trim();
+        // 既にスロット指定 (xxx/yyy/zzz) があればそれを保持
+        const slotMatch = cur.match(/\([^\)]+\)/);
+        if (slotMatch) {
+          elements.formRunes.value = `${setVal} ${slotMatch[0]}`;
+        } else {
+          elements.formRunes.value = setVal;
+        }
+      });
+    });
+  }
+
+  // 3. 2/4/6番メインオプスロットボタン（例: (速度/体力/体力)など）
+  if (elements.runeSlotPresetBtns) {
+    elements.runeSlotPresetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const slotVal = btn.dataset.runeSlot;
+        const cur = elements.formRunes.value.trim();
+        if (cur === '') {
+          elements.formRunes.value = slotVal;
+        } else if (/\([^\)]+\)/.test(cur)) {
+          // 既存のスロット部分を置換
+          elements.formRunes.value = cur.replace(/\([^\)]+\)/, slotVal);
+        } else {
+          // セット名の後ろに半角スペースを空けて追加
+          elements.formRunes.value = `${cur} ${slotVal}`;
+        }
+      });
+    });
+  }
+
+  // 4. 個別パーツ追加ボタン（暴走、意志、速度、体力など）
+  if (elements.runePartBtns) {
+    elements.runePartBtns.forEach(btn => {
+      if (btn.id === 'btn-clear-runes') return;
+      btn.addEventListener('click', () => {
+        const part = btn.dataset.part;
+        const cur = elements.formRunes.value.trim();
+        if (!cur) {
+          elements.formRunes.value = part;
+        } else {
+          // 4セットや2セットの単語を追加する場合は自動で「 + 」で繋ぐ
+          const isRuneName = ['暴走', '迅速', '激怒', '絶望', '吸血', '猛攻', '意志', '刃', '反撃', '守護', '元気', '集中', '闘志', '破壊'].includes(part);
+          const lastCharIsPlus = cur.endsWith('+');
+          if (isRuneName && !lastCharIsPlus && !cur.includes('(')) {
+            elements.formRunes.value = `${cur} + ${part}`;
+          } else {
+            elements.formRunes.value = `${cur} ${part}`;
+          }
+        }
+      });
+    });
+  }
+
+  // 5. ルーンクリアボタン
+  if (elements.btnClearRunes) {
+    elements.btnClearRunes.addEventListener('click', () => {
+      elements.formRunes.value = '';
+    });
+  }
   
   // リアルタイム検索
   elements.searchInput.addEventListener('input', (e) => {
@@ -5395,6 +5646,8 @@ function handleFormSubmit(e) {
     stars: parseInt(stars),
     role: elements.formRole.value.trim() || '役割未設定',
     recommendedRunes: elements.formRunes.value.trim(),
+    isRta: elements.formRta ? elements.formRta.checked : false,
+    rtaMemo: elements.formRtaMemo ? elements.formRtaMemo.value.trim() : '',
     guildMemo: elements.formGuildMemo.value.trim(),
     cairosMemo: elements.formCairosMemo.value.trim(),
     generalMemo: elements.formGeneralMemo.value.trim(),
