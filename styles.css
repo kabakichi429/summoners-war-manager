@@ -2334,6 +2334,12 @@ textarea {
    データ同期・保存モーダル (PC・スマホ同期機能)
    ========================================================================== */
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 /* ヘッダー内 同期ボタン */
 .btn-sync-header {
   display: inline-flex;
@@ -2361,12 +2367,48 @@ textarea {
   height: 15px;
 }
 
-/* 同期モーダル */
+/* 同期モーダル オーバーレイ＆カード */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.78);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1200;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+@media (min-width: 600px) {
+  .modal-overlay {
+    align-items: center;
+  }
+}
+
 .modal-sync-card {
-  max-width: 520px;
-  width: 92%;
+  background-color: var(--bg-secondary);
+  border-top: 2px solid var(--accent-gold);
+  border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+  max-width: 560px;
+  width: 100%;
   max-height: 90vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.65);
+}
+
+@media (min-width: 600px) {
+  .modal-sync-card {
+    border: 2px solid var(--accent-gold);
+    border-radius: var(--border-radius-lg);
+    width: 92%;
+    max-height: 85vh;
+  }
 }
 
 .sync-modal-title {
@@ -2385,8 +2427,10 @@ textarea {
 .sync-modal-body {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 14px;
   padding: 16px;
+  overflow-y: auto;
+  flex: 1;
 }
 
 /* 同期ステータスサマリー */
@@ -2428,11 +2472,58 @@ textarea {
   gap: 10px;
 }
 
+.sync-section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .sync-section-header h3 {
   font-size: 0.95rem;
   font-weight: 700;
   color: #fff;
   margin: 0;
+}
+
+.sync-size-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.sync-paste-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sync-output-preview-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.sync-mini-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.sync-output-input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(223, 178, 58, 0.35);
+  border-radius: var(--border-radius-sm);
+  color: #fde047;
+  padding: 8px 10px;
+  font-family: monospace;
+  font-size: 0.75rem;
 }
 
 .sync-desc {
@@ -2444,19 +2535,19 @@ textarea {
 
 .sync-btn-group {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
 .btn-sync-action {
   flex: 1;
-  min-width: 160px;
+  min-width: 135px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-size: 0.85rem;
-  padding: 10px 14px;
+  font-size: 0.82rem;
+  padding: 10px 12px;
 }
 
 /* テキストエリア */

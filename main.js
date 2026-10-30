@@ -2897,10 +2897,16 @@ const elements = {
   btnOpenSync: document.getElementById('btn-open-sync'),
   syncModal: document.getElementById('sync-modal'),
   syncModalClose: document.getElementById('sync-modal-close'),
+  btnSyncModalFooterClose: document.getElementById('btn-sync-modal-footer-close'),
   syncCountMonsters: document.getElementById('sync-count-monsters'),
   syncCountParties: document.getElementById('sync-count-parties'),
+  syncCodeSizeBadge: document.getElementById('sync-code-size-badge'),
   btnCopySyncCode: document.getElementById('btn-copy-sync-code'),
+  btnShareSyncCode: document.getElementById('btn-share-sync-code'),
   btnDownloadBackup: document.getElementById('btn-download-backup'),
+  syncOutputCode: document.getElementById('sync-output-code'),
+  btnPasteSyncCode: document.getElementById('btn-paste-sync-code'),
+  btnClearSyncCode: document.getElementById('btn-clear-sync-code'),
   syncInputCode: document.getElementById('sync-input-code'),
   btnApplySyncReplace: document.getElementById('btn-apply-sync-replace'),
   btnApplySyncMerge: document.getElementById('btn-apply-sync-merge'),
@@ -5831,6 +5837,9 @@ function setupEventListeners() {
   if (elements.syncModalClose) {
     elements.syncModalClose.addEventListener('click', closeSyncModal);
   }
+  if (elements.btnSyncModalFooterClose) {
+    elements.btnSyncModalFooterClose.addEventListener('click', closeSyncModal);
+  }
   if (elements.syncModal) {
     elements.syncModal.addEventListener('click', (e) => {
       if (e.target === elements.syncModal) closeSyncModal();
@@ -5838,6 +5847,22 @@ function setupEventListeners() {
   }
   if (elements.btnCopySyncCode) {
     elements.btnCopySyncCode.addEventListener('click', handleCopySyncCode);
+  }
+  if (elements.btnShareSyncCode) {
+    elements.btnShareSyncCode.addEventListener('click', handleShareSyncCode);
+  }
+  if (elements.syncOutputCode) {
+    elements.syncOutputCode.addEventListener('click', () => {
+      elements.syncOutputCode.select();
+    });
+  }
+  if (elements.btnPasteSyncCode) {
+    elements.btnPasteSyncCode.addEventListener('click', handlePasteSyncCode);
+  }
+  if (elements.btnClearSyncCode) {
+    elements.btnClearSyncCode.addEventListener('click', () => {
+      if (elements.syncInputCode) elements.syncInputCode.value = '';
+    });
   }
   if (elements.btnDownloadBackup) {
     elements.btnDownloadBackup.addEventListener('click', handleDownloadBackup);
@@ -6137,6 +6162,19 @@ function openSyncModal() {
   if (elements.syncCountMonsters) elements.syncCountMonsters.textContent = `${monsters.length}体`;
   if (elements.syncCountParties) elements.syncCountParties.textContent = `${parties.length}編成`;
   if (elements.syncInputCode) elements.syncInputCode.value = '';
+
+  // モーダルを開いた時点で軽量同期コードを自動生成してプレビュー欄に表示
+  try {
+    const syncCode = generateSyncCode();
+    if (elements.syncOutputCode) {
+      elements.syncOutputCode.value = syncCode;
+    }
+    if (elements.syncCodeSizeBadge) {
+      elements.syncCodeSizeBadge.textContent = `軽量コード (${syncCode.length.toLocaleString()}文字)`;
+    }
+  } catch (e) {
+    console.error('Failed to pre-generate sync code', e);
+  }
   
   elements.syncModal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
@@ -6149,31 +6187,117 @@ function closeSyncModal() {
   document.body.style.overflow = '';
 }
 
-// データをBase64エンコード付き同期コードに変換 (UTF-8対応)
-function generateSyncCode() {
-  const payload = {
-    version: 2,
-    exportedAt: new Date().toISOString(),
-    monsters: monsters,
-    parties: parties,
-    raidSets: raidSets,
-    dimensionRaidSets: dimensionRaidSets
-  };
-  const jsonStr = JSON.stringify(payload);
-  // UTF-8対応のBase64エンコード
-  const base64Str = btoa(encodeURIComponent(jsonStr).replace(/%([0-9A-F]{2})/g, (match, p1) => {
+// UTF-8文字列をBase64へ変換
+function utf8ToBase64(str) {
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => {
     return String.fromCharCode('0x' + p1);
   }));
-  return `SWDATA:${base64Str}`;
+}
+
+// Base64をUTF-8文字列へ復号
+function base64ToUtf8(base64Str) {
+  return decodeURIComponent(atob(base64Str).split('').map(c => {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+}
+
+// LINEやメールでも文字数制限に引っかからない超軽量・差分同期コード (SWLITE:) を生成
+function generateSyncCode() {
+  const monsterKeys = [
+    'name', 'attribute', 'stars', 'role', 'recommendedRunes', 'recommendedArtifacts',
+    'isRta', 'rtaSpeed', 'rtaPriority', 'rtaMemo', 'guildMemo', 'cairosMemo', 'generalMemo', 'isFavorite'
+  ];
+
+  const customMonsters = [];
+  const modifiedMonsters = [];
+  const currentMonsterIds = new Set(monsters.map(m => m.id));
+  const deletedMonsterIds = PRESET_MONSTERS.filter(pm => !currentMonsterIds.has(pm.id)).map(pm => pm.id);
+
+  monsters.forEach(m => {
+    const preset = PRESET_MONSTERS.find(pm => pm.id === m.id);
+    if (!preset) {
+      customMonsters.push(m);
+    } else {
+      const diff = { id: m.id };
+      let hasDiff = false;
+      monsterKeys.forEach(k => {
+        const curVal = typeof m[k] === 'undefined' ? '' : m[k];
+        const preVal = typeof preset[k] === 'undefined' ? '' : preset[k];
+        if (curVal !== preVal) {
+          diff[k] = m[k];
+          hasDiff = true;
+        }
+      });
+      if (hasDiff) {
+        diff.updatedAt = m.updatedAt;
+        modifiedMonsters.push(diff);
+      }
+    }
+  });
+
+  const partyKeys = [
+    'name', 'dungeon', 'dungeonCategory', 'averageTime', 'successRate', 'isFavorite',
+    'turnOrder', 'speedTuningMemo', 'requirementsMemo', 'targetMemo'
+  ];
+
+  const customParties = [];
+  const modifiedParties = [];
+  const currentPartyIds = new Set(parties.map(p => p.id));
+  const deletedPartyIds = PRESET_PARTIES.filter(pp => !currentPartyIds.has(pp.id)).map(pp => pp.id);
+
+  parties.forEach(p => {
+    const preset = PRESET_PARTIES.find(pp => pp.id === p.id);
+    if (!preset) {
+      customParties.push(p);
+    } else {
+      const diff = { id: p.id };
+      let hasDiff = false;
+      partyKeys.forEach(k => {
+        const curVal = typeof p[k] === 'undefined' ? '' : p[k];
+        const preVal = typeof preset[k] === 'undefined' ? '' : preset[k];
+        if (curVal !== preVal) {
+          diff[k] = p[k];
+          hasDiff = true;
+        }
+      });
+      if (JSON.stringify(p.members || []) !== JSON.stringify(preset.members || [])) {
+        diff.members = p.members;
+        hasDiff = true;
+      }
+      if (hasDiff) {
+        diff.updatedAt = p.updatedAt;
+        modifiedParties.push(diff);
+      }
+    }
+  });
+
+  const litePayload = {
+    v: 3,
+    cm: customMonsters,
+    mm: modifiedMonsters,
+    dm: deletedMonsterIds,
+    cp: customParties,
+    mp: modifiedParties,
+    dp: deletedPartyIds
+  };
+
+  const jsonStr = JSON.stringify(litePayload);
+  return `SWLITE:${utf8ToBase64(jsonStr)}`;
 }
 
 // 同期コードをクリップボードにコピー
 async function handleCopySyncCode() {
   const syncCode = generateSyncCode();
+  if (elements.syncOutputCode) {
+    elements.syncOutputCode.value = syncCode;
+  }
+  if (elements.syncCodeSizeBadge) {
+    elements.syncCodeSizeBadge.textContent = `軽量コード (${syncCode.length.toLocaleString()}文字)`;
+  }
   try {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       await navigator.clipboard.writeText(syncCode);
-      showToast('📋 同期コードをコピーしました！LINEやメモでスマホに送ってください');
+      showToast('📋 同期コードをコピーしました！LINEやメモで別端末に送ってください');
     } else {
       copyToClipboardFallback(syncCode);
     }
@@ -6182,8 +6306,59 @@ async function handleCopySyncCode() {
   }
 }
 
+// スマホの標準共有シート（LINE・AirDrop・メール・メモ等）で直接同期コードを共有
+async function handleShareSyncCode() {
+  const syncCode = generateSyncCode();
+  if (elements.syncOutputCode) {
+    elements.syncOutputCode.value = syncCode;
+  }
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'サマナ攻略 Manager 同期コード',
+        text: syncCode
+      });
+      showToast('📲 共有メニューを開きました');
+    } catch (err) {
+      if (err && err.name !== 'AbortError') {
+        handleCopySyncCode();
+      }
+    }
+  } else {
+    // Web Share非対応ブラウザ（PC等）ではクリップボードにコピー
+    handleCopySyncCode();
+  }
+}
+
+// クリップボードから受信テキストエリアへワンタップ貼り付け
+async function handlePasteSyncCode() {
+  if (!elements.syncInputCode) return;
+  try {
+    if (navigator.clipboard && navigator.clipboard.readText) {
+      const text = await navigator.clipboard.readText();
+      if (text && text.trim()) {
+        elements.syncInputCode.value = text.trim();
+        showToast('📋 クリップボードから同期コードを貼り付けました！');
+      } else {
+        showToast('クリップボードにテキストがありません');
+      }
+    } else {
+      elements.syncInputCode.focus();
+      showToast('入力欄を長押しして「ペースト（貼り付け）」してください');
+    }
+  } catch (err) {
+    elements.syncInputCode.focus();
+    showToast('入力欄を長押しして「ペースト（貼り付け）」してください');
+  }
+}
+
 // クリップボードコピーのフォールバック
 function copyToClipboardFallback(text) {
+  if (elements.syncOutputCode) {
+    elements.syncOutputCode.value = text;
+    elements.syncOutputCode.focus();
+    elements.syncOutputCode.select();
+  }
   const ta = document.createElement('textarea');
   ta.value = text;
   ta.style.position = 'fixed';
@@ -6203,7 +6378,7 @@ function copyToClipboardFallback(text) {
 function handleDownloadBackup() {
   const payload = {
     appName: "SummonersWar_Manager",
-    version: "2.0",
+    version: "3.0",
     exportedAt: new Date().toISOString(),
     monstersCount: monsters.length,
     partiesCount: parties.length,
@@ -6228,35 +6403,104 @@ function handleDownloadBackup() {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
   
-  showToast(`💾 「${filename}」を保存しました`);
+  showToast(`💾 バックアップファイル「${filename}」を保存しました`);
 }
 
-// 同期コードまたはJSONテキストの解析
+// 同期コード (SWLITE: / SWDATA:) またはJSONテキストの解析
 function parseSyncPayload(rawInput) {
   if (!rawInput || typeof rawInput !== 'string') {
     throw new Error('同期データが入力されていません');
   }
-  const trimmed = rawInput.trim();
-  let jsonStr = '';
+  // LINE等で前後に余計な改行やメッセージが入っていてもコード本体を自動抽出
+  let trimmed = rawInput.trim();
+  const liteMatch = trimmed.match(/SWLITE:[A-Za-z0-9+/=]+/);
+  const dataMatch = trimmed.match(/SWDATA:[A-Za-z0-9+/=]+/);
+  if (liteMatch) {
+    trimmed = liteMatch[0];
+  } else if (dataMatch) {
+    trimmed = dataMatch[0];
+  }
 
-  if (trimmed.startsWith('SWDATA:')) {
-    const base64Str = trimmed.slice(7);
+  // 1. 新形式の軽量差分コード (SWLITE:) の場合
+  if (trimmed.startsWith('SWLITE:')) {
+    const base64Str = trimmed.slice(7).replace(/\s+/g, '');
+    let lite;
     try {
-      jsonStr = decodeURIComponent(atob(base64Str).split('').map(c => {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
+      lite = JSON.parse(base64ToUtf8(base64Str));
     } catch (e) {
-      throw new Error('同期コードの復号に失敗しました。コードが欠けていないか確認してください');
+      throw new Error('軽量同期コードの復号に失敗しました。コードが途中で切れていないか確認してください');
+    }
+
+    const deletedM = new Set(Array.isArray(lite.dm) ? lite.dm : []);
+    const reconstructedMonsters = PRESET_MONSTERS
+      .filter(pm => !deletedM.has(pm.id))
+      .map(pm => ({ ...pm }));
+
+    if (Array.isArray(lite.mm)) {
+      lite.mm.forEach(diff => {
+        const idx = reconstructedMonsters.findIndex(m => m.id === diff.id);
+        if (idx !== -1) {
+          reconstructedMonsters[idx] = { ...reconstructedMonsters[idx], ...diff };
+        }
+      });
+    }
+    if (Array.isArray(lite.cm)) {
+      lite.cm.forEach(customM => {
+        if (!reconstructedMonsters.some(m => m.id === customM.id)) {
+          reconstructedMonsters.push(customM);
+        }
+      });
+    }
+
+    const deletedP = new Set(Array.isArray(lite.dp) ? lite.dp : []);
+    const reconstructedParties = PRESET_PARTIES
+      .filter(pp => !deletedP.has(pp.id))
+      .map(pp => ({ ...pp, members: (pp.members || []).map(m => ({ ...m })) }));
+
+    if (Array.isArray(lite.mp)) {
+      lite.mp.forEach(diff => {
+        const idx = reconstructedParties.findIndex(p => p.id === diff.id);
+        if (idx !== -1) {
+          reconstructedParties[idx] = { ...reconstructedParties[idx], ...diff };
+        }
+      });
+    }
+    if (Array.isArray(lite.cp)) {
+      lite.cp.forEach(customP => {
+        if (!reconstructedParties.some(p => p.id === customP.id)) {
+          reconstructedParties.push(customP);
+        }
+      });
+    }
+
+    return {
+      monsters: reconstructedMonsters,
+      parties: reconstructedParties,
+      raidSets: [...PRESET_RAID_SETS],
+      dimensionRaidSets: [...PRESET_DIMENSION_RAID_SETS],
+      customMonsters: Array.isArray(lite.cm) ? lite.cm : [],
+      modifiedMonsters: Array.isArray(lite.mm) ? lite.mm : [],
+      customParties: Array.isArray(lite.cp) ? lite.cp : [],
+      modifiedParties: Array.isArray(lite.mp) ? lite.mp : []
+    };
+  }
+
+  // 2. 従来形式 (SWDATA:) または JSONファイル の場合
+  let jsonStr = '';
+  if (trimmed.startsWith('SWDATA:')) {
+    const base64Str = trimmed.slice(7).replace(/\s+/g, '');
+    try {
+      jsonStr = base64ToUtf8(base64Str);
+    } catch (e) {
+      throw new Error('同期コードの復号に失敗しました。LINEの文字数制限等でコードが切れている場合は新しい「軽量コード」をお試しください');
     }
   } else if (trimmed.startsWith('{') && trimmed.endsWith('}')) {
     jsonStr = trimmed;
   } else {
     try {
-      jsonStr = decodeURIComponent(atob(trimmed).split('').map(c => {
-        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-      }).join(''));
+      jsonStr = base64ToUtf8(trimmed.replace(/\s+/g, ''));
     } catch (e) {
       throw new Error('コードの形式が認識できません。正しくコピーされているかご確認ください');
     }
@@ -6284,7 +6528,7 @@ function parseSyncPayload(rawInput) {
 // データの反映実行 (mode: 'replace' または 'merge')
 function applySyncData(payload, mode = 'replace') {
   if (mode === 'replace') {
-    const confirmMsg = `同期を実行すると、現在の端末のデータが上書きされます。\nよろしいですか？\n\n【読み込むデータ】\n・モンスター: ${payload.monsters.length}体\n・周回パーティ: ${payload.parties.length}編成`;
+    const confirmMsg = `同期を実行すると、現在の端末のデータが同期データで更新されます。\nよろしいですか？\n\n【反映されるデータ】\n・モンスター: ${payload.monsters.length}体\n・周回パーティ: ${payload.parties.length}編成`;
     if (confirm(confirmMsg)) {
       monsters = payload.monsters;
       parties = payload.parties;
@@ -6307,46 +6551,36 @@ function applySyncData(payload, mode = 'replace') {
   } else if (mode === 'merge') {
     // マージ（既存にないIDや名称は追加、既存にあるものは更新）
     let mAdded = 0, mUpdated = 0;
-    payload.monsters.forEach(newM => {
-      const idx = monsters.findIndex(m => m.id === newM.id || (m.name === newM.name && m.attribute === newM.attribute));
+    const sourceMonsters = (payload.customMonsters || payload.modifiedMonsters)
+      ? [...(payload.customMonsters || []), ...(payload.modifiedMonsters || [])]
+      : payload.monsters;
+
+    sourceMonsters.forEach(newM => {
+      const idx = monsters.findIndex(m => m.id === newM.id || (newM.name && m.name === newM.name && m.attribute === newM.attribute));
       if (idx !== -1) {
-        monsters[idx] = newM;
+        monsters[idx] = { ...monsters[idx], ...newM };
         mUpdated++;
-      } else {
+      } else if (newM.name) {
         monsters.push(newM);
         mAdded++;
       }
     });
 
     let pAdded = 0, pUpdated = 0;
-    payload.parties.forEach(newP => {
-      const idx = parties.findIndex(p => p.id === newP.id || (p.name === newP.name && p.dungeon === newP.dungeon));
+    const sourceParties = (payload.customParties || payload.modifiedParties)
+      ? [...(payload.customParties || []), ...(payload.modifiedParties || [])]
+      : payload.parties;
+
+    sourceParties.forEach(newP => {
+      const idx = parties.findIndex(p => p.id === newP.id || (newP.name && p.name === newP.name && p.dungeon === newP.dungeon));
       if (idx !== -1) {
-        parties[idx] = newP;
+        parties[idx] = { ...parties[idx], ...newP };
         pUpdated++;
-      } else {
+      } else if (newP.name) {
         parties.push(newP);
         pAdded++;
       }
     });
-
-    if (payload.raidSets && payload.raidSets.length > 0) {
-      payload.raidSets.forEach(newR => {
-        const idx = raidSets.findIndex(r => r.id === newR.id || r.name === newR.name);
-        if (idx !== -1) raidSets[idx] = newR;
-        else raidSets.push(newR);
-      });
-      saveRaidSetsToLocalStorage();
-    }
-
-    if (payload.dimensionRaidSets && payload.dimensionRaidSets.length > 0) {
-      payload.dimensionRaidSets.forEach(newDr => {
-        const idx = dimensionRaidSets.findIndex(dr => dr.id === newDr.id || dr.name === newDr.name);
-        if (idx !== -1) dimensionRaidSets[idx] = newDr;
-        else dimensionRaidSets.push(newDr);
-      });
-      saveDimensionRaidSetsToLocalStorage();
-    }
 
     saveToLocalStorage();
     savePartiesToLocalStorage();
