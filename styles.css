@@ -752,11 +752,286 @@ textarea {
   font-size: 0.9rem;
 }
 
+/* ワールドアリーナ並び替え・ピック枠フィルターツールバー */
+.rta-sort-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sort-control-row,
+.rta-priority-filter-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.sort-control-row::-webkit-scrollbar,
+.rta-priority-filter-row::-webkit-scrollbar {
+  display: none;
+}
+
+.toolbar-mini-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.sort-btn-group,
+.priority-chip-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: nowrap;
+}
+
+.sort-btn,
+.priority-filter-btn {
+  padding: 4px 10px;
+  background-color: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition-fast);
+}
+
+.sort-btn.active {
+  background-color: rgba(223, 178, 58, 0.2);
+  color: var(--accent-gold);
+  border-color: var(--accent-gold);
+}
+
+.priority-filter-btn.active {
+  background: rgba(168, 85, 247, 0.25);
+  color: #e9d5ff;
+  border-color: #a855f7;
+}
+
+.list-summary-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+
+.list-summary-bar .list-summary {
+  margin-bottom: 0;
+}
+
+.mode-pill-badge {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.3) 0%, rgba(139, 92, 246, 0.15) 100%);
+  border: 1px solid #a855f7;
+  color: #e9d5ff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* 役割・アーティファクト・RTA速度チップ＆クリアボタン */
+.btn-mini-clear {
+  background: rgba(255, 71, 87, 0.12);
+  border: 1px solid rgba(255, 71, 87, 0.35);
+  border-radius: 4px;
+  color: #ff6b81;
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.btn-mini-clear:hover {
+  background: var(--color-fire);
+  color: #fff;
+}
+
+.role-chip-btn,
+.artifact-chip-btn,
+.rta-speed-chip {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  color: var(--text-primary);
+  font-size: 0.73rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-family: inherit;
+}
+
+.role-chip-btn {
+  background: rgba(46, 213, 115, 0.08);
+  border-color: rgba(46, 213, 115, 0.3);
+  color: #7bed9f;
+}
+
+.role-chip-btn:hover {
+  background: var(--color-wind);
+  color: #0a0e17;
+}
+
+.artifact-chip-btn {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+  color: #7dd3fc;
+}
+
+.artifact-chip-btn:hover {
+  background: #0284c7;
+  color: #fff;
+}
+
+.rta-speed-chip {
+  background: rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.35);
+  color: #e9d5ff;
+  font-weight: 600;
+}
+
+.rta-speed-chip:hover {
+  background: #9333ea;
+  color: #fff;
+}
+
+/* カード内・モーダル内のRTA速度・ピック枠・アーティファクト表示 */
+.card-rta-speed-badge,
+.rta-speed-badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: rgba(234, 179, 8, 0.18);
+  border: 1px solid rgba(234, 179, 8, 0.5);
+  color: #fde047;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.card-rta-priority-badge,
+.rta-priority-badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: rgba(244, 63, 94, 0.18);
+  border: 1px solid rgba(244, 63, 94, 0.45);
+  color: #fda4af;
+  display: inline-flex;
+  align-items: center;
+}
+
+.card-artifacts {
+  font-size: 0.75rem;
+  color: #7dd3fc;
+  background-color: rgba(56, 189, 248, 0.08);
+  padding: 3px 8px;
+  border-radius: 4px;
+  display: block;
+  margin-top: 5px;
+  border: 1px dashed rgba(56, 189, 248, 0.3);
+}
+
+/* パーティ編成モーダルの登録キャラ呼び出し＆行動順ビルダー */
+.member-card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.member-card-header-row .member-card-title {
+  margin-bottom: 0;
+}
+
+.member-preset-select {
+  width: auto !important;
+  max-width: 190px;
+  padding: 4px 8px !important;
+  font-size: 0.75rem !important;
+  background-color: rgba(223, 178, 58, 0.1) !important;
+  border: 1px solid rgba(223, 178, 58, 0.4) !important;
+  color: var(--accent-gold) !important;
+  border-radius: 6px !important;
+}
+
+.member-mini-rune-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.m-rune-chip {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-size: 0.68rem;
+  padding: 2px 6px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.m-rune-chip:hover {
+  background: var(--accent-gold);
+  color: #0a0e17;
+  border-color: var(--accent-gold);
+}
+
+.turn-builder-box {
+  background: rgba(14, 20, 34, 0.75);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--border-radius-md);
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.turn-builder-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.turn-member-btn {
+  background: linear-gradient(135deg, rgba(223, 178, 58, 0.18) 0%, rgba(223, 178, 58, 0.06) 100%);
+  border: 1px solid rgba(223, 178, 58, 0.45);
+  border-radius: 6px;
+  color: #fef08a;
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.turn-member-btn:hover {
+  background: var(--accent-gold);
+  color: #0a0e17;
+}
+
 /* 詳細モーダルのRTAバッジ・セクション */
 .modal-badge-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 
 .rta-pill-badge {
@@ -1033,19 +1308,50 @@ textarea {
   min-height: 44px;
 }
 
+/* 右下フローティング新規追加ボタン (片手親指操作用) */
+.fab-add-btn {
+  position: fixed;
+  right: 16px;
+  bottom: calc(74px + var(--safe-bottom));
+  z-index: 450;
+  background: linear-gradient(135deg, var(--accent-gold) 0%, #b8860b 100%);
+  color: #0a0e17;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-size: 0.85rem;
+  font-weight: 800;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5), 0 0 12px var(--accent-gold-glow);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: var(--transition-fast);
+}
+
+.fab-add-btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6), 0 0 16px var(--accent-gold);
+}
+
+.fab-icon {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
 /* 下部ナビゲーションバー */
 .app-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100vw;
-  background: rgba(18, 25, 41, 0.9);
+  background: rgba(18, 25, 41, 0.94);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--border-color);
   display: flex;
   justify-content: space-around;
-  padding: 8px 12px calc(8px + var(--safe-bottom));
+  padding: 8px 4px calc(8px + var(--safe-bottom));
   z-index: 500;
 }
 
@@ -1056,21 +1362,23 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 3px;
   cursor: pointer;
   flex: 1;
+  min-width: 0;
   transition: var(--transition-fast);
 }
 
 .nav-icon svg {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   transition: transform var(--transition-fast);
 }
 
 .nav-label {
-  font-size: 0.7rem;
-  font-weight: 500;
+  font-size: 0.65rem;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .nav-item:hover {
@@ -1081,10 +1389,19 @@ textarea {
   color: var(--accent-gold);
 }
 
+.nav-item.nav-item-rta.active {
+  color: #d8b4fe;
+}
+
 .nav-item.active .nav-icon svg {
   transform: translateY(-2px);
   stroke: var(--accent-gold);
   filter: drop-shadow(0 0 5px var(--accent-gold-glow));
+}
+
+.nav-item.nav-item-rta.active .nav-icon svg {
+  stroke: #c084fc;
+  filter: drop-shadow(0 0 6px rgba(168, 85, 247, 0.5));
 }
 
 /* 空状態の表示 */

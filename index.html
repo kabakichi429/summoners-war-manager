@@ -35,7 +35,7 @@
       <span class="search-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
       </span>
-      <input type="text" id="search-input" placeholder="モンスター名、役割、メモを検索...">
+      <input type="text" id="search-input" placeholder="モンスター名、役割、ルーン、メモを検索...">
       <button id="btn-clear-search" class="clear-search-btn" style="display: none;">&times;</button>
     </div>
 
@@ -59,15 +59,43 @@
       <button class="attr-btn attr-light" data-attr="光">光</button>
       <button class="attr-btn attr-dark" data-attr="闇">闇</button>
     </div>
+
+    <!-- ワールドアリーナ (RTA) ＆ 並び替えツールバー -->
+    <div class="rta-sort-toolbar" id="rta-sort-toolbar">
+      <div class="sort-control-row">
+        <span class="toolbar-mini-label">🔃 並び順:</span>
+        <div class="sort-btn-group">
+          <button type="button" class="sort-btn active" data-sort="default">★ 標準順</button>
+          <button type="button" class="sort-btn" data-sort="speed">⚡ 速度順 (行動順)</button>
+          <button type="button" class="sort-btn" data-sort="priority">🔥 ピック枠順</button>
+        </div>
+      </div>
+      <div class="rta-priority-filter-row" id="rta-priority-filter-row" style="display: none;">
+        <span class="toolbar-mini-label">🎯 ピック枠:</span>
+        <div class="priority-chip-group">
+          <button type="button" class="priority-filter-btn active" data-priority="all">すべて</button>
+          <button type="button" class="priority-filter-btn" data-priority="ファースト">🔥 1st (初手)</button>
+          <button type="button" class="priority-filter-btn" data-priority="主力">⭐ 主力 (コア)</button>
+          <button type="button" class="priority-filter-btn" data-priority="カウンター">🛡️ カウンター</button>
+          <button type="button" class="priority-filter-btn" data-priority="ラスト">🃏 ラスト (5手目)</button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- メインコンテンツ -->
   <main class="app-content">
     
-    <!-- すべてタブ -->
+    <!-- すべて（＆ワリーナ）タブ -->
     <div id="tab-content-all" class="tab-pane active">
-      <div class="list-summary">
-        <span id="monster-count">0</span>体のモンスター
+      <div class="list-summary-bar">
+        <div class="list-summary">
+          <span id="monster-list-mode-badge" class="mode-pill-badge" style="display: none;">⚔️ ワリーナ編成モード</span>
+          <span><strong id="monster-count">0</strong>体のモンスター</span>
+        </div>
+        <button type="button" id="btn-top-add-monster" class="btn btn-gold-sm">
+          <span>＋</span> キャラ登録
+        </button>
       </div>
       <div class="monster-grid" id="monster-list-all">
         <!-- JSで動的に生成 -->
@@ -423,16 +451,48 @@
             </div>
           </div>
 
+          <!-- 役割 (タグ・カテゴリ) ＆ ワンタップ入力アシスタント -->
           <div class="form-group">
-            <label for="form-role">役割 (タグ・カテゴリ)</label>
-            <input type="text" id="form-role" placeholder="例: アタッカー, デバッファー, 剥がし, 巨人深淵用">
+            <div class="rune-label-row">
+              <label for="form-role">役割 (タグ・カテゴリ)</label>
+              <button type="button" id="btn-clear-role" class="btn-mini-clear">クリア</button>
+            </div>
+            <input type="text" id="form-role" placeholder="例: アタッカー / 全体剥がし / 免疫・解除">
+            <div class="rune-input-assistant role-input-assistant">
+              <div class="assistant-block">
+                <span class="assistant-label">🏷️ タップで役割を追加:</span>
+                <div class="assistant-chips">
+                  <button type="button" class="role-chip-btn" data-role="アタッカー">アタッカー</button>
+                  <button type="button" class="role-chip-btn" data-role="耐久アタッカー">耐久アタッカー</button>
+                  <button type="button" class="role-chip-btn" data-role="サポーター">サポーター</button>
+                  <button type="button" class="role-chip-btn" data-role="デバッファー">デバッファー</button>
+                  <button type="button" class="role-chip-btn" data-role="全体剥がし">全体剥がし</button>
+                  <button type="button" class="role-chip-btn" data-role="単体剥がし">単体剥がし</button>
+                  <button type="button" class="role-chip-btn" data-role="免疫・解除">免疫・解除</button>
+                  <button type="button" class="role-chip-btn" data-role="全体回復">全体回復</button>
+                  <button type="button" class="role-chip-btn" data-role="ゲージ上げ">ゲージ上げ</button>
+                  <button type="button" class="role-chip-btn" data-role="ゲージ下げ">ゲージ下げ</button>
+                  <button type="button" class="role-chip-btn" data-role="盾割り(縦割り)">盾割り(縦割り)</button>
+                  <button type="button" class="role-chip-btn" data-role="全体スタン">全体スタン</button>
+                  <button type="button" class="role-chip-btn" data-role="挑発・足止め">挑発・足止め</button>
+                  <button type="button" class="role-chip-btn" data-role="蘇生・復活">蘇生・復活</button>
+                  <button type="button" class="role-chip-btn" data-role="速度リーダー">速度リーダー</button>
+                  <button type="button" class="role-chip-btn" data-role="防御無視">防御無視</button>
+                  <button type="button" class="role-chip-btn" data-role="受けパ">受けパ</button>
+                  <button type="button" class="role-chip-btn" data-role="速攻パ">速攻パ</button>
+                  <button type="button" class="role-chip-btn" data-role="コントロール">コントロール</button>
+                  <button type="button" class="role-chip-btn" data-role="カイロス周回">カイロス周回</button>
+                  <button type="button" class="role-chip-btn" data-role="占領戦・ギルバト">占領戦・ギルバト</button>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- 推奨ルーン構成＆かんたん入力アシスタント -->
+          <!-- 推奨ルーン構成＆かんたん入力アシスタント (大幅拡充版) -->
           <div class="form-group">
             <div class="rune-label-row">
               <label for="form-runes">推奨ルーン構成</label>
-              <button type="button" id="btn-auto-format-runes" class="btn-assistant-format" title="「暴走プラス石」や「体力体力体力」などを綺麗な書式に自動整形">
+              <button type="button" id="btn-auto-format-runes" class="btn-assistant-format" title="「暴走プラス石」や「体力体力体力」「速度体力的中」などを綺麗な書式に自動整形">
                 ✨ 表記を自動整形
               </button>
             </div>
@@ -440,39 +500,67 @@
             
             <!-- ルーンかんたん入力アシスタント -->
             <div class="rune-input-assistant">
-              <!-- 定番セットプリセット -->
+              <!-- 定番セットプリセット (拡充) -->
               <div class="assistant-block">
-                <span class="assistant-label">🎯 定番セット:</span>
+                <span class="assistant-label">🎯 定番セット (ワンタップ設定):</span>
                 <div class="assistant-chips">
                   <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 意志">暴走+意志</button>
                   <button type="button" class="rune-preset-btn" data-rune-set="迅速 + 意志">迅速+意志</button>
-                  <button type="button" class="rune-preset-btn" data-rune-set="激怒 + 刃">激怒+刃</button>
-                  <button type="button" class="rune-preset-btn" data-rune-set="迅速 + 刃">迅速+刃</button>
                   <button type="button" class="rune-preset-btn" data-rune-set="絶望 + 意志">絶望+意志</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="激怒 + 刃">激怒+刃</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="激怒 + 意志">激怒+意志</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="迅速 + 刃">迅速+刃</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="迅速 + 集中">迅速+集中</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="迅速 + 元気">迅速+元気</button>
                   <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 反撃">暴走+反撃</button>
-                  <button type="button" class="rune-preset-btn" data-rune-set="闘志 + 闘志 + 闘志">闘志×3</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 破壊">暴走+破壊</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 守護">暴走+守護</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 元気">暴走+元気</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 集中">暴走+集中</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 忍耐">暴走+忍耐</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 果報">暴走+果報</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="絶望 + 反撃">絶望+反撃</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="絶望 + 集中">絶望+集中</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="絶望 + 破壊">絶望+破壊</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="吸血 + 意志">吸血+意志</button>
                   <button type="button" class="rune-preset-btn" data-rune-set="吸血 + 反撃">吸血+反撃</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="吸血 + 破壊">吸血+破壊</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="猛攻 + 刃">猛攻+刃</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="猛攻 + 意志">猛攻+意志</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="闘志 + 闘志 + 闘志">闘志×3</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="闘志 + 闘志 + 意志">闘志×2+意志</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="反撃 + 反撃 + 反撃">反撃×3</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="守護 + 守護 + 意志">守護×2+意志</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="保護 + 意志 + 元気">保護+意志+元気</button>
                 </div>
               </div>
 
-              <!-- 2/4/6番メインオプション定番プリセット -->
+              <!-- 2/4/6番メインオプション定番プリセット (抵抗・的中など拡充) -->
               <div class="assistant-block">
-                <span class="assistant-label">👟 2/4/6番スロット:</span>
+                <span class="assistant-label">👟 2/4/6番スロット (ワンタップ設定):</span>
                 <div class="assistant-chips">
                   <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/体力/体力)">(速度/体力/体力)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/体力/効果的中)">(速度/体力/効果的中)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/体力/効果抵抗)">(速度/体力/効果抵抗)</button>
                   <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/クリダメ/攻撃)">(速度/クリダメ/攻撃)</button>
                   <button type="button" class="rune-slot-preset-btn" data-rune-slot="(攻撃/クリダメ/攻撃)">(攻撃/クリダメ/攻撃)</button>
-                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/体力/防御)">(速度/体力/防御)</button>
-                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(体力/体力/体力)">(体力/体力/体力)</button>
-                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/防御/防御)">(速度/防御/防御)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/クリダメ/体力)">(速度/クリダメ/体力)</button>
                   <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/クリ率/体力)">(速度/クリ率/体力)</button>
-                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/体力/的中)">(速度/体力/的中)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/クリ率/攻撃)">(速度/クリ率/攻撃)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/体力/防御)">(速度/体力/防御)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(速度/防御/防御)">(速度/防御/防御)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(防御/クリダメ/防御)">(防御/クリダメ/防御)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(体力/体力/体力)">(体力/体力/体力)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(体力/体力/効果抵抗)">(体力/体力/効果抵抗)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(体力/クリダメ/体力)">(体力/クリダメ/体力)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(攻撃/攻撃/攻撃)">(攻撃/攻撃/攻撃)</button>
+                  <button type="button" class="rune-slot-preset-btn" data-rune-slot="(防御/防御/防御)">(防御/防御/防御)</button>
                 </div>
               </div>
 
               <!-- 個別パーツ挿入（クリックで末尾にスムーズ追加） -->
               <div class="assistant-block assistant-individual">
-                <span class="assistant-label">＋ パーツ追加:</span>
+                <span class="assistant-label">＋ パーツ個別追加 (4セット / 2セット / ステータス):</span>
                 <div class="assistant-chips mini-chips">
                   <!-- 4セット -->
                   <button type="button" class="rune-part-btn rune-part-4set" data-part="暴走">暴走</button>
@@ -482,39 +570,122 @@
                   <button type="button" class="rune-part-btn rune-part-4set" data-part="吸血">吸血</button>
                   <button type="button" class="rune-part-btn rune-part-4set" data-part="猛攻">猛攻</button>
                   <span class="chip-divider">|</span>
-                  <!-- 2セット -->
+                  <!-- 2セット・特殊ルーン全種 -->
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="意志">意志</button>
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="刃">刃</button>
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="反撃">反撃</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="破壊">破壊</button>
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="守護">守護</button>
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="元気">元気</button>
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="集中">集中</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="忍耐">忍耐</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="果報">果報</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="保護">保護</button>
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="闘志">闘志</button>
-                  <button type="button" class="rune-part-btn rune-part-2set" data-part="破壊">破壊</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="決意">決意</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="高揚">高揚</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="命中">命中</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="根性">根性</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="無形">無形</button>
                   <span class="chip-divider">|</span>
-                  <!-- メインOP単語 -->
+                  <!-- メインOP・サブOPステータス単語 (抵抗・的中追加) -->
                   <button type="button" class="rune-part-btn rune-part-stat" data-part="速度">速度</button>
                   <button type="button" class="rune-part-btn rune-part-stat" data-part="体力">体力</button>
                   <button type="button" class="rune-part-btn rune-part-stat" data-part="攻撃">攻撃</button>
                   <button type="button" class="rune-part-btn rune-part-stat" data-part="防御">防御</button>
                   <button type="button" class="rune-part-btn rune-part-stat" data-part="クリダメ">クリダメ</button>
                   <button type="button" class="rune-part-btn rune-part-stat" data-part="クリ率">クリ率</button>
+                  <button type="button" class="rune-part-btn rune-part-stat" data-part="効果的中">効果的中</button>
+                  <button type="button" class="rune-part-btn rune-part-stat" data-part="効果抵抗">効果抵抗</button>
                   <button type="button" class="rune-part-btn rune-part-clear" id="btn-clear-runes">クリア</button>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- ワールドアリーナ (RTA) 専用設定 -->
+          <!-- 推奨アーティファクト（OP）＆ワンタップ入力 -->
+          <div class="form-group">
+            <div class="rune-label-row">
+              <label for="form-artifacts">💎 推奨アーティファクト (オプション)</label>
+              <button type="button" id="btn-clear-artifacts" class="btn-mini-clear">クリア</button>
+            </div>
+            <input type="text" id="form-artifacts" placeholder="例: 速度比例追加ダメ / スキル3効果的中+ / 水属性被ダメ-">
+            <div class="rune-input-assistant artifact-input-assistant">
+              <div class="assistant-block">
+                <span class="assistant-label">✨ タップでアーティファクトOPを追加:</span>
+                <div class="assistant-chips">
+                  <button type="button" class="artifact-chip-btn" data-artifact="速度比例追加ダメ">速度比例追加ダメ</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="体力比例追加ダメ">体力比例追加ダメ</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="攻撃比例追加ダメ">攻撃比例追加ダメ</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="防御比例追加ダメ">防御比例追加ダメ</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="S1クリダメ+">S1クリダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="S2クリダメ+">S2クリダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="S3クリダメ+">S3クリダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="単体クリダメ+">単体クリダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="全体クリダメ+">全体クリダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="S1効果的中+">S1効果的中+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="S2効果的中+">S2効果的中+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="S3効果的中+">S3効果的中+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="S2/S3回復量+">S2/S3回復量+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="反撃ダメ+">反撃ダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="協力攻撃ダメ+">協力攻撃ダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="火属性与ダメ+">火与ダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="水属性与ダメ+">水与ダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="風属性与ダメ+">風与ダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="光属性与ダメ+">光与ダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="闇属性与ダメ+">闇与ダメ+</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="火属性被ダメ-">火被ダメ-</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="水属性被ダメ-">水被ダメ-</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="風属性被ダメ-">風被ダメ-</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="光属性被ダメ-">光被ダメ-</button>
+                  <button type="button" class="artifact-chip-btn" data-artifact="闇属性被ダメ-">闇被ダメ-</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ワールドアリーナ (RTA) 専用設定 (速度ライン・ピック優先度対応) -->
           <div class="form-group-box rta-form-box">
-            <div class="form-group checkbox-group" style="margin-bottom: 8px;">
+            <div class="form-group checkbox-group" style="margin-bottom: 10px;">
               <label class="checkbox-label">
                 <input type="checkbox" id="form-rta">
                 <span class="checkbox-custom"></span>
                 <span class="rta-checkbox-title">⚔️ ワールドアリーナ (RTA) で使用する</span>
               </label>
             </div>
-            <div class="form-group" id="form-rta-memo-group">
+            
+            <div class="form-row" style="margin-bottom: 10px;">
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="form-rta-speed">⚡ 目標・実測速度 (+値)</label>
+                <input type="text" id="form-rta-speed" placeholder="例: +210, +185">
+              </div>
+              <div class="form-group" style="margin-bottom: 0;">
+                <label for="form-rta-priority">🎯 ピック枠・優先度</label>
+                <select id="form-rta-priority">
+                  <option value="">未設定</option>
+                  <option value="ファースト">🔥 ファースト (初手・軸)</option>
+                  <option value="主力">⭐ 主力 (コアメンバー)</option>
+                  <option value="カウンター">🛡️ カウンター (対策枠)</option>
+                  <option value="ラスト">🃏 ラスト (5手目刺し)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- 速度ワンタップ入力チップ -->
+            <div class="assistant-chips" style="margin-bottom: 10px;">
+              <span class="assistant-label" style="align-self: center; margin-right: 4px;">速度目安:</span>
+              <button type="button" class="rta-speed-chip" data-speed="+220">+220</button>
+              <button type="button" class="rta-speed-chip" data-speed="+210">+210</button>
+              <button type="button" class="rta-speed-chip" data-speed="+200">+200</button>
+              <button type="button" class="rta-speed-chip" data-speed="+190">+190</button>
+              <button type="button" class="rta-speed-chip" data-speed="+180">+180</button>
+              <button type="button" class="rta-speed-chip" data-speed="+170">+170</button>
+              <button type="button" class="rta-speed-chip" data-speed="+160">+160</button>
+              <button type="button" class="rta-speed-chip" data-speed="+150">+150</button>
+              <button type="button" class="rta-speed-chip" data-speed="+130">+130</button>
+            </div>
+
+            <div class="form-group" id="form-rta-memo-group" style="margin-bottom: 0;">
               <label for="form-rta-memo">ワールドアリーナ (RTA) 対策・ピック方針メモ</label>
               <textarea id="form-rta-memo" rows="2" placeholder="例: 先手ピック用、受けパの核、速度300勝負、相手の免疫剥がしに対するカウンター等"></textarea>
             </div>
@@ -560,7 +731,9 @@
         <div class="modal-title-area">
           <div class="modal-badge-row">
             <span class="monster-attr-badge" id="modal-attr-badge">水</span>
-            <span class="rta-pill-badge" id="modal-rta-badge" style="display: none;">⚔️ RTA (ワリーナ)</span>
+            <span class="rta-pill-badge" id="modal-rta-badge" style="display: none;">⚔️ RTA</span>
+            <span class="rta-speed-badge" id="modal-rta-speed-badge" style="display: none;">⚡ 速度 --</span>
+            <span class="rta-priority-badge" id="modal-rta-priority-badge" style="display: none;">🎯 --</span>
           </div>
           <h2 id="modal-monster-name">水パンダ</h2>
           <div class="monster-stars" id="modal-monster-stars">★★★★★</div>
@@ -577,6 +750,11 @@
         <div class="detail-section">
           <h3><span class="section-icon">💎</span> 推奨ルーン</h3>
           <p id="modal-runes" class="detail-value">未登録</p>
+        </div>
+
+        <div class="detail-section" id="modal-section-artifacts" style="display: none;">
+          <h3><span class="section-icon">🏺</span> 推奨アーティファクト</h3>
+          <p id="modal-artifacts" class="detail-value">未登録</p>
         </div>
 
         <div class="detail-section" id="modal-section-rta" style="display: none;">
@@ -732,13 +910,18 @@
 
         <!-- メンバー5体入力欄 -->
         <div class="form-group-title">
-          <span>👥</span> モンスター構成 (1体目はリーダー)
+          <span>👥</span> モンスター構成 (1体目はリーダー / 登録済みキャラから自動入力可)
         </div>
 
         <div class="members-input-grid">
           <!-- メンバー1 (リーダー) -->
           <div class="member-input-card leader-card">
-            <div class="member-card-title"><span class="badge-leader">LEADER</span> モンスター 1</div>
+            <div class="member-card-header-row">
+              <div class="member-card-title"><span class="badge-leader">LEADER</span> モンスター 1</div>
+              <select class="member-preset-select" data-member-index="1" id="form-m1-preset">
+                <option value="">📋 登録キャラから選択...</option>
+              </select>
+            </div>
             <div class="form-row">
               <input type="text" id="form-m1-name" required placeholder="名前 (例: テシャール)">
               <select id="form-m1-attr">
@@ -751,11 +934,23 @@
             </div>
             <input type="text" id="form-m1-role" placeholder="役割 (例: ボス火力/道中一掃)">
             <input type="text" id="form-m1-runes" placeholder="ルーン (例: 激怒+刃 攻/クリダメ/攻)">
+            <div class="member-mini-rune-chips" data-member-index="1">
+              <button type="button" class="m-rune-chip" data-val="激怒+刃 (攻/クリダメ/攻)">激怒+刃</button>
+              <button type="button" class="m-rune-chip" data-val="暴走+意志 (速度/体力/体力)">暴走+意志</button>
+              <button type="button" class="m-rune-chip" data-val="迅速+意志 (速度/体力/体力)">迅速+意志</button>
+              <button type="button" class="m-rune-chip" data-val="闘志+闘志+闘志">闘志×3</button>
+              <button type="button" class="m-rune-chip" data-val="暴走+反撃">暴走+反撃</button>
+            </div>
           </div>
 
           <!-- メンバー2 -->
           <div class="member-input-card">
-            <div class="member-card-title">モンスター 2</div>
+            <div class="member-card-header-row">
+              <div class="member-card-title">モンスター 2</div>
+              <select class="member-preset-select" data-member-index="2" id="form-m2-preset">
+                <option value="">📋 登録キャラから選択...</option>
+              </select>
+            </div>
             <div class="form-row">
               <input type="text" id="form-m2-name" placeholder="名前 (例: フリルレア)">
               <select id="form-m2-attr">
@@ -768,11 +963,23 @@
             </div>
             <input type="text" id="form-m2-role" placeholder="役割 (例: 全体削り/盾割り)">
             <input type="text" id="form-m2-runes" placeholder="ルーン (例: 闘志+闘志+意志)">
+            <div class="member-mini-rune-chips" data-member-index="2">
+              <button type="button" class="m-rune-chip" data-val="激怒+刃 (攻/クリダメ/攻)">激怒+刃</button>
+              <button type="button" class="m-rune-chip" data-val="暴走+意志 (速度/体力/体力)">暴走+意志</button>
+              <button type="button" class="m-rune-chip" data-val="迅速+闘志">迅速+闘志</button>
+              <button type="button" class="m-rune-chip" data-val="闘志+闘志+闘志">闘志×3</button>
+              <button type="button" class="m-rune-chip" data-val="暴走+反撃">暴走+反撃</button>
+            </div>
           </div>
 
           <!-- メンバー3 -->
           <div class="member-input-card">
-            <div class="member-card-title">モンスター 3</div>
+            <div class="member-card-header-row">
+              <div class="member-card-title">モンスター 3</div>
+              <select class="member-preset-select" data-member-index="3" id="form-m3-preset">
+                <option value="">📋 登録キャラから選択...</option>
+              </select>
+            </div>
             <div class="form-row">
               <input type="text" id="form-m3-name" placeholder="名前 (例: コナミヤ)">
               <select id="form-m3-attr">
@@ -785,11 +992,23 @@
             </div>
             <input type="text" id="form-m3-role" placeholder="役割 (例: リモーション)">
             <input type="text" id="form-m3-runes" placeholder="ルーン (例: 迅速+闘志)">
+            <div class="member-mini-rune-chips" data-member-index="3">
+              <button type="button" class="m-rune-chip" data-val="激怒+刃 (攻/クリダメ/攻)">激怒+刃</button>
+              <button type="button" class="m-rune-chip" data-val="暴走+意志 (速度/体力/体力)">暴走+意志</button>
+              <button type="button" class="m-rune-chip" data-val="迅速+闘志">迅速+闘志</button>
+              <button type="button" class="m-rune-chip" data-val="闘志+闘志+闘志">闘志×3</button>
+              <button type="button" class="m-rune-chip" data-val="暴走+反撃">暴走+反撃</button>
+            </div>
           </div>
 
           <!-- メンバー4 -->
           <div class="member-input-card">
-            <div class="member-card-title">モンスター 4</div>
+            <div class="member-card-header-row">
+              <div class="member-card-title">モンスター 4</div>
+              <select class="member-preset-select" data-member-index="4" id="form-m4-preset">
+                <option value="">📋 登録キャラから選択...</option>
+              </select>
+            </div>
             <div class="form-row">
               <input type="text" id="form-m4-name" placeholder="名前 (例: テオン)">
               <select id="form-m4-attr">
@@ -802,11 +1021,23 @@
             </div>
             <input type="text" id="form-m4-role" placeholder="役割 (例: リモーション)">
             <input type="text" id="form-m4-runes" placeholder="ルーン (例: 迅速+闘志)">
+            <div class="member-mini-rune-chips" data-member-index="4">
+              <button type="button" class="m-rune-chip" data-val="激怒+刃 (攻/クリダメ/攻)">激怒+刃</button>
+              <button type="button" class="m-rune-chip" data-val="暴走+意志 (速度/体力/体力)">暴走+意志</button>
+              <button type="button" class="m-rune-chip" data-val="迅速+闘志">迅速+闘志</button>
+              <button type="button" class="m-rune-chip" data-val="闘志+闘志+闘志">闘志×3</button>
+              <button type="button" class="m-rune-chip" data-val="暴走+反撃">暴走+反撃</button>
+            </div>
           </div>
 
           <!-- メンバー5 -->
           <div class="member-input-card">
-            <div class="member-card-title">モンスター 5</div>
+            <div class="member-card-header-row">
+              <div class="member-card-title">モンスター 5</div>
+              <select class="member-preset-select" data-member-index="5" id="form-m5-preset">
+                <option value="">📋 登録キャラから選択...</option>
+              </select>
+            </div>
             <div class="form-row">
               <input type="text" id="form-m5-name" placeholder="名前 (例: ルナ)">
               <select id="form-m5-attr">
@@ -819,11 +1050,31 @@
             </div>
             <input type="text" id="form-m5-role" placeholder="役割 (例: 最大体力比例ダメ)">
             <input type="text" id="form-m5-runes" placeholder="ルーン (例: 激怒+刃)">
+            <div class="member-mini-rune-chips" data-member-index="5">
+              <button type="button" class="m-rune-chip" data-val="激怒+刃 (攻/クリダメ/攻)">激怒+刃</button>
+              <button type="button" class="m-rune-chip" data-val="暴走+意志 (速度/体力/体力)">暴走+意志</button>
+              <button type="button" class="m-rune-chip" data-val="迅速+闘志">迅速+闘志</button>
+              <button type="button" class="m-rune-chip" data-val="闘志+闘志+闘志">闘志×3</button>
+              <button type="button" class="m-rune-chip" data-val="暴走+反撃">暴走+反撃</button>
+            </div>
           </div>
         </div>
 
+        <!-- 推奨行動順 ＆ ワンタップ行動順ビルダー -->
         <div class="form-group">
-          <label for="form-party-turn">推奨行動順</label>
+          <div class="rune-label-row">
+            <label for="form-party-turn">⚡ 推奨行動順</label>
+            <div class="turn-builder-actions">
+              <button type="button" id="btn-turn-undo" class="btn-mini-clear">1つ戻す</button>
+              <button type="button" id="btn-turn-clear" class="btn-mini-clear">クリア</button>
+            </div>
+          </div>
+          <div class="turn-builder-box">
+            <span class="assistant-label">👆 動く順番にキャラをタップすると自動で「➔」で繋がります:</span>
+            <div class="assistant-chips" id="party-turn-builder-chips">
+              <!-- JSでメンバー1〜5のボタンを動的生成 -->
+            </div>
+          </div>
           <input type="text" id="form-party-turn" placeholder="例: フリルレア ➔ テシャール ➔ テオン ➔ コナミヤ ➔ ルナ">
         </div>
 
@@ -1047,6 +1298,12 @@
     </div>
   </div>
 
+  <!-- 右下フローティング新規追加ボタン (片手親指操作用) -->
+  <button type="button" id="fab-add-monster" class="fab-add-btn" title="新規モンスター登録">
+    <span class="fab-icon">＋</span>
+    <span class="fab-text">追加</span>
+  </button>
+
   <!-- 下部ナビゲーションバー -->
   <nav class="app-nav">
     <button class="nav-item active" data-tab="all">
@@ -1055,11 +1312,17 @@
       </span>
       <span class="nav-label">すべて</span>
     </button>
+    <button class="nav-item nav-item-rta" data-tab="rta">
+      <span class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+      </span>
+      <span class="nav-label">ワリーナ</span>
+    </button>
     <button class="nav-item" data-tab="guild">
       <span class="nav-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
       </span>
-      <span class="nav-label">ギルド戦</span>
+      <span class="nav-label">ギルド</span>
     </button>
     <button class="nav-item" data-tab="cairos">
       <span class="nav-icon">
@@ -1071,13 +1334,13 @@
       <span class="nav-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
       </span>
-      <span class="nav-label">異界レイド</span>
+      <span class="nav-label">レイド</span>
     </button>
     <button class="nav-item" data-tab="dimension">
       <span class="nav-icon">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
       </span>
-      <span class="nav-label">次元ホール</span>
+      <span class="nav-label">次元</span>
     </button>
     <button class="nav-item" data-tab="form" id="nav-item-form">
       <span class="nav-icon">

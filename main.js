@@ -7,9 +7,12 @@ const PRESET_MONSTERS = [
     name: "水パンダ (モアイ)",
     attribute: "水",
     stars: 5,
-    role: "耐久アタッカー / デバッファー / PVP",
+    role: "耐久アタッカー / 単体剥がし / デバッファー / PVP",
     recommendedRunes: "暴走 + 意志 (速度/体力/体力)",
+    recommendedArtifacts: "体力比例追加ダメ / S2効果的中+ / 風属性被ダメ-",
     isRta: true,
+    rtaSpeed: "+185",
+    rtaPriority: "ファースト",
     rtaMemo: "【RTAファーストピック・受けパの核】\nスキル3相打ちから頭数を減らす動きが強力。トリアーナ、ヴァネッサ、風パンダ等と好相性。",
     guildMemo: "スキル3の相打ち狙い（自身の体力を70%消費して敵に同等ダメージ）が極めて強力。\n【攻め編成例】\n・水パンダ、風ハープ(トリアーナ)、火アーク(ヴェラジュエル)\nトリアーナのパッシブで水パンダの自傷死を防ぐシナジーが優秀。",
     cairosMemo: "カイロス適性は低め。主にアリーナ・占領戦で運用。",
@@ -22,9 +25,12 @@ const PRESET_MONSTERS = [
     name: "風ハープ (トリアーナ)",
     attribute: "風",
     stars: 4,
-    role: "サポーター / 免役 / 蘇生支援 / PVP",
+    role: "サポーター / 免疫・解除 / 蘇生・我慢 / PVP",
     recommendedRunes: "暴走 + 意志 (速度/体力/防御)",
+    recommendedArtifacts: "速度比例追加ダメ / S3回復量+ / 火属性被ダメ-",
     isRta: true,
+    rtaSpeed: "+180",
+    rtaPriority: "主力",
     rtaMemo: "【受けパの絶対的守護神】\n即死無効化パッシブで相手の速攻ワンパン戦術を完全に狂わせる。暴走での割り込み免疫・回復が強い。",
     guildMemo: "パッシブ「救済の響き」で、味方が即死するダメージを受けた時にそのダメージを無効化しターンを獲得する。\n水パンダや風パンダと組み合わせる防衛・攻め双方が強力。",
     cairosMemo: "死のダンジョンなどで事故防止用として使うこともあるが、基本はPVP用。",
@@ -37,10 +43,13 @@ const PRESET_MONSTERS = [
     name: "火ヴァンパイア (ヴェルデハイル)",
     attribute: "火",
     stars: 4,
-    role: "ゲージアッパー / カイロス必須 / PVE",
-    recommendedRunes: "迅速 + 刃 または 暴走 + 反撃 (速度/クリ率/体力)",
+    role: "ゲージアップ / 反撃・割り込み / カイロス必須 / PVE",
+    recommendedRunes: "迅速 + 刃 または 反撃 + 反撃 + 反撃 (速度/クリ率/体力)",
+    recommendedArtifacts: "反撃ダメ+ / 協力攻撃ダメ+ / 水属性被ダメ-",
     isRta: true,
-    rtaMemo: "反撃ルーン特化型。全体攻撃への反撃ゲージアップで相手の行動順を崩壊させるアンチピック。",
+    rtaSpeed: "+145",
+    rtaPriority: "カウンター",
+    rtaMemo: "反撃ルーン3セット特化型。全体攻撃への反撃ゲージアップで相手の行動順を崩壊させるアンチピック。",
     guildMemo: "アリーナ・ギルバトの攻め（速度パ）でリーダーとして使うことがある。",
     cairosMemo: "【カイロス周回の神】\nクリティカルヒット時に味方全員の攻撃ゲージを20%（スキル1なら2回で40%）増加させるパッシブを持つ。\n・巨人深淵、ドラゴンダンジョン、死のダンジョン全てでゲージ回しの要。\n※クリティカル率「100%」が絶対条件。",
     generalMemo: "調合で必ず作成すべき最重要モンスターの一体。クリ率100%を最優先で確保し、次に速度と耐久を盛る。",
@@ -52,9 +61,12 @@ const PRESET_MONSTERS = [
     name: "光カウガール (ローレン)",
     attribute: "光",
     stars: 3,
-    role: "単体剥がし / 速度デバフ / ゲージ下げ / 万能PVE",
+    role: "単体剥がし / 防御弱化(盾割り) / ゲージ下げ・吸収 / 万能PVE",
     recommendedRunes: "迅速 + 集中 または 暴走 + 反撃 (速度/体力/効果的中)",
+    recommendedArtifacts: "S1効果的中+ / S2効果的中+ / 速度比例追加ダメ",
     isRta: false,
+    rtaSpeed: "",
+    rtaPriority: "",
     rtaMemo: "",
     guildMemo: "相手の耐久防衛（水パンなど）を単体で完封できる。持続ダメージや防御弱化、強化剥がしが便利。",
     cairosMemo: "巨人、ドラゴン、タワー攻略で大活躍。\n攻撃するたびに敵のゲージを下げ、防御弱化（縦割り）を付与する。\n【必要ステータス】\n・効果的中: 最低 45% (カイロス用) / 55% (ドラゴンダンジョン用)",
@@ -67,10 +79,13 @@ const PRESET_MONSTERS = [
     name: "闇イフリート (ヴェラモス)",
     attribute: "闇",
     stars: 5,
-    role: "弱化解除 / アタッカー / カイロス / タワー",
+    role: "免疫・解除 / スタン・足止め / 持続ダメージ / カイロス・タワー",
     recommendedRunes: "暴走 + 元気 または 迅速 + 集中 (速度/体力/体力)",
+    recommendedArtifacts: "S2効果的中+ / 体力比例追加ダメ / 光属性被ダメ-",
     isRta: true,
-    rtaMemo: "持続ダメージパやデバフ多用パ（リカ、カルナック等）への強力なカウンターピック。全体スタンと高回転解除が光る。",
+    rtaSpeed: "+175",
+    rtaPriority: "カウンター",
+    rtaMemo: "持続ダメージパやデバフ多用パ（リカ、ノラ、カルナック等）への強力なカウンターピック。全体スタンと高回転解除が光る。",
     guildMemo: "持続ダメージやスタンを多用してくる防衛に対するカウンターとして有効。",
     cairosMemo: "【巨人ダンジョン安定化の要】\n自身のターンが回ってくるたびに、味方全員の弱化効果（デバフ）を1つ解除し、体力を回復する。\n巨人ダンジョンでボスが付与してくる「防御弱化」を即座に解除して事故を防ぐ。",
     generalMemo: "調合で入手可能。スキル2の全体スタン＆持続ダメージも優秀。PVE攻略における大黒柱。",
@@ -82,9 +97,12 @@ const PRESET_MONSTERS = [
     name: "風パンダ (風燕)",
     attribute: "風",
     stars: 5,
-    role: "耐久アタッカー / 反撃 / PVP破壊王",
-    recommendedRunes: "暴走 + 意志 または 暴走 + 守護 (速度/防御/防御)",
+    role: "耐久アタッカー / 反撃・割り込み / 防御弱化(盾割り) / PVP",
+    recommendedRunes: "暴走 + 意志 または 暴走 + 破壊 (速度/防御/防御)",
+    recommendedArtifacts: "防御比例追加ダメ / 反撃ダメ+ / S1回復量+ / 火属性被ダメ-",
     isRta: true,
+    rtaSpeed: "+160",
+    rtaPriority: "主力",
     rtaMemo: "水属性アタッカーや剥がしの薄い相手に対するイージス艦。防御比例の固定反撃ダメージで単騎逆転できる。",
     guildMemo: "防御力比例アタッカー。パッシブで攻撃を受けるとゲージが上がり、通常攻撃に防御力比例の追加ダメージが乗る。\n【攻め編成例】\n・風パンダ、火アーク、水防衛対策キャラ。ソロ性能も非常に高い。",
     cairosMemo: "カイロスには不向き。完全なPVP（占領戦、アリーナ、RTA）向け。",
@@ -97,8 +115,9 @@ const PRESET_MONSTERS = [
     name: "水ホムンクルス (氷結・持続型)",
     attribute: "水",
     stars: 5,
-    role: "全体持続アタッカー / タワー攻略 / 異界",
-    recommendedRunes: "絶望 + 集中 (速度/クリダメ/攻撃力 または 速度/体力/的中)",
+    role: "全体持続アタッカー / スタン・足止め / タワー攻略 / 異界",
+    recommendedRunes: "絶望 + 集中 (速度/クリダメ/攻撃 または 速度/体力/効果的中)",
+    recommendedArtifacts: "S3効果的中+ / S2効果的中+ / 攻撃比例追加ダメ",
     guildMemo: "全体攻撃が多く絶望ルーンでの拘束力が高いが、基本はPVE（タワー、次元の裂け目）用。",
     cairosMemo: "試練のタワー（ノーマル/ハード）で無類の強さを誇る。\n全スキルを全体攻撃にスキル進化させ、持続ダメージとゲージダウンをばら撒く構成が強力。",
     generalMemo: "錬成製作で作成し、異界ダンジョンの素材を使ってスキルを進化させる。絶望ルーンと組み合わせることでタワーをほぼ完封できる。",
@@ -110,8 +129,9 @@ const PRESET_MONSTERS = [
     name: "光パラディン (ジャンヌ)",
     attribute: "光",
     stars: 5,
-    role: "全体挑発 / 無敵サポーター / タワー / PVP",
-    recommendedRunes: "暴走 + 反撃 または 反撃+反撃+意志 (速度/体力/体力)",
+    role: "スタン・足止め / 免疫・解除 / タワー / PVP",
+    recommendedRunes: "暴走 + 反撃 または 反撃 + 反撃 + 意志 (速度/体力/効果抵抗)",
+    recommendedArtifacts: "S3効果的中+ / S1回復量+ / 闇属性被ダメ-",
     guildMemo: "スキル3の2ターン全体挑発が非常に強力。味方1体に無敵＆弱化解除を貼るスキル2で味方を守る。",
     cairosMemo: "タワー攻略でボス階の取り巻きを無力化するのに適している。",
     generalMemo: "調合で入手可能。スキル1で挑発状態の敵を攻撃すると自身や味方を回復するため、反撃ルーンとの相性が極めて良い。",
@@ -123,8 +143,9 @@ const PRESET_MONSTERS = [
     name: "二次覚醒火インガミ (ラオーク)",
     attribute: "火",
     stars: 3,
-    role: "高速周回アタッカー / 協力攻撃 / 死ダン / 次元",
+    role: "アタッカー / 防御弱化(盾割り) / 死ダン / 次元",
     recommendedRunes: "暴走 + 刃 または 猛攻 + 刃 (攻撃/クリダメ/攻撃)",
+    recommendedArtifacts: "協力攻撃ダメ+ / S1クリダメ+ / 攻撃比例追加ダメ",
     guildMemo: "パッシブによる「敵撃破時の即時ターン獲得」と「通常攻撃の確率連続ヒット」で、時に理不尽な暴走火力を出すロマン砲。",
     cairosMemo: "【高速周回のキー】\nスキル2「協力攻撃」で味方2〜3体と一斉に攻撃し、味方のスキル再使用時間を短縮する。\n死のダンジョンや次元ホール（カルザンなど）の高速化で複数体並べて運用される。",
     generalMemo: "二次覚醒が必須。攻撃・クリ率・クリダメを極限まで高めて、一撃で雑魚敵を倒せるように調整する。",
@@ -136,7 +157,7 @@ const PRESET_MONSTERS = [
     name: "二次覚醒風ピクシー (シェノン)",
     attribute: "風",
     stars: 2,
-    role: "バッファー / 速度デバフ / 初心者巨人向け",
+    role: "攻撃・クリバフ / スタン・足止め / 初心者巨人向け",
     recommendedRunes: "絶望 + 元気 (速度/体力/体力)",
     guildMemo: "PVP適性は低め。",
     cairosMemo: "【初心者向け巨人10階安定サポーター】\n3ターンの間、味方全体の攻撃力と防御力を大幅に上げるバフを持つ。ボスに速度低下やミス誘発のデバフを付与し、受ける被ダメージを最小限に抑える。",
@@ -149,8 +170,8 @@ const PRESET_MONSTERS = [
     name: "水ガルーダ (コナミヤ)",
     attribute: "水",
     stars: 2,
-    role: "リモーション / 全体回復 / デバフ解除",
-    recommendedRunes: "暴走 + 意志 または 迅速 (速度/体力/体力)",
+    role: "ゲージアップ / 全体回復 / 免疫・解除",
+    recommendedRunes: "暴走 + 意志 または 迅速 + 元気 (速度/体力/体力)",
     guildMemo: "スキル2「リモーション」で、味方アタッカー（例：ルシェン、コッパーなど）に即時ターンを渡して大ダメージを出させるギミック攻めで活躍。",
     cairosMemo: "ドラゴンダンジョン等で、持続ダメージの解除＆ヒール役として活躍できる。",
     generalMemo: "スキル2は対象の攻撃力を1ターン上げる効果もあるため、鈍足超火力アタッカーと組ませるのが定石。",
@@ -162,9 +183,12 @@ const PRESET_MONSTERS = [
     name: "風極地女王 (ティアナ)",
     attribute: "風",
     stars: 5,
-    role: "絶対剥がし / ゲージアップ / PVPの神",
-    recommendedRunes: "迅速 + 意志 (最速調整)",
+    role: "全体剥がし / ゲージアップ / PVPの神",
+    recommendedRunes: "迅速 + 意志 (速度/クリダメ/攻撃 または 速度/体力/体力)",
+    recommendedArtifacts: "速度比例追加ダメ / S2クリダメ+ / 火属性被ダメ-",
     isRta: true,
+    rtaSpeed: "+220",
+    rtaPriority: "ファースト",
     rtaMemo: "【速攻・コントロールパの絶対神】\n抵抗不可の全体強化解除＋30%ゲージ上げ。相手の意志・免疫を100%崩す。最速を競う。",
     guildMemo: "【攻め性能SSS】\nスキル3「吹き荒れる風」は、敵味方全体のすべての強化・弱化効果を解除し、味方の攻撃ゲージを30%増加させる。\n※この剥がしは「抵抗されない」ため、意志ルーンや免疫防衛を100%崩すことができる。",
     cairosMemo: "カイロスでは不要。ギルバト・アリーナ攻めの核。",
@@ -2665,8 +2689,10 @@ let monsters = [];
 let parties = [];
 let raidSets = [];
 let dimensionRaidSets = [];
-let activeTab = 'all'; // 'all', 'guild', 'cairos', 'raid', 'dimension', 'form'
+let activeTab = 'all'; // 'all', 'rta', 'guild', 'cairos', 'raid', 'dimension', 'form'
 let contentFilter = 'all'; // 'all', 'rta', 'fav' (ワールドアリーナ・お気に入り絞り込み)
+let monsterSortMode = 'default'; // 'default', 'speed', 'priority'
+let rtaPriorityFilter = 'all'; // 'all', 'ファースト', '主力', 'カウンター', 'ラスト'
 let cairosSubtab = 'party'; // 'party', 'monsters'
 let guildSubtab = 'tartaros'; // 'tartaros', 'monsters'
 let dimensionSubtab = 'raid'; // 'raid', 'remains', 'awakening'
@@ -2691,6 +2717,12 @@ const elements = {
   attrBtns: document.querySelectorAll('.attr-btn'),
   contentFilterBtns: document.querySelectorAll('.content-filter-btn'),
   rtaCount: document.getElementById('rta-count'),
+  sortBtns: document.querySelectorAll('.sort-btn'),
+  rtaPriorityFilterRow: document.getElementById('rta-priority-filter-row'),
+  priorityFilterBtns: document.querySelectorAll('.priority-filter-btn'),
+  monsterListModeBadge: document.getElementById('monster-list-mode-badge'),
+  btnTopAddMonster: document.getElementById('btn-top-add-monster'),
+  fabAddMonster: document.getElementById('fab-add-monster'),
   
   monsterListAll: document.getElementById('monster-list-all'),
   monsterListGuild: document.getElementById('monster-list-guild'),
@@ -2747,8 +2779,16 @@ const elements = {
   formAttribute: document.getElementById('form-attribute'),
   formStars: document.getElementById('form-stars'),
   formRole: document.getElementById('form-role'),
+  roleChipBtns: document.querySelectorAll('.role-chip-btn'),
+  btnClearRole: document.getElementById('btn-clear-role'),
   formRunes: document.getElementById('form-runes'),
+  formArtifacts: document.getElementById('form-artifacts'),
+  artifactChipBtns: document.querySelectorAll('.artifact-chip-btn'),
+  btnClearArtifacts: document.getElementById('btn-clear-artifacts'),
   formRta: document.getElementById('form-rta'),
+  formRtaSpeed: document.getElementById('form-rta-speed'),
+  formRtaPriority: document.getElementById('form-rta-priority'),
+  rtaSpeedChips: document.querySelectorAll('.rta-speed-chip'),
   formRtaMemo: document.getElementById('form-rta-memo'),
   btnAutoFormatRunes: document.getElementById('btn-auto-format-runes'),
   runePresetBtns: document.querySelectorAll('.rune-preset-btn'),
@@ -2766,10 +2806,14 @@ const elements = {
   modalClose: document.getElementById('modal-close'),
   modalAttrBadge: document.getElementById('modal-attr-badge'),
   modalRtaBadge: document.getElementById('modal-rta-badge'),
+  modalRtaSpeedBadge: document.getElementById('modal-rta-speed-badge'),
+  modalRtaPriorityBadge: document.getElementById('modal-rta-priority-badge'),
   modalMonsterName: document.getElementById('modal-monster-name'),
   modalMonsterStars: document.getElementById('modal-monster-stars'),
   modalRole: document.getElementById('modal-role'),
   modalRunes: document.getElementById('modal-runes'),
+  modalSectionArtifacts: document.getElementById('modal-section-artifacts'),
+  modalArtifacts: document.getElementById('modal-artifacts'),
   modalSectionRta: document.getElementById('modal-section-rta'),
   modalRtaMemo: document.getElementById('modal-rta-memo'),
   modalGuildMemo: document.getElementById('modal-guild-memo'),
@@ -2839,6 +2883,11 @@ const elements = {
   formPartyRate: document.getElementById('form-party-rate'),
   formPartyFavorite: document.getElementById('form-party-favorite'),
   formPartyTurn: document.getElementById('form-party-turn'),
+  partyTurnBuilderChips: document.getElementById('party-turn-builder-chips'),
+  btnTurnUndo: document.getElementById('btn-turn-undo'),
+  btnTurnClear: document.getElementById('btn-turn-clear'),
+  memberPresetSelects: document.querySelectorAll('.member-preset-select'),
+  memberRuneChipBtns: document.querySelectorAll('.m-rune-chip'),
   formPartySpeed: document.getElementById('form-party-speed'),
   formPartyReq: document.getElementById('form-party-req'),
   formPartyTarget: document.getElementById('form-party-target'),
@@ -2906,11 +2955,11 @@ function initApp() {
         }
       }
 
-      // ワールドアリーナ (RTA) 属性の自動マイグレーションパッチ
+      // ワールドアリーナ (RTA)・アーティファクト属性の自動マイグレーションパッチ
       let monstersMigrated = false;
       monsters.forEach(m => {
+        const preset = PRESET_MONSTERS.find(p => p.id === m.id || p.name === m.name);
         if (typeof m.isRta === 'undefined') {
-          const preset = PRESET_MONSTERS.find(p => p.id === m.id || p.name === m.name);
           if (preset && preset.isRta) {
             m.isRta = true;
             m.rtaMemo = preset.rtaMemo || '';
@@ -2918,6 +2967,18 @@ function initApp() {
             m.isRta = false;
             m.rtaMemo = '';
           }
+          monstersMigrated = true;
+        }
+        if (typeof m.rtaSpeed === 'undefined') {
+          m.rtaSpeed = (preset && preset.rtaSpeed) ? preset.rtaSpeed : '';
+          monstersMigrated = true;
+        }
+        if (typeof m.rtaPriority === 'undefined') {
+          m.rtaPriority = (preset && preset.rtaPriority) ? preset.rtaPriority : '';
+          monstersMigrated = true;
+        }
+        if (typeof m.recommendedArtifacts === 'undefined') {
+          m.recommendedArtifacts = (preset && preset.recommendedArtifacts) ? preset.recommendedArtifacts : '';
           monstersMigrated = true;
         }
       });
@@ -3347,7 +3408,7 @@ function escapeHtml(string) {
   });
 }
 
-// ルーン文字列の自動整形・補正（音声入力の「暴走プラス石」「体力体力体力」等をサマナ標準書式へ変換）
+// ルーン文字列の自動整形・補正（音声入力の「暴走プラス石」「体力体力体力」「摘注」「抵抗」等をサマナ標準書式へ変換）
 function formatRuneText(rawText) {
   if (!rawText || typeof rawText !== 'string') return '';
   let text = rawText.trim();
@@ -3362,10 +3423,12 @@ function formatRuneText(rawText) {
   text = text.replace(/プラス\s*意志/gi, '+ 意志');
   text = text.replace(/\+\s*石/gi, '+ 意志');
   text = text.replace(/プラス/gi, '+');
+  text = text.replace(/摘注|てきちゅう/g, '効果的中');
+  text = text.replace(/ていこう/g, '効果抵抗');
 
   // 3. ルーン名の「+」補正（セットルーンの間に「 + 」を補う）
   const fourSets = ['暴走', '迅速', '激怒', '絶望', '吸血', '猛攻'];
-  const twoSets = ['意志', '刃', '反撃', '守護', '元気', '集中', '忍耐', '闘志', '決意', '高揚', '命中', '根性', '破壊'];
+  const twoSets = ['意志', '刃', '反撃', '守護', '元気', '集中', '忍耐', '果報', '保護', '闘志', '決意', '高揚', '命中', '根性', '破壊', '無形'];
 
   fourSets.forEach(f => {
     twoSets.forEach(t => {
@@ -3374,16 +3437,24 @@ function formatRuneText(rawText) {
     });
   });
 
-  text = text.replace(/闘志\s*×\s*3/g, '闘志 + 闘志 + 闘志');
-  text = text.replace(/闘志\s*3/g, '闘志 + 闘志 + 闘志');
-  text = text.replace(/闘志闘志闘志/g, '闘志 + 闘志 + 闘志');
+  // 2セット×3連構成の省略表記補正
+  ['闘志', '反撃', '守護', '元気', '意志', '保護', '決意'].forEach(r => {
+    text = text.replace(new RegExp(`${r}\\s*×\\s*3`, 'g'), `${r} + ${r} + ${r}`);
+    text = text.replace(new RegExp(`${r}\\s*3(?!\\d)`, 'g'), `${r} + ${r} + ${r}`);
+    text = text.replace(new RegExp(`${r}${r}${r}`, 'g'), `${r} + ${r} + ${r}`);
+    text = text.replace(new RegExp(`${r}\\s*×\\s*2`, 'g'), `${r} + ${r}`);
+  });
 
-  // 4. メインオプション（スロット2/4/6）のスラッシュ抜け補正（例: 「体力体力体力」➔「(体力/体力/体力)」）
+  // 4. メインオプション（スロット2/4/6）のスラッシュ抜け補正（例: 「体力体力体力」「速度体力抵抗」➔「(体力/体力/体力)」「(速度/体力/効果抵抗)」）
   const statsPattern = '(?:速度|体力|攻撃力|攻撃|防御力|防御|クリダメ|クリ率|効果的中|的中|効果抵抗|抵抗)';
   const slot3Regex = new RegExp(`(?<![\\(/])(${statsPattern})[\\s/、・,]*(${statsPattern})[\\s/、・,]*(${statsPattern})(?![\\)/])`, 'g');
 
   text = text.replace(slot3Regex, (match, p1, p2, p3) => {
-    const cleanStat = s => s.replace(/力$/, '');
+    const cleanStat = s => {
+      if (s === '的中') return '効果的中';
+      if (s === '抵抗') return '効果抵抗';
+      return s.replace(/力$/, '');
+    };
     return `(${cleanStat(p1)}/${cleanStat(p2)}/${cleanStat(p3)})`;
   });
 
@@ -3402,6 +3473,14 @@ function renderAll() {
     elements.rtaCount.textContent = rtaMonstersCount;
   }
 
+  // RTAモード時の優先度フィルター行およびモードバッジ表示切り替え
+  if (elements.rtaPriorityFilterRow) {
+    elements.rtaPriorityFilterRow.style.display = contentFilter === 'rta' ? 'flex' : 'none';
+  }
+  if (elements.monsterListModeBadge) {
+    elements.monsterListModeBadge.style.display = contentFilter === 'rta' ? 'inline-block' : 'none';
+  }
+
   renderMonsterList('all', elements.monsterListAll, elements.monsterCount);
   renderMonsterList('guild', elements.monsterListGuild, elements.guildCount);
   if (elements.guildCountSub) {
@@ -3412,6 +3491,24 @@ function renderAll() {
   renderGuildTartarosParties();
   renderRaidParties();
   renderDimensionView();
+}
+
+// 速度文字列（例: "+185"）から数値比較用の整数を取得
+function parseSpeedValue(speedStr) {
+  if (!speedStr || typeof speedStr !== 'string') return -1;
+  const m = speedStr.match(/(\d+)/);
+  return m ? parseInt(m[1], 10) : -1;
+}
+
+// ピック優先度のソートランク取得
+function getPriorityRank(priorityStr) {
+  const rankMap = {
+    'ファースト': 1,
+    '主力': 2,
+    'カウンター': 3,
+    'ラスト': 4
+  };
+  return rankMap[priorityStr] || 99;
 }
 
 // リストの描画
@@ -3432,6 +3529,13 @@ function renderMonsterList(type, containerElement, countElement) {
     if (contentFilter === 'fav' && !monster.isFavorite) {
       return false;
     }
+
+    // 2.5. RTAピック優先度フィルター（RTA絞り込み時のみ有効）
+    if (contentFilter === 'rta' && rtaPriorityFilter !== 'all') {
+      if ((monster.rtaPriority || '') !== rtaPriorityFilter) {
+        return false;
+      }
+    }
     
     // 3. タブごとの特化フィルター
     if (type === 'guild' && (!monster.guildMemo || monster.guildMemo.trim() === '')) {
@@ -3447,15 +3551,37 @@ function renderMonsterList(type, containerElement, countElement) {
       const nameMatch = monster.name.toLowerCase().includes(q);
       const roleMatch = (monster.role || '').toLowerCase().includes(q);
       const rtaMatch = (monster.rtaMemo || '').toLowerCase().includes(q);
+      const rtaSpeedMatch = (monster.rtaSpeed || '').toLowerCase().includes(q);
+      const rtaPrioMatch = (monster.rtaPriority || '').toLowerCase().includes(q);
       const guildMatch = (monster.guildMemo || '').toLowerCase().includes(q);
       const cairosMatch = (monster.cairosMemo || '').toLowerCase().includes(q);
       const generalMatch = (monster.generalMemo || '').toLowerCase().includes(q);
       const runeMatch = (monster.recommendedRunes || '').toLowerCase().includes(q);
+      const artifactMatch = (monster.recommendedArtifacts || '').toLowerCase().includes(q);
       
-      return nameMatch || roleMatch || rtaMatch || guildMatch || cairosMatch || generalMatch || runeMatch;
+      return nameMatch || roleMatch || rtaMatch || rtaSpeedMatch || rtaPrioMatch || guildMatch || cairosMatch || generalMatch || runeMatch || artifactMatch;
     }
     
     return true;
+  });
+
+  // 並び替え（ソートモードに応じたソート）
+  filtered.sort((a, b) => {
+    if (monsterSortMode === 'speed') {
+      const spdA = parseSpeedValue(a.rtaSpeed);
+      const spdB = parseSpeedValue(b.rtaSpeed);
+      if (spdB !== spdA) return spdB - spdA;
+    } else if (monsterSortMode === 'priority') {
+      const prioA = getPriorityRank(a.rtaPriority);
+      const prioB = getPriorityRank(b.rtaPriority);
+      if (prioA !== prioB) return prioA - prioB;
+      const spdA = parseSpeedValue(a.rtaSpeed);
+      const spdB = parseSpeedValue(b.rtaSpeed);
+      if (spdB !== spdA) return spdB - spdA;
+    }
+    if (a.isFavorite && !b.isFavorite) return -1;
+    if (!a.isFavorite && b.isFavorite) return 1;
+    return new Date(b.updatedAt) - new Date(a.updatedAt);
   });
   
   // 件数表示
@@ -3497,6 +3623,14 @@ function createMonsterCard(monster) {
   
   // 星の表示
   const starString = '★'.repeat(parseInt(monster.stars || 5));
+
+  // RTA速度・優先度バッジ
+  const rtaSpeedBadgeHtml = (monster.isRta && monster.rtaSpeed)
+    ? `<span class="card-rta-speed-badge" title="ワリーナ目標速度">⚡${escapeHtml(monster.rtaSpeed)}</span>`
+    : '';
+  const rtaPriorityBadgeHtml = (monster.isRta && monster.rtaPriority)
+    ? `<span class="card-rta-priority-badge" title="ピック優先度">${escapeHtml(monster.rtaPriority)}</span>`
+    : '';
   
   card.innerHTML = `
     <div class="card-header">
@@ -3506,12 +3640,15 @@ function createMonsterCard(monster) {
       </div>
       <div class="card-header-badges">
         ${monster.isRta ? '<span class="card-rta-badge">⚔️ RTA</span>' : ''}
+        ${rtaPriorityBadgeHtml}
+        ${rtaSpeedBadgeHtml}
         <span class="attr-badge attr-${monster.attribute}">${monster.attribute}</span>
       </div>
     </div>
     <div class="card-body">
       <div class="card-role">${escapeHtml(monster.role || '役割未設定')}</div>
-      ${monster.recommendedRunes ? `<div class="card-runes">${escapeHtml(monster.recommendedRunes)}</div>` : ''}
+      ${monster.recommendedRunes ? `<div class="card-runes">💎 ${escapeHtml(monster.recommendedRunes)}</div>` : ''}
+      ${monster.recommendedArtifacts ? `<div class="card-artifacts">🏺 ${escapeHtml(monster.recommendedArtifacts)}</div>` : ''}
     </div>
     <div class="card-footer">
       <div class="card-indicators">
@@ -3876,12 +4013,71 @@ function closePartyDetailModal() {
   document.body.style.overflow = '';
 }
 
+// パーティメンバーの登録モンスター呼び出しセレクトボックスを構築
+function populatePartyMemberPresets() {
+  if (!elements.memberPresetSelects) return;
+  elements.memberPresetSelects.forEach(select => {
+    select.innerHTML = '<option value="">📋 登録モンスターから自動入力...</option>';
+    monsters.forEach(m => {
+      const opt = document.createElement('option');
+      opt.value = m.id;
+      opt.textContent = `[${m.attribute}] ${m.name}`;
+      select.appendChild(opt);
+    });
+  });
+}
+
+// パーティ行動順ビルダーチップの更新（入力中のメンバー1〜5の名前をボタン化）
+function updatePartyTurnBuilderChips() {
+  if (!elements.partyTurnBuilderChips) return;
+  elements.partyTurnBuilderChips.innerHTML = '';
+
+  const currentMembers = [];
+  for (let i = 1; i <= 5; i++) {
+    const nameEl = document.getElementById(`form-m${i}-name`);
+    const attrEl = document.getElementById(`form-m${i}-attr`);
+    const rawName = nameEl ? nameEl.value.trim() : '';
+    if (rawName) {
+      currentMembers.push({
+        index: i,
+        name: rawName,
+        attr: attrEl ? attrEl.value : '風'
+      });
+    }
+  }
+
+  if (currentMembers.length === 0) {
+    elements.partyTurnBuilderChips.innerHTML = '<span class="turn-builder-placeholder">上のメンバー名を入力すると、ここにワンタップ追加ボタンが表示されます</span>';
+    return;
+  }
+
+  currentMembers.forEach(m => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'turn-member-btn';
+    // 括弧付きの長い名前の場合は短い通称も扱いやすく表示
+    const shortNameMatch = m.name.match(/\(([^)]+)\)/);
+    const displayName = shortNameMatch && !m.name.includes('コラボ') ? shortNameMatch[1] : m.name.replace(/\s*\([^)]*\)/g, '');
+    btn.innerHTML = `<span class="attr-badge attr-${escapeHtml(m.attr)}" style="font-size:0.6rem; padding:1px 4px;">${escapeHtml(m.attr)}</span><span>＋ ${escapeHtml(displayName)}</span>`;
+    btn.addEventListener('click', () => {
+      const curTurn = elements.formPartyTurn.value.trim();
+      if (!curTurn) {
+        elements.formPartyTurn.value = displayName;
+      } else {
+        elements.formPartyTurn.value = `${curTurn} ➔ ${displayName}`;
+      }
+    });
+    elements.partyTurnBuilderChips.appendChild(btn);
+  });
+}
+
 // パーティ編集フォームを開く
 function openPartyForm(id = null, defaultDungeon = null) {
   currentPartyEditId = id;
   const isEdit = Boolean(id);
 
   elements.partyForm.reset();
+  populatePartyMemberPresets();
   document.getElementById('error-party-name').style.display = 'none';
   elements.formPartyName.classList.remove('error');
 
@@ -3921,6 +4117,7 @@ function openPartyForm(id = null, defaultDungeon = null) {
     elements.formPartyDungeon.value = defaultDungeon || '巨人ダンジョン (深淵Hard)';
   }
 
+  updatePartyTurnBuilderChips();
   elements.partyFormModal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
@@ -5022,9 +5219,25 @@ function openDetailModal(id) {
   elements.modalAttrBadge.textContent = monster.attribute;
   elements.modalAttrBadge.className = `monster-attr-badge attr-${monster.attribute}`;
 
-  // ワールドアリーナ (RTA) バッジ
+  // ワールドアリーナ (RTA) バッジ・速度・優先度
   if (elements.modalRtaBadge) {
     elements.modalRtaBadge.style.display = monster.isRta ? 'inline-block' : 'none';
+  }
+  if (elements.modalRtaSpeedBadge) {
+    if (monster.isRta && monster.rtaSpeed) {
+      elements.modalRtaSpeedBadge.textContent = `⚡ ${monster.rtaSpeed}`;
+      elements.modalRtaSpeedBadge.style.display = 'inline-block';
+    } else {
+      elements.modalRtaSpeedBadge.style.display = 'none';
+    }
+  }
+  if (elements.modalRtaPriorityBadge) {
+    if (monster.isRta && monster.rtaPriority) {
+      elements.modalRtaPriorityBadge.textContent = `🎯 ${monster.rtaPriority}`;
+      elements.modalRtaPriorityBadge.style.display = 'inline-block';
+    } else {
+      elements.modalRtaPriorityBadge.style.display = 'none';
+    }
   }
 
   elements.modalMonsterName.textContent = monster.name;
@@ -5032,11 +5245,25 @@ function openDetailModal(id) {
   
   elements.modalRole.textContent = monster.role || '未登録';
   elements.modalRunes.textContent = monster.recommendedRunes || '未登録';
+
+  // 推奨アーティファクト
+  if (elements.modalSectionArtifacts && elements.modalArtifacts) {
+    if (monster.recommendedArtifacts && monster.recommendedArtifacts.trim() !== '') {
+      elements.modalArtifacts.textContent = monster.recommendedArtifacts;
+      elements.modalSectionArtifacts.style.display = 'block';
+    } else {
+      elements.modalSectionArtifacts.style.display = 'none';
+    }
+  }
   
   // ワールドアリーナメモ
   if (elements.modalSectionRta && elements.modalRtaMemo) {
     if (monster.isRta || (monster.rtaMemo && monster.rtaMemo.trim() !== '')) {
-      elements.modalRtaMemo.textContent = monster.rtaMemo || 'ワールドアリーナ使用モンスター（特記事項なし）';
+      const metaPrefix = [];
+      if (monster.rtaPriority) metaPrefix.push(`【ピック優先度: ${monster.rtaPriority}】`);
+      if (monster.rtaSpeed) metaPrefix.push(`【目標速度: ${monster.rtaSpeed}】`);
+      const prefixStr = metaPrefix.length > 0 ? `${metaPrefix.join(' ')}\n` : '';
+      elements.modalRtaMemo.textContent = prefixStr + (monster.rtaMemo || 'ワールドアリーナ使用モンスター（特記事項なし）');
       elements.modalSectionRta.style.display = 'block';
     } else {
       elements.modalSectionRta.style.display = 'none';
@@ -5089,10 +5316,19 @@ function openFormForEdit(id) {
   elements.formStars.value = monster.stars;
   elements.formRole.value = monster.role || '';
   elements.formRunes.value = monster.recommendedRunes || '';
+  if (elements.formArtifacts) {
+    elements.formArtifacts.value = monster.recommendedArtifacts || '';
+  }
 
   // ワールドアリーナ (RTA) 設定の復元
   if (elements.formRta) {
     elements.formRta.checked = Boolean(monster.isRta);
+  }
+  if (elements.formRtaSpeed) {
+    elements.formRtaSpeed.value = monster.rtaSpeed || '';
+  }
+  if (elements.formRtaPriority) {
+    elements.formRtaPriority.value = monster.rtaPriority || '';
   }
   if (elements.formRtaMemo) {
     elements.formRtaMemo.value = monster.rtaMemo || '';
@@ -5106,14 +5342,24 @@ function openFormForEdit(id) {
   // タブをフォームに切り替える
   switchTab('form');
   closeDetailModal();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function resetForm() {
   elements.monsterForm.reset();
   elements.formId.value = '';
   elements.formTitle.textContent = '新規モンスター登録';
+  if (elements.formArtifacts) {
+    elements.formArtifacts.value = '';
+  }
   if (elements.formRta) {
     elements.formRta.checked = false;
+  }
+  if (elements.formRtaSpeed) {
+    elements.formRtaSpeed.value = '';
+  }
+  if (elements.formRtaPriority) {
+    elements.formRtaPriority.value = '';
   }
   if (elements.formRtaMemo) {
     elements.formRtaMemo.value = '';
@@ -5137,6 +5383,22 @@ function setupEventListeners() {
     });
   });
 
+  // 右下フローティング追加ボタン (FAB) ＆ 一覧上部追加ボタン
+  if (elements.fabAddMonster) {
+    elements.fabAddMonster.addEventListener('click', () => {
+      resetForm();
+      switchTab('form');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  if (elements.btnTopAddMonster) {
+    elements.btnTopAddMonster.addEventListener('click', () => {
+      resetForm();
+      switchTab('form');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
   // コンテンツ・区分クイックフィルター（すべて・RTA・お気に入り）
   if (elements.contentFilterBtns) {
     elements.contentFilterBtns.forEach(btn => {
@@ -5144,6 +5406,40 @@ function setupEventListeners() {
         elements.contentFilterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         contentFilter = btn.dataset.contentFilter || 'all';
+        // 下部ナビのハイライトも同期
+        if (activeTab === 'all' || activeTab === 'rta') {
+          elements.navListItems.forEach(item => {
+            if (contentFilter === 'rta') {
+              item.classList.toggle('active', item.dataset.tab === 'rta');
+            } else {
+              item.classList.toggle('active', item.dataset.tab === 'all');
+            }
+          });
+        }
+        renderAll();
+      });
+    });
+  }
+
+  // ソート（並び替え）ボタン（標準 / 速度順 / ピック優先度順）
+  if (elements.sortBtns) {
+    elements.sortBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        elements.sortBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        monsterSortMode = btn.dataset.sort || 'default';
+        renderAll();
+      });
+    });
+  }
+
+  // RTAピック優先度フィルターボタン（すべて / ファースト / 主力 / カウンター / ラスト）
+  if (elements.priorityFilterBtns) {
+    elements.priorityFilterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        elements.priorityFilterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        rtaPriorityFilter = btn.dataset.priority || 'all';
         renderAll();
       });
     });
@@ -5158,6 +5454,64 @@ function setupEventListeners() {
       renderAll();
     });
   });
+
+  // 役割タグ ワンタップ入力チップ
+  if (elements.roleChipBtns) {
+    elements.roleChipBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const roleVal = btn.dataset.role;
+        const cur = elements.formRole.value.trim();
+        if (!cur) {
+          elements.formRole.value = roleVal;
+        } else {
+          const parts = cur.split(/\s*\/\s*/);
+          if (!parts.includes(roleVal)) {
+            elements.formRole.value = `${cur} / ${roleVal}`;
+          }
+        }
+      });
+    });
+  }
+  if (elements.btnClearRole) {
+    elements.btnClearRole.addEventListener('click', () => {
+      elements.formRole.value = '';
+    });
+  }
+
+  // アーティファクト ワンタップ入力チップ
+  if (elements.artifactChipBtns && elements.formArtifacts) {
+    elements.artifactChipBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const artVal = btn.dataset.artifact;
+        const cur = elements.formArtifacts.value.trim();
+        if (!cur) {
+          elements.formArtifacts.value = artVal;
+        } else {
+          const parts = cur.split(/\s*\/\s*/);
+          if (!parts.includes(artVal)) {
+            elements.formArtifacts.value = `${cur} / ${artVal}`;
+          }
+        }
+      });
+    });
+  }
+  if (elements.btnClearArtifacts && elements.formArtifacts) {
+    elements.btnClearArtifacts.addEventListener('click', () => {
+      elements.formArtifacts.value = '';
+    });
+  }
+
+  // RTA 速度ライン ワンタップチップ
+  if (elements.rtaSpeedChips && elements.formRtaSpeed) {
+    elements.rtaSpeedChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        elements.formRtaSpeed.value = chip.dataset.speed || '';
+        if (elements.formRta) {
+          elements.formRta.checked = true;
+        }
+      });
+    });
+  }
 
   // ルーンかんたん入力アシスタント関連イベント
   // 1. 表記自動整形ボタン
@@ -5210,7 +5564,7 @@ function setupEventListeners() {
     });
   }
 
-  // 4. 個別パーツ追加ボタン（暴走、意志、速度、体力など）
+  // 4. 個別パーツ追加ボタン（暴走、意志、速度、体力、効果的中、効果抵抗など）
   if (elements.runePartBtns) {
     elements.runePartBtns.forEach(btn => {
       if (btn.id === 'btn-clear-runes') return;
@@ -5221,7 +5575,7 @@ function setupEventListeners() {
           elements.formRunes.value = part;
         } else {
           // 4セットや2セットの単語を追加する場合は自動で「 + 」で繋ぐ
-          const isRuneName = ['暴走', '迅速', '激怒', '絶望', '吸血', '猛攻', '意志', '刃', '反撃', '守護', '元気', '集中', '闘志', '破壊'].includes(part);
+          const isRuneName = ['暴走', '迅速', '激怒', '絶望', '吸血', '猛攻', '意志', '刃', '反撃', '守護', '元気', '集中', '忍耐', '果報', '保護', '闘志', '決意', '高揚', '命中', '根性', '破壊', '無形'].includes(part);
           const lastCharIsPlus = cur.endsWith('+');
           if (isRuneName && !lastCharIsPlus && !cur.includes('(')) {
             elements.formRunes.value = `${cur} + ${part}`;
@@ -5237,6 +5591,73 @@ function setupEventListeners() {
   if (elements.btnClearRunes) {
     elements.btnClearRunes.addEventListener('click', () => {
       elements.formRunes.value = '';
+    });
+  }
+
+  // パーティ編成モーダル: 登録モンスターからの自動入力セレクト＆ルーンチップ＆行動順ビルダー
+  if (elements.memberPresetSelects) {
+    elements.memberPresetSelects.forEach(select => {
+      select.addEventListener('change', (e) => {
+        const monsterId = e.target.value;
+        const idx = select.dataset.memberIndex;
+        if (!monsterId || !idx) return;
+        const found = monsters.find(m => m.id === monsterId);
+        if (!found) return;
+
+        const nameInput = document.getElementById(`form-m${idx}-name`);
+        const attrSelect = document.getElementById(`form-m${idx}-attr`);
+        const roleInput = document.getElementById(`form-m${idx}-role`);
+        const runesInput = document.getElementById(`form-m${idx}-runes`);
+
+        if (nameInput) nameInput.value = found.name || '';
+        if (attrSelect) attrSelect.value = found.attribute || '風';
+        if (roleInput) roleInput.value = found.role || '';
+        if (runesInput && found.recommendedRunes) {
+          // 最初のセット候補（または全体）をセット
+          const shortRune = found.recommendedRunes.split(/\s*または\s*/)[0].replace(/\s*\([^)]*\)/, '').trim();
+          runesInput.value = shortRune || found.recommendedRunes;
+        }
+        updatePartyTurnBuilderChips();
+      });
+    });
+  }
+
+  // パーティメンバー1〜5の名前や属性を手動変更した際にも行動順ビルダーチップを更新
+  for (let i = 1; i <= 5; i++) {
+    const nameEl = document.getElementById(`form-m${i}-name`);
+    const attrEl = document.getElementById(`form-m${i}-attr`);
+    if (nameEl) nameEl.addEventListener('input', updatePartyTurnBuilderChips);
+    if (attrEl) attrEl.addEventListener('change', updatePartyTurnBuilderChips);
+  }
+
+  // パーティメンバーのミニルーンチップ（ワンタップで各メンバーの推奨ルーン欄に入力）
+  if (elements.memberRuneChipBtns) {
+    elements.memberRuneChipBtns.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const parent = chip.closest('.member-rune-quick-chips');
+        if (!parent) return;
+        const idx = parent.dataset.memberIndex;
+        const runesInput = document.getElementById(`form-m${idx}-runes`);
+        if (runesInput) {
+          runesInput.value = chip.dataset.val || '';
+        }
+      });
+    });
+  }
+
+  // 行動順ビルダーの「1つ戻す」「クリア」ボタン
+  if (elements.btnTurnUndo && elements.formPartyTurn) {
+    elements.btnTurnUndo.addEventListener('click', () => {
+      const cur = elements.formPartyTurn.value.trim();
+      if (!cur) return;
+      const parts = cur.split(/\s*➔\s*/);
+      parts.pop();
+      elements.formPartyTurn.value = parts.join(' ➔ ');
+    });
+  }
+  if (elements.btnTurnClear && elements.formPartyTurn) {
+    elements.btnTurnClear.addEventListener('click', () => {
+      elements.formPartyTurn.value = '';
     });
   }
   
@@ -5556,21 +5977,41 @@ function switchTab(tabId) {
       item.classList.remove('active');
     }
   });
+
+  // 「ワリーナ (rta)」タブまたは「すべて (all)」タブ選択時のコンテンツフィルター連動
+  if (tabId === 'rta') {
+    contentFilter = 'rta';
+    if (elements.contentFilterBtns) {
+      elements.contentFilterBtns.forEach(b => {
+        b.classList.toggle('active', b.dataset.contentFilter === 'rta');
+      });
+    }
+  } else if (tabId === 'all') {
+    contentFilter = 'all';
+    if (elements.contentFilterBtns) {
+      elements.contentFilterBtns.forEach(b => {
+        b.classList.toggle('active', b.dataset.contentFilter === 'all');
+      });
+    }
+  }
   
-  // コンテンツペインのアクティブ更新
+  // コンテンツペインのアクティブ更新 ('rta' の場合は 'tab-content-all' を表示)
+  const targetPaneId = tabId === 'rta' ? 'tab-content-all' : `tab-content-${tabId}`;
   elements.tabPanes.forEach(pane => {
-    if (pane.id === `tab-content-${tabId}`) {
+    if (pane.id === targetPaneId) {
       pane.classList.add('active');
     } else {
       pane.classList.remove('active');
     }
   });
   
-  // 検索・フィルターエリアは、「すべて」「ギルド戦」「カイロス」「次元ホール」タブの時だけ表示する
+  // 検索・フィルターエリアと右下FABボタンはフォームタブ以外の時だけ表示する
   if (tabId === 'form') {
     elements.searchFilterArea.style.display = 'none';
+    if (elements.fabAddMonster) elements.fabAddMonster.style.display = 'none';
   } else {
     elements.searchFilterArea.style.display = 'flex';
+    if (elements.fabAddMonster) elements.fabAddMonster.style.display = 'flex';
   }
   
   // フォームタブに遷移する際は、新規追加ならフォームをクリアする
@@ -5601,7 +6042,7 @@ function switchTab(tabId) {
     switchDimensionSubtab(dimensionSubtab);
   }
   
-  // リストの最描画
+  // リストの再描画
   renderAll();
 }
 
@@ -5640,14 +6081,22 @@ function handleFormSubmit(e) {
   }
   
   const id = elements.formId.value;
+  const rtaSpeedVal = elements.formRtaSpeed ? elements.formRtaSpeed.value.trim() : '';
+  const rtaPriorityVal = elements.formRtaPriority ? elements.formRtaPriority.value : '';
+  const rtaMemoVal = elements.formRtaMemo ? elements.formRtaMemo.value.trim() : '';
+  const isRtaChecked = (elements.formRta && elements.formRta.checked) || Boolean(rtaSpeedVal || rtaPriorityVal);
+
   const monsterData = {
     name: name,
     attribute: attribute,
     stars: parseInt(stars),
     role: elements.formRole.value.trim() || '役割未設定',
     recommendedRunes: elements.formRunes.value.trim(),
-    isRta: elements.formRta ? elements.formRta.checked : false,
-    rtaMemo: elements.formRtaMemo ? elements.formRtaMemo.value.trim() : '',
+    recommendedArtifacts: elements.formArtifacts ? elements.formArtifacts.value.trim() : '',
+    isRta: isRtaChecked,
+    rtaSpeed: rtaSpeedVal,
+    rtaPriority: rtaPriorityVal,
+    rtaMemo: rtaMemoVal,
     guildMemo: elements.formGuildMemo.value.trim(),
     cairosMemo: elements.formCairosMemo.value.trim(),
     generalMemo: elements.formGeneralMemo.value.trim(),
