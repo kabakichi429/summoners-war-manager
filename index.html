@@ -495,7 +495,7 @@
         </button>
         <button type="button" class="rune-subnav-btn" data-rune-subtab="matrix">
           <span class="subnav-icon">📊</span>
-          <span>全22種早見＆除外設定</span>
+          <span>全23種早見＆除外設定</span>
         </button>
         <button type="button" class="rune-subnav-btn" data-rune-subtab="mules">
           <span class="subnav-icon">📦</span>
@@ -548,6 +548,7 @@
                 <button type="button" class="checker-set-btn" data-rset="集中">集中</button>
                 <button type="button" class="checker-set-btn" data-rset="忍耐">忍耐</button>
                 <button type="button" class="checker-set-btn" data-rset="保護">保護</button>
+                <button type="button" class="checker-set-btn" data-rset="封印">封印</button>
               </div>
             </div>
             <div class="checker-rune-category-group">
@@ -735,19 +736,19 @@
           </div>
         </div>
 
-        <!-- 3. 全22種 ルーン別「残すべき2/4/6番メインOP＆サブOP」マトリクス (機能③) -->
+        <!-- 3. 全23種 ルーン別「残すべき2/4/6番メインOP＆サブOP」マトリクス (機能③) -->
         <div class="rune-matrix-section">
           <div class="matrix-toolbar">
-            <h3>📊 ルーン全22種「残すべきメインOP＆売却基準」早見表</h3>
+            <h3>📊 ルーン全23種「残すべきメインOP＆売却基準」早見表</h3>
             <div class="matrix-filter-btns" id="matrix-cat-filters">
-              <button type="button" class="matrix-filter-btn active" data-mcat="all">すべて (22種)</button>
+              <button type="button" class="matrix-filter-btn active" data-mcat="all">すべて (23種)</button>
               <button type="button" class="matrix-filter-btn" data-mcat="4set">4セット (6種)</button>
-              <button type="button" class="matrix-filter-btn" data-mcat="2set">主要2セット (10種)</button>
+              <button type="button" class="matrix-filter-btn" data-mcat="2set">主要2セット (11種)</button>
               <button type="button" class="matrix-filter-btn" data-mcat="rift">異界・古代 (6種)</button>
             </div>
           </div>
           <div class="rune-matrix-grid" id="rune-matrix-container">
-            <!-- JSで全22種のカードを動的生成 -->
+            <!-- JSで全23種のカードを動的生成 -->
           </div>
         </div>
       </div>
@@ -960,6 +961,8 @@
                   <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 忍耐">暴走+忍耐</button>
                   <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 果報">暴走+果報</button>
                   <button type="button" class="rune-preset-btn" data-rune-set="絶望 + 反撃">絶望+反撃</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="絶望 + 封印">絶望+封印</button>
+                  <button type="button" class="rune-preset-btn" data-rune-set="暴走 + 封印">暴走+封印</button>
                   <button type="button" class="rune-preset-btn" data-rune-set="絶望 + 集中">絶望+集中</button>
                   <button type="button" class="rune-preset-btn" data-rune-set="絶望 + 破壊">絶望+破壊</button>
                   <button type="button" class="rune-preset-btn" data-rune-set="吸血 + 意志">吸血+意志</button>
@@ -1021,6 +1024,7 @@
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="忍耐">忍耐</button>
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="果報">果報</button>
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="保護">保護</button>
+                  <button type="button" class="rune-part-btn rune-part-2set" data-part="封印">封印</button>
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="闘志">闘志</button>
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="決意">決意</button>
                   <button type="button" class="rune-part-btn rune-part-2set" data-part="高揚">高揚</button>

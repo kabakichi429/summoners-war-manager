@@ -4952,7 +4952,7 @@ function formatRuneText(rawText) {
 
   // 3. ルーン名の「+」補正（セットルーンの間に「 + 」を補う）
   const fourSets = ['暴走', '迅速', '激怒', '絶望', '吸血', '猛攻'];
-  const twoSets = ['意志', '刃', '反撃', '守護', '元気', '集中', '忍耐', '果報', '保護', '闘志', '決意', '高揚', '命中', '根性', '破壊', '無形'];
+  const twoSets = ['意志', '刃', '反撃', '守護', '元気', '集中', '忍耐', '果報', '保護', '封印', '闘志', '決意', '高揚', '命中', '根性', '破壊', '無形'];
 
   fourSets.forEach(f => {
     twoSets.forEach(t => {
@@ -7100,7 +7100,7 @@ function setupEventListeners() {
           elements.formRunes.value = part;
         } else {
           // 4セットや2セットの単語を追加する場合は自動で「 + 」で繋ぐ
-          const isRuneName = ['暴走', '迅速', '激怒', '絶望', '吸血', '猛攻', '意志', '刃', '反撃', '守護', '元気', '集中', '忍耐', '果報', '保護', '闘志', '決意', '高揚', '命中', '根性', '破壊', '無形'].includes(part);
+          const isRuneName = ['暴走', '迅速', '激怒', '絶望', '吸血', '猛攻', '意志', '刃', '反撃', '守護', '元気', '集中', '忍耐', '果報', '保護', '封印', '闘志', '決意', '高揚', '命中', '根性', '破壊', '無形'].includes(part);
           const lastCharIsPlus = cur.endsWith('+');
           if (isRuneName && !lastCharIsPlus && !cur.includes('(')) {
             elements.formRunes.value = `${cur} + ${part}`;
@@ -8380,7 +8380,7 @@ const RUNE_TIER_CONFIG = {
   }
 };
 
-// 全22種ルーン別 要・不要メインOP早見マトリクスデータ
+// 全23種ルーン別 要・不要メインOP早見マトリクスデータ
 const RUNE_MATRIX_DATA = [
   {
     name: '暴走',
@@ -8541,6 +8541,16 @@ const RUNE_MATRIX_DATA = [
     slot6: '🟢 体力% / 防御% / 効果抵抗',
     sellRule: '🔴 低体力のヒーロー。ただしベルベルグ用に「意志+意志+保護」を組む分は必ず確保！',
     subPriority: 'あなたの手持ちの『水雷帝 (ベルベルグ)』（知識バフ獲得用）や、死ダン・ギルバトの開幕シールド用に体力%と速度が高いものをキープ。'
+  },
+  {
+    name: '封印',
+    cat: '2set',
+    setLabel: '2セット (暴走封じ15%・対人特化)',
+    slot2: '🟢 速度 / 体力% / 🟡 防御%・攻撃%',
+    slot4: '🟢 体力% / 防御% / クリ率 / クリダメ',
+    slot6: '🟢 体力% / 効果的中 / 防御% / 攻撃%',
+    sellRule: '🔴 2/4/6番実数、および「速度」も「効果的中・体力%」もない低効率ヒーローは即売却！（PVE周回では使わない対人専用ルーンのため少数精鋭でOK）',
+    subPriority: '精霊ダンジョン産で「攻撃時15%で1ターン暴走（追加ターン）を封印する」対人2セット。速度＋効果的中＋体力%が最優先！風ROBO、クララ、ノラ、風フリーレン、ジバラ等の全体剥がし・妨害キャラに最適。'
   },
   {
     name: '闘志',
@@ -8813,7 +8823,11 @@ function findMatchingUserMonsters(runeSet, slot, mainStat) {
   // 1. 登録モンスター図鑑から検索
   monsters.forEach(m => {
     const recRunes = m.recommendedRunes || '';
-    if (recRunes.includes(runeSet) || runeSet === '無形') {
+    const isSealMatch = runeSet === '封印' && (
+      recRunes.includes('封印') ||
+      (m.isRta && (recRunes.includes('絶望') || (m.role || '').includes('全体剥がし') || (m.role || '').includes('コントロール')))
+    );
+    if (recRunes.includes(runeSet) || runeSet === '無形' || isSealMatch) {
       if (isStatCompatibleWithText(recRunes, `${m.role || ''} ${m.generalMemo || ''}`)) {
         matched.push({
           id: m.id,
@@ -8861,7 +8875,7 @@ function evaluateRuneVerdict() {
   const isAtkSet = ['激怒', '猛攻', '刃'].includes(set);
   const isPremSet = ['暴走', '意志', '迅速', '絶望', '吸血', '破壊', '無形'].includes(set);
   const isReappPrimeSet = ['暴走', '意志', '迅速', '絶望', '無形'].includes(set);
-  const isBasic2Set = ['元気', '守護', '集中', '忍耐', '根性', '命中', '高揚'].includes(set);
+  const isBasic2Set = ['元気', '守護', '集中', '忍耐', '根性', '命中', '高揚', '封印'].includes(set);
 
   // 1. レア以下（青・緑）の判定
   if (grade === 'rare') {
@@ -8923,6 +8937,24 @@ function evaluateRuneVerdict() {
         type: 'sell',
         badge: '🔴 即売却OK！（速度のない迅速ルーン）',
         reason: `迅速ルーンは「最速を取るため」に着けるセットです。サブOPに攻撃速度がないヒーロー（または奇数レジェンド）は、後からジェムで速度を付けても最大+10程度にしかならないため、迷わず売却してOKです！`
+      };
+    }
+  }
+
+  // 3.5. 封印ルーンの特化判定（対人・暴走封じ用）
+  if (set === '封印') {
+    if (subState === 'no_spd_atk' || subState === 'bad_subs') {
+      return {
+        type: 'sell',
+        badge: '🔴 即売却OK！（速度・耐久のない封印ルーンは不要）',
+        reason: `封印ルーン（攻撃時15%で1ターン暴走封じ）はカイロスやレイドでは一切使わない「純対人・コントロール用2セット」です。速度がなく火力に偏ったものやサブOPが不揃いのヒーロールーンは出番がないため、迷わず売却してOKです！`
+      };
+    }
+    if (subState === 'spd_rolled') {
+      return {
+        type: 'keep',
+        badge: '🟢 大当たり！対人剥がし・妨害キャラ用にキープ！',
+        reason: `速度が跳ねた封印ルーンは、風ROBO、クララ、ノラ、風フリーレン、ジバラなどの全体剥がし・全体攻撃キャラに「絶望＋封印」や「迅速/暴走＋封印」で持たせると、相手の理不尽な暴走事故を封じる極上の対人パーツになります！`
       };
     }
   }
