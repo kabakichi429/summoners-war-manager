@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -7,9 +8,12 @@
   <!-- Google Fonts: Outfit & Noto Sans JP -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600;700&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
   <!-- アプリヘッダー -->
@@ -19,12 +23,26 @@
       <h1>SW Manager</h1>
     </div>
     <div class="header-actions">
+      <button id="btn-header-runes" class="btn-rune-header" title="ルーン断捨離・売却サポート">
+        <span>💎</span>
+        <span>ルーン整理</span>
+      </button>
       <button id="btn-open-sync" class="btn-sync-header" title="PC・スマホのデータ同期">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sync-icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="sync-icon">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
         <span>同期・保存</span>
       </button>
       <button id="btn-reset-preset" class="btn-icon" title="初期データにリセット">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <polyline points="1 20 1 14 7 14"></polyline>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+        </svg>
       </button>
     </div>
   </header>
@@ -33,7 +51,11 @@
   <section class="search-filter-section" id="search-filter-area">
     <div class="search-box">
       <span class="search-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
       </span>
       <input type="text" id="search-input" placeholder="モンスター名、役割、ルーン、メモを検索...">
       <button id="btn-clear-search" class="clear-search-btn" style="display: none;">&times;</button>
@@ -49,7 +71,7 @@
         <span class="btn-icon-symbol">★</span> お気に入り
       </button>
     </div>
-    
+
     <!-- 属性フィルター（スマホでも闇属性まで1画面で綺麗にタップ可能） -->
     <div class="attribute-filters">
       <button class="attr-btn active" data-attr="all">すべて</button>
@@ -85,7 +107,7 @@
 
   <!-- メインコンテンツ -->
   <main class="app-content">
-    
+
     <!-- すべて（＆ワリーナ）タブ -->
     <div id="tab-content-all" class="tab-pane active">
       <div class="list-summary-bar">
@@ -268,15 +290,19 @@
       </div>
 
       <!-- 紅炎の魔獣 特化戦略ガイドバナー（紅炎の魔獣選択時または通常時に表示） -->
-      <div class="boss-strategy-banner" id="raid-fire-banner" style="display: none; border-left-color: #ff4757; margin-bottom: 14px;">
+      <div class="boss-strategy-banner" id="raid-fire-banner"
+        style="display: none; border-left-color: #ff4757; margin-bottom: 14px;">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
           <strong style="color: #ff4757; font-size: 0.95rem;">🔥 紅炎の魔獣（火属性ソロレイド20秒台最速周回）の5大絶対法則</strong>
-          <span style="font-size: 0.75rem; background: rgba(255, 71, 87, 0.2); color: #ff6b81; padding: 2px 8px; border-radius: 4px; font-weight: bold;">最速22〜26秒・事故率0%</span>
+          <span
+            style="font-size: 0.75rem; background: rgba(255, 71, 87, 0.2); color: #ff6b81; padding: 2px 8px; border-radius: 4px; font-weight: bold;">最速22〜26秒・事故率0%</span>
         </div>
         <p style="font-size: 0.8rem; color: #cbd5e1; margin: 0 0 4px 0; line-height: 1.55;">
-          <strong>① 風属性完全排除 ➔ 闇デバッファー換装</strong>：風属性はミス発生でデバフ試行自体が不発。等倍ミスなしの<strong>闇（ヘレア・ジュルタン・カミヤ）</strong>で縦割り・烙印を確定試行！<br>
+          <strong>① 風属性完全排除 ➔
+            闇デバッファー換装</strong>：風属性はミス発生でデバフ試行自体が不発。等倍ミスなしの<strong>闇（ヘレア・ジュルタン・カミヤ）</strong>で縦割り・烙印を確定試行！<br>
           <strong>② ブランディアと水イフの速度差「約47以上」</strong>：水イフの被弾ゲージ100%割り込みを防ぎ、ブランディア確定先手でHP50%ジャンプを誘発。前半デバッファー速度は170以下厳守。<br>
-          <strong>③ 耐久極限カット（確定トリガー）</strong>：カリンは★4 Lv30（HP6000）で開幕被弾HP30%以下➔攻撃バフ100%確定。水イフは★5 Lv1未育成でジャンプ被弾➔即「粘る」発動で縦割り。<br>
+          <strong>③ 耐久極限カット（確定トリガー）</strong>：カリンは★4 Lv30（HP6000）で開幕被弾HP30%以下➔攻撃バフ100%確定。水イフは★5
+          Lv1未育成でジャンプ被弾➔即「粘る」発動で縦割り。<br>
           <strong>④ イカル追加防御2430以上</strong>：ジャンプ後に自身＋味方3体（計4体協力攻撃）でヘレア・クローを引き連れデバフ再付与➔バーレイグ知識5でフィニッシュ！<br>
           <strong>⑤ アーティファクト「対火属性への与ダメUP」必須</strong>：シャオイン（水）もブランディア（火）も、全アタッカーに対火与ダメAFを装着（対水与ダメは無効）。
         </p>
@@ -327,7 +353,8 @@
               <span class="dim-raid-strategy-icon">🌌</span>
               <div>
                 <h3 class="dim-raid-strategy-title">異次元レイド (Dimension Raid)</h3>
-                <p class="dim-raid-strategy-subtitle">古代練磨石・ジェムを獲得する3フェーズ連続戦闘（各フェーズ5体・計15体編成。P1:週替わり次元制限 / P2:繭ミニオン殲滅 / P3:覚醒ボス決戦）</p>
+                <p class="dim-raid-strategy-subtitle">古代練磨石・ジェムを獲得する3フェーズ連続戦闘（各フェーズ5体・計15体編成。P1:週替わり次元制限 / P2:繭ミニオン殲滅 /
+                  P3:覚醒ボス決戦）</p>
               </div>
             </div>
             <span class="dim-raid-strategy-badge">5体×3フェーズ＝計15体</span>
@@ -412,13 +439,425 @@
       </div>
     </div>
 
+    <!-- 💎 ルーン整理・断捨離ナビタブ (5大機能統合) -->
+    <div id="tab-content-runes" class="tab-pane">
+      <!-- ルーン整理ヒーローヘッダー＆マイ基準セレクター (機能④連動) -->
+      <div class="rune-hero-banner">
+        <div class="rune-hero-top">
+          <div class="rune-hero-title-group">
+            <span class="rune-hero-icon">💎</span>
+            <div>
+              <h2 class="rune-hero-title">ルーン断捨離 ＆ 売却判断ナビ</h2>
+              <p class="rune-hero-subtitle">1,200枠のインベントリ不足を解消！迷うルーンを3秒仕分け＆一括整理</p>
+            </div>
+          </div>
+          <div class="rune-saved-slots-pill" id="rune-hero-saved-badge" title="人間倉庫と今回の売却で確保した枠">
+            📦 確保枠: <strong id="rune-total-freed-count">0</strong>枠
+          </div>
+        </div>
+
+        <!-- 機能④：あなたの進行度（マイ足切り基準）切り替え -->
+        <div class="rune-tier-selector-box">
+          <div class="rune-tier-header">
+            <span class="rune-tier-label">🎯 あなたの厳選段階（マイ足切りライン設定）：</span>
+            <span class="rune-tier-hint">※3秒判定や除外設定に自動連動</span>
+          </div>
+          <div class="rune-tier-btns" id="rune-tier-btn-group">
+            <button type="button" class="rune-tier-btn" data-tier="beginner">
+              <span class="tier-btn-title">🌱 初級 (カイロス安定)</span>
+              <span class="tier-btn-desc">奇数紫:速度+12〜 / 偶数%は広め保護</span>
+            </button>
+            <button type="button" class="rune-tier-btn active" data-tier="mid">
+              <span class="tier-btn-title">⚔️ 中級 (深淵高速・占領戦)【推奨】</span>
+              <span class="tier-btn-desc">奇数紫:速度+15(2ハネ)or高効率のみ</span>
+            </button>
+            <button type="button" class="rune-tier-btn" data-tier="endgame">
+              <span class="tier-btn-title">👑 上級 (ワリーナ・厳選)</span>
+              <span class="tier-btn-desc">奇数紫:速度3ハネ(+18+)or神効率のみ</span>
+            </button>
+          </div>
+          <div class="rune-tier-summary-bar" id="rune-tier-summary-bar">
+            <!-- JSで選択中のマイ基準サマリーを表示 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ルーン整理 4大サブタブナビゲーション -->
+      <div class="rune-subnav">
+        <button type="button" class="rune-subnav-btn active" data-rune-subtab="checker">
+          <span class="subnav-icon">⚡</span>
+          <span>3秒仕分け判定</span>
+        </button>
+        <button type="button" class="rune-subnav-btn" data-rune-subtab="cleanup">
+          <span class="subnav-icon">🧹</span>
+          <span>一括売却ツアー</span>
+          <span class="rune-subtab-badge" id="cleanup-progress-badge">0/8</span>
+        </button>
+        <button type="button" class="rune-subnav-btn" data-rune-subtab="matrix">
+          <span class="subnav-icon">📊</span>
+          <span>全22種早見＆除外設定</span>
+        </button>
+        <button type="button" class="rune-subnav-btn" data-rune-subtab="mules">
+          <span class="subnav-icon">📦</span>
+          <span>人間倉庫メモ</span>
+          <span class="rune-subtab-badge gold" id="mule-slots-badge">0枠</span>
+        </button>
+      </div>
+
+      <!-- ==========================================
+           サブペイン1：機能① 3秒で判定！「残す？売る？」瞬間仕分けチェッカー（手持ちキャラ連動）
+           ========================================== -->
+      <div id="rune-subpane-checker" class="rune-subpane active">
+        <div class="rune-checker-card">
+          <div class="checker-header-row">
+            <h3>⚡ 迷ったルーンを3秒判定！（手持ちキャラ適性連動）</h3>
+            <button type="button" id="btn-reset-checker" class="btn-mini-clear">🔄 条件リセット</button>
+          </div>
+          <p class="checker-lead">
+            ゲーム画面で売るか迷っているルーンの「種類」「番号」「メインOP」「状態」をタップしてください。
+          </p>
+
+          <!-- STEP 1: ルーン種類 -->
+          <div class="checker-step-block">
+            <div class="checker-step-label">
+              <span class="step-num-badge">1</span>
+              <span>ルーン種類を選択</span>
+              <span class="checker-selected-val" id="label-selected-rune-set">暴走</span>
+            </div>
+            <div class="checker-rune-category-group">
+              <span class="mini-cat-tag cat-4set">4セット</span>
+              <div class="checker-chip-row" id="checker-set-4">
+                <button type="button" class="checker-set-btn active" data-rset="暴走">暴走</button>
+                <button type="button" class="checker-set-btn" data-rset="迅速">迅速</button>
+                <button type="button" class="checker-set-btn" data-rset="絶望">絶望</button>
+                <button type="button" class="checker-set-btn" data-rset="激怒">激怒</button>
+                <button type="button" class="checker-set-btn" data-rset="吸血">吸血</button>
+                <button type="button" class="checker-set-btn" data-rset="猛攻">猛攻</button>
+              </div>
+            </div>
+            <div class="checker-rune-category-group">
+              <span class="mini-cat-tag cat-2set">主要2セット</span>
+              <div class="checker-chip-row" id="checker-set-2">
+                <button type="button" class="checker-set-btn" data-rset="意志">意志</button>
+                <button type="button" class="checker-set-btn" data-rset="破壊">破壊</button>
+                <button type="button" class="checker-set-btn" data-rset="反撃">反撃</button>
+                <button type="button" class="checker-set-btn" data-rset="果報">果報</button>
+                <button type="button" class="checker-set-btn" data-rset="刃">刃</button>
+                <button type="button" class="checker-set-btn" data-rset="元気">元気</button>
+                <button type="button" class="checker-set-btn" data-rset="守護">守護</button>
+                <button type="button" class="checker-set-btn" data-rset="集中">集中</button>
+                <button type="button" class="checker-set-btn" data-rset="忍耐">忍耐</button>
+                <button type="button" class="checker-set-btn" data-rset="保護">保護</button>
+              </div>
+            </div>
+            <div class="checker-rune-category-group">
+              <span class="mini-cat-tag cat-rift">異界・古代</span>
+              <div class="checker-chip-row" id="checker-set-rift">
+                <button type="button" class="checker-set-btn" data-rset="闘志">闘志</button>
+                <button type="button" class="checker-set-btn" data-rset="決意">決意</button>
+                <button type="button" class="checker-set-btn" data-rset="命中">命中</button>
+                <button type="button" class="checker-set-btn" data-rset="高揚">高揚</button>
+                <button type="button" class="checker-set-btn" data-rset="根性">根性</button>
+                <button type="button" class="checker-set-btn" data-rset="無形">無形</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: スロット番号 -->
+          <div class="checker-step-block">
+            <div class="checker-step-label">
+              <span class="step-num-badge">2</span>
+              <span>スロット番号を選択</span>
+            </div>
+            <div class="checker-slot-grid" id="checker-slot-group">
+              <button type="button" class="checker-slot-btn" data-rslot="odd">
+                <strong>1・3・5番</strong>
+                <span>奇数 (メイン固定)</span>
+              </button>
+              <button type="button" class="checker-slot-btn active" data-rslot="2">
+                <strong>2番</strong>
+                <span>速度 / % / 実数</span>
+              </button>
+              <button type="button" class="checker-slot-btn" data-rslot="4">
+                <strong>4番</strong>
+                <span>クリダメ / 率 / %</span>
+              </button>
+              <button type="button" class="checker-slot-btn" data-rslot="6">
+                <strong>6番</strong>
+                <span>的中 / 抵抗 / %</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 3: メインオプション (2/4/6番のとき表示、1/3/5番のときは固定案内) -->
+          <div class="checker-step-block" id="checker-mainstat-block">
+            <div class="checker-step-label">
+              <span class="step-num-badge">3</span>
+              <span>メインオプションを選択</span>
+              <span class="checker-selected-val" id="label-selected-mainstat">攻撃速度</span>
+            </div>
+            <div class="checker-chip-row" id="checker-mainstat-group">
+              <button type="button" class="checker-main-btn active" data-rmain="速度" data-valid-slots="2">⚡ 攻撃速度 (2番)</button>
+              <button type="button" class="checker-main-btn" data-rmain="体力%" data-valid-slots="2,4,6">💚 体力%</button>
+              <button type="button" class="checker-main-btn" data-rmain="攻撃%" data-valid-slots="2,4,6">🗡️ 攻撃%</button>
+              <button type="button" class="checker-main-btn" data-rmain="防御%" data-valid-slots="2,4,6">🛡️ 防御%</button>
+              <button type="button" class="checker-main-btn" data-rmain="クリダメ" data-valid-slots="4">💥 クリダメ (4番)</button>
+              <button type="button" class="checker-main-btn" data-rmain="クリ率" data-valid-slots="4">🎯 クリ率 (4番)</button>
+              <button type="button" class="checker-main-btn" data-rmain="効果的中" data-valid-slots="6">🎯 効果的中 (6番)</button>
+              <button type="button" class="checker-main-btn" data-rmain="効果抵抗" data-valid-slots="6">✨ 効果抵抗 (6番)</button>
+              <button type="button" class="checker-main-btn" data-rmain="実数" data-valid-slots="2,4,6">❌ 実数 (体力+/攻撃+/防御+)</button>
+            </div>
+            <div id="checker-odd-notice" class="checker-odd-notice" style="display: none;">
+              📌 <strong>1・3・5番（奇数スロット）</strong>はメインOPが固定のため、<strong>「サブOPの噛み合い・速度の跳ね方」が100%すべて</strong>です！偶数番よりも厳しめに足切りしましょう。
+            </div>
+          </div>
+
+          <!-- STEP 4: ランク＆サブOP状態 -->
+          <div class="checker-step-row-split">
+            <div class="checker-step-block">
+              <div class="checker-step-label">
+                <span class="step-num-badge">4</span>
+                <span>初期ランク（色）</span>
+              </div>
+              <div class="checker-grade-grid" id="checker-grade-group">
+                <button type="button" class="checker-grade-btn grade-legend" data-rgrade="legend">🟠 レジェンド (橙)</button>
+                <button type="button" class="checker-grade-btn grade-hero active" data-rgrade="hero">🟣 ヒーロー (紫)</button>
+                <button type="button" class="checker-grade-btn grade-rare" data-rgrade="rare">🔵 レア以下 (青)</button>
+              </div>
+            </div>
+
+            <div class="checker-step-block">
+              <div class="checker-step-label">
+                <span class="step-num-badge">5</span>
+                <span>サブOPの状態・跳ね方</span>
+              </div>
+              <div class="checker-substate-grid" id="checker-substate-group">
+                <button type="button" class="checker-sub-btn active" data-rsub="spd_init">⚡ 速度サブOPあり (未強化/+6テスト前)</button>
+                <button type="button" class="checker-sub-btn" data-rsub="spd_rolled">🚀 速度が2ハネ以上した (+15〜+20+)</button>
+                <button type="button" class="checker-sub-btn" data-rsub="no_spd_tank">🛡️ 速度なし・耐久/効率揃い (体力%/防御%/抵抗等)</button>
+                <button type="button" class="checker-sub-btn" data-rsub="no_spd_atk">🗡️ 速度なし・火力揃い (クリ率/クリダメ/攻撃%)</button>
+                <button type="button" class="checker-sub-btn" data-rsub="bad_subs">🌀 サブOPバラバラ・実数2個以上・低跳ね</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 🎯 判定結果出力ボックス -->
+          <div class="checker-result-container" id="checker-result-box">
+            <!-- JSでリアルタイム生成 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           サブペイン2：機能② 10分で100〜300個減らす！「一括売却ステップ・チェックリスト」
+           ========================================== -->
+      <div id="rune-subpane-cleanup" class="rune-subpane" style="display: none;">
+        <!-- 進捗＆売却カウンターダッシュボード -->
+        <div class="cleanup-dashboard-card">
+          <div class="cleanup-dash-top">
+            <div>
+              <h3>🧹 10分で100〜300個減らす！一括断捨離8ステップ</h3>
+              <p>サマナの「ルーン管理画面 ➔ 検索フィルター」を以下の通りに設定して、後悔ゼロの順番で一気にまとめ売りしましょう！</p>
+            </div>
+            <button type="button" id="btn-reset-cleanup-steps" class="btn btn-secondary btn-sm">🔄 チェックをリセット</button>
+          </div>
+
+          <!-- プログレスバー -->
+          <div class="cleanup-progress-wrap">
+            <div class="cleanup-progress-labels">
+              <span>断捨離ツアー進捗: <strong id="cleanup-done-text">0 / 8 ステップ完了</strong></span>
+              <span id="cleanup-percent-text">0%</span>
+            </div>
+            <div class="cleanup-progress-bar-bg">
+              <div class="cleanup-progress-bar-fill" id="cleanup-progress-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+
+          <!-- 売却カウンター（モチベーション用） -->
+          <div class="cleanup-counter-box">
+            <div class="cleanup-counter-info">
+              <span class="counter-label">🔥 今回売却して空けたルーン枠メモ:</span>
+              <span class="counter-value"><strong id="cleanup-sold-count">0</strong> 個処分済！</span>
+            </div>
+            <div class="cleanup-counter-btns">
+              <button type="button" class="btn-sold-add" data-add="5">+5個</button>
+              <button type="button" class="btn-sold-add" data-add="10">+10個</button>
+              <button type="button" class="btn-sold-add" data-add="30">+30個</button>
+              <button type="button" class="btn-sold-add" data-add="50">+50個</button>
+              <button type="button" id="btn-sold-reset" class="btn-mini-clear">0に戻す</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8ステップリストコンテナ -->
+        <div class="cleanup-steps-list" id="cleanup-steps-container">
+          <!-- JSで8ステップを生成 -->
+        </div>
+      </div>
+
+      <!-- ==========================================
+           サブペイン3：機能③＆④ 全22種「要・不要メインOP早見表」＆「売却除外設定レシピ」
+           ========================================== -->
+      <div id="rune-subpane-matrix" class="rune-subpane" style="display: none;">
+        <!-- 1. ゲーム内の「売却除外設定」そのまま入力レシピ (機能④) -->
+        <div class="exclusion-recipe-card">
+          <div class="recipe-header">
+            <div>
+              <h3>⚙️ ゲーム内「売却除外設定」そのまま入力レシピ</h3>
+              <p>サマナの「ルーン管理 ➔ 一括売却 ➔ 売却除外設定」にそのまま入力するだけで、普段の周回からゴミルーンだけを安全に一括売却できます（上部の厳選段階ボタンと連動）。</p>
+            </div>
+          </div>
+          <div id="exclusion-recipe-content" class="exclusion-recipe-grid">
+            <!-- JSで厳選段階に応じて動的生成 -->
+          </div>
+        </div>
+
+        <!-- 2. 速度がなくても絶対に売ってはいけない「特例神ルーン」4選 -->
+        <div class="special-keep-rules-card">
+          <h3>⚡ 速度がなくても絶対に売ってはいけない「特例ルーン」4大法則</h3>
+          <div class="special-rules-grid">
+            <div class="special-rule-item">
+              <div class="special-rule-title">① 風ドラナイ（レオ）用＆対レオ用の「速度0・超火力/高耐久」</div>
+              <p>あなたの手持ちの <strong>『風ドラゴンナイト (レオ)』</strong> がいる戦場では全員の速度がレオに固定されます。<strong>「速度+0でクリ率・クリダメ・攻撃%・体力%が跳ねた暴走/吸血/意志/破壊ルーン」</strong>はレオ本人やレオのお供に最高の宝物になります！</p>
+            </div>
+            <div class="special-rule-item">
+              <div class="special-rule-title">② カイロス・ソロレイド用の「鈍足ロマン砲（激怒・闘志・刃）」</div>
+              <p><strong>『バーレイグ』『ヒンメル』『水フリーレン』『ジュリー』『タリア』『リン』</strong> など、行動順が固定されたPVEアタッカーは速度が+20〜+50程度で十分なケースが多く、速度なしでも<strong>「クリ率・クリダメ・攻撃%」が特大跳ねしたルーン</strong>は一撃ワンパンの要です。</p>
+            </div>
+            <div class="special-rule-item">
+              <div class="special-rule-title">③ 占領戦・迷宮の「不死身受けタンク（破壊・反撃・守護）」</div>
+              <p><strong>『水シュタルク』『風パンダ』『タラニス』『ダリオン』</strong> などの受けキャラ・前衛タンクは、速度が控えめでも<strong>「体力%・防御%・効果抵抗・クリ率」の合計値（ルーン評価点）が高い破壊・反撃・守護ルーン</strong>で大活躍します。</p>
+            </div>
+            <div class="special-rule-item">
+              <div class="special-rule-title">④ 2・4・6番の「暴走・意志・迅速・絶望」レジェンド（%メインOP）</div>
+              <p>2番「速度 / 体力% / 攻撃%」、4番「クリダメ / 体力%」、6番「体力% / 攻撃%」の<strong>メジャーセット・レジェンド（初期橙）</strong>は、サブOPが全部実数のゴミでも<strong>絶対に売却NG！</strong>「初期化石（練成石）」を使えば神ルーンに生まれ変わります。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. 全22種 ルーン別「残すべき2/4/6番メインOP＆サブOP」マトリクス (機能③) -->
+        <div class="rune-matrix-section">
+          <div class="matrix-toolbar">
+            <h3>📊 ルーン全22種「残すべきメインOP＆売却基準」早見表</h3>
+            <div class="matrix-filter-btns" id="matrix-cat-filters">
+              <button type="button" class="matrix-filter-btn active" data-mcat="all">すべて (22種)</button>
+              <button type="button" class="matrix-filter-btn" data-mcat="4set">4セット (6種)</button>
+              <button type="button" class="matrix-filter-btn" data-mcat="2set">主要2セット (10種)</button>
+              <button type="button" class="matrix-filter-btn" data-mcat="rift">異界・古代 (6種)</button>
+            </div>
+          </div>
+          <div class="rune-matrix-grid" id="rune-matrix-container">
+            <!-- JSで全22種のカードを動的生成 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ==========================================
+           サブペイン4：機能⑤ インベントリを実質+300枠広げる！「人間倉庫（ルーン保管係）」管理帳
+           ========================================== -->
+      <div id="rune-subpane-mules" class="rune-subpane" style="display: none;">
+        <!-- 人間倉庫の解説＆節約枠バナー -->
+        <div class="mule-summary-banner">
+          <div class="mule-summary-left">
+            <div class="mule-badge-pill">💡 サマナ上級者のインベントリ拡張術</div>
+            <h3>📦 人間倉庫（ルーン保管係モンスター）管理帳</h3>
+            <p>
+              <strong>モンスターに装着したルーンは、ルーンインベントリ（1,200枠）にカウントされません！</strong><br>
+              倉庫に眠っている未育成の★4・★5モンスターに「今は使わない闘志ルーン」「練成待ちの暴走/意志レジェンド」「速度ハネ候補」を6個着せておけば、<strong>50体で300枠ものインベントリが空きます！</strong>誰に何を預けたかここでメモしておきましょう。
+            </p>
+          </div>
+          <div class="mule-stats-box">
+            <div class="mule-stat-num"><span id="mule-total-monsters">0</span>体</div>
+            <div class="mule-stat-label">保管係モンスター</div>
+            <div class="mule-stat-saved">実質 +<strong id="mule-total-saved-slots">0</strong>枠 拡張中！</div>
+          </div>
+        </div>
+
+        <!-- ワンタップ定番テンプレート追加バー -->
+        <div class="mule-quick-templates">
+          <span class="assistant-label">⚡ ワンタップで保管係テンプレートを追加：</span>
+          <div class="assistant-chips">
+            <button type="button" class="mule-template-btn" data-tpl-name="闘志ルーン保管係" data-tpl-attr="火" data-tpl-cat="🔥 闘志ルーン保管" data-tpl-memo="カイロス・レイド予備の闘志ルーン6個を装着保管">＋ 🔥 闘志ルーン保管係</button>
+            <button type="button" class="mule-template-btn" data-tpl-name="練成待ちレジェンド保管係" data-tpl-attr="水" data-tpl-cat="💎 練成待ちレジェンド" data-tpl-memo="2・4・6番の暴走・意志・迅速レジェンド（初期化石待ち）を装着保管">＋ 💎 練成待ちレジェンド係</button>
+            <button type="button" class="mule-template-btn" data-tpl-name="迅速・速度パーツ保管係" data-tpl-attr="風" data-tpl-cat="⚡ 迅速・速度パーツ" data-tpl-memo="サブ速度が跳ねた迅速・バラパーツ6個を装着保管">＋ ⚡ 迅速・速度パーツ係</button>
+            <button type="button" class="mule-template-btn" data-tpl-name="レオ用(速度0)ルーン保管係" data-tpl-attr="風" data-tpl-cat="🦁 レオ用(速度0高火力)" data-tpl-memo="速度+0でクリ率・クリダメ・耐久が高いルーン6個を装着保管">＋ 🦁 レオ用(速度0)係</button>
+            <button type="button" class="mule-template-btn" data-tpl-name="激怒・刃アタッカー予備保管係" data-tpl-attr="光" data-tpl-cat="🗡️ 激怒・火力パーツ" data-tpl-memo="クリ率・クリダメ跳ねの激怒・刃・猛攻パーツ6個を装着保管">＋ 🗡️ 激怒・火力予備係</button>
+          </div>
+        </div>
+
+        <!-- 保管係モンスター登録フォーム -->
+        <div class="mule-form-card">
+          <h4 id="mule-form-title">＋ 新しいルーン保管係（人間倉庫）をメモする</h4>
+          <form id="mule-form" novalidate>
+            <input type="hidden" id="mule-form-id">
+            <div class="mule-form-grid">
+              <div class="form-group">
+                <label for="mule-name">保管係モンスター名（倉庫キャラ） <span class="required">*</span></label>
+                <input type="text" id="mule-name" required placeholder="例: 倉庫の火シルフ, 未育成の風吸血鬼">
+              </div>
+              <div class="form-group">
+                <label for="mule-attr">属性</label>
+                <select id="mule-attr">
+                  <option value="火">火</option>
+                  <option value="水">水</option>
+                  <option value="風">風</option>
+                  <option value="光">光</option>
+                  <option value="闇">闇</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="mule-slots">装着しているルーン数</label>
+                <select id="mule-slots">
+                  <option value="6" selected>6個フル装着 (6枠節約)</option>
+                  <option value="5">5個装着 (5枠節約)</option>
+                  <option value="4">4個装着 (4枠節約)</option>
+                  <option value="3">3個装着 (3枠節約)</option>
+                  <option value="2">2個装着 (2枠節約)</option>
+                  <option value="1">1個装着 (1枠節約)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="mule-category">預けているルーンの用途・種類（タップで入力可）</label>
+              <input type="text" id="mule-category" placeholder="例: 🔥 闘志ルーン保管 / 💎 練成待ちレジェンド">
+              <div class="assistant-chips" style="margin-top: 4px;">
+                <button type="button" class="mule-cat-chip" data-mcat="🔥 闘志ルーン保管">🔥 闘志ルーン保管</button>
+                <button type="button" class="mule-cat-chip" data-mcat="💎 練成待ちレジェンド">💎 練成待ちレジェンド</button>
+                <button type="button" class="mule-cat-chip" data-mcat="⚡ 迅速・速度パーツ">⚡ 迅速・速度パーツ</button>
+                <button type="button" class="mule-cat-chip" data-mcat="🗡️ 激怒・火力パーツ">🗡️ 激怒・火力パーツ</button>
+                <button type="button" class="mule-cat-chip" data-mcat="🛡️ 破壊・反撃・受け用">🛡️ 破壊・反撃・受け用</button>
+                <button type="button" class="mule-cat-chip" data-mcat="🦁 レオ用(速度0高火力)">🦁 レオ用(速度0高火力)</button>
+                <button type="button" class="mule-cat-chip" data-mcat="🌀 異界(決意/命中/高揚)">🌀 異界(決意/命中/高揚)</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="mule-memo">保管メモ（何番のどんなルーンを着せているか）</label>
+              <input type="text" id="mule-memo" placeholder="例: 2番速度の暴走レジェンド、4番クリダメ意志レジェンドなど">
+            </div>
+
+            <div class="mule-form-actions">
+              <button type="button" id="btn-mule-cancel" class="btn btn-secondary btn-sm" style="display: none;">キャンセル</button>
+              <button type="submit" id="btn-mule-submit" class="btn btn-primary btn-sm">📦 保管係リストに保存</button>
+            </div>
+          </form>
+        </div>
+
+        <!-- 保管係モンスター一覧 -->
+        <div class="mule-list-grid" id="mule-list-container">
+          <!-- JSで動的生成 -->
+        </div>
+      </div>
+    </div>
+
     <!-- 登録・編集タブ -->
     <div id="tab-content-form" class="tab-pane">
       <div class="form-container">
         <h2 id="form-title">新規モンスター登録</h2>
         <form id="monster-form" novalidate>
           <input type="hidden" id="form-monster-id">
-          
+
           <div class="form-group">
             <label for="form-name">モンスター名 <span class="required">*</span></label>
             <input type="text" id="form-name" required placeholder="例: 水パンダ, ヴェルデハイル">
@@ -492,12 +931,13 @@
           <div class="form-group">
             <div class="rune-label-row">
               <label for="form-runes">推奨ルーン構成</label>
-              <button type="button" id="btn-auto-format-runes" class="btn-assistant-format" title="「暴走プラス石」や「体力体力体力」「速度体力的中」などを綺麗な書式に自動整形">
+              <button type="button" id="btn-auto-format-runes" class="btn-assistant-format"
+                title="「暴走プラス石」や「体力体力体力」「速度体力的中」などを綺麗な書式に自動整形">
                 ✨ 表記を自動整形
               </button>
             </div>
             <input type="text" id="form-runes" placeholder="例: 暴走 + 意志 (速度/体力/体力)">
-            
+
             <!-- ルーンかんたん入力アシスタント -->
             <div class="rune-input-assistant">
               <!-- 定番セットプリセット (拡充) -->
@@ -653,7 +1093,7 @@
                 <span class="rta-checkbox-title">⚔️ ワールドアリーナ (RTA) で使用する</span>
               </label>
             </div>
-            
+
             <div class="form-row" style="margin-bottom: 10px;">
               <div class="form-group" style="margin-bottom: 0;">
                 <label for="form-rta-speed">⚡ 目標・実測速度 (+値)</label>
@@ -740,7 +1180,7 @@
         </div>
         <button id="modal-close" class="modal-close-btn">&times;</button>
       </div>
-      
+
       <div class="modal-body">
         <div class="detail-section">
           <h3><span class="section-icon">⚔️</span> 役割 / タグ</h3>
@@ -1080,7 +1520,8 @@
 
         <div class="form-group">
           <label for="form-party-speed">速度調整・同調メモ</label>
-          <textarea id="form-party-speed" rows="2" placeholder="例: フリルレア最速。テオンとコナミヤはテシャールの直後に割り込めるよう速度差2以内に調整。"></textarea>
+          <textarea id="form-party-speed" rows="2"
+            placeholder="例: フリルレア最速。テオンとコナミヤはテシャールの直後に割り込めるよう速度差2以内に調整。"></textarea>
         </div>
 
         <div class="form-group">
@@ -1115,12 +1556,16 @@
       <div class="modal-body sync-modal-body">
         <div class="sync-status-card">
           <div class="sync-status-item">
-            <span class="sync-status-label">現在の登録モンスター</span>
+            <span class="sync-status-label">登録モンスター</span>
             <span id="sync-count-monsters" class="sync-status-val">0体</span>
           </div>
           <div class="sync-status-item">
             <span class="sync-status-label">周回パーティ</span>
             <span id="sync-count-parties" class="sync-status-val">0編成</span>
+          </div>
+          <div class="sync-status-item">
+            <span class="sync-status-label">ルーン保管係</span>
+            <span id="sync-count-mules" class="sync-status-val">0体</span>
           </div>
         </div>
 
@@ -1135,14 +1580,23 @@
           </p>
           <div class="sync-btn-group">
             <button type="button" id="btn-copy-sync-code" class="btn btn-primary btn-sync-action">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
               📋 同期コードをコピー
             </button>
             <button type="button" id="btn-share-sync-code" class="btn btn-secondary btn-sync-action">
               📲 LINE・アプリで共有
             </button>
             <button type="button" id="btn-download-backup" class="btn btn-secondary btn-sync-action">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
               💾 ファイル保存 (.json)
             </button>
           </div>
@@ -1164,9 +1618,10 @@
           <p class="sync-desc">
             LINEやメモ等で送った同期コードを貼り付けて「⚡ 上書きで同期」または「🔀 既存と統合」を押してください。
           </p>
-          
-          <textarea id="sync-input-code" class="sync-textarea" rows="3" placeholder="ここにコピーした同期コード (SWLITE:... または SWDATA:...) を貼り付けてください..."></textarea>
-          
+
+          <textarea id="sync-input-code" class="sync-textarea" rows="3"
+            placeholder="ここにコピーした同期コード (SWLITE:... または SWDATA:...) を貼り付けてください..."></textarea>
+
           <div class="sync-import-actions">
             <button type="button" id="btn-apply-sync-replace" class="btn btn-primary">
               ⚡ 上書きで同期（推奨）
@@ -1185,7 +1640,8 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" id="btn-sync-modal-footer-close" class="btn btn-secondary" style="margin-left: auto;">閉じる</button>
+        <button type="button" id="btn-sync-modal-footer-close" class="btn btn-secondary"
+          style="margin-left: auto;">閉じる</button>
       </div>
     </div>
   </div>
@@ -1210,16 +1666,16 @@
         <div class="party-detail-section">
           <h3><span class="section-icon">📜</span> 異次元レイドの完全仕様と戦闘フロー</h3>
           <p class="detail-value text-pre">
-【コンテンツ概要】
-異次元レイドは、古代ルーンの強化素材である「古代の練磨石」「古代の宝石」を獲得するための最高峰1人用レイド（全5段階）です。
-1回の入場につき次元ホールエネルギーを1個消費（連続バトル対応）。
-ボスは1週間ごとに各次元（カルザン ➔ エルニア ➔ ルメール ➔ カルデルン ➔ サクリファス 等）を巡回・移動します。
+            【コンテンツ概要】
+            異次元レイドは、古代ルーンの強化素材である「古代の練磨石」「古代の宝石」を獲得するための最高峰1人用レイド（全5段階）です。
+            1回の入場につき次元ホールエネルギーを1個消費（連続バトル対応）。
+            ボスは1週間ごとに各次元（カルザン ➔ エルニア ➔ ルメール ➔ カルデルン ➔ サクリファス 等）を巡回・移動します。
 
-【チーム編成の絶対ルール】
-・全3フェーズ連続戦闘で、各フェーズごとに「5体」のモンスターを編成（5体×3デッキ＝合計15体）。
-・同じモンスターを複数のフェーズで重複して編成することは不可（15体すべて異なるモンスター）。
-・各フェーズごとに個別のリーダースキルを設定可能（※効果はそのフェーズの5体のみに適用）。
-・Phase 2・Phase 3の条件は固定されているため、P2・P3デッキを強固に固定しておき、ボスの週替わり移動に合わせてP1のデッキのみを調整・特化させるのがセオリーです。
+            【チーム編成の絶対ルール】
+            ・全3フェーズ連続戦闘で、各フェーズごとに「5体」のモンスターを編成（5体×3デッキ＝合計15体）。
+            ・同じモンスターを複数のフェーズで重複して編成することは不可（15体すべて異なるモンスター）。
+            ・各フェーズごとに個別のリーダースキルを設定可能（※効果はそのフェーズの5体のみに適用）。
+            ・Phase 2・Phase 3の条件は固定されているため、P2・P3デッキを強固に固定しておき、ボスの週替わり移動に合わせてP1のデッキのみを調整・特化させるのがセオリーです。
           </p>
         </div>
 
@@ -1227,25 +1683,25 @@
         <div class="party-detail-section dim-phase-section dim-phase-1">
           <h3><span class="section-icon">🦅</span> Phase 1：週替わり異次元制限ボス戦 (5体編成)</h3>
           <p class="detail-value text-pre">
-【フェーズの仕組みと条件】
-・ボスが滞在している次元の入場ルールがそのまま適用されます。
-  - カルザン週：純正★4以下のみ編成可能
-  - エルニア週：同一属性のみ編成可能（風属性統一など）
-  - ルメール週：純正星ランク合計20以下
-  - カルデルン週：全4タイプ（攻撃・防御・体力・サポート）を各1体以上編成
-・ボスのHPを削り切るとボスが逃亡し、Phase 2へ自動移行します。
+            【フェーズの仕組みと条件】
+            ・ボスが滞在している次元の入場ルールがそのまま適用されます。
+            - カルザン週：純正★4以下のみ編成可能
+            - エルニア週：同一属性のみ編成可能（風属性統一など）
+            - ルメール週：純正星ランク合計20以下
+            - カルデルン週：全4タイプ（攻撃・防御・体力・サポート）を各1体以上編成
+            ・ボスのHPを削り切るとボスが逃亡し、Phase 2へ自動移行します。
 
-【編成の要点（カルザン週の例）】
-・ヴェルデハイル(L)のゲージ回し＋フランの免疫・攻撃バフ・回復。
-・二次覚醒ラオーク（協力攻撃）と二次覚醒クロー（弱化特効「傷口ほじくり返し」）でボスのHPを一気に削り落とす。
-・ローレンやカリンを添えることで、盾割り・攻撃弱化（剣折り）・回復阻害を初手から切らさないことが安定の秘訣。
+            【編成の要点（カルザン週の例）】
+            ・ヴェルデハイル(L)のゲージ回し＋フランの免疫・攻撃バフ・回復。
+            ・二次覚醒ラオーク（協力攻撃）と二次覚醒クロー（弱化特効「傷口ほじくり返し」）でボスのHPを一気に削り落とす。
+            ・ローレンやカリンを添えることで、盾割り・攻撃弱化（剣折り）・回復阻害を初手から切らさないことが安定の秘訣。
 
-【推奨ステータス基準】
-・ヴェルデハイル: 暴走+反撃 (クリ率100%必須、速度+80以上、体力+15000以上)
-・フラン: 迅速+反撃/元気 (速度+110以上、効果抵抗50%以上、体力+18000以上)
-・二次覚醒クロー: 激怒+刃 (攻撃+1400以上、クリ率85%以上、クリダメ180%以上)
-・二次覚醒ラオーク: 暴走+刃 (攻撃+1300以上、クリ率85%以上、クリダメ160%以上)
-・ローレン / カリン: 迅速+集中 / 反撃+闘志 (速度+90以上、的中45%以上、高耐久)
+            【推奨ステータス基準】
+            ・ヴェルデハイル: 暴走+反撃 (クリ率100%必須、速度+80以上、体力+15000以上)
+            ・フラン: 迅速+反撃/元気 (速度+110以上、効果抵抗50%以上、体力+18000以上)
+            ・二次覚醒クロー: 激怒+刃 (攻撃+1400以上、クリ率85%以上、クリダメ180%以上)
+            ・二次覚醒ラオーク: 暴走+刃 (攻撃+1300以上、クリ率85%以上、クリダメ160%以上)
+            ・ローレン / カリン: 迅速+集中 / 反撃+闘志 (速度+90以上、的中45%以上、高耐久)
           </p>
         </div>
 
@@ -1253,21 +1709,21 @@
         <div class="party-detail-section dim-phase-section dim-phase-2">
           <h3><span class="section-icon">🌲</span> Phase 2：繭＆ミニオン殲滅戦 (5体編成・固定条件)</h3>
           <p class="detail-value text-pre">
-【フェーズの仕組みと最重要ギミック】
-・逃亡したボスが中央の「繭（コクーン）」に籠もり、HPを回復しようとします。
-・同時にボスを守るミニオン（手下モンスター群）が出現。画面上部にボスのHP回復ゲージが表示されます。
-・【超重要】ミニオンを素早く全滅させるほど、ボスの回復量を低く抑えられ、Phase 3で覚醒・進化したボスの攻撃力上昇を大幅にカットできます！
+            【フェーズの仕組みと最重要ギミック】
+            ・逃亡したボスが中央の「繭（コクーン）」に籠もり、HPを回復しようとします。
+            ・同時にボスを守るミニオン（手下モンスター群）が出現。画面上部にボスのHP回復ゲージが表示されます。
+            ・【超重要】ミニオンを素早く全滅させるほど、ボスの回復量を低く抑えられ、Phase 3で覚醒・進化したボスの攻撃力上昇を大幅にカットできます！
 
-【編成の要点】
-・ミニオンを1ターンで一掃できる「全体攻撃（AoE）アタッカー」が極めて有効。
-・風属性軸ならルシェン（切断の魔法）＋アカムアミール（全体スタン＆弱化比例大砲）＋フレスベルグ（攻撃/速度バフ）＋ライリー/タラニス。
-・水属性/配布軸ならシグマルス（全体凍結大砲）＋コナミヤ＋メガン＋ヴィゴル＋バナード。
-・手持ちに応じてプロム(2A)、リンダ(2A)、ジーク等の高回転・全体攻撃持ちを組み込み、回復ゲージが溜まりきる前に殲滅します。
+            【編成の要点】
+            ・ミニオンを1ターンで一掃できる「全体攻撃（AoE）アタッカー」が極めて有効。
+            ・風属性軸ならルシェン（切断の魔法）＋アカムアミール（全体スタン＆弱化比例大砲）＋フレスベルグ（攻撃/速度バフ）＋ライリー/タラニス。
+            ・水属性/配布軸ならシグマルス（全体凍結大砲）＋コナミヤ＋メガン＋ヴィゴル＋バナード。
+            ・手持ちに応じてプロム(2A)、リンダ(2A)、ジーク等の高回転・全体攻撃持ちを組み込み、回復ゲージが溜まりきる前に殲滅します。
 
-【推奨ステータス基準】
-・ルシェン / アミール / シグマルス: 激怒+刃 (攻撃+1300以上、クリ率85%以上、クリダメ170%以上)
-・ライリー / コナミヤ: 暴走/迅速+意志 (速度+100以上、体力+24000以上)
-・タラニス: 守護+守護+意志 (速度+70以上、防御+1400以上、体力+18000以上)
+            【推奨ステータス基準】
+            ・ルシェン / アミール / シグマルス: 激怒+刃 (攻撃+1300以上、クリ率85%以上、クリダメ170%以上)
+            ・ライリー / コナミヤ: 暴走/迅速+意志 (速度+100以上、体力+24000以上)
+            ・タラニス: 守護+守護+意志 (速度+70以上、防御+1400以上、体力+18000以上)
           </p>
         </div>
 
@@ -1275,35 +1731,35 @@
         <div class="party-detail-section dim-phase-section dim-phase-3">
           <h3><span class="section-icon">💀</span> Phase 3：覚醒ボス決戦・シールド破壊 (5体編成・固定条件)</h3>
           <p class="detail-value text-pre">
-【フェーズの仕組みと「次元歪曲」シールド対策】
-・最終進化した覚醒ボスとの決戦（5体パーティ）。
-・ボスは「次元歪曲（Dimension Distortion）」という強力な被ダメージ大幅軽減シールドを発動します。
-・【最重要特効スキル】：「ダメージ減少効果を無視」するスキルを持つモンスターを編成することで、ボスのシールドを貫通して特大ダメージを与え、瞬時にシールドを粉砕できます！
+            【フェーズの仕組みと「次元歪曲」シールド対策】
+            ・最終進化した覚醒ボスとの決戦（5体パーティ）。
+            ・ボスは「次元歪曲（Dimension Distortion）」という強力な被ダメージ大幅軽減シールドを発動します。
+            ・【最重要特効スキル】：「ダメージ減少効果を無視」するスキルを持つモンスターを編成することで、ボスのシールドを貫通して特大ダメージを与え、瞬時にシールドを粉砕できます！
 
-【推奨モンスターと役割】
-① 水ユーベル (フリーレンコラボ): 【ユーザー所持・超特効】
-   パッシブ「鋭い直感」で相手のシールドやダメージ減少効果を完全に無視！ボスの次元歪曲シールドを一撃で切り裂く。
-② アイアン (火リビングアーマー 2A): 【無課金・特効】
-   スキルやパッシブで「ダメージ減少効果無視」を持ち、ボスのシールドを一撃で貫通破壊。
-③ カルカノ (火スナイパー):
-   パッシブの確定盾割りに加え、「ダメージ減少効果無視」の超精密射撃でボスのシールドを粉砕。
-④ ヒンメル:
-   ボス特攻（ボス戦与ダメージ+100%＆味方被ダメージ20%軽減）で圧倒的な削り速度と安全性を提供。
-⑤ ダリオン / ディアス:
-   自身以外の味方被ダメージを15〜20%常時カットするパッシブ＋盾割り。ヒンメルと合わせると最大40%被ダメカット！
-⑥ ヴェラモス / ルル(2A) / ネリオペ:
-   ボスの全体デバフを毎ターン自動解除＆免疫・回復（ネリオペなら全体CTリセットで水ユーベル即再装填）。
-⑦ ヴィゴル(2A) / ベラデオン(2A):
-   3連盾割り、全体速度バフ、回復、ゲージ上げでパーティの回転と火力を底上げ。
+            【推奨モンスターと役割】
+            ① 水ユーベル (フリーレンコラボ): 【ユーザー所持・超特効】
+            パッシブ「鋭い直感」で相手のシールドやダメージ減少効果を完全に無視！ボスの次元歪曲シールドを一撃で切り裂く。
+            ② アイアン (火リビングアーマー 2A): 【無課金・特効】
+            スキルやパッシブで「ダメージ減少効果無視」を持ち、ボスのシールドを一撃で貫通破壊。
+            ③ カルカノ (火スナイパー):
+            パッシブの確定盾割りに加え、「ダメージ減少効果無視」の超精密射撃でボスのシールドを粉砕。
+            ④ ヒンメル:
+            ボス特攻（ボス戦与ダメージ+100%＆味方被ダメージ20%軽減）で圧倒的な削り速度と安全性を提供。
+            ⑤ ダリオン / ディアス:
+            自身以外の味方被ダメージを15〜20%常時カットするパッシブ＋盾割り。ヒンメルと合わせると最大40%被ダメカット！
+            ⑥ ヴェラモス / ルル(2A) / ネリオペ:
+            ボスの全体デバフを毎ターン自動解除＆免疫・回復（ネリオペなら全体CTリセットで水ユーベル即再装填）。
+            ⑦ ヴィゴル(2A) / ベラデオン(2A):
+            3連盾割り、全体速度バフ、回復、ゲージ上げでパーティの回転と火力を底上げ。
 
-【推奨ステータス基準】
-・水ユーベル: 激怒+刃 (攻撃/クリダメ/攻撃 または 速度/クリダメ/攻撃、クリ率85%以上、クリダメ160%以上)
-・アイアン(2A): 守護+守護+意志 (防御/クリダメ/防御 または 防御/防御/体力、防御+1400以上)
-・カルカノ: 猛攻+意志 (攻撃+1300以上、クリ率70%以上、クリダメ160%以上)
-・ヒンメル: 激怒+刃 (速度+80以上、クリ率85%以上、クリダメ200%以上)
-・ダリオン(2A): 守護+守護+反撃 (防御+1200以上、体力+22000以上)
-・ヴェラモス / ルル(2A) / ネリオペ: 迅速/暴走+元気 (速度+90以上、体力+22000以上)
-・ヴィゴル(2A): 迅速+元気 (速度+115以上、体力+28000以上)
+            【推奨ステータス基準】
+            ・水ユーベル: 激怒+刃 (攻撃/クリダメ/攻撃 または 速度/クリダメ/攻撃、クリ率85%以上、クリダメ160%以上)
+            ・アイアン(2A): 守護+守護+意志 (防御/クリダメ/防御 または 防御/防御/体力、防御+1400以上)
+            ・カルカノ: 猛攻+意志 (攻撃+1300以上、クリ率70%以上、クリダメ160%以上)
+            ・ヒンメル: 激怒+刃 (速度+80以上、クリ率85%以上、クリダメ200%以上)
+            ・ダリオン(2A): 守護+守護+反撃 (防御+1200以上、体力+22000以上)
+            ・ヴェラモス / ルル(2A) / ネリオペ: 迅速/暴走+元気 (速度+90以上、体力+22000以上)
+            ・ヴィゴル(2A): 迅速+元気 (速度+115以上、体力+28000以上)
           </p>
         </div>
       </div>
@@ -1324,43 +1780,83 @@
   <nav class="app-nav">
     <button class="nav-item active" data-tab="all">
       <span class="nav-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+          <polyline points="9 22 9 12 15 12 15 22"></polyline>
+        </svg>
       </span>
       <span class="nav-label">すべて</span>
     </button>
     <button class="nav-item nav-item-rta" data-tab="rta">
       <span class="nav-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polygon
+            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+          </polygon>
+        </svg>
       </span>
       <span class="nav-label">ワリーナ</span>
     </button>
     <button class="nav-item" data-tab="guild">
       <span class="nav-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+        </svg>
       </span>
       <span class="nav-label">ギルド</span>
     </button>
     <button class="nav-item" data-tab="cairos">
       <span class="nav-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
       </span>
       <span class="nav-label">カイロス</span>
     </button>
     <button class="nav-item" data-tab="raid">
       <span class="nav-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+        </svg>
       </span>
       <span class="nav-label">レイド</span>
     </button>
     <button class="nav-item" data-tab="dimension">
       <span class="nav-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
+          <path d="M2 12h20"></path>
+        </svg>
       </span>
       <span class="nav-label">次元</span>
     </button>
+    <button class="nav-item nav-item-runes" data-tab="runes" id="nav-item-runes">
+      <span class="nav-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="6 3 18 3 22 9 12 22 2 9 6 3"></polygon>
+          <line x1="2" y1="9" x2="22" y2="9"></line>
+          <polyline points="12 22 16 9 12 3 8 9 12 22"></polyline>
+        </svg>
+      </span>
+      <span class="nav-label">ルーン</span>
+    </button>
     <button class="nav-item" data-tab="form" id="nav-item-form">
       <span class="nav-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
       </span>
       <span class="nav-label">追加</span>
     </button>
@@ -1372,4 +1868,5 @@
   <!-- JavaScriptファイル -->
   <script src="main.js" defer></script>
 </body>
+
 </html>

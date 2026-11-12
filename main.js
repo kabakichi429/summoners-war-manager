@@ -2723,11 +2723,11 @@ const elements = {
   monsterListModeBadge: document.getElementById('monster-list-mode-badge'),
   btnTopAddMonster: document.getElementById('btn-top-add-monster'),
   fabAddMonster: document.getElementById('fab-add-monster'),
-  
+
   monsterListAll: document.getElementById('monster-list-all'),
   monsterListGuild: document.getElementById('monster-list-guild'),
   monsterListCairos: document.getElementById('monster-list-cairos'),
-  
+
   partyListRaid: document.getElementById('raid-party-list'),
   raidSetCount: document.getElementById('raid-set-count'),
   btnAddRaidParty: document.getElementById('btn-add-raid-party'),
@@ -2736,7 +2736,7 @@ const elements = {
   countRaidAll: document.getElementById('count-raid-all'),
   countRaidFire: document.getElementById('count-raid-fire'),
   countRaidNormal: document.getElementById('count-raid-normal'),
-  
+
   // 次元ホール関連
   btnDimSubnavRaid: document.getElementById('btn-dim-subnav-raid'),
   btnDimSubnavRemains: document.getElementById('btn-dim-subnav-remains'),
@@ -2767,10 +2767,10 @@ const elements = {
   guildCountSub: document.getElementById('guild-count-sub'),
   guildTartarosCount: document.getElementById('guild-tartaros-count'),
   cairosCount: document.getElementById('cairos-count'),
-  
+
   btnResetPreset: document.getElementById('btn-reset-preset'),
   toastContainer: document.getElementById('toast-container'),
-  
+
   // モンスターフォーム
   monsterForm: document.getElementById('monster-form'),
   formTitle: document.getElementById('form-title'),
@@ -2800,7 +2800,7 @@ const elements = {
   formGeneralMemo: document.getElementById('form-general'),
   formFavorite: document.getElementById('form-favorite'),
   btnCancelForm: document.getElementById('btn-cancel-form'),
-  
+
   // モンスター詳細モーダル
   detailModal: document.getElementById('detail-modal'),
   modalClose: document.getElementById('modal-close'),
@@ -2821,7 +2821,7 @@ const elements = {
   modalGeneralMemo: document.getElementById('modal-general-memo'),
   modalBtnDelete: document.getElementById('modal-btn-delete'),
   modalBtnEdit: document.getElementById('modal-btn-edit'),
-  
+
   modalSectionGuild: document.getElementById('modal-section-guild'),
   modalSectionCairos: document.getElementById('modal-section-cairos'),
   modalSectionGeneral: document.getElementById('modal-section-general'),
@@ -2912,6 +2912,8 @@ const elements = {
   btnApplySyncMerge: document.getElementById('btn-apply-sync-merge'),
   syncFileInput: document.getElementById('sync-file-input'),
   btnTriggerFileInput: document.getElementById('btn-trigger-file-input'),
+  syncCountMules: document.getElementById('sync-count-mules'),
+  btnHeaderRunes: document.getElementById('btn-header-runes'),
 
   // タルタロスの迷宮 クイックバナー
   bannerGoTartaros: document.getElementById('banner-go-tartaros')
@@ -3349,7 +3351,10 @@ function initApp() {
     dimensionRaidSets = [...PRESET_DIMENSION_RAID_SETS];
     saveDimensionRaidSetsToLocalStorage();
   }
-  
+
+  // ルーン整理・人間倉庫データのロード
+  initRuneManagerData();
+
   sortMonsters();
   sortParties();
   renderAll();
@@ -3390,7 +3395,7 @@ function showToast(message) {
   toast.className = 'toast';
   toast.innerHTML = `<span>🛡️</span><span>${escapeHtml(message)}</span>`;
   elements.toastContainer.appendChild(toast);
-  
+
   // 3秒後に削除
   setTimeout(() => {
     toast.remove();
@@ -3402,7 +3407,7 @@ function escapeHtml(string) {
   if (typeof string !== 'string') {
     return '';
   }
-  return string.replace(/[&<>"']/g, function(match) {
+  return string.replace(/[&<>"']/g, function (match) {
     const escapeMap = {
       '&': '&amp;',
       '<': '&lt;',
@@ -3497,6 +3502,7 @@ function renderAll() {
   renderGuildTartarosParties();
   renderRaidParties();
   renderDimensionView();
+  renderRuneManagerView();
 }
 
 // 速度文字列（例: "+185"）から数値比較用の整数を取得
@@ -3520,7 +3526,7 @@ function getPriorityRank(priorityStr) {
 // リストの描画
 function renderMonsterList(type, containerElement, countElement) {
   containerElement.innerHTML = '';
-  
+
   // フィルタリング処理
   const filtered = monsters.filter(monster => {
     // 1. 属性フィルター
@@ -3542,7 +3548,7 @@ function renderMonsterList(type, containerElement, countElement) {
         return false;
       }
     }
-    
+
     // 3. タブごとの特化フィルター
     if (type === 'guild' && (!monster.guildMemo || monster.guildMemo.trim() === '')) {
       return false;
@@ -3550,7 +3556,7 @@ function renderMonsterList(type, containerElement, countElement) {
     if (type === 'cairos' && (!monster.cairosMemo || monster.cairosMemo.trim() === '')) {
       return false;
     }
-    
+
     // 4. 検索キーワードフィルター
     if (searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase();
@@ -3564,10 +3570,10 @@ function renderMonsterList(type, containerElement, countElement) {
       const generalMatch = (monster.generalMemo || '').toLowerCase().includes(q);
       const runeMatch = (monster.recommendedRunes || '').toLowerCase().includes(q);
       const artifactMatch = (monster.recommendedArtifacts || '').toLowerCase().includes(q);
-      
+
       return nameMatch || roleMatch || rtaMatch || rtaSpeedMatch || rtaPrioMatch || guildMatch || cairosMatch || generalMatch || runeMatch || artifactMatch;
     }
-    
+
     return true;
   });
 
@@ -3589,15 +3595,15 @@ function renderMonsterList(type, containerElement, countElement) {
     if (!a.isFavorite && b.isFavorite) return 1;
     return new Date(b.updatedAt) - new Date(a.updatedAt);
   });
-  
+
   // 件数表示
   countElement.textContent = filtered.length;
-  
+
   if (filtered.length === 0) {
     containerElement.appendChild(createEmptyState());
     return;
   }
-  
+
   // カードを生成して挿入
   filtered.forEach(monster => {
     containerElement.appendChild(createMonsterCard(monster));
@@ -3620,13 +3626,13 @@ function createMonsterCard(monster) {
   const card = document.createElement('div');
   card.className = `monster-card attr-${monster.attribute}`;
   card.dataset.id = monster.id;
-  
+
   // 各メモが存在するかのインジケータ判定
   const hasRta = monster.isRta || (monster.rtaMemo && monster.rtaMemo.trim() !== '');
   const hasGuild = monster.guildMemo && monster.guildMemo.trim() !== '';
   const hasCairos = monster.cairosMemo && monster.cairosMemo.trim() !== '';
   const hasGeneral = monster.generalMemo && monster.generalMemo.trim() !== '';
-  
+
   // 星の表示
   const starString = '★'.repeat(parseInt(monster.stars || 5));
 
@@ -3637,7 +3643,7 @@ function createMonsterCard(monster) {
   const rtaPriorityBadgeHtml = (monster.isRta && monster.rtaPriority)
     ? `<span class="card-rta-priority-badge" title="ピック優先度">${escapeHtml(monster.rtaPriority)}</span>`
     : '';
-  
+
   card.innerHTML = `
     <div class="card-header">
       <div class="card-title">
@@ -3671,7 +3677,7 @@ function createMonsterCard(monster) {
       </div>
     </div>
   `;
-  
+
   // カード全体のクリックイベント（詳細モーダル起動）
   card.addEventListener('click', (e) => {
     // お気に入りボタンや編集ボタンのクリック時は詳細を開かないようにする
@@ -3689,14 +3695,14 @@ function createMonsterCard(monster) {
       openFormForEdit(monster.id);
     });
   }
-  
+
   // お気に入りトグルイベント
   const favBtn = card.querySelector('.favorite-btn');
   favBtn.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleFavorite(monster.id);
   });
-  
+
   return card;
 }
 
@@ -4384,7 +4390,7 @@ function renderGuildTartarosParties() {
 function updateBossStrategyBanner() {
   if (!elements.bossStrategyBanner) return;
   const data = BOSS_STRATEGY_DATA[tartarosBossFilter] || BOSS_STRATEGY_DATA.all;
-  
+
   elements.bossStrategyBanner.className = `boss-strategy-banner ${data.theme || ''}`;
   elements.bossStrategyBanner.innerHTML = `
     <div class="strategy-icon">${data.icon}</div>
@@ -4472,7 +4478,7 @@ function renderRaidParties() {
     const reqMatch = (set.requirementsMemo || '').toLowerCase().includes(q);
     const speedMatch = (set.speedTuningMemo || '').toLowerCase().includes(q);
     const bossMatch = (set.boss || '').toLowerCase().includes(q);
-    
+
     // 各チームのメンバー検索
     const teams = [set.team1, set.team2, set.team3];
     const memberMatch = teams.some(t => {
@@ -4545,7 +4551,7 @@ function renderRaidParties() {
     };
 
     const isFireBeast = set.boss === '紅炎の魔獣';
-    const bossBadgeHtml = isFireBeast 
+    const bossBadgeHtml = isFireBeast
       ? `<span class="raid-set-badge-tag" style="background: rgba(255, 71, 87, 0.2); border-color: #ff4757; color: #ff6b81;">🔥 紅炎の魔獣 (火)</span>`
       : `<span class="raid-set-badge-tag" style="background: rgba(168, 85, 247, 0.2); border-color: #a855f7; color: #c084fc;">⚡ 混沌のカドゥルー</span>`;
 
@@ -4695,18 +4701,18 @@ function openRaidSetDetailModal(setId) {
         elements.modalPartyTurnOrder.innerHTML = `
           <div class="raid-turn-order-list">
             ${teamLines.map((line, idx) => {
-              const teamMatch = line.match(/(?:チーム|TEAM)\s*([123１２３])/i);
-              const teamNum = teamMatch ? teamMatch[1] : (idx + 1);
-              const colorClass = `team-badge-${teamNum}`;
-              const parts = line.split(/:\s*/);
-              const flowText = parts.length > 1 ? parts.slice(1).join(': ') : line;
-              return `
+          const teamMatch = line.match(/(?:チーム|TEAM)\s*([123１２３])/i);
+          const teamNum = teamMatch ? teamMatch[1] : (idx + 1);
+          const colorClass = `team-badge-${teamNum}`;
+          const parts = line.split(/:\s*/);
+          const flowText = parts.length > 1 ? parts.slice(1).join(': ') : line;
+          return `
                 <div class="raid-turn-row">
                   <span class="raid-turn-team-badge ${colorClass}">TEAM ${teamNum}</span>
                   <div class="raid-turn-flow-text">${escapeHtml(flowText)}</div>
                 </div>
               `;
-            }).join('')}
+        }).join('')}
           </div>
         `;
       } else {
@@ -5092,10 +5098,10 @@ function renderDimensionAwakeningParties() {
     awkParties = awkParties.filter(p => {
       if (dimensionAwakeningFilter === 'フランケン・リビングアーマー') {
         return (p.name && (p.name.includes('フランケン') || p.name.includes('リビングアーマー') || p.name.includes('ブルドーザー') || p.name.includes('コッパー'))) ||
-               (p.constraintBadge && (p.constraintBadge.includes('フランケン') || p.constraintBadge.includes('リビングアーマー')));
+          (p.constraintBadge && (p.constraintBadge.includes('フランケン') || p.constraintBadge.includes('リビングアーマー')));
       }
       return (p.name && p.name.includes(dimensionAwakeningFilter)) ||
-             (p.constraintBadge && p.constraintBadge.includes(dimensionAwakeningFilter));
+        (p.constraintBadge && p.constraintBadge.includes(dimensionAwakeningFilter));
     });
   }
 
@@ -5218,9 +5224,9 @@ function createDimensionPartyCard(party) {
 function openDetailModal(id) {
   const monster = monsters.find(m => m.id === id);
   if (!monster) return;
-  
+
   currentEditId = id;
-  
+
   // バッジとテキストの設定
   elements.modalAttrBadge.textContent = monster.attribute;
   elements.modalAttrBadge.className = `monster-attr-badge attr-${monster.attribute}`;
@@ -5248,7 +5254,7 @@ function openDetailModal(id) {
 
   elements.modalMonsterName.textContent = monster.name;
   elements.modalMonsterStars.textContent = '★'.repeat(parseInt(monster.stars || 5));
-  
+
   elements.modalRole.textContent = monster.role || '未登録';
   elements.modalRunes.textContent = monster.recommendedRunes || '未登録';
 
@@ -5261,7 +5267,7 @@ function openDetailModal(id) {
       elements.modalSectionArtifacts.style.display = 'none';
     }
   }
-  
+
   // ワールドアリーナメモ
   if (elements.modalSectionRta && elements.modalRtaMemo) {
     if (monster.isRta || (monster.rtaMemo && monster.rtaMemo.trim() !== '')) {
@@ -5283,7 +5289,7 @@ function openDetailModal(id) {
   } else {
     elements.modalSectionGuild.style.display = 'none';
   }
-  
+
   // カイロスメモ
   if (monster.cairosMemo && monster.cairosMemo.trim() !== '') {
     elements.modalCairosMemo.textContent = monster.cairosMemo;
@@ -5291,7 +5297,7 @@ function openDetailModal(id) {
   } else {
     elements.modalSectionCairos.style.display = 'none';
   }
-  
+
   // 一般メモ
   if (monster.generalMemo && monster.generalMemo.trim() !== '') {
     elements.modalGeneralMemo.textContent = monster.generalMemo;
@@ -5299,7 +5305,7 @@ function openDetailModal(id) {
   } else {
     elements.modalSectionGeneral.style.display = 'none';
   }
-  
+
   // モーダルを表示
   elements.detailModal.style.display = 'flex';
   document.body.style.overflow = 'hidden'; // 背面のスクロールを防止
@@ -5314,7 +5320,7 @@ function closeDetailModal() {
 function openFormForEdit(id) {
   const monster = monsters.find(m => m.id === id);
   if (!monster) return;
-  
+
   elements.formTitle.textContent = 'モンスター情報を編集';
   elements.formId.value = monster.id;
   elements.formName.value = monster.name;
@@ -5344,7 +5350,7 @@ function openFormForEdit(id) {
   elements.formCairosMemo.value = monster.cairosMemo || '';
   elements.formGeneralMemo.value = monster.generalMemo || '';
   elements.formFavorite.checked = monster.isFavorite || false;
-  
+
   // タブをフォームに切り替える
   switchTab('form');
   closeDetailModal();
@@ -5450,7 +5456,7 @@ function setupEventListeners() {
       });
     });
   }
-  
+
   // 属性フィルターボタンのクリック（スマホでもタップしやすい全幅グリッド）
   elements.attrBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -5666,7 +5672,7 @@ function setupEventListeners() {
       elements.formPartyTurn.value = '';
     });
   }
-  
+
   // リアルタイム検索
   elements.searchInput.addEventListener('input', (e) => {
     searchQuery = e.target.value;
@@ -5677,7 +5683,7 @@ function setupEventListeners() {
     }
     renderAll();
   });
-  
+
   // 検索クリアボタン
   elements.btnClearSearch.addEventListener('click', () => {
     elements.searchInput.value = '';
@@ -5685,7 +5691,7 @@ function setupEventListeners() {
     elements.btnClearSearch.style.display = 'none';
     renderAll();
   });
-  
+
   // モーダル閉じる
   elements.modalClose.addEventListener('click', closeDetailModal);
   elements.detailModal.addEventListener('click', (e) => {
@@ -5693,14 +5699,14 @@ function setupEventListeners() {
       closeDetailModal();
     }
   });
-  
+
   // モーダル編集ボタン
   elements.modalBtnEdit.addEventListener('click', () => {
     if (currentEditId) {
       openFormForEdit(currentEditId);
     }
   });
-  
+
   // モーダル削除ボタン
   elements.modalBtnDelete.addEventListener('click', () => {
     if (currentEditId) {
@@ -5714,13 +5720,13 @@ function setupEventListeners() {
       }
     }
   });
-  
+
   // フォームキャンセルボタン
   elements.btnCancelForm.addEventListener('click', () => {
     resetForm();
     switchTab('all');
   });
-  
+
   // フォーム送信
   elements.monsterForm.addEventListener('submit', handleFormSubmit);
 
@@ -5818,12 +5824,14 @@ function setupEventListeners() {
   if (elements.partyForm) {
     elements.partyForm.addEventListener('submit', handlePartyFormSubmit);
   }
-  
-  // プリセットデータへのリセットボタン（モンスター＆パーティ両方を初期化）
+
+  // プリセットデータへのリセットボタン（モンスター＆パーティ・ルーン整理データを初期化）
   elements.btnResetPreset.addEventListener('click', () => {
-    if (confirm('登録したモンスターメモおよび周回パーティを初期プリセットに戻しますか？\n(自分で作成・編集したデータはすべてリセットされます)')) {
+    if (confirm('登録したモンスターメモ・周回パーティ・人間倉庫データを初期プリセットに戻しますか？\n(自分で作成・編集したデータはすべてリセットされます)')) {
       localStorage.removeItem('summoners_war_manager_data');
       localStorage.removeItem('summoners_war_party_data');
+      localStorage.removeItem('summoners_war_rune_mules');
+      localStorage.removeItem('summoners_war_rune_prefs');
       initApp();
       showToast('全データを初期プリセットにリセットしました');
       switchTab('all');
@@ -5918,8 +5926,8 @@ function setupEventListeners() {
   // 異界レイド パーティ追加ボタン
   if (elements.btnAddRaidParty) {
     elements.btnAddRaidParty.addEventListener('click', () => {
-      const defaultDungeon = raidBossFilter === '紅炎の魔獣' 
-        ? '異界レイド (紅炎の魔獣5階)' 
+      const defaultDungeon = raidBossFilter === '紅炎の魔獣'
+        ? '異界レイド (紅炎の魔獣5階)'
         : '異界レイド (ソロ・カドゥルー5階)';
       openPartyForm(null, defaultDungeon);
     });
@@ -5988,12 +5996,15 @@ function setupEventListeners() {
       if (e.target === elements.dimRaidDetailModal) closeDimensionRaidModal();
     });
   }
+
+  // ルーン整理・断捨離ナビ関連イベントの設定
+  setupRuneManagerEvents();
 }
 
 // タブ切り替え制御
 function switchTab(tabId) {
   activeTab = tabId;
-  
+
   // ナビゲーションバーのアクティブクラス更新
   elements.navListItems.forEach(item => {
     if (item.dataset.tab === tabId) {
@@ -6019,7 +6030,7 @@ function switchTab(tabId) {
       });
     }
   }
-  
+
   // コンテンツペインのアクティブ更新 ('rta' の場合は 'tab-content-all' を表示)
   const targetPaneId = tabId === 'rta' ? 'tab-content-all' : `tab-content-${tabId}`;
   elements.tabPanes.forEach(pane => {
@@ -6029,16 +6040,21 @@ function switchTab(tabId) {
       pane.classList.remove('active');
     }
   });
-  
-  // 検索・フィルターエリアと右下FABボタンはフォームタブ以外の時だけ表示する
-  if (tabId === 'form') {
+
+  // 検索・フィルターエリアと右下FABボタンはフォームタブ・ルーン整理タブ以外の時だけ表示する
+  if (tabId === 'form' || tabId === 'runes') {
     elements.searchFilterArea.style.display = 'none';
     if (elements.fabAddMonster) elements.fabAddMonster.style.display = 'none';
   } else {
     elements.searchFilterArea.style.display = 'flex';
     if (elements.fabAddMonster) elements.fabAddMonster.style.display = 'flex';
   }
-  
+
+  // ヘッダーのルーン整理ボタンのアクティブ状態同期
+  if (elements.btnHeaderRunes) {
+    elements.btnHeaderRunes.classList.toggle('active', tabId === 'runes');
+  }
+
   // フォームタブに遷移する際は、新規追加ならフォームをクリアする
   if (tabId === 'form' && !elements.formId.value) {
     resetForm();
@@ -6066,7 +6082,12 @@ function switchTab(tabId) {
   if (tabId === 'dimension') {
     switchDimensionSubtab(dimensionSubtab);
   }
-  
+
+  // ルーン整理タブを開いたときは描画を更新
+  if (tabId === 'runes') {
+    renderRuneManagerView();
+  }
+
   // リストの再描画
   renderAll();
 }
@@ -6075,26 +6096,26 @@ function switchTab(tabId) {
 function handleFormSubmit(e) {
   e.preventDefault();
   clearErrors();
-  
+
   // バリデーション
   const name = elements.formName.value.trim();
   const attribute = elements.formAttribute.value;
   const stars = elements.formStars.value;
-  
+
   let hasError = false;
-  
+
   if (!name) {
     document.getElementById('error-name').style.display = 'block';
     elements.formName.classList.add('error');
     hasError = true;
   }
-  
+
   if (!attribute) {
     document.getElementById('error-attribute').style.display = 'block';
     elements.formAttribute.classList.add('error');
     hasError = true;
   }
-  
+
   if (hasError) {
     // 最初の入力エラーにフォーカス
     if (!name) {
@@ -6104,7 +6125,7 @@ function handleFormSubmit(e) {
     }
     return;
   }
-  
+
   const id = elements.formId.value;
   const rtaSpeedVal = elements.formRtaSpeed ? elements.formRtaSpeed.value.trim() : '';
   const rtaPriorityVal = elements.formRtaPriority ? elements.formRtaPriority.value : '';
@@ -6128,7 +6149,7 @@ function handleFormSubmit(e) {
     isFavorite: elements.formFavorite.checked,
     updatedAt: new Date().toISOString()
   };
-  
+
   if (id) {
     // 編集更新
     const index = monsters.findIndex(m => m.id === id);
@@ -6143,7 +6164,7 @@ function handleFormSubmit(e) {
     monsters.push(monsterData);
     showToast(`${name} を登録しました！`);
   }
-  
+
   // 保存とリスト更新
   sortMonsters();
   saveToLocalStorage();
@@ -6161,6 +6182,7 @@ function openSyncModal() {
   // 現在のデータ件数を反映
   if (elements.syncCountMonsters) elements.syncCountMonsters.textContent = `${monsters.length}体`;
   if (elements.syncCountParties) elements.syncCountParties.textContent = `${parties.length}編成`;
+  if (elements.syncCountMules) elements.syncCountMules.textContent = `${runeMules.length}体`;
   if (elements.syncInputCode) elements.syncInputCode.value = '';
 
   // モーダルを開いた時点で軽量同期コードを自動生成してプレビュー欄に表示
@@ -6175,7 +6197,7 @@ function openSyncModal() {
   } catch (e) {
     console.error('Failed to pre-generate sync code', e);
   }
-  
+
   elements.syncModal.style.display = 'flex';
   document.body.style.overflow = 'hidden';
 }
@@ -6272,13 +6294,19 @@ function generateSyncCode() {
   });
 
   const litePayload = {
-    v: 3,
+    v: 4,
     cm: customMonsters,
     mm: modifiedMonsters,
     dm: deletedMonsterIds,
     cp: customParties,
     mp: modifiedParties,
-    dp: deletedPartyIds
+    dp: deletedPartyIds,
+    rm: runeMules,
+    rp: {
+      tier: runeState.tier,
+      cleanupCompleted: runeState.cleanupCompleted,
+      soldCount: runeState.soldCount
+    }
   };
 
   const jsonStr = JSON.stringify(litePayload);
@@ -6378,25 +6406,31 @@ function copyToClipboardFallback(text) {
 function handleDownloadBackup() {
   const payload = {
     appName: "SummonersWar_Manager",
-    version: "3.0",
+    version: "4.0",
     exportedAt: new Date().toISOString(),
     monstersCount: monsters.length,
     partiesCount: parties.length,
     monsters: monsters,
     parties: parties,
     raidSets: raidSets,
-    dimensionRaidSets: dimensionRaidSets
+    dimensionRaidSets: dimensionRaidSets,
+    runeMules: runeMules,
+    runePrefs: {
+      tier: runeState.tier,
+      cleanupCompleted: runeState.cleanupCompleted,
+      soldCount: runeState.soldCount
+    }
   };
   const jsonStr = JSON.stringify(payload, null, 2);
   const blob = new Blob([jsonStr], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
-  
+
   const now = new Date();
   const y = now.getFullYear();
   const m = String(now.getMonth() + 1).padStart(2, '0');
   const d = String(now.getDate()).padStart(2, '0');
   const filename = `sw_manager_backup_${y}${m}${d}.json`;
-  
+
   const a = document.createElement('a');
   a.href = url;
   a.download = filename;
@@ -6404,7 +6438,7 @@ function handleDownloadBackup() {
   a.click();
   document.body.removeChild(a);
   setTimeout(() => URL.revokeObjectURL(url), 1000);
-  
+
   showToast(`💾 バックアップファイル「${filename}」を保存しました`);
 }
 
@@ -6483,7 +6517,9 @@ function parseSyncPayload(rawInput) {
       customMonsters: Array.isArray(lite.cm) ? lite.cm : [],
       modifiedMonsters: Array.isArray(lite.mm) ? lite.mm : [],
       customParties: Array.isArray(lite.cp) ? lite.cp : [],
-      modifiedParties: Array.isArray(lite.mp) ? lite.mp : []
+      modifiedParties: Array.isArray(lite.mp) ? lite.mp : [],
+      runeMules: Array.isArray(lite.rm) ? lite.rm : null,
+      runePrefs: lite.rp || null
     };
   }
 
@@ -6521,14 +6557,16 @@ function parseSyncPayload(rawInput) {
     monsters: Array.isArray(data.monsters) ? data.monsters : [],
     parties: Array.isArray(data.parties) ? data.parties : [],
     raidSets: Array.isArray(data.raidSets) ? data.raidSets : [],
-    dimensionRaidSets: Array.isArray(data.dimensionRaidSets) ? data.dimensionRaidSets : []
+    dimensionRaidSets: Array.isArray(data.dimensionRaidSets) ? data.dimensionRaidSets : [],
+    runeMules: Array.isArray(data.runeMules) ? data.runeMules : null,
+    runePrefs: data.runePrefs || null
   };
 }
 
 // データの反映実行 (mode: 'replace' または 'merge')
 function applySyncData(payload, mode = 'replace') {
   if (mode === 'replace') {
-    const confirmMsg = `同期を実行すると、現在の端末のデータが同期データで更新されます。\nよろしいですか？\n\n【反映されるデータ】\n・モンスター: ${payload.monsters.length}体\n・周回パーティ: ${payload.parties.length}編成`;
+    const confirmMsg = `同期を実行すると、現在の端末のデータが同期データで更新されます。\nよろしいですか？\n\n【反映されるデータ】\n・モンスター: ${payload.monsters.length}体\n・周回パーティ: ${payload.parties.length}編成${Array.isArray(payload.runeMules) ? `\n・ルーン保管係: ${payload.runeMules.length}体` : ''}`;
     if (confirm(confirmMsg)) {
       monsters = payload.monsters;
       parties = payload.parties;
@@ -6539,6 +6577,16 @@ function applySyncData(payload, mode = 'replace') {
       if (payload.dimensionRaidSets && payload.dimensionRaidSets.length > 0) {
         dimensionRaidSets = payload.dimensionRaidSets;
         saveDimensionRaidSetsToLocalStorage();
+      }
+      if (Array.isArray(payload.runeMules)) {
+        runeMules = payload.runeMules;
+        saveRuneMulesToLocalStorage();
+      }
+      if (payload.runePrefs) {
+        if (payload.runePrefs.tier) runeState.tier = payload.runePrefs.tier;
+        if (Array.isArray(payload.runePrefs.cleanupCompleted)) runeState.cleanupCompleted = payload.runePrefs.cleanupCompleted;
+        if (typeof payload.runePrefs.soldCount === 'number') runeState.soldCount = payload.runePrefs.soldCount;
+        saveRunePrefsToLocalStorage();
       }
       saveToLocalStorage();
       savePartiesToLocalStorage();
@@ -6581,6 +6629,18 @@ function applySyncData(payload, mode = 'replace') {
         pAdded++;
       }
     });
+
+    if (Array.isArray(payload.runeMules)) {
+      payload.runeMules.forEach(nm => {
+        const idx = runeMules.findIndex(rm => rm.id === nm.id || (nm.name && rm.name === nm.name));
+        if (idx !== -1) {
+          runeMules[idx] = { ...runeMules[idx], ...nm };
+        } else if (nm.name) {
+          runeMules.push(nm);
+        }
+      });
+      saveRuneMulesToLocalStorage();
+    }
 
     saveToLocalStorage();
     savePartiesToLocalStorage();
@@ -6627,4 +6687,1424 @@ function handleSyncFileSelect(e) {
   };
   reader.readAsText(file, 'UTF-8');
 }
+
+// =============================================================================
+// 💎 ルーン整理・断捨離＆売却判断ナビ (5大機能統合モジュール)
+// =============================================================================
+
+// 初期サンプル人間倉庫（ルーン保管係）プリセット
+const PRESET_RUNE_MULES = [
+  {
+    id: 'mule-preset-fight-1',
+    name: '倉庫の未育成★4 (闘志1号)',
+    attribute: '火',
+    slots: 6,
+    category: '🔥 闘志ルーン保管',
+    memo: 'カイロス・ソロレイド調整用の闘志ルーン（速度付き・クリダメ付き等）を6個装着して保管',
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'mule-preset-reapp-1',
+    name: '倉庫の未育成★4 (練成ベース係)',
+    attribute: '水',
+    slots: 6,
+    category: '💎 練成待ちレジェンド',
+    memo: '暴走・意志・迅速の2/4/6番レジェンド（速度・体力%・クリダメ）の初期化石待ちストック',
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: 'mule-preset-leo-1',
+    name: '倉庫の未育成★4 (レオ用速度0係)',
+    attribute: '風',
+    slots: 6,
+    category: '🦁 レオ用(速度0高火力)',
+    memo: '速度+0でクリ率・クリダメ・攻撃%・体力%が高く跳ねたレオ編成用ルーンを6個保管',
+    updatedAt: new Date().toISOString()
+  }
+];
+
+// 一括売却ツアー（8ステップ断捨離チェックリスト）データ
+const CLEANUP_STEPS_DATA = [
+  {
+    id: 'step-1',
+    title: 'Step 1：2・4・6番の「実数メインOP（速度以外）」を一括売却',
+    impact: '目安: 20〜60個削減 / 安全度100%',
+    filterRecipe: '【番号】2, 4, 6 ➔ 【メインOP】体力(+), 攻撃力(+), 防御力(+) ➔ 【初期ランク】ヒーロー以下',
+    desc: '偶数スロット（2・4・6番）のメインOPが「％」ではなく「＋（実数）」のルーンは、どのモンスターにも使いません。一括選択してすべてマナに変えましょう！',
+    caution: '※例外：「初期レジェンド（橙）かつサブOPに攻撃速度があるもの」だけは+6〜+9まで叩き、速度が3ハネ以上すれば最速バラ枠として使えます（跳ねなければ即売却）。'
+  },
+  {
+    id: 'step-2',
+    title: 'Step 2：アタッカー系（激怒・猛攻・刃）の「6番 効果抵抗 / 効果的中」を一括売却',
+    impact: '目安: 15〜40個削減 / 安全度99%',
+    filterRecipe: '【種類】激怒, 猛攻, 刃 ➔ 【番号】6番 ➔ 【メインOP】効果抵抗, 効果的中',
+    desc: '激怒・猛攻・刃は火力を出すためのセットです。6番が効果抵抗や効果的中のものはアタッカーの役割と完全に矛盾するため、レジェンドであっても練磨・練成の価値がありません。',
+    caution: '※例外：サブOPに「攻撃速度」があり、+6で速度が2ハネ(+16+)〜3ハネする場合は「迅速のバラ枠パーツ」としてのみ残す価値があります。速度がなければ即売却！'
+  },
+  {
+    id: 'step-3',
+    title: 'Step 3：迅速ルーンの「サブOPに速度がないヒーロー（紫）」を一掃',
+    impact: '目安: 20〜50個削減 / 安全度98%',
+    filterRecipe: '【種類】迅速 ➔ 【番号】1, 3, 5, 4, 6番 ➔ 【初期ランク】ヒーロー以下 ➔ サブOPに「攻撃速度」がないものを選択',
+    desc: '迅速ルーンは「最速を取るため」に着けるセットです。サブOPに最初から攻撃速度が付いていないヒーロールーンは、後からジェムで速度を付けても最大+10程度にしかならないため100%不要です！',
+    caution: '※2番のメイン「攻撃速度」だけは例外としてキープしてください。'
+  },
+  {
+    id: 'step-4',
+    title: 'Step 4：1・3・5番（奇数）の「未強化ヒーローで速度なし＆実数混じり」を一掃',
+    impact: '目安: 40〜100個削減 / 効果最大！',
+    filterRecipe: '【番号】1, 3, 5番 ➔ 【強化度】+0〜+3 ➔ 【初期ランク】ヒーロー ➔ 【サブOP】体力(+), 攻撃力(+), 防御力(+)',
+    desc: 'インベントリ圧迫の最大の原因が「なんとなく残した1・3・5番の紫ルーン」です！奇数番はメインOPが固定でドロップ率が高いため、サブOPに実数が混ざり速度もないヒーローは思い切って全売却しましょう。',
+    caution: '※例外：「破壊・反撃・守護」で体力%・防御%・クリ率・抵抗の3つが綺麗に揃っている高効率候補のみ+6まで様子見。'
+  },
+  {
+    id: 'step-5',
+    title: 'Step 5：昔叩きかけて放置している「+3 〜 +9」の負けルーンを成仏させる',
+    impact: '目安: 30〜80個削減 / 即効性◎',
+    filterRecipe: '【強化度】「+3 〜 +9」に指定して検索',
+    desc: '過去に「+6まで叩いて速度が跳ねなかった」「実数に跳ねて強化を止めた」まま、売却し忘れてインベントリに眠っているルーンが必ず大量にあります！強化度+3〜+9で絞り込むと一網打尽にできます。',
+    caution: '※+6時点で「速度2ハネ未満」または「実数・不協和音OPに跳ねたルーン」はその場ですべて売却！'
+  },
+  {
+    id: 'step-6',
+    title: 'Step 6：ダブつきがちな「4番 クリ率」ルーンの不要セット整理',
+    impact: '目安: 10〜30個削減',
+    filterRecipe: '【番号】4番 ➔ 【メインOP】クリティカル率',
+    desc: 'アタッカーの基本は「4番クリダメ」です。4番クリ率を使うのは「ヴェルデハイル（暴走/反撃/迅速）」「水イフ・スペクトラ・オラクル系・イカル」など一部のみ。元気・忍耐・保護・集中などでサブOPが微妙な4番クリ率はすべて売却してOK！',
+    caution: '※暴走・反撃・迅速・刃の4番クリ率で「速度」や「体力%・攻撃%」が跳ねているものはヴェルデハイル等用にキープ。'
+  },
+  {
+    id: 'step-7',
+    title: 'Step 7：基礎2セット（元気・守護・集中・忍耐）の低スコア紫ルーン整理',
+    impact: '目安: 20〜50個削減',
+    filterRecipe: '【種類】元気, 守護, 集中, 忍耐 ➔ 【初期ランク】ヒーロー',
+    desc: 'カイロスで副産物として大量に落ちる元気・集中・忍耐・守護は、意志や破壊に比べて余りやすいセットです。+6時点で「速度+15以上」または「目的ステータス（体力%や防御%等）が2ハネ(+22%以上)」していないヒーローは売却しましょう。',
+    caution: '※ダリオン・タラニス・イカル用の「守護（防御%特化）」や、ヴェルデ用の「反撃」は必要数だけ確保。'
+  },
+  {
+    id: 'step-8',
+    title: 'Step 8：【見落としがち】実数ジェム＆レア（青）変換ジェムの一括売却',
+    impact: 'マナ大量獲得＆ジェム枠確保',
+    filterRecipe: '【ルーン管理 ➔ ジェム/練磨石タブ】➔ 実数（体力+/攻撃+/防御+）の変換ジェム ＆ 青色の変換ジェム',
+    desc: 'ルーンをわざわざ「実数（＋）」に変換することはほぼありません（まれに速度0レオ用で速度を消す時くらい）。実数の変換ジェム（青・紫）や、数値の低いレア（青）ジェムを売ると数百万マナになり、枠もスッキリします！',
+    caution: '※「攻撃速度」「体力%」「攻撃%」「防御%」の練磨石（青でも使う！）は売らずに残してください。売るのは「変換ジェム」の不要分です。'
+  }
+];
+
+// マイ足切り基準（進行度3段階）の設定データ
+const RUNE_TIER_CONFIG = {
+  beginner: {
+    label: '🌱 初級 (カイロス安定・復帰勢)',
+    oddHeroSpd: '+12以上 (1〜2ハネ)',
+    evenHeroRule: 'メイン%一致ならサブ1ハネでもキープ',
+    legendReapp: '暴走/迅速/意志の2・4・6番%は絶対保護',
+    scoreTarget: 'ルーン評価スコア 90〜110点以上',
+    exclusionRecipe: [
+      {
+        title: '① 基本ランク・番号設定',
+        items: [
+          '・レア度：<strong>ヒーロー（紫）、レジェンド（橙）</strong>のみ除外（青以下はすべて売却対象）',
+          '・1/3/5番（奇数）：サブOPに<strong>「攻撃速度 +4以上」</strong>または<strong>「体力%/攻撃%/防御%/クリ率 +6%以上」</strong>を除外'
+        ]
+      },
+      {
+        title: '② 2・4・6番（偶数）メインOP設定',
+        items: [
+          '・2番：<strong>攻撃速度、体力%、攻撃%、防御%</strong>を除外（実数は売却）',
+          '・4番：<strong>クリダメ、クリ率、体力%、防御%、攻撃%</strong>を除外（実数は売却）',
+          '・6番：<strong>体力%、攻撃%、防御%、効果的中、効果抵抗</strong>を除外（実数は売却）'
+        ]
+      }
+    ]
+  },
+  mid: {
+    label: '⚔️ 中級 (深淵高速・占領戦・ソロレイド)【推奨】',
+    oddHeroSpd: '+15以上 (2ハネ必須)',
+    evenHeroRule: 'メイン%一致 ＋ 有効サブOP2つ以上',
+    legendReapp: '暴走/意志/迅速/絶望の偶数%レジェは練成保護',
+    scoreTarget: 'ルーン評価スコア 125〜140点以上',
+    exclusionRecipe: [
+      {
+        title: '① 基本ランク・奇数番（1/3/5番）の厳選',
+        items: [
+          '・レア度：<strong>ヒーロー以上</strong>（古代ルーンもヒーロー以上）',
+          '・1/3/5番ヒーロー：<strong>「攻撃速度 +5以上」</strong>または<strong>「クリ率+5% ＆ クリダメ+6%」「体力%+7% ＆ 防御%+7%」</strong>など複合一致のみ除外',
+          '・+6強化テスト：<strong>速度が+14〜15未満</strong>でサブOPもバラバラなら即売却！'
+        ]
+      },
+      {
+        title: '② 2・4・6番（偶数）の厳選',
+        items: [
+          '・2/4/6番レジェンド：<strong>メインOPが「速度・%・クリダメ」ならサブOP不問で全保護</strong>（初期化石ベース）',
+          '・2/4/6番ヒーロー：メインOPがセットと一致（例：激怒4番クリダメ、暴走2番速度/体力%）し、サブOPに<strong>速度または主ステ%</strong>があるもののみ除外',
+          '・偶数実数：<strong>「初期レジェンド かつ サブ速度+5以上」</strong>のみ速度3ハネガチャ用に除外（それ以外の実数は全売却）'
+        ]
+      }
+    ]
+  },
+  endgame: {
+    label: '👑 上級 (ワリーナ・高水準厳選)',
+    oddHeroSpd: '+18以上 (3ハネMAX級のみ)',
+    evenHeroRule: '速度2ハネ(+16+) または サブ効率極大のみ',
+    legendReapp: '暴走/意志/迅速の偶数主要OPレジェのみ練成',
+    scoreTarget: 'ルーン評価スコア 150〜170点以上',
+    exclusionRecipe: [
+      {
+        title: '① 奇数番（1/3/5番）の徹底足切り',
+        items: [
+          '・1/3/5番ヒーロー：<strong>「サブ速度+5〜6」</strong>かつ他のサブOPも%で揃っているもののみ+6テスト（+6で16〜18未満なら即売却）',
+          '・1/3/5番レジェンド：+6時点で実数に2回跳ねたら即売却'
+        ]
+      },
+      {
+        title: '② 偶数番（2/4/6番）の徹底足切り',
+        items: [
+          '・2/4/6番ヒーロー：メインOP一致 かつ <strong>サブOP3つ以上が有効%＋速度</strong>のみ残す',
+          '・6番の「効果抵抗・効果的中」：ヒーローは<strong>速度3ハネ(+18+)</strong>しなければ即売却'
+        ]
+      }
+    ]
+  }
+};
+
+// 全22種ルーン別 要・不要メインOP早見マトリクスデータ
+const RUNE_MATRIX_DATA = [
+  {
+    name: '暴走',
+    cat: '4set',
+    setLabel: '4セット (最重要)',
+    slot2: '🟢 速度 / 体力% / 攻撃% / 防御%',
+    slot4: '🟢 体力% / クリダメ / クリ率 / 防御% / 攻撃%',
+    slot6: '🟢 体力% / 攻撃% / 防御% (🟡 的中/抵抗は速度ハネのみ)',
+    sellRule: '🔴 2/4/6番の実数（レジェ速度チャレンジ以外）。奇数ヒーローで速度も耐久%も低いもの。',
+    subPriority: '速度 ＞ 体力% ＞ 防御% ＞ クリ率/クリダメ ＞ 効果的中/抵抗。暴走偶数%レジェンドはゴミサブでも練成用に絶対ロック！'
+  },
+  {
+    name: '迅速',
+    cat: '4set',
+    setLabel: '4セット (最速枠)',
+    slot2: '🟢 速度 (最優先) / 🟡 攻撃%・体力%(高速度サブのみ)',
+    slot4: '🟢 体力% / クリダメ / クリ率 / 攻撃% / 防御%',
+    slot6: '🟢 体力% / 攻撃% / 効果的中 / 防御%',
+    sellRule: '🔴 サブOPに「攻撃速度」がないヒーロー以下は即売却！2番速度以外の低速度ルーンも売却。',
+    subPriority: '攻撃速度がすべて！+6で速度が2ハネ(+15〜18)しないヒーローは未練なく売却してOK。'
+  },
+  {
+    name: '絶望',
+    cat: '4set',
+    setLabel: '4セット (足止め)',
+    slot2: '🟢 速度 / 体力% / 🟡 攻撃%・防御%',
+    slot4: '🟢 体力% / クリダメ / クリ率 / 防御%',
+    slot6: '🟢 体力% / 効果的中 / 攻撃% / 防御%',
+    sellRule: '🔴 2/4/6番実数、6番抵抗で速度がないヒーロー、サブOPに実数が2個以上ある奇数ヒーロー。',
+    subPriority: '速度 ＋ 効果的中 ＋ 体力%/防御%（ノラ、リカ、風フリーレン、ヴェラード、水ホム等に最適）。'
+  },
+  {
+    name: '激怒',
+    cat: '4set',
+    setLabel: '4セット (ワンパン火力)',
+    slot2: '🟢 攻撃% / 速度 / 防御%(コッパー・アイアン用) / 体力%(シュタルク用)',
+    slot4: '🟢 クリダメ (絶対核) / 🟡 クリ率(一部)',
+    slot6: '🟢 攻撃% / 防御%(防御比例用) / 体力%(体力比例用)',
+    sellRule: '🔴 6番「効果抵抗・効果的中」は即売却！4番のクリダメ以外でサブにクリ率/クリダメがないものも売却。',
+    subPriority: 'クリ率(85〜100%確保用) ＞ クリダメ ＞ 攻撃%(または防御%) ＞ 速度。カイロス・レイド用は速度0でも火力跳ねなら神ルーン！'
+  },
+  {
+    name: '吸血',
+    cat: '4set',
+    setLabel: '4セット (単騎・受け)',
+    slot2: '🟢 攻撃% / 速度 / 体力% / 防御%',
+    slot4: '🟢 クリダメ / 体力% / クリ率',
+    slot6: '🟢 攻撃% / 体力% / 防御%',
+    sellRule: '🔴 6番「効果的中」はほぼ不要（即売却）。サブOPの合計効率が低い奇数ヒーローも売却。',
+    subPriority: 'ライカ、レオ、水イフ、美猴王などの耐久アタッカー向け。クリ率・攻撃%・体力%・抵抗の複合跳ねが強力（レオ用なら速度0でOK）。'
+  },
+  {
+    name: '猛攻',
+    cat: '4set',
+    setLabel: '4セット (攻撃・爆弾)',
+    slot2: '🟢 速度 / 攻撃%',
+    slot4: '🟢 クリダメ / 攻撃%(爆弾・鬼武者用) / クリ率',
+    slot6: '🟢 攻撃% / 🟡 効果的中(爆弾用のみ)',
+    sellRule: '🔴 2/4/6番の「体力%・防御%・効果抵抗」でサブ速度が跳ねていないものはすべて即売却！',
+    subPriority: '攻撃%・クリ率・クリダメ・速度。水フリーレンやカルカノ、鬼武者系（クリ不要・攻撃&速度特化）に最適。'
+  },
+  {
+    name: '意志',
+    cat: '2set',
+    setLabel: '2セット (対人・レイド必須)',
+    slot2: '🟢 速度 / 体力% / 攻撃% / 防御%',
+    slot4: '🟢 体力% / クリダメ / クリ率 / 防御% / 攻撃%',
+    slot6: '🟢 体力% / 攻撃% / 防御% / 効果抵抗 / 効果的中',
+    sellRule: '🔴 2/4/6番の実数。ただし意志は全キャラで使うため、%メインOPのレジェンドは練成ベースとして保護！',
+    subPriority: '対人（RTA・占領戦）およびソロレイド（バーレイグ・プリア等）の必需品。速度跳ね・耐久跳ね・火力跳ねすべて需要あり。'
+  },
+  {
+    name: '破壊',
+    cat: '2set',
+    setLabel: '2セット (占領戦受けの要)',
+    slot2: '🟢 速度 / 体力% / 防御% / 攻撃%',
+    slot4: '🟢 体力% / クリダメ / 防御%',
+    slot6: '🟢 体力% / 防御% / 効果抵抗 / 攻撃%',
+    sellRule: '🔴 6番「効果的中」や、耐久サブOPがない低効率ヒーロー。',
+    subPriority: '水シュタルク、風パンダ、タラニス、カミラ等の持久戦キャラに必須。速度が低くても「体力%・防御%・抵抗・クリ率」が高ければ大当たり！'
+  },
+  {
+    name: '反撃',
+    cat: '2set',
+    setLabel: '2セット (ヴェルデ・レイド・迷宮)',
+    slot2: '🟢 速度 / 体力% / 防御% / 攻撃%',
+    slot4: '🟢 体力% / クリ率(ヴェルデ用) / クリダメ / 防御%',
+    slot6: '🟢 体力% / 防御% / 効果抵抗 / 攻撃%',
+    sellRule: '🔴 サブOPが実数ばかりのヒーロー。',
+    subPriority: 'ヴェルデハイル、ダリオン、カリン、水パンダ、ジャンヌ等で大量消費。特にクリ率・体力%・防御%・速度の跳ねが重宝します。'
+  },
+  {
+    name: '果報',
+    cat: '2set',
+    setLabel: '2セット (割り込み回復)',
+    slot2: '🟢 速度 / 体力%',
+    slot4: '🟢 体力% / 防御%',
+    slot6: '🟢 体力% / 効果抵抗 / 防御%',
+    sellRule: '🔴 2/4/6番の「攻撃%・クリダメ・効果的中」でサブ速度が跳ねていないものは売却OK！',
+    subPriority: '被弾でゲージを上げて割り込むサポーター・ヒーラー（フラン、ライリー、ルル、トリアーナ等）向け。速度＋体力%＋抵抗に特化。'
+  },
+  {
+    name: '刃',
+    cat: '2set',
+    setLabel: '2セット (アタッカー汎用)',
+    slot2: '🟢 攻撃% / 速度 / 防御% / 体力%',
+    slot4: '🟢 クリダメ / クリ率',
+    slot6: '🟢 攻撃% / 防御% / 体力%',
+    sellRule: '🔴 6番「効果抵抗・効果的中」は即売却！サブOPにクリ率もクリダメも速度もない奇数ヒーローも即売却。',
+    subPriority: 'カイロス・レイドの全アタッカーで使用。サブOPに「クリ率2ハネ(+16%+)」または「クリダメ＋攻撃%」があるものを厳選。'
+  },
+  {
+    name: '元気',
+    cat: '2set',
+    setLabel: '2セット (耐久汎用)',
+    slot2: '🟢 速度 / 体力%',
+    slot4: '🟢 体力% / 防御%',
+    slot6: '🟢 体力% / 効果抵抗 / 防御%',
+    sellRule: '🔴 最も余りやすいセット。+6で速度2ハネ(+15+)または体力%/防御%が大きく跳ねないヒーローは全売却！',
+    subPriority: 'サブOPで「体力%」「速度」「防御%」「効果抵抗」が極めて高い高スコア品だけを残せばインベントリが劇的に空きます。'
+  },
+  {
+    name: '守護',
+    cat: '2set',
+    setLabel: '2セット (イカル・タラニス・アイアン)',
+    slot2: '🟢 防御% / 速度 / 体力%',
+    slot4: '🟢 防御% / クリダメ(アイアン/コッパー用) / 体力%',
+    slot6: '🟢 防御% / 体力%',
+    sellRule: '🔴 防御%も速度も絡まない中途半端な攻撃系ヒーローはすべて売却。',
+    subPriority: 'イカル（防御+2430〜3301達成用）、タラニス、アイアン(2A)、ヴェラード、ダリオンに必須。奇数番は「防御%2〜3ハネ」を最優先保護！'
+  },
+  {
+    name: '集中',
+    cat: '2set',
+    setLabel: '2セット (デバッファー用)',
+    slot2: '🟢 速度 / 体力%',
+    slot4: '🟢 体力% / 防御% / クリ率',
+    slot6: '🟢 体力% / 効果的中 / 防御%',
+    sellRule: '🔴 速度も効果的中も付いていないヒーローは即売却！',
+    subPriority: 'ローレン、ヴェラード、リカ、ノラ、ガレオン用。サブOPに「速度＋効果的中＋体力%」があるものだけ残す。'
+  },
+  {
+    name: '忍耐',
+    cat: '2set',
+    setLabel: '2セット (レイド・受けサポ)',
+    slot2: '🟢 速度 / 体力% / 防御%',
+    slot4: '🟢 体力% / 防御%',
+    slot6: '🟢 体力% / 防御% / 効果抵抗',
+    sellRule: '🔴 アタッカー用メインOP（クリダメ等）で速度・抵抗がないものは売却。',
+    subPriority: '異界レイドや占領戦のサポーター（ライリー、ルル、ベルベルグ、ディアス等）で抵抗100%を作るためのパーツ。'
+  },
+  {
+    name: '保護',
+    cat: '2set',
+    setLabel: '2セット (ベルベルグ・開幕盾)',
+    slot2: '🟢 速度 / 体力% / 防御%',
+    slot4: '🟢 体力% / 防御%',
+    slot6: '🟢 体力% / 防御% / 効果抵抗',
+    sellRule: '🔴 低体力のヒーロー。ただしベルベルグ用に「意志+意志+保護」を組む分は必ず確保！',
+    subPriority: 'あなたの手持ちの『水雷帝 (ベルベルグ)』（知識バフ獲得用）や、死ダン・ギルバトの開幕シールド用に体力%と速度が高いものをキープ。'
+  },
+  {
+    name: '闘志',
+    cat: 'rift',
+    setLabel: '異界2セット (周回・レイド超重要)',
+    slot2: '🟢 速度 / 攻撃% / 体力% / 防御%',
+    slot4: '🟢 クリダメ / 体力% / 防御% / 攻撃% / クリ率',
+    slot6: '🟢 攻撃% / 体力% / 防御% / 効果的中',
+    sellRule: '🔴 2/4/6番の実数のみ売却。闘志はカイロス高速周回＆ソロレイドで何セットも使うため広めにキープ！',
+    subPriority: 'フリルレア、ジーク、コナミヤ、サブリナ、カリン、デボラ等に大量装着。倉庫キャラ（人間倉庫）に着せてでも多くストック推奨！'
+  },
+  {
+    name: '決意',
+    cat: 'rift',
+    setLabel: '異界2セット (全体防御+8%)',
+    slot2: '🟢 防御% / 速度 / 体力%',
+    slot4: '🟢 防御% / クリダメ / 体力%',
+    slot6: '🟢 防御% / 体力%',
+    sellRule: '🔴 防御%が絡まない低ステータスヒーローは売却。',
+    subPriority: 'イカル（4体協力の防御2430ライン達成）やコッパー・ブルドーザー・アイアン編成の防御底上げに重宝します。'
+  },
+  {
+    name: '命中',
+    cat: 'rift',
+    setLabel: '異界2セット (全体的中+10%)',
+    slot2: '🟢 速度 / 体力% / 攻撃%',
+    slot4: '🟢 体力% / クリダメ / 防御%',
+    slot6: '🟢 体力% / 効果的中 / 防御%',
+    sellRule: '🔴 余りやすいので、速度または火力/耐久が高い良品のみ1〜2セット分残して他は売却。',
+    subPriority: 'カイロスやソロレイドでパーティ全体の効果的中を+10%底上げしたい時に1セット差すと便利。'
+  },
+  {
+    name: '高揚',
+    cat: 'rift',
+    setLabel: '異界2セット (全体体力+8%)',
+    slot2: '🟢 速度 / 体力%',
+    slot4: '🟢 体力% / クリダメ',
+    slot6: '🟢 体力% / 防御%',
+    sellRule: '🔴 体力%も速度も低いヒーローは売却。',
+    subPriority: 'タルタロス迷宮や異界レイド、水シュタルク等の体力比例パーティの全体HP底上げ用。'
+  },
+  {
+    name: '根性',
+    cat: 'rift',
+    setLabel: '異界2セット (全体抵抗+10%)',
+    slot2: '🟢 速度 / 体力% / 防御%',
+    slot4: '🟢 体力% / 防御%',
+    slot6: '🟢 体力% / 防御% / 効果抵抗',
+    sellRule: '🔴 攻撃系メインOPや低効率ヒーローはすべて売却してOK（最も使用頻度が低いセットの一つ）。',
+    subPriority: 'ソロレイドの後衛サポーターに1セット差して全体の抵抗を補う用途のみ。厳選して少数だけ残せばOK。'
+  },
+  {
+    name: '無形',
+    cat: 'rift',
+    setLabel: '深淵2セット (ワイルドカード)',
+    slot2: '🟢 速度 / 体力% / 攻撃% / 防御%',
+    slot4: '🟢 クリダメ / 体力% / クリ率 / 防御%',
+    slot6: '🟢 体力% / 攻撃% / 防御%',
+    sellRule: '🔴 2/4/6番実数、および低跳ねの奇数ヒーロー。',
+    subPriority: '1個だけであらゆるセットの不足1枠を埋められる超貴重ルーン！速度ハネや高効率の無形ルーンは最優先でロック保護！'
+  }
+];
+
+// ルーン整理モジュール状態
+let runeState = {
+  tier: 'mid', // 'beginner', 'mid', 'endgame'
+  subtab: 'checker', // 'checker', 'cleanup', 'matrix', 'mules'
+  checker: {
+    set: '暴走',
+    slot: '2', // 'odd', '2', '4', '6'
+    mainStat: '速度',
+    grade: 'hero', // 'legend', 'hero', 'rare'
+    subState: 'spd_init' // 'spd_init', 'spd_rolled', 'no_spd_tank', 'no_spd_atk', 'bad_subs'
+  },
+  cleanupCompleted: [],
+  soldCount: 0,
+  matrixCat: 'all' // 'all', '4set', '2set', 'rift'
+};
+
+let runeMules = [];
+let currentMuleEditId = null;
+
+// ルーン整理データの初期化ロード
+function initRuneManagerData() {
+  const savedPrefs = localStorage.getItem('summoners_war_rune_prefs');
+  if (savedPrefs) {
+    try {
+      const parsed = JSON.parse(savedPrefs);
+      if (parsed.tier) runeState.tier = parsed.tier;
+      if (Array.isArray(parsed.cleanupCompleted)) runeState.cleanupCompleted = parsed.cleanupCompleted;
+      if (typeof parsed.soldCount === 'number') runeState.soldCount = parsed.soldCount;
+    } catch (e) {
+      console.error('Failed to parse rune prefs', e);
+    }
+  }
+
+  const savedMules = localStorage.getItem('summoners_war_rune_mules');
+  if (savedMules) {
+    try {
+      runeMules = JSON.parse(savedMules);
+    } catch (e) {
+      runeMules = [...PRESET_RUNE_MULES];
+      saveRuneMulesToLocalStorage();
+    }
+  } else {
+    runeMules = [...PRESET_RUNE_MULES];
+    saveRuneMulesToLocalStorage();
+  }
+}
+
+function saveRunePrefsToLocalStorage() {
+  localStorage.setItem('summoners_war_rune_prefs', JSON.stringify({
+    tier: runeState.tier,
+    cleanupCompleted: runeState.cleanupCompleted,
+    soldCount: runeState.soldCount
+  }));
+}
+
+function saveRuneMulesToLocalStorage() {
+  localStorage.setItem('summoners_war_rune_mules', JSON.stringify(runeMules));
+}
+
+// ルーン整理ビュー全体の描画更新
+function renderRuneManagerView() {
+  const tabRunePane = document.getElementById('tab-content-runes');
+  if (!tabRunePane) return;
+
+  // 1. マイ足切り基準（進行度）ボタン＆サマリーバーの更新
+  const tierBtns = document.querySelectorAll('#rune-tier-btn-group .rune-tier-btn');
+  tierBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tier === runeState.tier);
+  });
+
+  const tierCfg = RUNE_TIER_CONFIG[runeState.tier] || RUNE_TIER_CONFIG.mid;
+  const summaryBar = document.getElementById('rune-tier-summary-bar');
+  if (summaryBar) {
+    summaryBar.innerHTML = `
+      <span class="tier-rule-chip">奇数紫速度: <strong>${escapeHtml(tierCfg.oddHeroSpd)}</strong></span>
+      <span class="tier-rule-chip">偶数紫: <strong>${escapeHtml(tierCfg.evenHeroRule)}</strong></span>
+      <span class="tier-rule-chip">練成保護: <strong>${escapeHtml(tierCfg.legendReapp)}</strong></span>
+      <span class="tier-rule-chip">目安: <strong>${escapeHtml(tierCfg.scoreTarget)}</strong></span>
+    `;
+  }
+
+  // 2. 確保枠バッジ（人間倉庫枠 ＋ 今回売却数）の更新
+  const muleSavedSlots = runeMules.reduce((sum, m) => sum + (parseInt(m.slots, 10) || 6), 0);
+  const totalFreed = muleSavedSlots + (runeState.soldCount || 0);
+  const totalFreedEl = document.getElementById('rune-total-freed-count');
+  if (totalFreedEl) totalFreedEl.textContent = totalFreed;
+
+  const muleBadgeEl = document.getElementById('mule-slots-badge');
+  if (muleBadgeEl) muleBadgeEl.textContent = `${muleSavedSlots}枠`;
+
+  const cleanupBadgeEl = document.getElementById('cleanup-progress-badge');
+  if (cleanupBadgeEl) cleanupBadgeEl.textContent = `${runeState.cleanupCompleted.length}/${CLEANUP_STEPS_DATA.length}`;
+
+  // 3. 各サブペインの描画
+  renderRuneCheckerVerdict();
+  renderCleanupSteps();
+  renderRuneMatrixAndExclusion();
+  renderRuneMulesList();
+}
+
+// ルーン整理サブタブの切り替え
+function switchRuneSubtab(subtab) {
+  runeState.subtab = subtab;
+  const subBtns = document.querySelectorAll('.rune-subnav-btn');
+  subBtns.forEach(b => {
+    b.classList.toggle('active', b.dataset.runeSubtab === subtab);
+  });
+
+  const panes = {
+    checker: document.getElementById('rune-subpane-checker'),
+    cleanup: document.getElementById('rune-subpane-cleanup'),
+    matrix: document.getElementById('rune-subpane-matrix'),
+    mules: document.getElementById('rune-subpane-mules')
+  };
+
+  Object.keys(panes).forEach(k => {
+    if (panes[k]) {
+      panes[k].style.display = k === subtab ? 'block' : 'none';
+      panes[k].classList.toggle('active', k === subtab);
+    }
+  });
+}
+
+// -----------------------------------------------------------------------------
+// 機能①：3秒仕分け判定チェッカー ＆ 登録モンスター連動マッチング
+// -----------------------------------------------------------------------------
+
+// スロット変更時に選択可能なメインOPボタンを制御
+function syncCheckerSlotAndMainStat() {
+  const slot = runeState.checker.slot;
+  const mainBtns = document.querySelectorAll('#checker-mainstat-group .checker-main-btn');
+  const oddNotice = document.getElementById('checker-odd-notice');
+  const mainGroup = document.getElementById('checker-mainstat-group');
+  const mainLabel = document.getElementById('label-selected-mainstat');
+
+  if (slot === 'odd') {
+    if (oddNotice) oddNotice.style.display = 'block';
+    if (mainGroup) mainGroup.style.display = 'none';
+    if (mainLabel) mainLabel.textContent = '奇数固定 (1:攻+ / 3:防+ / 5:体+)';
+    return;
+  }
+
+  if (oddNotice) oddNotice.style.display = 'none';
+  if (mainGroup) mainGroup.style.display = 'flex';
+
+  let currentMainValid = false;
+  mainBtns.forEach(btn => {
+    const validSlots = (btn.dataset.validSlots || '').split(',');
+    const isValid = validSlots.includes(slot);
+    btn.classList.toggle('disabled-slot', !isValid);
+    if (isValid && btn.dataset.rmain === runeState.checker.mainStat) {
+      currentMainValid = true;
+    }
+  });
+
+  // もし現在選択中のメインOPがそのスロットで出ない場合、そのスロットの代表メインOPに自動切り替え
+  if (!currentMainValid) {
+    if (slot === '2') runeState.checker.mainStat = '速度';
+    else if (slot === '4') runeState.checker.mainStat = 'クリダメ';
+    else if (slot === '6') runeState.checker.mainStat = '体力%';
+  }
+
+  mainBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.rmain === runeState.checker.mainStat);
+  });
+  if (mainLabel) mainLabel.textContent = runeState.checker.mainStat;
+}
+
+// 手持ち登録モンスター＆周回パーティから、該当ルーンセット＆メインOP傾向に合うキャラを検索
+function findMatchingUserMonsters(runeSet, slot, mainStat) {
+  const matched = [];
+  const seenNames = new Set();
+
+  // メインOPとキャラの推奨スロット傾向の簡易照合ヘルパー
+  const isStatCompatibleWithText = (runeText, roleText) => {
+    if (slot === 'odd') return true;
+    if (mainStat === '実数') return false;
+    const combined = `${runeText || ''} ${roleText || ''}`;
+
+    if (mainStat === '速度') {
+      return combined.includes('速度') || combined.includes('迅速') || combined.includes('暴走') || combined.includes('サポ') || combined.includes('剥がし') || combined.includes('ゲージ');
+    }
+    if (mainStat === 'クリダメ') {
+      return combined.includes('クリダメ') || combined.includes('アタッカー') || combined.includes('火力') || combined.includes('激怒') || combined.includes('猛攻') || combined.includes('スナイパー') || combined.includes('大砲');
+    }
+    if (mainStat === 'クリ率') {
+      return combined.includes('クリ率') || combined.includes('ヴェルデ');
+    }
+    if (mainStat === '体力%') {
+      return combined.includes('体力') || combined.includes('耐久') || combined.includes('タンク') || combined.includes('サポ') || combined.includes('回復') || combined.includes('免疫');
+    }
+    if (mainStat === '攻撃%') {
+      return combined.includes('攻撃') || combined.includes('クリダメ') || combined.includes('アタッカー') || combined.includes('火力') || combined.includes('激怒') || combined.includes('猛攻');
+    }
+    if (mainStat === '防御%') {
+      return combined.includes('防御') || combined.includes('守護') || combined.includes('イカル') || combined.includes('タラニス') || combined.includes('風パン') || combined.includes('ヴェラード') || combined.includes('アイアン') || combined.includes('ダリオン');
+    }
+    if (mainStat === '効果的中') {
+      return combined.includes('的中') || combined.includes('デバフ') || combined.includes('剥がし') || combined.includes('スタン') || combined.includes('持続') || combined.includes('凍結');
+    }
+    if (mainStat === '効果抵抗') {
+      return combined.includes('抵抗') || combined.includes('解除') || combined.includes('免疫') || combined.includes('回復') || combined.includes('蘇生');
+    }
+    return true;
+  };
+
+  // 1. 登録モンスター図鑑から検索
+  monsters.forEach(m => {
+    const recRunes = m.recommendedRunes || '';
+    if (recRunes.includes(runeSet) || runeSet === '無形') {
+      if (isStatCompatibleWithText(recRunes, `${m.role || ''} ${m.generalMemo || ''}`)) {
+        matched.push({
+          id: m.id,
+          name: m.name,
+          attribute: m.attribute || '水',
+          runes: recRunes
+        });
+        seenNames.add(m.name);
+      }
+    }
+  });
+
+  // 2. もし登録モンスター図鑑だけで少ない場合は周回パーティメンバーからも補完
+  if (matched.length < 8) {
+    parties.forEach(p => {
+      (p.members || []).forEach(mem => {
+        if (!mem.name || seenNames.has(mem.name)) return;
+        if ((mem.runes || '').includes(runeSet)) {
+          if (isStatCompatibleWithText(mem.runes, mem.role)) {
+            const existingMonster = monsters.find(mo => mo.name.includes(mem.name) || mem.name.includes(mo.name));
+            matched.push({
+              id: existingMonster ? existingMonster.id : null,
+              name: mem.name,
+              attribute: mem.attribute || '風',
+              runes: mem.runes
+            });
+            seenNames.add(mem.name);
+          }
+        }
+      });
+    });
+  }
+
+  return matched.slice(0, 10);
+}
+
+// 3秒仕分け判定ロジック本体
+function evaluateRuneVerdict() {
+  const { set, slot, mainStat, grade, subState } = runeState.checker;
+  const tier = runeState.tier;
+  const slotLabel = slot === 'odd' ? '1・3・5番 (奇数)' : `${slot}番`;
+  const mainLabel = slot === 'odd' ? '固定実数' : mainStat;
+  const gradeLabel = grade === 'legend' ? 'レジェンド(橙)' : (grade === 'hero' ? 'ヒーロー(紫)' : 'レア以下(青)');
+
+  const isAtkSet = ['激怒', '猛攻', '刃'].includes(set);
+  const isPremSet = ['暴走', '意志', '迅速', '絶望', '吸血', '破壊', '無形'].includes(set);
+  const isReappPrimeSet = ['暴走', '意志', '迅速', '絶望', '無形'].includes(set);
+  const isBasic2Set = ['元気', '守護', '集中', '忍耐', '根性', '命中', '高揚'].includes(set);
+
+  // 1. レア以下（青・緑）の判定
+  if (grade === 'rare') {
+    if (tier === 'beginner' && slot === '2' && mainStat === '速度') {
+      return {
+        type: 'test',
+        badge: '🟡 序盤の繋ぎとしてのみキープ（+6〜+12使用）',
+        reason: `レア（青）ルーンですが、2番「攻撃速度」はカイロス安定周回の繋ぎとして使えます。ただしヒーロー以上の2番速度が手に入り次第、順次入れ替えて売却しましょう。`
+      };
+    }
+    return {
+      type: 'sell',
+      badge: '🔴 即売却OK！（レア以下は全売り）',
+      reason: `現在の厳選基準では「レア（青）以下」のルーンは強化してもサブOPの伸びしろが圧倒的に足りません。叩かずにそのまま一括売却してマナに変えましょう！`
+    };
+  }
+
+  // 2. 偶数スロット（2・4・6番）の「実数メインOP」判定
+  if (slot !== 'odd' && mainStat === '実数') {
+    if (grade === 'legend' && (subState === 'spd_init' || subState === 'spd_rolled')) {
+      return {
+        type: 'test',
+        badge: '🟡 速度3〜4ハネ狙いガチャ！（跳ねなければ即売却）',
+        reason: `偶数番の「実数メインOP」は原則すべて即売却ですが、「初期レジェンド（橙）かつサブに速度があるもの」だけは+6まで叩いてみてください。速度が2連ハネ（そして最終的に+22〜+26以上）すれば、ティアナやバナード等の「最速バラ枠」として使えます。1回でも速度以外に跳ねたらその場で即売却！`
+      };
+    }
+    return {
+      type: 'sell',
+      badge: '🔴 即売却OK！（偶数番の実数は不要）',
+      reason: `${slot}番のメインOPが「実数（体力+/攻撃+/防御+）」のルーンは、%ルーンに比べてステータスが大幅に劣るため使い道がありません。迷わず即売却してOKです！`
+    };
+  }
+
+  // 3. 迅速ルーンの特化判定（速度命）
+  if (set === '迅速') {
+    if (slot === '2' && mainStat === '速度') {
+      if (grade === 'legend') {
+        return {
+          type: 'keep',
+          badge: '🟢 絶対キープ！（迅速2番速度レジェンドは家宝級）',
+          reason: `迅速の2番「攻撃速度」レジェンドは最優先でロック保護してください！サブOPが微妙でも、初期化石（練成）やジェム変換で一線級の最速ルーンになります。`
+        };
+      }
+      return {
+        type: 'keep',
+        badge: '🟢 キープ推奨！（迅速2番速度は貴重）',
+        reason: `迅速の2番「攻撃速度」は何セットあっても困りません。サブOPに体力%・防御%・的中・攻撃%などがあれば強化して主力やカイロス速度調整に使いましょう。`
+      };
+    }
+    if (subState === 'no_spd_tank' || subState === 'no_spd_atk' || subState === 'bad_subs') {
+      if (grade === 'legend' && slot !== 'odd' && ['体力%', '攻撃%', 'クリダメ'].includes(mainStat)) {
+        return {
+          type: 'reapp',
+          badge: '🔵 初期化石（練成）ベース候補として保管',
+          reason: `サブOPに速度がありませんが、迅速の${slot}番「${mainStat}」レジェンドは初期化石（練成）でサブ速度+20以上を狙えるベースになります。インベントリを空けたい場合は倉庫キャラ（人間倉庫）に装着させて保管しましょう。`
+        };
+      }
+      return {
+        type: 'sell',
+        badge: '🔴 即売却OK！（速度のない迅速ルーン）',
+        reason: `迅速ルーンは「最速を取るため」に着けるセットです。サブOPに攻撃速度がないヒーロー（または奇数レジェンド）は、後からジェムで速度を付けても最大+10程度にしかならないため、迷わず売却してOKです！`
+      };
+    }
+  }
+
+  // 4. アタッカー系（激怒・猛攻・刃）× 不協和音メインOPの判定
+  if (isAtkSet && slot !== 'odd') {
+    if (mainStat === '効果抵抗' || (mainStat === '効果的中' && set !== '猛攻')) {
+      if (subState === 'spd_rolled') {
+        return {
+          type: 'keep',
+          badge: '🟡 バラ枠の速度パーツとしてのみキープ',
+          reason: `${set}の6番「${mainStat}」はセット効果と矛盾しますが、サブ速度が大きく跳ねているため、ゲージ上げ役やデバッファーの「セット無視バラ枠」としてのみ使えます。`
+        };
+      }
+      return {
+        type: 'sell',
+        badge: '🔴 即売却OK！（アタッカーセット×抵抗/的中は不一致）',
+        reason: `火力を出すための「${set}」ルーンで、6番メインOPが「${mainStat}」のものはアタッカーに一切使いません。レジェンドであっても練成する価値がないため、迷わず即売却してOKです！`
+      };
+    }
+    if (mainStat === '防御%' && set === '猛攻') {
+      return {
+        type: 'sell',
+        badge: '🔴 即売却OK！（猛攻×防御%は不一致）',
+        reason: `猛攻ルーン（攻撃力+35%）にメインOP「防御%」は噛み合いません（防御比例アタッカーは激怒や守護・刃を使います）。速度が爆跳ねしていない限り即売却でOKです！`
+      };
+    }
+    if (mainStat === '防御%' && (set === '激怒' || set === '刃')) {
+      if (subState === 'no_spd_atk' || subState === 'spd_rolled' || subState === 'spd_init') {
+        return {
+          type: 'keep',
+          badge: '🟢 防御比例アタッカー用！（アイアン・コッパー・ヴェラード適性）',
+          reason: `${set}の${slot}番「防御%」は、異次元レイド特効の『アイアン(2A)』や占領戦の『コッパー』『ブルドーザー』『ヴェラード』にドンピシャのメインOPです！サブOPでクリ率・クリダメ・防御%が伸びれば神ルーンになります。`
+        };
+      }
+    }
+  }
+
+  // 5. 果報・忍耐・保護・根性 × 攻撃系メインOPの判定
+  if (['果報', '忍耐', '保護', '根性'].includes(set) && slot !== 'odd' && ['攻撃%', 'クリダメ'].includes(mainStat)) {
+    if (subState === 'spd_rolled') {
+      return {
+        type: 'keep',
+        badge: '🟢 高速度パーツとしてキープ',
+        reason: `${set}の「${mainStat}」ですが、速度が大きく跳ねているため速度アタッカーやバラ枠として優秀です！`
+      };
+    }
+    if (subState === 'bad_subs' || (grade === 'hero' && subState !== 'spd_init')) {
+      return {
+        type: 'sell',
+        badge: '🔴 即売却OK！（耐久サポートセット×火力メインOPの不一致）',
+        reason: `${set}ルーンは主に耐久サポーター（体力%・防御%）が着けるセットです。メインが「${mainStat}」で速度やクリ率・クリダメが特大跳ねしていないヒーロールーンは使い道がないため売却してOKです。`
+      };
+    }
+  }
+
+  // 6. 1・3・5番（奇数スロット）の厳格判定
+  if (slot === 'odd') {
+    if (subState === 'bad_subs') {
+      return {
+        type: 'sell',
+        badge: '🔴 即売却OK！（奇数番のサブOP不揃い）',
+        reason: `1・3・5番（奇数スロット）はメインOPが固定のため、サブOPの質がすべてです。実数が2個以上混ざっていたり、サブOPがバラバラ・低跳ねの奇数ルーンはインベントリ圧迫の元凶なので迷わず売却しましょう！`
+      };
+    }
+    if (subState === 'spd_rolled') {
+      return {
+        type: 'keep',
+        badge: '🟢 文句なしの主力キープ！（速度ハネルーン）',
+        reason: `奇数スロットで速度が2ハネ以上（${tier === 'endgame' ? '+18以上' : '+15以上'}）したルーンは全コンテンツで引っ張りだこです！空いているサブOP枠にジェムで体力%・防御%・攻撃%を変換してさらに完成度を高めましょう。`
+      };
+    }
+    if (subState === 'spd_init') {
+      const targetSpd = tier === 'beginner' ? '+12以上（1〜2ハネ）' : (tier === 'mid' ? '+15以上（2ハネ）' : '+18以上（3ハネ）');
+      return {
+        type: 'test',
+        badge: `🟡 +6まで叩いて速度テスト！（目標: ${targetSpd}）`,
+        reason: `今すぐ+6まで強化して「攻撃速度」に跳ねるか試してください！現在のあなたの基準（${RUNE_TIER_CONFIG[tier].label}）では、+6（レジェンドなら+9）時点で速度が【${targetSpd}】になるか、セットに合った主ステータス%が綺麗に2ハネしなければ、その場で売却してOKです！`
+      };
+    }
+    if (subState === 'no_spd_tank') {
+      if (['破壊', '反撃', '守護', '吸血', '暴走', '意志', '忍耐', '闘志'].includes(set)) {
+        return {
+          type: 'keep',
+          badge: '🟢 受けキャラ・前衛タンク・レオ用にキープ推奨！',
+          reason: `速度はありませんが、「${set}」で体力%・防御%・効果抵抗・クリ率などが揃っているルーンは、占領戦の受けキャラ（水シュタルク、風パンダ、タラニス等）、ソロレイド前衛（ダリオン、イカル）、または『レオ』編成で非常に重宝します！+6〜+9で実数に跳ねたら売却、%が伸びたらロックしましょう。`
+        };
+      }
+      if (isAtkSet) {
+        return {
+          type: 'sell',
+          badge: '🔴 売却推奨（火力セットに速度なし耐久サブ）',
+          reason: `${set}ルーン（アタッカー用）の奇数番で、速度も火力サブOP（クリ率・クリダメ・攻撃%）もない耐久寄りのルーンはほとんど使いません（水シュタルク等の体力比例クリダメ型でクリ率・クリダメが付いている場合のみ例外）。`
+        };
+      }
+    }
+    if (subState === 'no_spd_atk') {
+      if (['激怒', '猛攻', '刃', '闘志', '意志', '暴走', '吸血', '無形'].includes(set)) {
+        return {
+          type: 'keep',
+          badge: '🟢 カイロス・ソロレイド大砲 / レオ用にキープ推奨！',
+          reason: `速度がなくても「クリ率・クリダメ・攻撃%」が揃った「${set}」ルーンは、カイロス深淵（ヒンメル、ジュリー、タリア、アカムアミール）やソロレイド（バーレイグ、シャオイン、クロー）、そして『レオ』のお供アタッカーに最高のパーツです！+6でクリ率やクリダメがしっかり跳ねるか確認しましょう。`
+        };
+      }
+      if (isBasic2Set) {
+        return {
+          type: 'sell',
+          badge: '🔴 売却推奨（サポート2セット×速度なし火力サブ）',
+          reason: `${set}ルーンで速度がなく火力サブOPに偏っている奇数ヒーローは、刃や激怒の下位互換になりやすいため、クリ率が3ハネ(+18%+)しない限り売却してOKです。`
+        };
+      }
+    }
+  }
+
+  // 7. 偶数スロット（2・4・6番）のサブOP状態別判定
+  if (subState === 'bad_subs') {
+    // 重要：暴走・意志・迅速・絶望の偶数%レジェンドは練成ベースとして保護！
+    if (grade === 'legend' && isReappPrimeSet && ['速度', '体力%', '攻撃%', '防御%', 'クリダメ'].includes(mainStat)) {
+      return {
+        type: 'reapp',
+        badge: '🔵 絶対に売らないで！【練成石（初期化石）ベース】でロック！',
+        reason: `サブOPはバラバラですが、「${set}」の${slot}番「${mainStat}」の初期レジェンド（橙）はサマナで最も価値が高いルーンです！絶対に売却せず、+12まで叩いて「初期化石（練成石）」を使えば神ルーンに化けます。今すぐ使わない場合は倉庫番キャラ（人間倉庫）に着せて保護しましょう！`
+      };
+    }
+    if (grade === 'legend' && ['激怒', '破壊', '吸血'].includes(set) && ['クリダメ', '体力%', '攻撃%', '速度'].includes(mainStat)) {
+      return {
+        type: 'reapp',
+        badge: '🔵 キープまたは練成候補（貴重メインOPレジェンド）',
+        reason: `${set}の${slot}番「${mainStat}」レジェンドは希少です。メインOPだけで仕事ができるカイロスや占領戦キャラに使えるほか、必要なら初期化石も検討できます。`
+      };
+    }
+    if (slot === '4' && mainStat === 'クリ率' && !['暴走', '反撃', '迅速', '刃'].includes(set)) {
+      return {
+        type: 'sell',
+        badge: '🔴 即売却OK！（使い道のない4番クリ率）',
+        reason: `4番「クリ率」を使うキャラはヴェルデハイル等ごく一部に限られます。${set}の4番クリ率でサブOPも微妙なものは倉庫を圧迫するだけなので即売却してOKです！`
+      };
+    }
+    return {
+      type: 'sell',
+      badge: '🔴 売却推奨！（偶数ヒーローのサブOP不揃い）',
+      reason: `${set}の${slot}番「${mainStat}」ですが、初期ヒーローでサブOPがバラバラ（実数多め・低跳ね）なものは、強化してもスコアが伸びません。メインOPがどうしても不足している序盤以外は売却してOKです！`
+    };
+  }
+
+  if (subState === 'spd_rolled') {
+    return {
+      type: 'keep',
+      badge: '🟢 大当たり！主力キープ確定（偶数番＋速度ハネ）',
+      reason: `価値の高い${slot}番「${mainStat}」でサブ速度まで跳ねた文句なしの一級品ルーンです！練磨石で速度と%ステータスを磨いて主力モンスターに装着しましょう。`
+    };
+  }
+
+  if (subState === 'spd_init') {
+    return {
+      type: 'test',
+      badge: '🟡 +6まで叩いて速度・主ステの跳ねをチェック！',
+      reason: `${set}の${slot}番「${mainStat}」に速度サブOPが付いた有望株です！まずは+6まで強化し、「速度」またはセットに合った「体力%/攻撃%/防御%/クリ率」に跳ねればそのまま+12へ進めてキープ！もし実数（＋）に2回跳ねた場合は、ヒーローなら売却（暴走・意志・迅速のレジェンドなら練成用に保護）しましょう。`
+    };
+  }
+
+  if (subState === 'no_spd_tank' || subState === 'no_spd_atk') {
+    if (slot === '2' && mainStat === '速度') {
+      return {
+        type: 'keep',
+        badge: '🟢 キープ推奨！（2番メイン速度＋高効率サブOP）',
+        reason: `2番はメインOP自体が「攻撃速度(+42)」なので、サブOPに速度は付きません。サブOPで耐久%や火力(クリ率/クリダメ/攻撃%)がしっかり揃っている2番速度ルーンは極上のメインパーツです！`
+      };
+    }
+    return {
+      type: 'keep',
+      badge: '🟢 キープ推奨！（カイロス・レイド・受けキャラ・レオ適性◎）',
+      reason: `${set}の${slot}番「${mainStat}」でサブOPの噛み合いが良いルーンです。速度が控えめでも、カイロス・異界レイドの固定行動順アタッカーや、占領戦の耐久受けキャラ、『レオ』編成で即戦力になります（すぐ使わない場合は「人間倉庫」の保管係キャラに着せておくとインベントリ枠を消費しません！）。`
+    };
+  }
+
+  return {
+    type: 'test',
+    badge: '🟡 +6まで叩いて伸びを確認',
+    reason: `+6まで強化して有効な%ステータスや速度が伸びればキープ、実数に跳ねたら売却しましょう。`
+  };
+}
+
+// 3秒判定チェッカーの結果描画
+function renderRuneCheckerVerdict() {
+  const resultBox = document.getElementById('checker-result-box');
+  if (!resultBox) return;
+
+  syncCheckerSlotAndMainStat();
+
+  const { set, slot, mainStat, grade } = runeState.checker;
+  const verdict = evaluateRuneVerdict();
+  const matchedMonsters = findMatchingUserMonsters(set, slot, mainStat);
+
+  const slotText = slot === 'odd' ? '1・3・5番(奇数)' : `${slot}番`;
+  const mainText = slot === 'odd' ? '固定実数' : mainStat;
+  const gradeText = grade === 'legend' ? '🟠レジェンド' : (grade === 'hero' ? '🟣ヒーロー' : '🔵レア以下');
+
+  let monstersHtml = '';
+  if (verdict.type === 'sell' && mainStat === '実数' && slot !== 'odd') {
+    monstersHtml = `
+      <div class="verdict-monsters-box">
+        <div class="verdict-monsters-title">⚠️ あなたの登録キャラ・編成との照合結果</div>
+        <p style="font-size:0.8rem; color:#fda4af;">偶数番の実数メインOPを使う登録モンスターは <strong>0体</strong> です。安心して売却してください！</p>
+      </div>
+    `;
+  } else if (matchedMonsters.length > 0) {
+    monstersHtml = `
+      <div class="verdict-monsters-box">
+        <div class="verdict-monsters-title">💡 あなたの手持ち・周回編成でこのルーンが合う候補 (${matchedMonsters.length}体+): <span style="font-size:0.7rem; color:#94a3b8; font-weight:400;">※タップでキャラ詳細</span></div>
+        <div class="verdict-monster-chips">
+          ${matchedMonsters.map(m => `
+            <button type="button" class="verdict-monster-chip" data-mid="${escapeHtml(m.id || '')}" title="${escapeHtml(m.runes || '')}">
+              <span class="attr-badge attr-${escapeHtml(m.attribute)}" style="font-size:0.62rem; padding:1px 5px;">${escapeHtml(m.attribute)}</span>
+              <span>${escapeHtml(m.name)}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  } else {
+    monstersHtml = `
+      <div class="verdict-monsters-box">
+        <div class="verdict-monsters-title">⚠️ あなたの登録キャラ・編成との照合結果</div>
+        <p style="font-size:0.8rem; color:#cbd5e1;">現在登録されているモンスター・周回編成の中で「${escapeHtml(set)} × ${escapeHtml(mainText)}」を第一推奨とするキャラは見当たりません。不要であれば売却してOKです！</p>
+      </div>
+    `;
+  }
+
+  resultBox.innerHTML = `
+    <div class="verdict-card verdict-${verdict.type}">
+      <div class="verdict-top-bar">
+        <span class="verdict-main-badge">${escapeHtml(verdict.badge)}</span>
+        <span class="verdict-target-summary">対象: <strong>${escapeHtml(set)}</strong> / ${escapeHtml(slotText)} / <strong>${escapeHtml(mainText)}</strong> / ${escapeHtml(gradeText)}</span>
+      </div>
+      <div class="verdict-reason-text">
+        ${escapeHtml(verdict.reason)}
+      </div>
+      ${monstersHtml}
+    </div>
+  `;
+
+  // 候補モンスターチップをクリックで詳細モーダル表示
+  const chips = resultBox.querySelectorAll('.verdict-monster-chip');
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const mid = chip.dataset.mid;
+      if (mid) {
+        openDetailModal(mid);
+      } else {
+        showToast('パーティ編成メンバーです（モンスター図鑑から詳細登録も可能）');
+      }
+    });
+  });
+}
+
+// -----------------------------------------------------------------------------
+// 機能②：一括売却8ステップ・チェックリスト描画
+// -----------------------------------------------------------------------------
+function renderCleanupSteps() {
+  const container = document.getElementById('cleanup-steps-container');
+  if (!container) return;
+
+  const totalSteps = CLEANUP_STEPS_DATA.length;
+  const doneCount = runeState.cleanupCompleted.length;
+  const pct = Math.round((doneCount / totalSteps) * 100);
+
+  const doneTextEl = document.getElementById('cleanup-done-text');
+  const pctTextEl = document.getElementById('cleanup-percent-text');
+  const fillEl = document.getElementById('cleanup-progress-fill');
+  const soldCountEl = document.getElementById('cleanup-sold-count');
+
+  if (doneTextEl) doneTextEl.textContent = `${doneCount} / ${totalSteps} ステップ完了`;
+  if (pctTextEl) pctTextEl.textContent = `${pct}%`;
+  if (fillEl) fillEl.style.width = `${pct}%`;
+  if (soldCountEl) soldCountEl.textContent = runeState.soldCount || 0;
+
+  container.innerHTML = '';
+
+  CLEANUP_STEPS_DATA.forEach(step => {
+    const isDone = runeState.cleanupCompleted.includes(step.id);
+    const card = document.createElement('div');
+    card.className = `cleanup-step-card ${isDone ? 'completed' : ''}`;
+    card.innerHTML = `
+      <div class="cleanup-step-top">
+        <label class="cleanup-check-label">
+          <input type="checkbox" class="cleanup-check-input" data-step-id="${step.id}" ${isDone ? 'checked' : ''}>
+          <span class="cleanup-step-title">${escapeHtml(step.title)}</span>
+        </label>
+        <div class="cleanup-step-badges">
+          <span class="cleanup-impact-badge">${escapeHtml(step.impact)}</span>
+        </div>
+      </div>
+      <div class="cleanup-filter-recipe">
+        <strong>📱 ゲーム内の検索フィルター設定手順：</strong>
+        <span>${escapeHtml(step.filterRecipe)}</span>
+      </div>
+      <p class="cleanup-step-desc">${escapeHtml(step.desc)}</p>
+      <div class="cleanup-step-caution">${escapeHtml(step.caution)}</div>
+    `;
+
+    const checkbox = card.querySelector('.cleanup-check-input');
+    if (checkbox) {
+      checkbox.addEventListener('change', (e) => {
+        if (e.target.checked) {
+          if (!runeState.cleanupCompleted.includes(step.id)) {
+            runeState.cleanupCompleted.push(step.id);
+          }
+          showToast(`✅ ${step.title.split('：')[0]} を完了しました！`);
+        } else {
+          runeState.cleanupCompleted = runeState.cleanupCompleted.filter(id => id !== step.id);
+        }
+        saveRunePrefsToLocalStorage();
+        renderRuneManagerView();
+      });
+    }
+
+    container.appendChild(card);
+  });
+}
+
+// -----------------------------------------------------------------------------
+// 機能③＆④：全22種 要・不要マトリクス ＆ ゲーム内「売却除外設定」レシピ描画
+// -----------------------------------------------------------------------------
+function renderRuneMatrixAndExclusion() {
+  // 1. 売却除外設定レシピ（マイ基準連動）
+  const recipeContainer = document.getElementById('exclusion-recipe-content');
+  if (recipeContainer) {
+    const tierCfg = RUNE_TIER_CONFIG[runeState.tier] || RUNE_TIER_CONFIG.mid;
+    recipeContainer.innerHTML = (tierCfg.exclusionRecipe || []).map(box => `
+      <div class="recipe-box">
+        <div class="recipe-box-title">${escapeHtml(box.title)}（${escapeHtml(tierCfg.label.split(' ')[1] || '')}）</div>
+        <ul class="recipe-box-list">
+          ${box.items.map(item => `<li>${item}</li>`).join('')}
+        </ul>
+      </div>
+    `).join('');
+  }
+
+  // 2. 全22種ルーン別マトリクス
+  const matrixContainer = document.getElementById('rune-matrix-container');
+  if (!matrixContainer) return;
+
+  const filteredRunes = RUNE_MATRIX_DATA.filter(r => {
+    if (runeState.matrixCat === 'all') return true;
+    return r.cat === runeState.matrixCat;
+  });
+
+  matrixContainer.innerHTML = filteredRunes.map(r => {
+    const userMatches = findMatchingUserMonsters(r.name, 'odd', '速度').slice(0, 5);
+    const matchNames = userMatches.length > 0
+      ? userMatches.map(m => m.name.replace(/\s*\([^)]*\)/g, '')).join('、')
+      : '汎用';
+
+    return `
+      <div class="matrix-rune-card">
+        <div class="matrix-card-header">
+          <span class="matrix-rune-name">💎 ${escapeHtml(r.name)}ルーン</span>
+          <span class="matrix-set-type">${escapeHtml(r.setLabel)}</span>
+        </div>
+        <div class="matrix-slots-table">
+          <div class="matrix-slot-row">
+            <span class="matrix-slot-num">2番</span>
+            <span class="matrix-keep-tag">${escapeHtml(r.slot2)}</span>
+          </div>
+          <div class="matrix-slot-row">
+            <span class="matrix-slot-num">4番</span>
+            <span class="matrix-keep-tag">${escapeHtml(r.slot4)}</span>
+          </div>
+          <div class="matrix-slot-row">
+            <span class="matrix-slot-num">6番</span>
+            <span class="matrix-keep-tag">${escapeHtml(r.slot6)}</span>
+          </div>
+        </div>
+        <div class="matrix-sell-tag">${escapeHtml(r.sellRule)}</div>
+        <div class="matrix-sub-note">
+          <strong>📌 サブOP＆ポイント:</strong> ${escapeHtml(r.subPriority)}<br>
+          <span style="color:#fde047; font-size:0.73rem;">👥 あなたの手持ち装着例: ${escapeHtml(matchNames)} など</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// -----------------------------------------------------------------------------
+// 機能⑤：人間倉庫（ルーン保管係モンスター）管理帳
+// -----------------------------------------------------------------------------
+function renderRuneMulesList() {
+  const listContainer = document.getElementById('mule-list-container');
+  const totalMonstersEl = document.getElementById('mule-total-monsters');
+  const totalSavedEl = document.getElementById('mule-total-saved-slots');
+
+  const totalSavedSlots = runeMules.reduce((sum, m) => sum + (parseInt(m.slots, 10) || 6), 0);
+  if (totalMonstersEl) totalMonstersEl.textContent = runeMules.length;
+  if (totalSavedEl) totalSavedEl.textContent = totalSavedSlots;
+
+  if (!listContainer) return;
+  listContainer.innerHTML = '';
+
+  if (runeMules.length === 0) {
+    listContainer.innerHTML = `
+      <div class="empty-state" style="grid-column: 1 / -1;">
+        <div class="empty-icon">📦</div>
+        <p>登録されているルーン保管係（人間倉庫）がありません。<br>上のテンプレートボタンまたは入力フォームから追加すると、1体につき6枠インベントリを節約できます！</p>
+      </div>
+    `;
+    return;
+  }
+
+  runeMules.forEach(mule => {
+    const card = document.createElement('div');
+    card.className = 'mule-card';
+    const slots = parseInt(mule.slots, 10) || 6;
+
+    card.innerHTML = `
+      <div class="mule-card-top">
+        <div class="mule-card-title">
+          <span class="attr-badge attr-${escapeHtml(mule.attribute || '火')}">${escapeHtml(mule.attribute || '火')}</span>
+          <span>${escapeHtml(mule.name)}</span>
+        </div>
+        <span class="mule-slot-pill">✨ ${slots}枠節約中</span>
+      </div>
+      ${mule.category ? `<span class="mule-cat-badge">${escapeHtml(mule.category)}</span>` : ''}
+      <p class="mule-memo-text">${escapeHtml(mule.memo || 'ルーン6個装着保管中')}</p>
+      <div class="mule-card-footer">
+        <button type="button" class="btn-card-edit btn-edit-mule" data-mule-id="${escapeHtml(mule.id)}">✏️ 編集</button>
+        <button type="button" class="btn-mini-clear btn-delete-mule" data-mule-id="${escapeHtml(mule.id)}">🗑️ 削除</button>
+      </div>
+    `;
+
+    const editBtn = card.querySelector('.btn-edit-mule');
+    if (editBtn) {
+      editBtn.addEventListener('click', () => {
+        currentMuleEditId = mule.id;
+        document.getElementById('mule-form-id').value = mule.id;
+        document.getElementById('mule-name').value = mule.name || '';
+        document.getElementById('mule-attr').value = mule.attribute || '火';
+        document.getElementById('mule-slots').value = String(mule.slots || 6);
+        document.getElementById('mule-category').value = mule.category || '';
+        document.getElementById('mule-memo').value = mule.memo || '';
+        document.getElementById('mule-form-title').textContent = `✏️ 「${mule.name}」の保管メモを編集`;
+        document.getElementById('btn-mule-cancel').style.display = 'inline-flex';
+        document.getElementById('mule-name').focus();
+      });
+    }
+
+    const delBtn = card.querySelector('.btn-delete-mule');
+    if (delBtn) {
+      delBtn.addEventListener('click', () => {
+        if (confirm(`保管係「${mule.name}」のメモを削除しますか？`)) {
+          runeMules = runeMules.filter(m => m.id !== mule.id);
+          saveRuneMulesToLocalStorage();
+          renderRuneManagerView();
+          showToast(`「${mule.name}」を削除しました`);
+        }
+      });
+    }
+
+    listContainer.appendChild(card);
+  });
+}
+
+function resetMuleForm() {
+  currentMuleEditId = null;
+  const form = document.getElementById('mule-form');
+  if (form) form.reset();
+  const idEl = document.getElementById('mule-form-id');
+  if (idEl) idEl.value = '';
+  const titleEl = document.getElementById('mule-form-title');
+  if (titleEl) titleEl.textContent = '＋ 新しいルーン保管係（人間倉庫）をメモする';
+  const cancelBtn = document.getElementById('btn-mule-cancel');
+  if (cancelBtn) cancelBtn.style.display = 'none';
+}
+
+// ルーン整理モジュールの全イベントリスナー設定
+function setupRuneManagerEvents() {
+  // 1. ヘッダーの「💎 ルーン整理」クイックボタン
+  if (elements.btnHeaderRunes) {
+    elements.btnHeaderRunes.addEventListener('click', () => {
+      switchTab('runes');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // 2. マイ足切り基準（初級/中級/上級）切り替えボタン
+  const tierBtns = document.querySelectorAll('#rune-tier-btn-group .rune-tier-btn');
+  tierBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      runeState.tier = btn.dataset.tier || 'mid';
+      saveRunePrefsToLocalStorage();
+      renderRuneManagerView();
+      showToast(`厳選基準を「${RUNE_TIER_CONFIG[runeState.tier].label}」に切り替えました`);
+    });
+  });
+
+  // 3. サブタブ切り替え（3秒判定 / 一括売却ツアー / 早見表＆除外設定 / 人間倉庫）
+  const subBtns = document.querySelectorAll('.rune-subnav-btn');
+  subBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      switchRuneSubtab(btn.dataset.runeSubtab || 'checker');
+    });
+  });
+
+  // 4. 3秒判定チェッカーの各選択ボタン
+  const setBtns = document.querySelectorAll('.checker-set-btn');
+  setBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      setBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      runeState.checker.set = btn.dataset.rset || '暴走';
+      const labelEl = document.getElementById('label-selected-rune-set');
+      if (labelEl) labelEl.textContent = runeState.checker.set;
+      renderRuneCheckerVerdict();
+    });
+  });
+
+  const slotBtns = document.querySelectorAll('#checker-slot-group .checker-slot-btn');
+  slotBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      slotBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      runeState.checker.slot = btn.dataset.rslot || '2';
+      renderRuneCheckerVerdict();
+    });
+  });
+
+  const mainBtns = document.querySelectorAll('#checker-mainstat-group .checker-main-btn');
+  mainBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (btn.classList.contains('disabled-slot')) return;
+      runeState.checker.mainStat = btn.dataset.rmain || '速度';
+      renderRuneCheckerVerdict();
+    });
+  });
+
+  const gradeBtns = document.querySelectorAll('#checker-grade-group .checker-grade-btn');
+  gradeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      gradeBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      runeState.checker.grade = btn.dataset.rgrade || 'hero';
+      renderRuneCheckerVerdict();
+    });
+  });
+
+  const subStateBtns = document.querySelectorAll('#checker-substate-group .checker-sub-btn');
+  subStateBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      subStateBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      runeState.checker.subState = btn.dataset.rsub || 'spd_init';
+      renderRuneCheckerVerdict();
+    });
+  });
+
+  const btnResetChecker = document.getElementById('btn-reset-checker');
+  if (btnResetChecker) {
+    btnResetChecker.addEventListener('click', () => {
+      runeState.checker = {
+        set: '暴走',
+        slot: '2',
+        mainStat: '速度',
+        grade: 'hero',
+        subState: 'spd_init'
+      };
+      setBtns.forEach(b => b.classList.toggle('active', b.dataset.rset === '暴走'));
+      slotBtns.forEach(b => b.classList.toggle('active', b.dataset.rslot === '2'));
+      gradeBtns.forEach(b => b.classList.toggle('active', b.dataset.rgrade === 'hero'));
+      subStateBtns.forEach(b => b.classList.toggle('active', b.dataset.rsub === 'spd_init'));
+      const labelEl = document.getElementById('label-selected-rune-set');
+      if (labelEl) labelEl.textContent = '暴走';
+      renderRuneCheckerVerdict();
+      showToast('判定条件を初期状態にリセットしました');
+    });
+  }
+
+  // 5. 一括売却ツアーのリセット＆売却個数カウンター
+  const btnResetCleanup = document.getElementById('btn-reset-cleanup-steps');
+  if (btnResetCleanup) {
+    btnResetCleanup.addEventListener('click', () => {
+      runeState.cleanupCompleted = [];
+      saveRunePrefsToLocalStorage();
+      renderRuneManagerView();
+      showToast('断捨離チェックリストをリセットしました！');
+    });
+  }
+
+  const soldAddBtns = document.querySelectorAll('.btn-sold-add');
+  soldAddBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const addVal = parseInt(btn.dataset.add, 10) || 0;
+      runeState.soldCount = (runeState.soldCount || 0) + addVal;
+      saveRunePrefsToLocalStorage();
+      renderRuneManagerView();
+      showToast(`🔥 売却数 +${addVal}個！（累計 ${runeState.soldCount}個処分！）`);
+    });
+  });
+
+  const btnSoldReset = document.getElementById('btn-sold-reset');
+  if (btnSoldReset) {
+    btnSoldReset.addEventListener('click', () => {
+      runeState.soldCount = 0;
+      saveRunePrefsToLocalStorage();
+      renderRuneManagerView();
+      showToast('売却カウンターを0にリセットしました');
+    });
+  }
+
+  // 6. 全22種マトリクスのカテゴリフィルター
+  const matrixCatBtns = document.querySelectorAll('#matrix-cat-filters .matrix-filter-btn');
+  matrixCatBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      matrixCatBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      runeState.matrixCat = btn.dataset.mcat || 'all';
+      renderRuneMatrixAndExclusion();
+    });
+  });
+
+  // 7. 人間倉庫（ルーン保管係）のテンプレート追加・チップ入力・フォーム保存
+  const tplBtns = document.querySelectorAll('.mule-template-btn');
+  tplBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const countSame = runeMules.filter(m => m.category === btn.dataset.tplCat).length + 1;
+      const newMule = {
+        id: 'mule-' + Date.now(),
+        name: `${btn.dataset.tplName} ${countSame}号`,
+        attribute: btn.dataset.tplAttr || '火',
+        slots: 6,
+        category: btn.dataset.tplCat || '🔥 闘志ルーン保管',
+        memo: btn.dataset.tplMemo || '',
+        updatedAt: new Date().toISOString()
+      };
+      runeMules.unshift(newMule);
+      saveRuneMulesToLocalStorage();
+      renderRuneManagerView();
+      showToast(`📦 「${newMule.name}」を追加しました！（+6枠節約）`);
+    });
+  });
+
+  const muleCatChips = document.querySelectorAll('.mule-cat-chip');
+  muleCatChips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const catInput = document.getElementById('mule-category');
+      if (catInput) {
+        catInput.value = chip.dataset.mcat || '';
+      }
+    });
+  });
+
+  const muleForm = document.getElementById('mule-form');
+  if (muleForm) {
+    muleForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nameInput = document.getElementById('mule-name');
+      const nameVal = nameInput ? nameInput.value.trim() : '';
+      if (!nameVal) {
+        alert('保管係モンスター名を入力してください（例: 倉庫の火シルフ）');
+        if (nameInput) nameInput.focus();
+        return;
+      }
+
+      const muleData = {
+        id: currentMuleEditId || ('mule-' + Date.now()),
+        name: nameVal,
+        attribute: document.getElementById('mule-attr').value || '火',
+        slots: parseInt(document.getElementById('mule-slots').value, 10) || 6,
+        category: document.getElementById('mule-category').value.trim() || '📦 ルーン保管',
+        memo: document.getElementById('mule-memo').value.trim() || 'ルーン6個装着保管中',
+        updatedAt: new Date().toISOString()
+      };
+
+      if (currentMuleEditId) {
+        const idx = runeMules.findIndex(m => m.id === currentMuleEditId);
+        if (idx !== -1) {
+          runeMules[idx] = muleData;
+          showToast(`📦 「${nameVal}」を更新しました！`);
+        }
+      } else {
+        runeMules.unshift(muleData);
+        showToast(`📦 「${nameVal}」を保管係に登録しました！（+${muleData.slots}枠節約）`);
+      }
+
+      saveRuneMulesToLocalStorage();
+      resetMuleForm();
+      renderRuneManagerView();
+    });
+  }
+
+  const btnMuleCancel = document.getElementById('btn-mule-cancel');
+  if (btnMuleCancel) {
+    btnMuleCancel.addEventListener('click', () => {
+      resetMuleForm();
+    });
+  }
+}
+
 
