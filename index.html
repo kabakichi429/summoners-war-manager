@@ -107,6 +107,7 @@
           <button type="button" class="sort-btn active" data-sort="default">★ 標準順</button>
           <button type="button" class="sort-btn" data-sort="speed">⚡ 速度順 (行動順)</button>
           <button type="button" class="sort-btn" data-sort="priority">🔥 ピック枠順</button>
+          <button type="button" class="sort-btn" data-sort="used">📌 採用編成数順</button>
         </div>
       </div>
       <div class="rta-priority-filter-row" id="rta-priority-filter-row" style="display: none;">
@@ -534,7 +535,7 @@
         </div>
       </div>
 
-      <!-- ルーン整理 4大サブタブナビゲーション -->
+      <!-- ルーン整理 5大サブタブナビゲーション -->
       <div class="rune-subnav">
         <button type="button" class="rune-subnav-btn active" data-rune-subtab="checker">
           <span class="subnav-icon">⚡</span>
@@ -553,6 +554,10 @@
           <span class="subnav-icon">📦</span>
           <span>人間倉庫メモ</span>
           <span class="rune-subtab-badge gold" id="mule-slots-badge">0枠</span>
+        </button>
+        <button type="button" class="rune-subnav-btn" data-rune-subtab="artifacts">
+          <span class="subnav-icon">🏺</span>
+          <span>アーティファクト厳選</span>
         </button>
       </div>
 
@@ -900,6 +905,115 @@
         <!-- 保管係モンスター一覧 -->
         <div class="mule-list-grid" id="mule-list-container">
           <!-- JSで動的生成 -->
+        </div>
+      </div>
+
+      <!-- ==========================================
+           サブペイン5：機能⑥ アーティファクト（属性／タイプ）3秒仕分け＆厳選・売却ナビ
+           ========================================== -->
+      <div id="rune-subpane-artifacts" class="rune-subpane" style="display: none;">
+        <!-- ① 3秒仕分けチェッカー -->
+        <div class="rune-checker-card">
+          <div class="checker-header-row">
+            <h3>🏺 アーティファクト 3秒仕分けチェッカー（手持ちキャラ連動）</h3>
+            <button type="button" id="btn-reset-art-checker" class="btn-mini-clear">🔄 条件リセット</button>
+          </div>
+          <p class="checker-lead">
+            鋼鉄・審判ダンジョンで落ちたアーティファクトの「メインOP」「サブOP系統」「跳ね具合」を選ぶだけで、残すべき神アーティファクトか即売却かを即断します。
+          </p>
+
+          <!-- STEP 1: 種類＆メインOP -->
+          <div class="checker-step-block">
+            <div class="checker-step-label">
+              <span class="step-num-badge">1</span>
+              <span>メインオプションを選択（属性 / タイプ共通）</span>
+              <span class="checker-selected-val" id="label-selected-art-main">体力+</span>
+            </div>
+            <div class="checker-chip-row" id="art-main-group">
+              <button type="button" class="art-main-btn active" data-amain="体力+">💚 体力+ (耐久・サポ・多段汎用)</button>
+              <button type="button" class="art-main-btn" data-amain="攻撃力+">🗡️ 攻撃力+ (アタッカー・爆弾)</button>
+              <button type="button" class="art-main-btn" data-amain="防御力+">🛡️ 防御力+ (イカル・防御比例・受け)</button>
+            </div>
+          </div>
+
+          <!-- STEP 2 & STEP 3 -->
+          <div class="checker-step-row-split">
+            <div class="checker-step-block">
+              <div class="checker-step-label">
+                <span class="step-num-badge">2</span>
+                <span>サブOP系統を選択</span>
+              </div>
+              <div class="checker-substate-grid" id="art-subcat-group">
+                <button type="button" class="art-subcat-btn active" data-asub="add_dmg">🔥 追加ダメージ系 (速度/攻撃/体力/防御比例)</button>
+                <button type="button" class="art-subcat-btn" data-asub="crit_dmg">💥 スキルクリダメ・1撃目/状況別クリダメ</button>
+                <button type="button" class="art-subcat-btn" data-asub="dmg_red">🛡️ 属性被ダメ軽減 (火・水・風・光・闇 -%)</button>
+                <button type="button" class="art-subcat-btn" data-asub="acc_debuff">🎯 スキル効果的中・爆弾/持続ダメUP</button>
+                <button type="button" class="art-subcat-btn" data-asub="rec_utility">❤️ 回復量・吸血・失った体力比例・速度UP</button>
+                <button type="button" class="art-subcat-btn" data-asub="bad_mix">🗑️ 死にOP・バラバラ不揃い (待機/反撃/低数値混在)</button>
+              </div>
+            </div>
+
+            <div class="checker-step-block">
+              <div class="checker-step-label">
+                <span class="step-num-badge">3</span>
+                <span>強化・跳ね状態</span>
+              </div>
+              <div class="checker-grade-grid" id="art-roll-group">
+                <button type="button" class="art-roll-btn grade-legend active" data-aroll="rolled">🟢 目的OPに2〜3ハネ以上 (高数値・特化)</button>
+                <button type="button" class="art-roll-btn grade-hero" data-aroll="init_good">🟡 +0〜+6 テスト前 (有効OPが2個以上一致)</button>
+                <button type="button" class="art-roll-btn grade-rare" data-aroll="low_bad">🔴 低跳ね・メインとサブが矛盾・レア以下</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 判定結果 -->
+          <div class="checker-result-container" id="art-checker-result-box">
+            <!-- JSでリアルタイム生成 -->
+          </div>
+        </div>
+
+        <!-- ② 役割・系統別「残すべき神サブOP ＆ 足切り基準」早見表 -->
+        <div class="rune-matrix-section">
+          <div class="matrix-toolbar">
+            <h3>📊 役割・系統別「残すべき神サブOP ＆ 足切り基準」早見表</h3>
+            <div class="matrix-filter-btns" id="art-guide-filters">
+              <button type="button" class="art-filter-btn active" data-acat="all">すべて</button>
+              <button type="button" class="art-filter-btn" data-acat="add_dmg">🔥 追加ダメ</button>
+              <button type="button" class="art-filter-btn" data-acat="crit_dmg">💥 クリダメ系</button>
+              <button type="button" class="art-filter-btn" data-acat="dmg_red">🛡️ 被ダメ軽減</button>
+              <button type="button" class="art-filter-btn" data-acat="acc_debuff">🎯 的中/持続/回復</button>
+            </div>
+          </div>
+          <div class="rune-matrix-grid" id="artifact-guide-container">
+            <!-- JSで動的生成 -->
+          </div>
+        </div>
+
+        <!-- ③ 迷わず即売却してよい「不要アーティファクト・不一致」5大ルール -->
+        <div class="special-keep-rules-card">
+          <h3>🗑️ 迷わず即売却してよい「不要アーティファクト・不一致」5大ルール</h3>
+          <div class="special-rules-grid">
+            <div class="special-rule-item">
+              <div class="special-rule-title">① 「待機中被ダメ減」「復活時ゲージ」「単体クリダメ軽減」等の死にOPだらけ</div>
+              <p>実質機能しないOP（待機中・スキル再使用中系・効果のない復活バフ系など）が2つ以上混ざったアーティファクトは、強化してもハズレ跳ねしやすいため+0のまま即売却してOKです。</p>
+            </div>
+            <div class="special-rule-item">
+              <div class="special-rule-title">② メインOP「防御力+」×「追加ダメ(攻撃/速度比例)」など方向性の不一致</div>
+              <p>多段アタッカー（水ホム・ジュリー等）は「体力+」または「攻撃力+」を好みます。メインが防御力+でサブが追加ダメとクリダメにバラけているものは優先度が低く売却候補です（イカル/ヴェラード用のスキル的中・防御バフUPは別）。</p>
+            </div>
+            <div class="special-rule-item">
+              <div class="special-rule-title">③ 多段攻撃じゃないのに「追加ダメ系」＆単発なのに「追加ダメ」特化</div>
+              <p><strong>追加ダメージは1ヒットごとに乗る</strong>ため、2〜6回攻撃（水ホム、エトナ系、オラクル、風ROBO、ジュリー、双子）で輝き、単発攻撃キャラには「スキルNクリダメ」の方が圧倒的に効きます。用途を意識して整理しましょう。</p>
+            </div>
+            <div class="special-rule-item">
+              <div class="special-rule-title">④ 1ハネ止まりの低数値「バラバラ多色」レジェンド</div>
+              <p>アーティファクトはルーンと違い<strong>初期化石（練成）がありません</strong>（※変換石は1箇所のみ）。+12で「有効OPに2〜3ハネ（10〜20%台）」していない1ハネ散らばりレジェンドは容量圧迫の原因なので即売却しましょう。</p>
+            </div>
+            <div class="special-rule-item">
+              <div class="special-rule-title">⑤ レア（青）以下 ＆ 使い道のない単発属性「与えるダメUP +3%」止まり</div>
+              <p>ヒーロー（紫）とレジェンド（橙）以外は厳選対象外。属性アーティファクトで「〇〇属性へ与えるダメUP」単発しか伸びなかったものも、+6〜+9で見切ってマナに変えましょう。</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

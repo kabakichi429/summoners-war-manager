@@ -5906,6 +5906,12 @@ function renderMonsterList(type, containerElement, countElement) {
     return true;
   });
 
+  // 採用編成数キャッシュ計算（ソート＆バッジ表示用）
+  const usedCountMap = new Map();
+  filtered.forEach(m => {
+    usedCountMap.set(m.id, findPartiesUsingMonster(m).length);
+  });
+
   // 並び替え（ソートモードに応じたソート）
   filtered.sort((a, b) => {
     if (monsterSortMode === 'speed') {
@@ -5919,6 +5925,10 @@ function renderMonsterList(type, containerElement, countElement) {
       const spdA = parseSpeedValue(a.rtaSpeed);
       const spdB = parseSpeedValue(b.rtaSpeed);
       if (spdB !== spdA) return spdB - spdA;
+    } else if (monsterSortMode === 'used') {
+      const usedA = usedCountMap.get(a.id) || 0;
+      const usedB = usedCountMap.get(b.id) || 0;
+      if (usedB !== usedA) return usedB - usedA;
     }
     if (a.isFavorite && !b.isFavorite) return -1;
     if (!a.isFavorite && b.isFavorite) return 1;
@@ -5935,7 +5945,7 @@ function renderMonsterList(type, containerElement, countElement) {
 
   // カードを生成して挿入
   filtered.forEach(monster => {
-    containerElement.appendChild(createMonsterCard(monster));
+    containerElement.appendChild(createMonsterCard(monster, usedCountMap.get(monster.id) || 0));
   });
 }
 
@@ -5943,18 +5953,72 @@ function renderMonsterList(type, containerElement, countElement) {
 function createEmptyState() {
   const div = document.createElement('div');
   div.className = 'empty-state';
-  div.innerHTML = `
-    <div class="empty-icon">📂</div>
-    <p>該当するモンスターが見つかりませんでした。</p>
-  `;
+  const hasFilter = (searchQuery && searchQuery.trim() !== '') ||
+    attributeFilter !== 'all' ||
+    (quickTagFilter && quickTagFilter !== 'all') ||
+    contentFilter !== 'all' ||
+    (contentFilter === 'rta' && rtaPriorityFilter !== 'all');
+
+  if (hasFilter) {
+    div.innerHTML = `
+      <div class="empty-icon">🔍</div>
+      <p style="font-weight: 600; color: #fff; margin-bottom: 6px;">条件に一致するモンスターが見つかりませんでした</p>
+      <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">
+        ${searchQuery ? `検索ワード: 「${escapeHtml(searchQuery)}」 ` : ''}
+        ${attributeFilter !== 'all' ? `属性: 「${escapeHtml(attributeFilter)}」 ` : ''}
+        ${contentFilter !== 'all' ? `区分: 「${escapeHtml(contentFilter.toUpperCase())}」 ` : ''}
+        ${quickTagFilter && quickTagFilter !== 'all' ? 'クイックタグ選択中' : ''} で絞り込み中です。
+      </p>
+      <button type="button" class="btn btn-primary btn-sm" id="btn-reset-monster-filters">
+        🔄 検索・絞り込みをすべて解除して全件表示
+      </button>
+    `;
+    const resetBtn = div.querySelector('#btn-reset-monster-filters');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        if (elements.searchInput) elements.searchInput.value = '';
+        searchQuery = '';
+        if (elements.btnClearSearch) elements.btnClearSearch.style.display = 'none';
+        attributeFilter = 'all';
+        if (elements.attrBtns) {
+          elements.attrBtns.forEach(b => b.classList.toggle('active', b.dataset.attr === 'all'));
+        }
+        quickTagFilter = 'all';
+        if (elements.quickTagBtns) {
+          elements.quickTagBtns.forEach(b => b.classList.toggle('active', b.dataset.qtag === 'all'));
+        }
+        contentFilter = 'all';
+        if (elements.contentFilterBtns) {
+          elements.contentFilterBtns.forEach(b => b.classList.toggle('active', (b.dataset.contentFilter || 'all') === 'all'));
+        }
+        rtaPriorityFilter = 'all';
+        if (elements.priorityFilterBtns) {
+          elements.priorityFilterBtns.forEach(b => b.classList.toggle('active', (b.dataset.priority || 'all') === 'all'));
+        }
+        if (activeTab === 'rta') {
+          activeTab = 'all';
+          elements.navListItems.forEach(item => item.classList.toggle('active', item.dataset.tab === 'all'));
+        }
+        renderAll();
+        showToast('検索・絞り込みをすべて解除しました');
+      });
+    }
+  } else {
+    div.innerHTML = `
+      <div class="empty-icon">📂</div>
+      <p>該当するモンスターが見つかりませんでした。</p>
+    `;
+  }
   return div;
 }
 
 // モンスターカードHTMLを生成
-function createMonsterCard(monster) {
+function createMonsterCard(monster, usedCountOverride = null) {
   const card = document.createElement('div');
   card.className = `monster-card attr-${monster.attribute}`;
   card.dataset.id = monster.id;
+
+  const usedCount = usedCountOverride !== null ? usedCountOverride : findPartiesUsingMonster(monster).length;
 
   // 各メモが存在するかのインジケータ判定
   const hasRta = monster.isRta || (monster.rtaMemo && monster.rtaMemo.trim() !== '');
@@ -5972,6 +6036,9 @@ function createMonsterCard(monster) {
   const rtaPriorityBadgeHtml = (monster.isRta && monster.rtaPriority)
     ? `<span class="card-rta-priority-badge" title="ピック優先度">${escapeHtml(monster.rtaPriority)}</span>`
     : '';
+  const usedBadgeHtml = usedCount > 0
+    ? `<span class="card-used-party-badge" title="全コンテンツでの採用編成数">📌 ${usedCount}編成</span>`
+    : '';
 
   card.innerHTML = `
     <div class="card-header">
@@ -5980,6 +6047,7 @@ function createMonsterCard(monster) {
         <span class="card-stars">${starString}</span>
       </div>
       <div class="card-header-badges">
+        ${usedBadgeHtml}
         ${monster.isRta ? '<span class="card-rta-badge">⚔️ RTA</span>' : ''}
         ${rtaPriorityBadgeHtml}
         ${rtaSpeedBadgeHtml}
@@ -7127,24 +7195,35 @@ function renderRaidParties() {
     if (raidBossFilter === '紅炎の魔獣' && set.boss !== '紅炎の魔獣') return false;
     if (raidBossFilter === 'カドゥルー' && set.boss === '紅炎の魔獣') return false;
 
-    // 検索クエリ
-    if (searchQuery.trim() === '') return true;
-    const q = searchQuery.toLowerCase();
-    const nameMatch = (set.name || '').toLowerCase().includes(q);
-    const summaryMatch = (set.summary || '').toLowerCase().includes(q);
-    const reqMatch = (set.requirementsMemo || '').toLowerCase().includes(q);
-    const speedMatch = (set.speedTuningMemo || '').toLowerCase().includes(q);
-    const bossMatch = (set.boss || '').toLowerCase().includes(q);
-
-    // 各チームのメンバー検索
     const teams = [set.team1, set.team2, set.team3];
-    const memberMatch = teams.some(t => {
-      if (!t) return false;
-      const allMembers = [...(t.frontline || []), ...(t.backline || [])];
-      return allMembers.some(m => (m.name || '').toLowerCase().includes(q) || (m.role || '').toLowerCase().includes(q));
-    });
+    const memberText = teams.map(t => {
+      if (!t) return '';
+      return [...(t.frontline || []), ...(t.backline || [])]
+        .map(m => `${m.name || ''} ${m.role || ''} ${m.runes || ''}`)
+        .join(' ');
+    }).join(' ');
+    const combinedText = [
+      set.name,
+      set.tag,
+      set.summary,
+      set.requirementsMemo,
+      set.speedTuningMemo,
+      set.strategyMemo,
+      set.boss,
+      memberText
+    ].join(' ');
 
-    return nameMatch || summaryMatch || reqMatch || speedMatch || bossMatch || memberMatch;
+    // 役割・ルーン クイックタグフィルター
+    if (quickTagFilter && quickTagFilter !== 'all') {
+      if (!matchesQuickTag(combinedText)) return false;
+    }
+
+    // 検索クエリ（別名検索対応）
+    if (searchQuery.trim() !== '') {
+      return matchesQueryWithAlias(combinedText, searchQuery);
+    }
+
+    return true;
   });
 
   if (elements.raidSetCount) {
@@ -7157,8 +7236,28 @@ function renderRaidParties() {
     emptyDiv.innerHTML = `
       <div class="empty-icon">🔍</div>
       <p style="font-weight: 600; color: #fff; margin-bottom: 6px;">条件に一致するレイド構成が見つかりません</p>
-      <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">「${escapeHtml(searchQuery)}」の検索条件を変更してください。</p>
+      <p style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">
+        ${searchQuery ? `検索ワード: 「${escapeHtml(searchQuery)}」 ` : ''}
+        ${quickTagFilter && quickTagFilter !== 'all' ? 'クイックタグ選択中' : ''} で絞り込み中です。
+      </p>
+      <button type="button" class="btn btn-primary btn-sm" id="btn-reset-raid-filters">
+        🔄 検索・絞り込みをすべて解除
+      </button>
     `;
+    const btnResetRaid = emptyDiv.querySelector('#btn-reset-raid-filters');
+    if (btnResetRaid) {
+      btnResetRaid.addEventListener('click', () => {
+        if (elements.searchInput) elements.searchInput.value = '';
+        searchQuery = '';
+        if (elements.btnClearSearch) elements.btnClearSearch.style.display = 'none';
+        quickTagFilter = 'all';
+        if (elements.quickTagBtns) {
+          elements.quickTagBtns.forEach(b => b.classList.toggle('active', b.dataset.qtag === 'all'));
+        }
+        switchRaidBoss('all');
+        renderAll();
+      });
+    }
     elements.partyListRaid.appendChild(emptyDiv);
     return;
   }
@@ -7542,17 +7641,29 @@ function renderDimensionRaidSets() {
   elements.dimRaidSetList.innerHTML = '';
 
   const filteredSets = dimensionRaidSets.filter(set => {
-    if (searchQuery.trim() === '') return true;
-    const q = searchQuery.toLowerCase();
-    const nameMatch = (set.name || '').toLowerCase().includes(q);
-    const summaryMatch = (set.summary || '').toLowerCase().includes(q);
-    const reqMatch = (set.requirementsMemo || '').toLowerCase().includes(q);
     const phases = [set.phase1, set.phase2, set.phase3];
-    const memberMatch = phases.some(p => {
-      if (!p || !p.members) return false;
-      return p.members.some(m => (m.name || '').toLowerCase().includes(q) || (m.role || '').toLowerCase().includes(q));
-    });
-    return nameMatch || summaryMatch || reqMatch || memberMatch;
+    const memberText = phases.map(p => (p && p.members)
+      ? p.members.map(m => `${m.name || ''} ${m.role || ''} ${m.runes || ''}`).join(' ')
+      : ''
+    ).join(' ');
+    const combinedText = [
+      set.name,
+      set.tag,
+      set.summary,
+      set.requirementsMemo,
+      set.strategyMemo,
+      memberText
+    ].join(' ');
+
+    if (quickTagFilter && quickTagFilter !== 'all') {
+      if (!matchesQuickTag(combinedText)) return false;
+    }
+
+    if (searchQuery.trim() !== '') {
+      return matchesQueryWithAlias(combinedText, searchQuery);
+    }
+
+    return true;
   });
 
   if (filteredSets.length === 0) {
@@ -7713,15 +7824,27 @@ function renderDimensionRemainsParties() {
     });
   }
 
-  // 検索フィルター
-  if (searchQuery.trim() !== '') {
-    const q = searchQuery.toLowerCase();
+  // クイックタグ＆別名検索フィルター
+  if ((quickTagFilter && quickTagFilter !== 'all') || searchQuery.trim() !== '') {
     remainsParties = remainsParties.filter(p => {
-      const nameMatch = (p.name || '').toLowerCase().includes(q);
-      const reqMatch = (p.requirementsMemo || '').toLowerCase().includes(q);
-      const speedMatch = (p.speedTuningMemo || '').toLowerCase().includes(q);
-      const memberMatch = (p.members || []).some(m => (m.name || '').toLowerCase().includes(q) || (m.role || '').toLowerCase().includes(q));
-      return nameMatch || reqMatch || speedMatch || memberMatch;
+      const memberText = (p.members || []).map(m => `${m.name || ''} ${m.role || ''} ${m.runes || ''}`).join(' ');
+      const combinedText = [
+        p.name,
+        p.dungeon,
+        p.dimensionArea,
+        p.turnOrder,
+        p.requirementsMemo,
+        p.speedTuningMemo,
+        p.targetMemo,
+        memberText
+      ].join(' ');
+      if (quickTagFilter && quickTagFilter !== 'all' && !matchesQuickTag(combinedText)) {
+        return false;
+      }
+      if (searchQuery.trim() !== '' && !matchesQueryWithAlias(combinedText, searchQuery)) {
+        return false;
+      }
+      return true;
     });
   }
 
@@ -7762,14 +7885,27 @@ function renderDimensionAwakeningParties() {
     });
   }
 
-  // 検索フィルター
-  if (searchQuery.trim() !== '') {
-    const q = searchQuery.toLowerCase();
+  // クイックタグ＆別名検索フィルター
+  if ((quickTagFilter && quickTagFilter !== 'all') || searchQuery.trim() !== '') {
     awkParties = awkParties.filter(p => {
-      const nameMatch = (p.name || '').toLowerCase().includes(q);
-      const reqMatch = (p.requirementsMemo || '').toLowerCase().includes(q);
-      const memberMatch = (p.members || []).some(m => (m.name || '').toLowerCase().includes(q) || (m.role || '').toLowerCase().includes(q));
-      return nameMatch || reqMatch || memberMatch;
+      const memberText = (p.members || []).map(m => `${m.name || ''} ${m.role || ''} ${m.runes || ''}`).join(' ');
+      const combinedText = [
+        p.name,
+        p.dungeon,
+        p.constraintBadge,
+        p.turnOrder,
+        p.requirementsMemo,
+        p.speedTuningMemo,
+        p.targetMemo,
+        memberText
+      ].join(' ');
+      if (quickTagFilter && quickTagFilter !== 'all' && !matchesQuickTag(combinedText)) {
+        return false;
+      }
+      if (searchQuery.trim() !== '' && !matchesQueryWithAlias(combinedText, searchQuery)) {
+        return false;
+      }
+      return true;
     });
   }
 
@@ -9878,7 +10014,7 @@ const RUNE_MATRIX_DATA = [
 // ルーン整理モジュール状態
 let runeState = {
   tier: 'mid', // 'beginner', 'mid', 'endgame'
-  subtab: 'checker', // 'checker', 'cleanup', 'matrix', 'mules'
+  subtab: 'checker', // 'checker', 'cleanup', 'matrix', 'mules', 'artifacts'
   checker: {
     set: '暴走',
     slot: '2', // 'odd', '2', '4', '6'
@@ -9888,7 +10024,13 @@ let runeState = {
   },
   cleanupCompleted: [],
   soldCount: 0,
-  matrixCat: 'all' // 'all', '4set', '2set', 'rift'
+  matrixCat: 'all', // 'all', '4set', '2set', 'rift'
+  artChecker: {
+    mainStat: '体力+', // '体力+', '攻撃力+', '防御力+'
+    subCat: 'add_dmg', // 'add_dmg', 'crit_dmg', 'dmg_red', 'acc_debuff', 'rec_utility', 'bad_mix'
+    rollState: 'rolled' // 'rolled', 'init_good', 'low_bad'
+  },
+  artGuideCat: 'all' // 'all', 'add_dmg', 'crit_dmg', 'dmg_red', 'acc_debuff'
 };
 
 let runeMules = [];
@@ -9973,6 +10115,8 @@ function renderRuneManagerView() {
   renderCleanupSteps();
   renderRuneMatrixAndExclusion();
   renderRuneMulesList();
+  renderArtifactCheckerVerdict();
+  renderArtifactGuideGrid();
 }
 
 // ルーン整理サブタブの切り替え
@@ -9987,7 +10131,8 @@ function switchRuneSubtab(subtab) {
     checker: document.getElementById('rune-subpane-checker'),
     cleanup: document.getElementById('rune-subpane-cleanup'),
     matrix: document.getElementById('rune-subpane-matrix'),
-    mules: document.getElementById('rune-subpane-mules')
+    mules: document.getElementById('rune-subpane-mules'),
+    artifacts: document.getElementById('rune-subpane-artifacts')
   };
 
   Object.keys(panes).forEach(k => {
@@ -10108,7 +10253,7 @@ function findMatchingUserMonsters(runeSet, slot, mainStat) {
         if (!mem.name || seenNames.has(mem.name)) return;
         if ((mem.runes || '').includes(runeSet)) {
           if (isStatCompatibleWithText(mem.runes, mem.role)) {
-            const existingMonster = monsters.find(mo => mo.name.includes(mem.name) || mem.name.includes(mo.name));
+            const existingMonster = findMonsterByNameOrAlias(mem.name, mem.attribute || '');
             matched.push({
               id: existingMonster ? existingMonster.id : null,
               name: mem.name,
@@ -10428,7 +10573,7 @@ function renderRuneCheckerVerdict() {
         <div class="verdict-monsters-title">💡 あなたの手持ち・周回編成でこのルーンが合う候補 (${matchedMonsters.length}体+): <span style="font-size:0.7rem; color:#94a3b8; font-weight:400;">※タップでキャラ詳細</span></div>
         <div class="verdict-monster-chips">
           ${matchedMonsters.map(m => `
-            <button type="button" class="verdict-monster-chip" data-mid="${escapeHtml(m.id || '')}" title="${escapeHtml(m.runes || '')}">
+            <button type="button" class="verdict-monster-chip" data-mid="${escapeHtml(m.id || '')}" data-mname="${escapeHtml(m.name || '')}" data-mattr="${escapeHtml(m.attribute || '')}" title="${escapeHtml(m.runes || '')}">
               <span class="attr-badge attr-${escapeHtml(m.attribute)}" style="font-size:0.62rem; padding:1px 5px;">${escapeHtml(m.attribute)}</span>
               <span>${escapeHtml(m.name)}</span>
             </button>
@@ -10458,15 +10603,19 @@ function renderRuneCheckerVerdict() {
     </div>
   `;
 
-  // 候補モンスターチップをクリックで詳細モーダル表示
+  // 候補モンスターチップをクリックで詳細モーダル表示（未紐付け名も別名解決でジャンプ）
   const chips = resultBox.querySelectorAll('.verdict-monster-chip');
   chips.forEach(chip => {
     chip.addEventListener('click', () => {
-      const mid = chip.dataset.mid;
-      if (mid) {
-        openDetailModal(mid);
+      let targetId = chip.dataset.mid;
+      if (!targetId) {
+        const resolved = findMonsterByNameOrAlias(chip.dataset.mname || '', chip.dataset.mattr || '');
+        if (resolved) targetId = resolved.id;
+      }
+      if (targetId) {
+        openDetailModal(targetId);
       } else {
-        showToast('パーティ編成メンバーです（モンスター図鑑から詳細登録も可能）');
+        showToast(`「${chip.dataset.mname || 'このキャラ'}」は図鑑未登録のため、必要なら「＋キャラ登録」から追加してください`);
       }
     });
   });
@@ -10690,6 +10839,301 @@ function resetMuleForm() {
   if (cancelBtn) cancelBtn.style.display = 'none';
 }
 
+// -----------------------------------------------------------------------------
+// 機能⑥：アーティファクト（属性／タイプ）3秒仕分け＆厳選・売却ナビ (提案C)
+// -----------------------------------------------------------------------------
+const ARTIFACT_GUIDE_DATA = [
+  {
+    cat: 'add_dmg',
+    icon: '🔥',
+    title: '追加ダメージ系（多段・サポート火力の覇権）',
+    badge: '最優先キープ',
+    mainBest: '体力+ / 攻撃力+（サポート兼任なら体力+一択）',
+    subPriority: '速度比例追加ダメ（+120%〜200%+） / 攻撃力比例（+10%〜25%+） / 体力比例（+2%〜4%+） / 防御力比例',
+    keepRule: '追加ダメ系が2種類以上付いている、または「追加ダメに2ハネ以上」したものは神アーティファクト候補！1ヒットごとに固定ダメージが乗るため、防御を無視してゴリゴリ削れます。'
+  },
+  {
+    cat: 'crit_dmg',
+    icon: '💥',
+    title: 'スキルクリダメ＆状況別クリダメUP（単発・カイロス砲台）',
+    badge: 'PVE/一撃必殺',
+    mainBest: '攻撃力+（防御比例アタッカーは防御力+ / 体力比例は体力+）',
+    subPriority: 'スキル3(または主力スキル)クリダメUP（+12%〜20%+） / 敵の体力状態に応じたクリダメ / 1撃目クリダメ / 協力・反撃ダメUP',
+    keepRule: 'カイロス・レイド（ヒンメル、バーレイグ、水フリーレン、ルシェン、カーリー等）は「主力スキルクリダメ +15%以上」または「攻撃/防御強化効果UP」が重なると要求ルーン難易度が劇的に下がります。'
+  },
+  {
+    cat: 'dmg_red',
+    icon: '🛡️',
+    title: '属性からの被ダメ軽減（RTA・占領戦 受け＆デコイ必須）',
+    badge: '対人必須級',
+    mainBest: '体力+（または防衛受け役用 防御力+）',
+    subPriority: '火属性からの被ダメ軽減（-12%〜22%） / 水属性被ダメ軽減 / 風属性被ダメ軽減 / 光・闇属性被ダメ軽減',
+    keepRule: '苦手属性や主要アタッカー属性の「被ダメ軽減 -15%以上」は占領戦デコイ（カミラ、風パンダ、アメリア、水シュタルク、レオ等）の事故率を激減させます。1属性特化ハネでもロック対象！'
+  },
+  {
+    cat: 'acc_debuff',
+    icon: '🎯',
+    title: 'スキル効果的中・爆弾/持続ダメージUP（妨害＆タワー）',
+    badge: 'コントロール用',
+    mainBest: '体力+（爆弾アタッカーのセアラ/ジバラのみ攻撃力+）',
+    subPriority: 'スキル3・スキル2効果的中UP（+15%〜28%+） / 持続ダメージ+UP / 爆弾ダメージ+UP（セアラ・ジバラ神OP）',
+    keepRule: '「スキル効果的中+」があればルーン側の的中を削って速度や耐久に回せます！また持続ダメUP（リカ・ノラ・サス・メリア）と爆弾ダメUP（セアラ・ジバラ）は火力直結のため確保推奨。'
+  },
+  {
+    cat: 'rec_utility',
+    icon: '❤️',
+    title: '回復量UP・吸血・失った体力比例・強化効果UP',
+    badge: '耐久サポ/反撃用',
+    mainBest: '体力+（防御バフ主体のタラニス/イカルは防御力+）',
+    subPriority: 'スキル2/3回復量UP（+12%〜20%+） / 吸血量UP（ライカ・水鬼） / 失った体力比例防御(or攻撃) / 速度上昇効果UP（バナード・ベルデ等）',
+    keepRule: '回復量+UP（ルル・ライリー・アリーヤ・フラン）や吸血+UP（ライカ・吸血ミホ系）、強化効果UP（防御強化UPでイカル合作ライン緩和など）が2ハネしたら長期戦用として保護！'
+  },
+  {
+    cat: 'bad_mix',
+    icon: '🗑️',
+    title: '即売却チェック（待機中・復活関連・不一致低ハネ）',
+    badge: '断捨離対象',
+    mainBest: 'どのメインOPでもサブが死にOP2個以上なら即売却',
+    subPriority: '待機中被ダメ減 / 復活時攻撃ゲージ / 攻撃後ダメージ軽減 / 死に効果1ハネ×4の散らばり',
+    keepRule: 'アーティファクトは初期化石（練成）不可のため「+9〜+12で有効OPが2ハネ以上（合計12〜20%+）」しなければ即売却してマナに変換しましょう！'
+  }
+];
+
+function findMatchingArtifactMonsters(mainStat, subCat) {
+  const matched = [];
+  const seen = new Set();
+
+  let subRegex = /./;
+  if (subCat === 'add_dmg') {
+    subRegex = /追加ダメ|速度比例|体力比例|攻撃力比例|防御力比例|多段|連撃/;
+  } else if (subCat === 'crit_dmg') {
+    subRegex = /クリダメ|スキル[1-4]|S[1-4]|初撃|1撃目|単発|切断|知識|大砲|火力/;
+  } else if (subCat === 'dmg_red') {
+    subRegex = /被ダメ|軽減|属性.*減|受け|タンク|耐久|デコイ|反撃/;
+  } else if (subCat === 'acc_debuff') {
+    subRegex = /的中|持続|爆弾|剥がし|スタン|凍結|挑発|睡眠|弱化/;
+  } else if (subCat === 'rec_utility') {
+    subRegex = /回復|吸血|失った体力|免疫|蘇生|防衛|防御強化|速度上昇|協力/;
+  } else {
+    return [];
+  }
+
+  let mainHintRegex = null;
+  if (mainStat === '攻撃力+') {
+    mainHintRegex = /攻撃力\+|アタッカー|火力|爆弾|激怒|猛攻|クリダメ/;
+  } else if (mainStat === '防御力+') {
+    mainHintRegex = /防御力\+|防御%|イカル|防御比例|守護|タンク|受け/;
+  } else if (mainStat === '体力+') {
+    mainHintRegex = /体力\+|体力%|サポ|耐久|受け|多段|剥がし|回復|免疫/;
+  }
+
+  monsters.forEach(m => {
+    if (seen.has(m.name)) return;
+    const artText = m.recommendedArtifacts || '';
+    const fullText = [artText, m.role, m.rtaMemo, m.guildMemo, m.cairosMemo, m.generalMemo].join(' ');
+    const artHit = subRegex.test(artText);
+    const fullHit = subRegex.test(fullText);
+
+    if (!fullHit) return;
+    const mainMatch = !mainHintRegex || mainHintRegex.test(`${artText} ${m.recommendedRunes || ''} ${m.role || ''}`);
+    if (!artHit && !mainMatch) return;
+
+    const score = (artHit ? 10 : 0) + (mainMatch ? 5 : 0) + (m.isFavorite ? 2 : 0);
+    matched.push({
+      id: m.id,
+      name: m.name,
+      attribute: m.attribute || '火',
+      artifacts: artText || m.role || '',
+      score
+    });
+    seen.add(m.name);
+  });
+
+  matched.sort((a, b) => b.score - a.score);
+  return matched.slice(0, 10);
+}
+
+function evaluateArtifactVerdict() {
+  const { mainStat, subCat, rollState } = runeState.artChecker;
+
+  if (rollState === 'low_bad' || subCat === 'bad_mix') {
+    return {
+      type: 'sell',
+      badge: '🔴 即売却OK！（死にOP混在・低ハネ・不一致）',
+      reason: 'アーティファクトにはルーンのような「初期化石（練成）」がありません。死にOP（待機中・復活時系）が多いものや、強化して有効OPに2ハネ以上しなかったものは整理の足かせになるため、迷わずマナに変えてOKです！'
+    };
+  }
+
+  if (mainStat === '防御力+' && subCat === 'add_dmg') {
+    if (rollState === 'rolled') {
+      return {
+        type: 'test',
+        badge: '🟡 受けサポート・防御比例キャラ用に限定キープ',
+        reason: 'メイン「防御力+」×「追加ダメ」は純アタッカーより優先度が下がりますが、水パンダ/ベルベルグ/風パンダ/ヴェラードなど防御・耐久を兼ねるキャラが多段ヒットの固定ダメを出したい場合には十分採用候補になります。'
+      };
+    }
+    return {
+      type: 'sell',
+      badge: '🔴 売却寄り（メイン防御+ × 追加ダメ未強化は優先度低）',
+      reason: '追加ダメ特化を狙う場合はメイン「体力+」または「攻撃力+」の方が圧倒的に汎用性が高いです。未強化段階で神サブ（速度比例＋体力比例など）が同時に付いていない限り売却でOKです。'
+    };
+  }
+
+  if (mainStat === '攻撃力+' && subCat === 'dmg_red') {
+    if (rollState === 'rolled') {
+      return {
+        type: 'keep',
+        badge: '🟡 攻め兼用の耐久確保枠としてキープ（攻撃比例回復・レオ対策など）',
+        reason: '「攻撃力+」に属性被ダメ軽減が付く形はややチグハグですが、攻撃依存アタッカー（ラキ・カルカノ・ジュリー・セアラ系）を特定の反撃/属性防衛に耐えさせたいピンポイント運用なら高数値に限り保護の価値あり！'
+      };
+    }
+    return {
+      type: 'sell',
+      badge: '🔴 売却推奨（メイン攻撃+ × 被ダメ軽減の方向性不一致）',
+      reason: '属性被ダメ軽減は耐久サポや受けタンク（メイン体力+ / 防御+）に持たせるのが鉄板です。未強化で数値も浅いなら無理に残さず整理しましょう。'
+    };
+  }
+
+  if (rollState === 'rolled') {
+    const synergyNote = {
+      add_dmg: '1ヒットごとに固定ダメが乗り、防御無視級のダメージを叩き出せます！（特に速度比例+追加ダメ、攻撃/体力比例の複合は家宝レベル）',
+      crit_dmg: '主力スキルクリダメや状況別クリダメが高数値で乗るため、カイロス深淵・レイド・占領戦の一撃必殺ラインを一気に引き上げられます！',
+      dmg_red: '特定属性からの被ダメージを15%〜20%近くカットでき、占領戦受け攻め・RTAの事故率を大幅に下げる必須アーティファクトです！',
+      acc_debuff: 'スキル効果的中+のおかげでルーン側の的中を耐久や速度へ回せます。持続ダメ/爆弾ダメUPもそのまま決定力に直結！',
+      rec_utility: '回復量+・吸血+・防御強化UP等は耐久戦の持久力やイカル合作ライン緩和に絶大な効果を発揮します！'
+    };
+    return {
+      type: 'keep',
+      badge: `🟢 文句なしの大当たりキープ！（${mainStat} × 高ハネ特化）`,
+      reason: synergyNote[subCat] || '有効OPに特化して伸びた高価値アーティファクトです。必ずロック保護しましょう！'
+    };
+  }
+
+  // init_good
+  return {
+    type: 'test',
+    badge: '🟡 +6〜+9まで強化テスト！（有効OP 2ハネ以上で本採用）',
+    reason: `メインOP（${mainStat}）とサブOP系統の相性が非常に良好です！今すぐ+6〜+9まで叩き、狙いの有効OPに連続ハネすれば本採用ロック、死にOPや別の微妙なOPに2回飛んだらその場で売却しましょう。`
+  };
+}
+
+function renderArtifactCheckerVerdict() {
+  const box = document.getElementById('art-checker-result-box');
+  if (!box) return;
+
+  const { mainStat, subCat, rollState } = runeState.artChecker;
+  const labelEl = document.getElementById('label-selected-art-main');
+  if (labelEl) labelEl.textContent = mainStat;
+
+  const verdict = evaluateArtifactVerdict();
+  const matchedMonsters = (verdict.type === 'sell' && subCat === 'bad_mix')
+    ? []
+    : findMatchingArtifactMonsters(mainStat, subCat);
+
+  const subCatLabels = {
+    add_dmg: '追加ダメージ系',
+    crit_dmg: 'スキル/状況別クリダメUP',
+    dmg_red: '属性被ダメ軽減',
+    acc_debuff: 'スキル効果的中/爆弾/持続',
+    rec_utility: '回復/吸血/速度/強化効果UP',
+    bad_mix: '死にOP・バラバラ不揃い'
+  };
+  const rollLabels = {
+    rolled: '🟢 2〜3ハネ以上',
+    init_good: '🟡 テスト前 (有効2種+)',
+    low_bad: '🔴 低跳ね/レア以下'
+  };
+
+  let monstersHtml = '';
+  if (verdict.type === 'sell' && subCat === 'bad_mix') {
+    monstersHtml = `
+      <div class="verdict-monsters-box">
+        <div class="verdict-monsters-title">🗑️ 手持ちキャラ適性チェック</div>
+        <p style="font-size:0.8rem; color:#fda4af;">死にOP混在のため推奨対象外です。変換石を使うほどではない場合はそのまま売却してマナに変えましょう！</p>
+      </div>
+    `;
+  } else if (matchedMonsters.length > 0) {
+    monstersHtml = `
+      <div class="verdict-monsters-box">
+        <div class="verdict-monsters-title">💡 このアーティファクトが特に刺さるあなたの手持ち候補 (${matchedMonsters.length}体+): <span style="font-size:0.7rem; color:#94a3b8; font-weight:400;">※タップで図鑑詳細</span></div>
+        <div class="verdict-monster-chips">
+          ${matchedMonsters.map(m => `
+            <button type="button" class="verdict-monster-chip" data-mid="${escapeHtml(m.id)}" title="${escapeHtml(m.artifacts)}">
+              <span class="attr-badge attr-${escapeHtml(m.attribute)}" style="font-size:0.62rem; padding:1px 5px;">${escapeHtml(m.attribute)}</span>
+              <span>${escapeHtml(m.name)}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+    `;
+  } else {
+    monstersHtml = `
+      <div class="verdict-monsters-box">
+        <div class="verdict-monsters-title">💡 手持ちキャラ適性チェック</div>
+        <p style="font-size:0.8rem; color:#cbd5e1;">手持ち図鑑全体で汎用パーツとして運用可能です。</p>
+      </div>
+    `;
+  }
+
+  box.innerHTML = `
+    <div class="verdict-card verdict-${verdict.type}">
+      <div class="verdict-top-bar">
+        <span class="verdict-main-badge">${escapeHtml(verdict.badge)}</span>
+        <span class="verdict-target-summary">対象: <strong>${escapeHtml(mainStat)}</strong> / <strong>${escapeHtml(subCatLabels[subCat] || subCat)}</strong> / ${escapeHtml(rollLabels[rollState] || rollState)}</span>
+      </div>
+      <div class="verdict-reason-text">${escapeHtml(verdict.reason)}</div>
+      ${monstersHtml}
+    </div>
+  `;
+
+  box.querySelectorAll('.verdict-monster-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      if (chip.dataset.mid) openDetailModal(chip.dataset.mid);
+    });
+  });
+}
+
+function renderArtifactGuideGrid() {
+  const container = document.getElementById('artifact-guide-container');
+  if (!container) return;
+
+  const filtered = ARTIFACT_GUIDE_DATA.filter(item => {
+    if (runeState.artGuideCat === 'all') return true;
+    if (runeState.artGuideCat === 'acc_debuff') {
+      return item.cat === 'acc_debuff' || item.cat === 'rec_utility';
+    }
+    return item.cat === runeState.artGuideCat;
+  });
+
+  container.innerHTML = filtered.map(item => {
+    const sampleMonsters = findMatchingArtifactMonsters('all', item.cat).slice(0, 5);
+    const monsterNames = sampleMonsters.length > 0
+      ? sampleMonsters.map(m => m.name.replace(/\s*\([^)]*\)/g, '')).join('、')
+      : '即売却チェック項目';
+
+    return `
+      <div class="matrix-rune-card art-guide-card">
+        <div class="matrix-card-header">
+          <span class="matrix-rune-name">${item.icon} ${escapeHtml(item.title)}</span>
+          <span class="matrix-set-type">${escapeHtml(item.badge)}</span>
+        </div>
+        <div class="art-priority-row">
+          <strong>📌 推奨メインOP:</strong> ${escapeHtml(item.mainBest)}
+        </div>
+        <div class="art-priority-row">
+          <strong>⭐ 狙う神サブOP:</strong> ${escapeHtml(item.subPriority)}
+        </div>
+        <div class="art-keep-line">
+          <strong>✅ 厳選＆保護基準:</strong> ${escapeHtml(item.keepRule)}
+        </div>
+        <div class="art-monsters-line">
+          <strong>👥 手持ち適性例:</strong> ${escapeHtml(monsterNames)}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
 // ルーン整理モジュールの全イベントリスナー設定
 function setupRuneManagerEvents() {
   // 1. ヘッダーの「💎 ルーン整理」クイックボタン
@@ -10911,6 +11355,59 @@ function setupRuneManagerEvents() {
       resetMuleForm();
     });
   }
+
+  // 8. アーティファクト厳選＆3秒チェッカーイベント (提案C)
+  const artMainBtns = document.querySelectorAll('#art-main-group .art-main-btn');
+  artMainBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      artMainBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      runeState.artChecker.mainStat = btn.dataset.amain || '体力+';
+      renderArtifactCheckerVerdict();
+    });
+  });
+
+  const artSubBtns = document.querySelectorAll('#art-subcat-group .art-subcat-btn');
+  artSubBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      artSubBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      runeState.artChecker.subCat = btn.dataset.asub || 'add_dmg';
+      renderArtifactCheckerVerdict();
+    });
+  });
+
+  const artRollBtns = document.querySelectorAll('#art-roll-group .art-roll-btn');
+  artRollBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      artRollBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      runeState.artChecker.rollState = btn.dataset.aroll || 'rolled';
+      renderArtifactCheckerVerdict();
+    });
+  });
+
+  const btnResetArtChecker = document.getElementById('btn-reset-art-checker');
+  if (btnResetArtChecker) {
+    btnResetArtChecker.addEventListener('click', () => {
+      runeState.artChecker = { mainStat: '体力+', subCat: 'add_dmg', rollState: 'rolled' };
+      artMainBtns.forEach(b => b.classList.toggle('active', b.dataset.amain === '体力+'));
+      artSubBtns.forEach(b => b.classList.toggle('active', b.dataset.asub === 'add_dmg'));
+      artRollBtns.forEach(b => b.classList.toggle('active', b.dataset.aroll === 'rolled'));
+      renderArtifactCheckerVerdict();
+      showToast('アーティファクト判定条件を初期状態にリセットしました');
+    });
+  }
+
+  const artGuideBtns = document.querySelectorAll('#art-guide-filters .art-filter-btn');
+  artGuideBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      artGuideBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      runeState.artGuideCat = btn.dataset.acat || 'all';
+      renderArtifactGuideGrid();
+    });
+  });
 }
 
 

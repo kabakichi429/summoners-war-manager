@@ -4337,10 +4337,10 @@ textarea {
   color: var(--accent-gold);
 }
 
-/* ルーン整理 4大サブタブナビ */
+/* ルーン整理 5大サブタブナビ */
 .rune-subnav {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 6px;
   margin-bottom: 16px;
   background: var(--bg-card);
@@ -4349,9 +4349,12 @@ textarea {
   border: 1px solid var(--border-color);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 680px) {
   .rune-subnav {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .rune-subnav-btn:last-child {
+    grid-column: 1 / -1;
   }
 }
 
@@ -4526,7 +4529,8 @@ textarea {
 }
 
 .checker-set-btn,
-.checker-main-btn {
+.checker-main-btn,
+.art-main-btn {
   background: var(--bg-card);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 6px;
@@ -4539,13 +4543,15 @@ textarea {
 }
 
 .checker-set-btn:hover,
-.checker-main-btn:hover {
+.checker-main-btn:hover,
+.art-main-btn:hover {
   border-color: var(--accent-gold);
   color: #fff;
 }
 
 .checker-set-btn.active,
-.checker-main-btn.active {
+.checker-main-btn.active,
+.art-main-btn.active {
   background: var(--accent-gold);
   border-color: var(--accent-gold);
   color: #0a0e17;
@@ -4635,7 +4641,9 @@ textarea {
 }
 
 .checker-grade-btn,
-.checker-sub-btn {
+.checker-sub-btn,
+.art-roll-btn,
+.art-subcat-btn {
   background: var(--bg-card);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 7px;
@@ -4648,21 +4656,24 @@ textarea {
   transition: var(--transition-fast);
 }
 
-.checker-grade-btn.grade-legend.active {
+.checker-grade-btn.grade-legend.active,
+.art-roll-btn.grade-legend.active {
   background: rgba(249, 115, 22, 0.25);
   border-color: #f97316;
   color: #fed7aa;
   box-shadow: 0 0 10px rgba(249, 115, 22, 0.35);
 }
 
-.checker-grade-btn.grade-hero.active {
+.checker-grade-btn.grade-hero.active,
+.art-roll-btn.grade-hero.active {
   background: rgba(168, 85, 247, 0.25);
   border-color: #a855f7;
   color: #f3e8ff;
   box-shadow: 0 0 10px rgba(168, 85, 247, 0.35);
 }
 
-.checker-grade-btn.grade-rare.active {
+.checker-grade-btn.grade-rare.active,
+.art-roll-btn.grade-rare.active {
   background: rgba(59, 130, 246, 0.25);
   border-color: #3b82f6;
   color: #bfdbfe;
@@ -4674,7 +4685,8 @@ textarea {
   gap: 6px;
 }
 
-.checker-sub-btn.active {
+.checker-sub-btn.active,
+.art-subcat-btn.active {
   background: rgba(223, 178, 58, 0.2);
   border-color: var(--accent-gold);
   color: #fef08a;
@@ -5139,7 +5151,8 @@ textarea {
   flex-wrap: wrap;
 }
 
-.matrix-filter-btn {
+.matrix-filter-btn,
+.art-filter-btn {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: 6px;
@@ -5148,9 +5161,11 @@ textarea {
   font-weight: 600;
   padding: 5px 12px;
   cursor: pointer;
+  transition: var(--transition-fast);
 }
 
-.matrix-filter-btn.active {
+.matrix-filter-btn.active,
+.art-filter-btn.active {
   background: rgba(223, 178, 58, 0.2);
   border-color: var(--accent-gold);
   color: var(--accent-gold);
@@ -5786,4 +5801,62 @@ textarea {
   background: rgba(223, 178, 58, 0.18);
   border: 1px solid rgba(223, 178, 58, 0.45);
   color: #fde047;
+}
+
+/* ==========================================================================
+   📌 モンスターカード採用編成数バッジ & 🏺 アーティファクト厳選ナビ追加スタイル
+   ========================================================================== */
+
+.card-used-party-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 800;
+  background: rgba(56, 189, 248, 0.14);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #7dd3fc;
+  white-space: nowrap;
+}
+
+.art-guide-card {
+  border-color: rgba(245, 158, 11, 0.28);
+}
+
+.art-guide-card .art-priority-row {
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 6px 9px;
+  font-size: 0.77rem;
+  color: #e2e8f0;
+  margin-bottom: 6px;
+  line-height: 1.45;
+}
+
+.art-guide-card .art-priority-row strong {
+  color: #fde047;
+}
+
+.art-guide-card .art-keep-line {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: 6px;
+  padding: 6px 9px;
+  font-size: 0.76rem;
+  color: #6ee7b7;
+  margin-bottom: 7px;
+  line-height: 1.45;
+}
+
+.art-guide-card .art-monsters-line {
+  font-size: 0.74rem;
+  color: #cbd5e1;
+  line-height: 1.45;
+}
+
+.art-guide-card .art-monsters-line strong {
+  color: #7dd3fc;
 }
