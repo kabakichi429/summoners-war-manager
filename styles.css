@@ -336,7 +336,6 @@ body {
 
 .tab-pane.active {
   display: block;
-  animation: fadeIn 0.3s ease;
 }
 
 @keyframes fadeIn {
@@ -388,7 +387,7 @@ body {
   padding: 16px;
   position: relative;
   cursor: pointer;
-  transition: var(--transition-normal);
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -3679,7 +3678,6 @@ textarea {
 
 .dim-subpane.active {
   display: block;
-  animation: fadeIn 0.3s ease;
 }
 
 /* 異次元レイド 戦略概要カード */
@@ -5859,4 +5857,34 @@ textarea {
 
 .art-guide-card .art-monsters-line strong {
   color: #7dd3fc;
+}
+
+/* ==========================================================================
+   ⚡ タップ応答＆画面外カード描画負荷の最適化
+   ========================================================================== */
+
+button,
+a,
+.monster-card,
+.party-card,
+.nav-item,
+.clickable-member-jump,
+.favorite-btn,
+.btn-favorite,
+.subnav-tab,
+.rune-subnav-btn {
+  touch-action: manipulation;
+}
+
+.monster-card,
+.party-card,
+.matrix-rune-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 210px;
+}
+
+.raid-set-card,
+.dim-raid-set-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 420px;
 }

@@ -4921,12 +4921,16 @@ function initApp() {
       monsters = JSON.parse(localData);
 
       // PRESET_MONSTERSの全モンスターをチェックして未登録なら自動追加
+      let presetAdded = false;
       PRESET_MONSTERS.forEach(preset => {
         if (!monsters.some(m => m.id === preset.id)) {
           monsters.push(preset);
-          saveToLocalStorage();
+          presetAdded = true;
         }
       });
+      if (presetAdded) {
+        saveToLocalStorage();
+      }
 
       // シャイナのリーダースキル更新パッチ（的中 ➔ 攻撃力33%UP）
       const curShaina = monsters.find(m => m.id === "preset-fire-shaina" || m.name.includes("シャイナ"));
@@ -5357,10 +5361,12 @@ function initApp() {
 
   sortMonsters();
   sortParties();
+  invalidateDataCaches();
   renderAll();
 }
 
 function saveDimensionRaidSetsToLocalStorage() {
+  invalidateDataCaches();
   localStorage.setItem('summoners_war_dim_raid_data', JSON.stringify(dimensionRaidSets));
 }
 
@@ -5372,7 +5378,10 @@ function sortParties() {
   });
 }
 
-function savePartiesToLocalStorage() {
+function savePartiesToLocalStorage(options = {}) {
+  if (!options.keepMatchCache) {
+    invalidateDataCaches();
+  }
   localStorage.setItem('summoners_war_party_data', JSON.stringify(parties));
 }
 
@@ -5385,7 +5394,10 @@ function sortMonsters() {
   });
 }
 
-function saveToLocalStorage() {
+function saveToLocalStorage(options = {}) {
+  if (!options.keepMatchCache) {
+    invalidateDataCaches();
+  }
   localStorage.setItem('summoners_war_manager_data', JSON.stringify(monsters));
 }
 
@@ -5540,20 +5552,65 @@ const MONSTER_NAME_ALIASES = [
   ['ニーナ', '水シャシャ']
 ];
 
+// エイリアス事前インデックスとメモ化キャッシュ（高速化用）
+const MONSTER_NAME_ALIASES_LOWER = MONSTER_NAME_ALIASES.map(group => group.map(g => g.toLowerCase()));
+const ALIAS_TOKEN_TO_GROUPS = new Map();
+MONSTER_NAME_ALIASES_LOWER.forEach((group, groupIdx) => {
+  group.forEach(token => {
+    if (!ALIAS_TOKEN_TO_GROUPS.has(token)) {
+      ALIAS_TOKEN_TO_GROUPS.set(token, []);
+    }
+    ALIAS_TOKEN_TO_GROUPS.get(token).push(groupIdx);
+  });
+});
+
+const normalizeNameCache = new Map();
+const stripParensCache = new Map();
+const aliasSetCache = new Map();
+const monsterResolveCache = new Map();
+const usedPartiesCache = new Map();
+let usedPartiesCacheDirty = true;
+let preparedPartySourcesCache = null;
+
+let cachedQuickTagKey = null;
+let cachedQuickTagRegex = null;
+let cachedAliasQuery = null;
+let cachedAliasTerms = [];
+
+function invalidateDataCaches() {
+  monsterResolveCache.clear();
+  usedPartiesCache.clear();
+  usedPartiesCacheDirty = true;
+  preparedPartySourcesCache = null;
+}
+
 function normalizeMonsterLookupName(name) {
   if (!name) return '';
-  return String(name)
+  const key = String(name);
+  const cached = normalizeNameCache.get(key);
+  if (cached !== undefined) return cached;
+  if (normalizeNameCache.size > 5000) normalizeNameCache.clear();
+  const normalized = key
     .replace(/👑/g, '')
     .replace(/\[(L|リーダー)\]/gi, '')
     .replace(/[(（](L|リーダー)[)）]/gi, '')
     .trim()
     .toLowerCase();
+  normalizeNameCache.set(key, normalized);
+  return normalized;
 }
 
 function stripMonsterParens(name) {
-  return normalizeMonsterLookupName(name)
+  if (!name) return '';
+  const key = String(name);
+  const cached = stripParensCache.get(key);
+  if (cached !== undefined) return cached;
+  if (stripParensCache.size > 5000) stripParensCache.clear();
+  const stripped = normalizeMonsterLookupName(key)
     .replace(/[(（][^()（）]*[)）]/g, '')
     .trim();
+  stripParensCache.set(key, stripped);
+  return stripped;
 }
 
 function extractParenTokens(name) {
@@ -5573,10 +5630,16 @@ function extractParenTokens(name) {
 }
 
 function getMonsterAliasSet(rawName) {
+  if (!rawName) return new Set();
+  const key = String(rawName);
+  const cached = aliasSetCache.get(key);
+  if (cached !== undefined) return cached;
+  if (aliasSetCache.size > 5000) aliasSetCache.clear();
+
   const set = new Set();
-  const full = normalizeMonsterLookupName(rawName);
-  const base = stripMonsterParens(rawName);
-  const parenTokens = extractParenTokens(rawName);
+  const full = normalizeMonsterLookupName(key);
+  const base = stripMonsterParens(key);
+  const parenTokens = extractParenTokens(key);
 
   [full, base, ...parenTokens].forEach(val => {
     if (val) set.add(val);
@@ -5587,24 +5650,29 @@ function getMonsterAliasSet(rawName) {
     set.add(full.replace(/[(（]2a[)）]/g, '').trim());
   }
 
-  // エイリアスグループの展開
-  let added = true;
-  while (added) {
-    added = false;
-    MONSTER_NAME_ALIASES.forEach(group => {
-      const lowerGroup = group.map(g => g.toLowerCase());
-      const hits = lowerGroup.some(item => set.has(item));
-      if (hits) {
-        lowerGroup.forEach(item => {
-          if (!set.has(item)) {
-            set.add(item);
-            added = true;
-          }
-        });
+  // 事前インデックスを使ったエイリアスグループの展開（BFS）
+  const queue = Array.from(set);
+  const visitedGroups = new Set();
+  for (let i = 0; i < queue.length; i++) {
+    const token = queue[i];
+    const groupIndices = ALIAS_TOKEN_TO_GROUPS.get(token);
+    if (!groupIndices) continue;
+    for (let j = 0; j < groupIndices.length; j++) {
+      const gIdx = groupIndices[j];
+      if (visitedGroups.has(gIdx)) continue;
+      visitedGroups.add(gIdx);
+      const group = MONSTER_NAME_ALIASES_LOWER[gIdx];
+      for (let k = 0; k < group.length; k++) {
+        const item = group[k];
+        if (!set.has(item)) {
+          set.add(item);
+          queue.push(item);
+        }
       }
-    });
+    }
   }
 
+  aliasSetCache.set(key, set);
   return set;
 }
 
@@ -5653,10 +5721,18 @@ function scoreMonsterMatch(monster, targetName, targetBase, targetAliases, attr)
 
 function findMonsterByNameOrAlias(rawName, attr = '') {
   if (!rawName || !monsters || monsters.length === 0) return null;
+  const cacheKey = `${rawName}\u0000${attr || ''}`;
+  if (monsterResolveCache.has(cacheKey)) {
+    return monsterResolveCache.get(cacheKey);
+  }
+
   const targetName = normalizeMonsterLookupName(rawName);
   const targetBase = stripMonsterParens(rawName);
   const targetAliases = getMonsterAliasSet(rawName);
-  if (!targetName) return null;
+  if (!targetName) {
+    monsterResolveCache.set(cacheKey, null);
+    return null;
+  }
 
   let bestMonster = null;
   let bestScore = 0;
@@ -5669,7 +5745,10 @@ function findMonsterByNameOrAlias(rawName, attr = '') {
     }
   });
 
-  return bestScore >= 55 ? bestMonster : null;
+  const resolved = bestScore >= 55 ? bestMonster : null;
+  if (monsterResolveCache.size > 3000) monsterResolveCache.clear();
+  monsterResolveCache.set(cacheKey, resolved);
+  return resolved;
 }
 
 function matchesQueryWithAlias(text, query) {
@@ -5680,13 +5759,31 @@ function matchesQueryWithAlias(text, query) {
   if (lowerText.includes(q)) return true;
 
   if (q.length >= 2) {
-    for (const group of MONSTER_NAME_ALIASES) {
-      const lowerGroup = group.map(g => g.toLowerCase());
-      const matchesGroup = lowerGroup.some(item => item === q || (q.length >= 2 && item.includes(q)) || (item.length >= 2 && q.includes(item)));
-      if (matchesGroup) {
-        if (lowerGroup.some(item => lowerText.includes(item))) {
-          return true;
+    if (cachedAliasQuery !== q) {
+      cachedAliasQuery = q;
+      const termSet = new Set();
+      for (let i = 0; i < MONSTER_NAME_ALIASES_LOWER.length; i++) {
+        const lowerGroup = MONSTER_NAME_ALIASES_LOWER[i];
+        let matchesGroup = false;
+        for (let j = 0; j < lowerGroup.length; j++) {
+          const item = lowerGroup[j];
+          if (item === q || item.includes(q) || (item.length >= 2 && q.includes(item))) {
+            matchesGroup = true;
+            break;
+          }
         }
+        if (matchesGroup) {
+          for (let j = 0; j < lowerGroup.length; j++) {
+            termSet.add(lowerGroup[j]);
+          }
+        }
+      }
+      cachedAliasTerms = Array.from(termSet);
+    }
+
+    for (let i = 0; i < cachedAliasTerms.length; i++) {
+      if (lowerText.includes(cachedAliasTerms[i])) {
+        return true;
       }
     }
   }
@@ -5696,16 +5793,107 @@ function matchesQueryWithAlias(text, query) {
 function matchesQuickTag(combinedText) {
   if (!quickTagFilter || quickTagFilter === 'all') return true;
   if (!combinedText) return false;
-  try {
-    const regex = new RegExp(quickTagFilter, 'i');
-    return regex.test(combinedText);
-  } catch (e) {
-    return String(combinedText).toLowerCase().includes(quickTagFilter.toLowerCase());
+  if (cachedQuickTagKey !== quickTagFilter) {
+    cachedQuickTagKey = quickTagFilter;
+    try {
+      cachedQuickTagRegex = new RegExp(quickTagFilter, 'i');
+    } catch (e) {
+      cachedQuickTagRegex = null;
+    }
   }
+  if (cachedQuickTagRegex) {
+    return cachedQuickTagRegex.test(combinedText);
+  }
+  return String(combinedText).toLowerCase().includes(quickTagFilter.toLowerCase());
+}
+
+function ensurePreparedPartySources() {
+  if (preparedPartySourcesCache) return preparedPartySourcesCache;
+
+  const prepMember = (m) => {
+    if (!m || !m.name) return null;
+    return {
+      norm: normalizeMonsterLookupName(m.name),
+      base: stripMonsterParens(m.name),
+      aliases: getMonsterAliasSet(m.name),
+      attribute: m.attribute || ''
+    };
+  };
+
+  const preparedParties = (parties || []).map(p => {
+    let labelPrefix = '🏰';
+    if (p.dungeonCategory === '占領戦') labelPrefix = '⚔️';
+    else if (p.dungeonCategory === 'タルタロス') labelPrefix = '🏰';
+    else if (p.dungeonCategory === 'タワー') labelPrefix = '🗼';
+    else if (p.dungeonCategory === '異界魔獣') labelPrefix = '🐉';
+    else if (p.dungeonCategory === '次元ホール') labelPrefix = '🌌';
+    else labelPrefix = '⏱️';
+
+    return {
+      key: `party:${p.id}`,
+      kind: 'party',
+      id: p.id,
+      name: p.name,
+      badge: `${labelPrefix} ${p.dungeonCategory || p.dungeon || '編成'}`,
+      members: (p.members || []).map(prepMember).filter(Boolean)
+    };
+  });
+
+  const preparedRaidSets = (raidSets || []).map(set => {
+    const members = [];
+    [set.team1, set.team2, set.team3].forEach(t => {
+      if (!t) return;
+      [...(t.frontline || []), ...(t.backline || [])].forEach(m => {
+        const pm = prepMember(m);
+        if (pm) members.push(pm);
+      });
+    });
+    return {
+      key: `raid:${set.id}`,
+      kind: 'raid',
+      id: set.id,
+      name: set.name,
+      badge: `🔥 ${set.boss || '異界レイド'}`,
+      members
+    };
+  });
+
+  const preparedDimRaidSets = (dimensionRaidSets || []).map(set => {
+    const members = [];
+    [set.phase1, set.phase2, set.phase3].forEach(ph => {
+      if (!ph) return;
+      (ph.members || []).forEach(m => {
+        const pm = prepMember(m);
+        if (pm) members.push(pm);
+      });
+    });
+    return {
+      key: `dimraid:${set.id}`,
+      kind: 'dimraid',
+      id: set.id,
+      name: set.name,
+      badge: '🌌 異次元レイド',
+      members
+    };
+  });
+
+  preparedPartySourcesCache = [...preparedParties, ...preparedRaidSets, ...preparedDimRaidSets];
+  return preparedPartySourcesCache;
 }
 
 function findPartiesUsingMonster(monster) {
   if (!monster) return [];
+  if (usedPartiesCacheDirty) {
+    usedPartiesCache.clear();
+    usedPartiesCacheDirty = false;
+  }
+  const cacheKey = monster.id || `${monster.attribute || ''}:${monster.name || ''}`;
+  const cached = usedPartiesCache.get(cacheKey);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  const sources = ensurePreparedPartySources();
   const results = [];
   const seen = new Set();
   const targetName = normalizeMonsterLookupName(monster.name);
@@ -5713,108 +5901,296 @@ function findPartiesUsingMonster(monster) {
   const targetAliases = getMonsterAliasSet(monster.name);
 
   const isMemberMatch = (m) => {
-    if (!m || !m.name) return false;
-    // 属性が明記されている場合は属性不一致（同名コラボ別属性など）を除外
     if (m.attribute && monster.attribute && m.attribute !== monster.attribute) {
       return false;
     }
-    const score = scoreMonsterMatch(monster, normalizeMonsterLookupName(m.name), stripMonsterParens(m.name), getMonsterAliasSet(m.name), m.attribute || monster.attribute || '');
+    const score = scoreMonsterMatch(monster, m.norm, m.base, m.aliases, m.attribute || monster.attribute || '');
     if (score >= 55) return true;
-    const mBase = stripMonsterParens(m.name);
-    return mBase === targetBase || normalizeMonsterLookupName(m.name) === targetName || targetAliases.has(mBase);
+    return m.base === targetBase || m.norm === targetName || targetAliases.has(m.base);
   };
 
-  // 1. 通常パーティ・占領戦・タルタロス・タワー・異界魔獣・次元ホール
-  (parties || []).forEach(p => {
-    const key = `party:${p.id}`;
-    if (seen.has(key)) return;
-    if ((p.members || []).some(isMemberMatch)) {
-      seen.add(key);
-      let labelPrefix = '🏰';
-      if (p.dungeonCategory === '占領戦') labelPrefix = '⚔️';
-      else if (p.dungeonCategory === 'タルタロス') labelPrefix = '🏰';
-      else if (p.dungeonCategory === 'タワー') labelPrefix = '🗼';
-      else if (p.dungeonCategory === '異界魔獣') labelPrefix = '🐉';
-      else if (p.dungeonCategory === '次元ホール') labelPrefix = '🌌';
-      else labelPrefix = '⏱️';
-      results.push({
-        kind: 'party',
-        id: p.id,
-        name: p.name,
-        badge: `${labelPrefix} ${p.dungeonCategory || p.dungeon || '編成'}`
-      });
+  for (let i = 0; i < sources.length; i++) {
+    const src = sources[i];
+    if (seen.has(src.key)) continue;
+    let matched = false;
+    for (let j = 0; j < src.members.length; j++) {
+      if (isMemberMatch(src.members[j])) {
+        matched = true;
+        break;
+      }
     }
-  });
-
-  // 2. 異界レイド 3パーティセット
-  (raidSets || []).forEach(set => {
-    const key = `raid:${set.id}`;
-    if (seen.has(key)) return;
-    const teams = [set.team1, set.team2, set.team3];
-    const matched = teams.some(t => {
-      if (!t) return false;
-      const members = [...(t.frontline || []), ...(t.backline || [])];
-      return members.some(isMemberMatch);
-    });
     if (matched) {
-      seen.add(key);
+      seen.add(src.key);
       results.push({
-        kind: 'raid',
-        id: set.id,
-        name: set.name,
-        badge: `🔥 ${set.boss || '異界レイド'}`
+        kind: src.kind,
+        id: src.id,
+        name: src.name,
+        badge: src.badge
       });
     }
-  });
+  }
 
-  // 3. 異次元レイドセット
-  (dimensionRaidSets || []).forEach(set => {
-    const key = `dimraid:${set.id}`;
-    if (seen.has(key)) return;
-    const phases = [set.phase1, set.phase2, set.phase3];
-    const matched = phases.some(ph => ph && (ph.members || []).some(isMemberMatch));
-    if (matched) {
-      seen.add(key);
-      results.push({
-        kind: 'dimraid',
-        id: set.id,
-        name: set.name,
-        badge: '🌌 異次元レイド'
-      });
-    }
-  });
-
+  usedPartiesCache.set(cacheKey, results);
   return results;
 }
 
-// 5. UI描画ロジック
-function renderAll() {
-  // ワールドアリーナ登録モンスター数の更新
+// 5. UI描画ロジック（アクティブタブ限定描画 ＋ Dirtyフラグ遅延更新）
+const ALL_LIST_VIEW_KEYS = [
+  'all',
+  'guild:siege',
+  'guild:tartaros',
+  'guild:monsters',
+  'cairos:party',
+  'cairos:monsters',
+  'raid',
+  'dimension:raid',
+  'dimension:remains',
+  'dimension:awakening'
+];
+const ALL_RUNE_VIEW_KEYS = [
+  'runes:checker',
+  'runes:cleanup',
+  'runes:matrix',
+  'runes:mules',
+  'runes:artifacts'
+];
+const dirtyViews = new Set([...ALL_LIST_VIEW_KEYS, ...ALL_RUNE_VIEW_KEYS]);
+
+function markViewsDirty(scope = 'all') {
+  if (Array.isArray(scope)) {
+    scope.forEach(k => dirtyViews.add(k));
+    return;
+  }
+  if (scope === 'lists') {
+    ALL_LIST_VIEW_KEYS.forEach(k => dirtyViews.add(k));
+    return;
+  }
+  if (scope === 'runes') {
+    ALL_RUNE_VIEW_KEYS.forEach(k => dirtyViews.add(k));
+    return;
+  }
+  ALL_LIST_VIEW_KEYS.forEach(k => dirtyViews.add(k));
+  ALL_RUNE_VIEW_KEYS.forEach(k => dirtyViews.add(k));
+}
+
+function getCurrentViewKey() {
+  if (activeTab === 'all' || activeTab === 'rta') return 'all';
+  if (activeTab === 'guild') return `guild:${guildSubtab}`;
+  if (activeTab === 'cairos') return `cairos:${cairosSubtab}`;
+  if (activeTab === 'raid') return 'raid';
+  if (activeTab === 'dimension') return `dimension:${dimensionSubtab}`;
+  if (activeTab === 'runes') return `runes:${runeState.subtab}`;
+  return null;
+}
+
+function updateGlobalBadges() {
   const rtaMonstersCount = monsters.filter(m => m.isRta).length;
   if (elements.rtaCount) {
     elements.rtaCount.textContent = rtaMonstersCount;
   }
-
-  // RTAモード時の優先度フィルター行およびモードバッジ表示切り替え
   if (elements.rtaPriorityFilterRow) {
     elements.rtaPriorityFilterRow.style.display = contentFilter === 'rta' ? 'flex' : 'none';
   }
   if (elements.monsterListModeBadge) {
     elements.monsterListModeBadge.style.display = contentFilter === 'rta' ? 'inline-block' : 'none';
   }
+}
 
-  renderMonsterList('all', elements.monsterListAll, elements.monsterCount);
-  renderMonsterList('guild', elements.monsterListGuild, elements.guildCount);
-  if (elements.guildCountSub) {
-    elements.guildCountSub.textContent = elements.guildCount ? elements.guildCount.textContent : '0';
+function matchesMonsterFilter(monster, type) {
+  if (attributeFilter !== 'all' && monster.attribute !== attributeFilter) {
+    return false;
   }
-  renderMonsterList('cairos', elements.monsterListCairos, elements.cairosCount);
-  renderParties();
-  renderGuildSiegeParties();
-  renderGuildTartarosParties();
-  renderRaidParties();
-  renderDimensionView();
-  renderRuneManagerView();
+  if (contentFilter === 'rta' && !monster.isRta) {
+    return false;
+  }
+  if (contentFilter === 'fav' && !monster.isFavorite) {
+    return false;
+  }
+  if (contentFilter === 'rta' && rtaPriorityFilter !== 'all') {
+    if ((monster.rtaPriority || '') !== rtaPriorityFilter) {
+      return false;
+    }
+  }
+  if (type === 'guild' && (!monster.guildMemo || monster.guildMemo.trim() === '')) {
+    return false;
+  }
+  if (type === 'cairos' && (!monster.cairosMemo || monster.cairosMemo.trim() === '')) {
+    return false;
+  }
+  if (quickTagFilter && quickTagFilter !== 'all') {
+    const combinedTagText = [
+      monster.name,
+      monster.role,
+      monster.rtaMemo,
+      monster.guildMemo,
+      monster.cairosMemo,
+      monster.generalMemo,
+      monster.recommendedRunes,
+      monster.recommendedArtifacts
+    ].join(' ');
+    if (!matchesQuickTag(combinedTagText)) {
+      return false;
+    }
+  }
+  if (searchQuery.trim() !== '') {
+    const searchableText = [
+      monster.name,
+      monster.role,
+      monster.rtaMemo,
+      monster.rtaSpeed,
+      monster.rtaPriority,
+      monster.guildMemo,
+      monster.cairosMemo,
+      monster.generalMemo,
+      monster.recommendedRunes,
+      monster.recommendedArtifacts
+    ].join(' ');
+    return matchesQueryWithAlias(searchableText, searchQuery);
+  }
+  return true;
+}
+
+function countFilteredMonsters(type) {
+  let count = 0;
+  for (let i = 0; i < monsters.length; i++) {
+    if (matchesMonsterFilter(monsters[i], type)) count++;
+  }
+  return count;
+}
+
+function getFilteredCairosParties() {
+  const cairosParties = parties.filter(isCairosParty);
+  return cairosParties.filter(party => {
+    if (dungeonFilter !== 'all') {
+      const matchCategory = party.dungeonCategory === dungeonFilter;
+      const matchDungeonName = (party.dungeon || '').includes(dungeonFilter) ||
+        (dungeonFilter === '異界魔獣' && (party.dungeon || '').includes('異界の魔獣'));
+      if (!matchCategory && !matchDungeonName) {
+        return false;
+      }
+    }
+    if (quickTagFilter && quickTagFilter !== 'all') {
+      const memberText = (party.members || []).map(m => `${m.name || ''} ${m.role || ''} ${m.runes || ''}`).join(' ');
+      const partyTagText = [
+        party.name,
+        party.dungeon,
+        party.requirementsMemo,
+        party.targetMemo,
+        party.speedTuningMemo,
+        memberText
+      ].join(' ');
+      if (!matchesQuickTag(partyTagText)) {
+        return false;
+      }
+    }
+    if (searchQuery.trim() !== '') {
+      const memberText = (party.members || []).map(m => `${m.name || ''} ${m.role || ''} ${m.runes || ''}`).join(' ');
+      const searchableText = [
+        party.name,
+        party.dungeon,
+        party.turnOrder,
+        party.speedTuningMemo,
+        party.requirementsMemo,
+        party.targetMemo,
+        memberText
+      ].join(' ');
+      return matchesQueryWithAlias(searchableText, searchQuery);
+    }
+    return true;
+  });
+}
+
+function updateActiveTabHeaderCounts() {
+  if (activeTab === 'guild') {
+    const siegeCount = parties.filter(p =>
+      p.dungeonCategory === '占領戦' || (p.dungeon && (p.dungeon.includes('占領戦') || p.dungeon.includes('ギルバト')))
+    ).length;
+    if (elements.guildSiegeCount) elements.guildSiegeCount.textContent = siegeCount;
+    const tartarosCount = parties.filter(p => p.dungeonCategory === 'タルタロス' || (p.dungeon && p.dungeon.includes('タルタロス'))).length;
+    if (elements.guildTartarosCount) elements.guildTartarosCount.textContent = tartarosCount;
+    if (guildSubtab !== 'monsters') {
+      const gCount = countFilteredMonsters('guild');
+      if (elements.guildCount) elements.guildCount.textContent = gCount;
+      if (elements.guildCountSub) elements.guildCountSub.textContent = gCount;
+    }
+  } else if (activeTab === 'cairos') {
+    if (cairosSubtab !== 'party' && elements.partyCount) {
+      elements.partyCount.textContent = getFilteredCairosParties().length;
+    }
+    if (cairosSubtab !== 'monsters' && elements.cairosCount) {
+      elements.cairosCount.textContent = countFilteredMonsters('cairos');
+    }
+  } else if (activeTab === 'dimension') {
+    const remainsCount = parties.filter(p => p.dimensionType === 'remains' || (p.dungeon && p.dungeon.includes('遺跡'))).length;
+    const awakeningCount = parties.filter(p => p.dimensionType === 'awakening' || (p.dungeon && p.dungeon.includes('2次覚醒'))).length;
+    if (elements.dimRaidCount) elements.dimRaidCount.textContent = dimensionRaidSets.length;
+    if (elements.dimRemainsCount) elements.dimRemainsCount.textContent = remainsCount;
+    if (elements.dimAwakeningCount) elements.dimAwakeningCount.textContent = awakeningCount;
+    if (elements.dimRaidSetCount) elements.dimRaidSetCount.textContent = dimensionRaidSets.length;
+  }
+}
+
+function renderActiveView(force = false) {
+  const viewKey = getCurrentViewKey();
+  if (!viewKey) {
+    updateGlobalBadges();
+    return;
+  }
+
+  if (activeTab === 'runes') {
+    updateRuneHeaderBadges();
+    if (!force && !dirtyViews.has(viewKey)) return;
+    if (viewKey === 'runes:checker') renderRuneCheckerVerdict();
+    else if (viewKey === 'runes:cleanup') renderCleanupSteps();
+    else if (viewKey === 'runes:matrix') renderRuneMatrixAndExclusion();
+    else if (viewKey === 'runes:mules') renderRuneMulesList();
+    else if (viewKey === 'runes:artifacts') {
+      renderArtifactCheckerVerdict();
+      renderArtifactGuideGrid();
+    }
+    dirtyViews.delete(viewKey);
+    return;
+  }
+
+  updateGlobalBadges();
+  updateActiveTabHeaderCounts();
+
+  if (!force && !dirtyViews.has(viewKey)) {
+    return;
+  }
+
+  if (viewKey === 'all') {
+    renderMonsterList('all', elements.monsterListAll, elements.monsterCount);
+  } else if (viewKey === 'guild:siege') {
+    renderGuildSiegeParties();
+  } else if (viewKey === 'guild:tartaros') {
+    renderGuildTartarosParties();
+  } else if (viewKey === 'guild:monsters') {
+    renderMonsterList('guild', elements.monsterListGuild, elements.guildCount);
+    if (elements.guildCountSub) {
+      elements.guildCountSub.textContent = elements.guildCount ? elements.guildCount.textContent : '0';
+    }
+  } else if (viewKey === 'cairos:party') {
+    renderParties();
+  } else if (viewKey === 'cairos:monsters') {
+    renderMonsterList('cairos', elements.monsterListCairos, elements.cairosCount);
+  } else if (viewKey === 'raid') {
+    renderRaidParties();
+  } else if (viewKey === 'dimension:raid') {
+    renderDimensionRaidSets();
+  } else if (viewKey === 'dimension:remains') {
+    updateDimensionRemainsGuideBanner(dimensionRemainsFilter);
+    renderDimensionRemainsParties();
+  } else if (viewKey === 'dimension:awakening') {
+    renderDimensionAwakeningParties();
+  }
+  dirtyViews.delete(viewKey);
+}
+
+function renderAll(options = {}) {
+  const scope = options.scope || 'all';
+  markViewsDirty(scope);
+  renderActiveView(Boolean(options.force));
 }
 
 // 速度文字列（例: "+185"）から数値比較用の整数を取得
@@ -5837,74 +6213,19 @@ function getPriorityRank(priorityStr) {
 
 // リストの描画
 function renderMonsterList(type, containerElement, countElement) {
+  if (!containerElement) return;
   containerElement.innerHTML = '';
 
   // フィルタリング処理
-  const filtered = monsters.filter(monster => {
-    // 1. 属性フィルター
-    if (attributeFilter !== 'all' && monster.attribute !== attributeFilter) {
-      return false;
-    }
+  const filtered = monsters.filter(monster => matchesMonsterFilter(monster, type));
 
-    // 2. コンテンツ・区分クイックフィルター（すべて・RTA・お気に入り）
-    if (contentFilter === 'rta' && !monster.isRta) {
-      return false;
-    }
-    if (contentFilter === 'fav' && !monster.isFavorite) {
-      return false;
-    }
+  // 件数表示
+  if (countElement) countElement.textContent = filtered.length;
 
-    // 2.5. RTAピック優先度フィルター（RTA絞り込み時のみ有効）
-    if (contentFilter === 'rta' && rtaPriorityFilter !== 'all') {
-      if ((monster.rtaPriority || '') !== rtaPriorityFilter) {
-        return false;
-      }
-    }
-
-    // 3. タブごとの特化フィルター
-    if (type === 'guild' && (!monster.guildMemo || monster.guildMemo.trim() === '')) {
-      return false;
-    }
-    if (type === 'cairos' && (!monster.cairosMemo || monster.cairosMemo.trim() === '')) {
-      return false;
-    }
-
-    // 3.5. 役割・ルーン クイックタグフィルター
-    if (quickTagFilter && quickTagFilter !== 'all') {
-      const combinedTagText = [
-        monster.name,
-        monster.role,
-        monster.rtaMemo,
-        monster.guildMemo,
-        monster.cairosMemo,
-        monster.generalMemo,
-        monster.recommendedRunes,
-        monster.recommendedArtifacts
-      ].join(' ');
-      if (!matchesQuickTag(combinedTagText)) {
-        return false;
-      }
-    }
-
-    // 4. 検索キーワードフィルター（別名検索対応）
-    if (searchQuery.trim() !== '') {
-      const searchableText = [
-        monster.name,
-        monster.role,
-        monster.rtaMemo,
-        monster.rtaSpeed,
-        monster.rtaPriority,
-        monster.guildMemo,
-        monster.cairosMemo,
-        monster.generalMemo,
-        monster.recommendedRunes,
-        monster.recommendedArtifacts
-      ].join(' ');
-      return matchesQueryWithAlias(searchableText, searchQuery);
-    }
-
-    return true;
-  });
+  if (filtered.length === 0) {
+    containerElement.appendChild(createEmptyState());
+    return;
+  }
 
   // 採用編成数キャッシュ計算（ソート＆バッジ表示用）
   const usedCountMap = new Map();
@@ -5935,18 +6256,12 @@ function renderMonsterList(type, containerElement, countElement) {
     return new Date(b.updatedAt) - new Date(a.updatedAt);
   });
 
-  // 件数表示
-  countElement.textContent = filtered.length;
-
-  if (filtered.length === 0) {
-    containerElement.appendChild(createEmptyState());
-    return;
-  }
-
-  // カードを生成して挿入
+  // カードを生成して DocumentFragment で一括挿入
+  const frag = document.createDocumentFragment();
   filtered.forEach(monster => {
-    containerElement.appendChild(createMonsterCard(monster, usedCountMap.get(monster.id) || 0));
+    frag.appendChild(createMonsterCard(monster, usedCountMap.get(monster.id) || 0));
   });
+  containerElement.appendChild(frag);
 }
 
 // 空状態のUIを生成
@@ -6075,31 +6390,6 @@ function createMonsterCard(monster, usedCountOverride = null) {
     </div>
   `;
 
-  // カード全体のクリックイベント（詳細モーダル起動）
-  card.addEventListener('click', (e) => {
-    // お気に入りボタンや編集ボタンのクリック時は詳細を開かないようにする
-    if (e.target.classList.contains('favorite-btn') || e.target.closest('.btn-card-edit')) {
-      return;
-    }
-    openDetailModal(monster.id);
-  });
-
-  // 直接編集ボタンイベント（スマホでも即座に編集画面へ移行可能）
-  const btnEdit = card.querySelector('.btn-card-edit');
-  if (btnEdit) {
-    btnEdit.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openFormForEdit(monster.id);
-    });
-  }
-
-  // お気に入りトグルイベント
-  const favBtn = card.querySelector('.favorite-btn');
-  favBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    toggleFavorite(monster.id);
-  });
-
   return card;
 }
 
@@ -6110,8 +6400,8 @@ function toggleFavorite(id) {
     monster.isFavorite = !monster.isFavorite;
     monster.updatedAt = new Date().toISOString();
     sortMonsters();
-    saveToLocalStorage();
-    renderAll();
+    saveToLocalStorage({ keepMatchCache: true });
+    renderAll({ scope: 'lists' });
     showToast(monster.isFavorite ? `${monster.name} をお気に入りに登録しました` : `${monster.name} のお気に入りを解除しました`);
   }
 }
@@ -6146,53 +6436,7 @@ function renderParties() {
   if (!elements.partyListCairos) return;
   elements.partyListCairos.innerHTML = '';
 
-  // カイロスダンジョン・タワー・異界魔獣のパーティのみを抽出
-  const cairosParties = parties.filter(isCairosParty);
-
-  const filtered = cairosParties.filter(party => {
-    // 1. ダンジョン別フィルター (allの場合はカイロス等すべて)
-    if (dungeonFilter !== 'all') {
-      const matchCategory = party.dungeonCategory === dungeonFilter;
-      const matchDungeonName = (party.dungeon || '').includes(dungeonFilter) ||
-        (dungeonFilter === '異界魔獣' && (party.dungeon || '').includes('異界の魔獣'));
-      if (!matchCategory && !matchDungeonName) {
-        return false;
-      }
-    }
-
-    // 1.5. 役割・ルーン クイックタグフィルター
-    if (quickTagFilter && quickTagFilter !== 'all') {
-      const memberText = (party.members || []).map(m => `${m.name || ''} ${m.role || ''} ${m.runes || ''}`).join(' ');
-      const partyTagText = [
-        party.name,
-        party.dungeon,
-        party.requirementsMemo,
-        party.targetMemo,
-        party.speedTuningMemo,
-        memberText
-      ].join(' ');
-      if (!matchesQuickTag(partyTagText)) {
-        return false;
-      }
-    }
-
-    // 2. 検索キーワードフィルター（別名検索対応）
-    if (searchQuery.trim() !== '') {
-      const memberText = (party.members || []).map(m => `${m.name || ''} ${m.role || ''} ${m.runes || ''}`).join(' ');
-      const searchableText = [
-        party.name,
-        party.dungeon,
-        party.turnOrder,
-        party.speedTuningMemo,
-        party.requirementsMemo,
-        party.targetMemo,
-        memberText
-      ].join(' ');
-      return matchesQueryWithAlias(searchableText, searchQuery);
-    }
-
-    return true;
-  });
+  const filtered = getFilteredCairosParties();
 
   if (elements.partyCount) {
     elements.partyCount.textContent = filtered.length;
@@ -6203,9 +6447,11 @@ function renderParties() {
     return;
   }
 
+  const frag = document.createDocumentFragment();
   filtered.forEach(party => {
-    elements.partyListCairos.appendChild(createPartyCard(party));
+    frag.appendChild(createPartyCard(party));
   });
+  elements.partyListCairos.appendChild(frag);
 }
 
 // パーティ空状態UI
@@ -6356,8 +6602,8 @@ function togglePartyFavorite(id) {
     party.isFavorite = !party.isFavorite;
     party.updatedAt = new Date().toISOString();
     sortParties();
-    savePartiesToLocalStorage();
-    renderAll();
+    savePartiesToLocalStorage({ keepMatchCache: true });
+    renderAll({ scope: 'lists' });
     showToast(party.isFavorite ? `「${party.name}」をお気に入りに登録しました` : `「${party.name}」のお気に入りを解除しました`);
   }
 }
@@ -6716,7 +6962,8 @@ function handlePartyFormSubmit(e) {
 }
 
 // カイロス内サブタブの切り替え
-function switchCairosSubtab(subtab) {
+function switchCairosSubtab(subtab, options = {}) {
+  const shouldRender = options.render !== false;
   cairosSubtab = subtab;
 
   if (subtab === 'party') {
@@ -6726,7 +6973,6 @@ function switchCairosSubtab(subtab) {
     elements.cairosSubpaneMonsters.style.display = 'none';
     elements.dungeonFilterArea.style.display = 'flex';
     if (elements.btnAddParty) elements.btnAddParty.style.display = 'inline-flex';
-    renderParties();
   } else {
     elements.btnSubnavParty.classList.remove('active');
     elements.btnSubnavMonsters.classList.add('active');
@@ -6734,7 +6980,10 @@ function switchCairosSubtab(subtab) {
     elements.cairosSubpaneMonsters.style.display = 'block';
     elements.dungeonFilterArea.style.display = 'none';
     if (elements.btnAddParty) elements.btnAddParty.style.display = 'none';
-    renderMonsterList('cairos', elements.monsterListCairos, elements.cairosCount);
+  }
+
+  if (shouldRender) {
+    renderActiveView();
   }
 }
 
@@ -6888,9 +7137,11 @@ function renderGuildTartarosParties() {
     return;
   }
 
+  const frag = document.createDocumentFragment();
   filtered.forEach(party => {
-    elements.partyListGuildTartaros.appendChild(createPartyCard(party));
+    frag.appendChild(createPartyCard(party));
   });
+  elements.partyListGuildTartaros.appendChild(frag);
 }
 
 // ボス別ワンポイント戦略バナーの更新
@@ -7071,9 +7322,11 @@ function renderGuildSiegeParties() {
     return;
   }
 
+  const frag = document.createDocumentFragment();
   filtered.forEach(party => {
-    elements.partyListGuildSiege.appendChild(createPartyCard(party));
+    frag.appendChild(createPartyCard(party));
   });
+  elements.partyListGuildSiege.appendChild(frag);
 }
 
 function updateSiegeStrategyBanner(totalCount = null) {
@@ -7104,10 +7357,12 @@ function switchSiegeTargetFilter(target) {
     });
   }
   renderGuildSiegeParties();
+  dirtyViews.delete('guild:siege');
 }
 
 // ギルド戦サブタブ切り替え（占領戦 / 迷宮 / モンスター）
-function switchGuildSubtab(subtab) {
+function switchGuildSubtab(subtab, options = {}) {
+  const shouldRender = options.render !== false;
   guildSubtab = subtab;
   if (elements.btnGuildSubnavSiege) {
     elements.btnGuildSubnavSiege.classList.toggle('active', subtab === 'siege');
@@ -7144,12 +7399,8 @@ function switchGuildSubtab(subtab) {
     }
   }
 
-  if (subtab === 'siege') {
-    renderGuildSiegeParties();
-  } else if (subtab === 'tartaros') {
-    renderGuildTartarosParties();
-  } else {
-    renderMonsterList('guild', elements.monsterListGuild, elements.guildCount);
+  if (shouldRender) {
+    renderActiveView();
   }
 }
 
@@ -7162,6 +7413,7 @@ function switchTartarosBoss(boss) {
     });
   }
   renderGuildTartarosParties();
+  dirtyViews.delete('guild:tartaros');
 }
 
 // -----------------------------------------------------------------------------
@@ -7262,6 +7514,7 @@ function renderRaidParties() {
     return;
   }
 
+  const frag = document.createDocumentFragment();
   filteredSets.forEach(set => {
     const card = document.createElement('div');
     card.className = 'raid-set-card';
@@ -7351,8 +7604,9 @@ function renderRaidParties() {
       });
     }
 
-    elements.partyListRaid.appendChild(card);
+    frag.appendChild(card);
   });
+  elements.partyListRaid.appendChild(frag);
 }
 
 // 異界レイド ボス切り替え
@@ -7371,6 +7625,7 @@ function switchRaidBoss(boss) {
     elements.raidFireBanner.style.display = (raidBossFilter === '紅炎の魔獣' || raidBossFilter === 'all') ? 'block' : 'none';
   }
   renderRaidParties();
+  dirtyViews.delete('raid');
 }
 
 // 異界レイドセット詳細モーダル
@@ -7541,15 +7796,20 @@ function renderDimensionView() {
 
   if (dimensionSubtab === 'raid') {
     renderDimensionRaidSets();
+    dirtyViews.delete('dimension:raid');
   } else if (dimensionSubtab === 'remains') {
+    updateDimensionRemainsGuideBanner(dimensionRemainsFilter);
     renderDimensionRemainsParties();
+    dirtyViews.delete('dimension:remains');
   } else if (dimensionSubtab === 'awakening') {
     renderDimensionAwakeningParties();
+    dirtyViews.delete('dimension:awakening');
   }
 }
 
 // 次元ホールのサブタブ切り替え
-function switchDimensionSubtab(subtab) {
+function switchDimensionSubtab(subtab, options = {}) {
+  const shouldRender = options.render !== false;
   dimensionSubtab = subtab;
 
   const tabs = [
@@ -7574,13 +7834,8 @@ function switchDimensionSubtab(subtab) {
     }
   });
 
-  if (subtab === 'raid') {
-    renderDimensionRaidSets();
-  } else if (subtab === 'remains') {
-    updateDimensionRemainsGuideBanner(dimensionRemainsFilter);
-    renderDimensionRemainsParties();
-  } else if (subtab === 'awakening') {
-    renderDimensionAwakeningParties();
+  if (shouldRender) {
+    renderActiveView();
   }
 }
 
@@ -7600,6 +7855,7 @@ function switchDimensionRemainsFilter(area) {
 
   updateDimensionRemainsGuideBanner(area);
   renderDimensionRemainsParties();
+  dirtyViews.delete('dimension:remains');
 }
 
 // 2次覚醒フィルター切り替え
@@ -7617,6 +7873,7 @@ function switchDimensionAwakeningFilter(target) {
   }
 
   renderDimensionAwakeningParties();
+  dirtyViews.delete('dimension:awakening');
 }
 
 // 遺跡ガイドバナーの更新
@@ -7676,6 +7933,7 @@ function renderDimensionRaidSets() {
     return;
   }
 
+  const frag = document.createDocumentFragment();
   filteredSets.forEach(set => {
     const card = document.createElement('div');
     card.className = 'dim-raid-set-card';
@@ -7743,8 +8001,9 @@ function renderDimensionRaidSets() {
       });
     }
 
-    elements.dimRaidSetList.appendChild(card);
+    frag.appendChild(card);
   });
+  elements.dimRaidSetList.appendChild(frag);
 }
 
 // 異次元レイド詳細モーダル制御
@@ -7858,10 +8117,11 @@ function renderDimensionRemainsParties() {
     return;
   }
 
+  const frag = document.createDocumentFragment();
   remainsParties.forEach(party => {
-    const card = createDimensionPartyCard(party);
-    elements.dimRemainsPartyList.appendChild(card);
+    frag.appendChild(createDimensionPartyCard(party));
   });
+  elements.dimRemainsPartyList.appendChild(frag);
 }
 
 // 2次覚醒ダンジョン パーティの描画
@@ -7919,10 +8179,11 @@ function renderDimensionAwakeningParties() {
     return;
   }
 
+  const frag = document.createDocumentFragment();
   awkParties.forEach(party => {
-    const card = createDimensionPartyCard(party);
-    elements.dimAwakeningPartyList.appendChild(card);
+    frag.appendChild(createDimensionPartyCard(party));
   });
+  elements.dimAwakeningPartyList.appendChild(frag);
 }
 
 // 次元ホール用の汎用パーティカード生成ヘルパー
@@ -8217,6 +8478,29 @@ function clearErrors() {
 
 // 8. イベントリスナーの設定
 function setupEventListeners() {
+  // モンスターカード一覧のクリックイベント委譲（カード毎の大量リスナー生成を廃止）
+  [elements.monsterListAll, elements.monsterListGuild, elements.monsterListCairos].forEach(container => {
+    if (!container) return;
+    container.addEventListener('click', (e) => {
+      const favBtn = e.target.closest('.favorite-btn');
+      if (favBtn && favBtn.dataset.favId) {
+        e.stopPropagation();
+        toggleFavorite(favBtn.dataset.favId);
+        return;
+      }
+      const editBtn = e.target.closest('.btn-card-edit');
+      if (editBtn && editBtn.dataset.id) {
+        e.stopPropagation();
+        openFormForEdit(editBtn.dataset.id);
+        return;
+      }
+      const card = e.target.closest('.monster-card');
+      if (card && card.dataset.id) {
+        openDetailModal(card.dataset.id);
+      }
+    });
+  });
+
   // ナビゲーションタブ切り替え
   elements.navListItems.forEach(item => {
     item.addEventListener('click', () => {
@@ -8258,7 +8542,7 @@ function setupEventListeners() {
             }
           });
         }
-        renderAll();
+        renderAll({ scope: 'lists' });
       });
     });
   }
@@ -8270,7 +8554,7 @@ function setupEventListeners() {
         elements.sortBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         monsterSortMode = btn.dataset.sort || 'default';
-        renderAll();
+        renderAll({ scope: 'lists' });
       });
     });
   }
@@ -8282,7 +8566,7 @@ function setupEventListeners() {
         elements.priorityFilterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         rtaPriorityFilter = btn.dataset.priority || 'all';
-        renderAll();
+        renderAll({ scope: 'lists' });
       });
     });
   }
@@ -8293,7 +8577,7 @@ function setupEventListeners() {
       elements.attrBtns.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       attributeFilter = btn.dataset.attr;
-      renderAll();
+      renderAll({ scope: 'lists' });
     });
   });
 
@@ -8304,7 +8588,7 @@ function setupEventListeners() {
         elements.quickTagBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         quickTagFilter = btn.dataset.qtag || 'all';
-        renderAll();
+        renderAll({ scope: 'lists' });
       });
     });
   }
@@ -8515,23 +8799,45 @@ function setupEventListeners() {
     });
   }
 
-  // リアルタイム検索
-  elements.searchInput.addEventListener('input', (e) => {
+  // リアルタイム検索（IME入力対応＋120msデバウンス）
+  let searchDebounceTimer = null;
+  let isSearchComposing = false;
+
+  elements.searchInput.addEventListener('compositionstart', () => {
+    isSearchComposing = true;
+  });
+
+  elements.searchInput.addEventListener('compositionend', (e) => {
+    isSearchComposing = false;
+    clearTimeout(searchDebounceTimer);
     searchQuery = e.target.value;
-    if (searchQuery.trim() !== '') {
-      elements.btnClearSearch.style.display = 'flex';
+    elements.btnClearSearch.style.display = searchQuery.trim() !== '' ? 'flex' : 'none';
+    renderAll({ scope: 'lists' });
+  });
+
+  elements.searchInput.addEventListener('input', (e) => {
+    const val = e.target.value;
+    elements.btnClearSearch.style.display = val.trim() !== '' ? 'flex' : 'none';
+    if (isSearchComposing) return;
+
+    clearTimeout(searchDebounceTimer);
+    searchQuery = val;
+    if (searchQuery.trim() === '') {
+      renderAll({ scope: 'lists' });
     } else {
-      elements.btnClearSearch.style.display = 'none';
+      searchDebounceTimer = setTimeout(() => {
+        renderAll({ scope: 'lists' });
+      }, 120);
     }
-    renderAll();
   });
 
   // 検索クリアボタン
   elements.btnClearSearch.addEventListener('click', () => {
+    clearTimeout(searchDebounceTimer);
     elements.searchInput.value = '';
     searchQuery = '';
     elements.btnClearSearch.style.display = 'none';
-    renderAll();
+    renderAll({ scope: 'lists' });
   });
 
   // モーダル閉じる
@@ -8602,6 +8908,7 @@ function setupEventListeners() {
         btn.classList.add('active');
         dungeonFilter = btn.dataset.dungeon;
         renderParties();
+        dirtyViews.delete('cairos:party');
       });
     });
   }
@@ -8924,6 +9231,7 @@ function switchTab(tabId) {
   });
 
   // 「ワリーナ (rta)」タブまたは「すべて (all)」タブ選択時のコンテンツフィルター連動
+  const prevContentFilter = contentFilter;
   if (tabId === 'rta') {
     contentFilter = 'rta';
     if (elements.contentFilterBtns) {
@@ -8938,6 +9246,9 @@ function switchTab(tabId) {
         b.classList.toggle('active', b.dataset.contentFilter === 'all');
       });
     }
+  }
+  if (contentFilter !== prevContentFilter) {
+    markViewsDirty('lists');
   }
 
   // コンテンツペインのアクティブ更新 ('rta' の場合は 'tab-content-all' を表示)
@@ -8969,13 +9280,10 @@ function switchTab(tabId) {
     resetForm();
   }
 
-  // ギルド戦タブを開いたときはサブタブ状態を同期
+  // 各タブのサブタブUI状態のみ同期（描画は最後の renderActiveView で1回だけ行う）
   if (tabId === 'guild') {
-    switchGuildSubtab(guildSubtab);
-  }
-
-  // カイロスタブを開いたときはサブタブ状態を同期
-  if (tabId === 'cairos') {
+    switchGuildSubtab(guildSubtab, { render: false });
+  } else if (tabId === 'cairos') {
     if (dungeonFilter === 'タルタロス' || dungeonFilter === '異界レイド') {
       dungeonFilter = 'all';
       if (elements.dungeonBtns) {
@@ -8983,22 +9291,17 @@ function switchTab(tabId) {
           b.classList.toggle('active', b.dataset.dungeon === 'all');
         });
       }
+      markViewsDirty(['cairos:party']);
     }
-    switchCairosSubtab(cairosSubtab);
+    switchCairosSubtab(cairosSubtab, { render: false });
+  } else if (tabId === 'dimension') {
+    switchDimensionSubtab(dimensionSubtab, { render: false });
+  } else if (tabId === 'runes') {
+    switchRuneSubtab(runeState.subtab, { render: false });
   }
 
-  // 次元ホールタブを開いたときはサブタブ状態を同期
-  if (tabId === 'dimension') {
-    switchDimensionSubtab(dimensionSubtab);
-  }
-
-  // ルーン整理タブを開いたときは描画を更新
-  if (tabId === 'runes') {
-    renderRuneManagerView();
-  }
-
-  // リストの再描画
-  renderAll();
+  // 現在表示中の単一ビューのみ、必要な場合だけ再描画
+  renderActiveView();
 }
 
 // フォーム送信の処理
@@ -10076,8 +10379,8 @@ function saveRuneMulesToLocalStorage() {
   localStorage.setItem('summoners_war_rune_mules', JSON.stringify(runeMules));
 }
 
-// ルーン整理ビュー全体の描画更新
-function renderRuneManagerView() {
+// ルーン整理ヘッダー＆バッジの軽量更新
+function updateRuneHeaderBadges() {
   const tabRunePane = document.getElementById('tab-content-runes');
   if (!tabRunePane) return;
 
@@ -10109,18 +10412,24 @@ function renderRuneManagerView() {
 
   const cleanupBadgeEl = document.getElementById('cleanup-progress-badge');
   if (cleanupBadgeEl) cleanupBadgeEl.textContent = `${runeState.cleanupCompleted.length}/${CLEANUP_STEPS_DATA.length}`;
+}
 
-  // 3. 各サブペインの描画
-  renderRuneCheckerVerdict();
-  renderCleanupSteps();
-  renderRuneMatrixAndExclusion();
-  renderRuneMulesList();
-  renderArtifactCheckerVerdict();
-  renderArtifactGuideGrid();
+// ルーン整理ビュー全体の描画更新（非表示時はdirtyフラグのみ立てて遅延描画）
+function renderRuneManagerView() {
+  const tabRunePane = document.getElementById('tab-content-runes');
+  if (!tabRunePane) return;
+
+  markViewsDirty('runes');
+  updateRuneHeaderBadges();
+
+  if (activeTab === 'runes') {
+    renderActiveView();
+  }
 }
 
 // ルーン整理サブタブの切り替え
-function switchRuneSubtab(subtab) {
+function switchRuneSubtab(subtab, options = {}) {
+  const shouldRender = options.render !== false;
   runeState.subtab = subtab;
   const subBtns = document.querySelectorAll('.rune-subnav-btn');
   subBtns.forEach(b => {
@@ -10141,6 +10450,10 @@ function switchRuneSubtab(subtab) {
       panes[k].classList.toggle('active', k === subtab);
     }
   });
+
+  if (shouldRender && activeTab === 'runes') {
+    renderActiveView();
+  }
 }
 
 // -----------------------------------------------------------------------------
@@ -10644,6 +10957,7 @@ function renderCleanupSteps() {
 
   container.innerHTML = '';
 
+  const frag = document.createDocumentFragment();
   CLEANUP_STEPS_DATA.forEach(step => {
     const isDone = runeState.cleanupCompleted.includes(step.id);
     const card = document.createElement('div');
@@ -10678,12 +10992,15 @@ function renderCleanupSteps() {
           runeState.cleanupCompleted = runeState.cleanupCompleted.filter(id => id !== step.id);
         }
         saveRunePrefsToLocalStorage();
-        renderRuneManagerView();
+        updateRuneHeaderBadges();
+        renderCleanupSteps();
+        dirtyViews.delete('runes:cleanup');
       });
     }
 
-    container.appendChild(card);
+    frag.appendChild(card);
   });
+  container.appendChild(frag);
 }
 
 // -----------------------------------------------------------------------------
@@ -10774,6 +11091,7 @@ function renderRuneMulesList() {
     return;
   }
 
+  const frag = document.createDocumentFragment();
   runeMules.forEach(mule => {
     const card = document.createElement('div');
     card.className = 'mule-card';
@@ -10817,14 +11135,17 @@ function renderRuneMulesList() {
         if (confirm(`保管係「${mule.name}」のメモを削除しますか？`)) {
           runeMules = runeMules.filter(m => m.id !== mule.id);
           saveRuneMulesToLocalStorage();
-          renderRuneManagerView();
+          updateRuneHeaderBadges();
+          renderRuneMulesList();
+          dirtyViews.delete('runes:mules');
           showToast(`「${mule.name}」を削除しました`);
         }
       });
     }
 
-    listContainer.appendChild(card);
+    frag.appendChild(card);
   });
+  listContainer.appendChild(frag);
 }
 
 function resetMuleForm() {
@@ -11242,7 +11563,9 @@ function setupRuneManagerEvents() {
     btnResetCleanup.addEventListener('click', () => {
       runeState.cleanupCompleted = [];
       saveRunePrefsToLocalStorage();
-      renderRuneManagerView();
+      updateRuneHeaderBadges();
+      renderCleanupSteps();
+      dirtyViews.delete('runes:cleanup');
       showToast('断捨離チェックリストをリセットしました！');
     });
   }
@@ -11253,7 +11576,9 @@ function setupRuneManagerEvents() {
       const addVal = parseInt(btn.dataset.add, 10) || 0;
       runeState.soldCount = (runeState.soldCount || 0) + addVal;
       saveRunePrefsToLocalStorage();
-      renderRuneManagerView();
+      updateRuneHeaderBadges();
+      renderCleanupSteps();
+      dirtyViews.delete('runes:cleanup');
       showToast(`🔥 売却数 +${addVal}個！（累計 ${runeState.soldCount}個処分！）`);
     });
   });
@@ -11263,7 +11588,9 @@ function setupRuneManagerEvents() {
     btnSoldReset.addEventListener('click', () => {
       runeState.soldCount = 0;
       saveRunePrefsToLocalStorage();
-      renderRuneManagerView();
+      updateRuneHeaderBadges();
+      renderCleanupSteps();
+      dirtyViews.delete('runes:cleanup');
       showToast('売却カウンターを0にリセットしました');
     });
   }
@@ -11276,6 +11603,7 @@ function setupRuneManagerEvents() {
       btn.classList.add('active');
       runeState.matrixCat = btn.dataset.mcat || 'all';
       renderRuneMatrixAndExclusion();
+      dirtyViews.delete('runes:matrix');
     });
   });
 
@@ -11295,7 +11623,9 @@ function setupRuneManagerEvents() {
       };
       runeMules.unshift(newMule);
       saveRuneMulesToLocalStorage();
-      renderRuneManagerView();
+      updateRuneHeaderBadges();
+      renderRuneMulesList();
+      dirtyViews.delete('runes:mules');
       showToast(`📦 「${newMule.name}」を追加しました！（+6枠節約）`);
     });
   });
@@ -11345,7 +11675,9 @@ function setupRuneManagerEvents() {
 
       saveRuneMulesToLocalStorage();
       resetMuleForm();
-      renderRuneManagerView();
+      updateRuneHeaderBadges();
+      renderRuneMulesList();
+      dirtyViews.delete('runes:mules');
     });
   }
 
